@@ -615,12 +615,16 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
     }
 
-    .popup-naam { font-weight: 700; color: var(--navy); font-size: 0.9rem; margin-bottom: 4px; }
-    .popup-adres { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
-    .popup-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+    .popup-adres { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
+    .popup-praktijken { display: flex; flex-direction: column; gap: 8px; }
+    .popup-praktijk { display: flex; align-items: center; gap: 8px; }
+    .popup-praktijk-pills { display: flex; gap: 3px; flex-shrink: 0; }
+    .popup-praktijk-naam { font-size: 0.83rem; font-weight: 600; color: var(--navy); }
+    .popup-praktijk-naam a { color: inherit; text-decoration: none; }
+    .popup-praktijk-naam a:hover { text-decoration: underline; }
     .popup-tag {
       font-size: 0.7rem; font-weight: 700;
-      padding: 2px 8px; border-radius: 999px;
+      padding: 2px 7px; border-radius: 999px;
       color: #fff;
     }
 
@@ -985,11 +989,11 @@
 
     <div class="disciplines-filter">
       <button class="disc-btn active" onclick="filterDisc(this, 'all')">Alle disciplines</button>
-      <button class="disc-btn" onclick="filterDisc(this, 'fysiotherapeut')">Fysiotherapeut</button>
-      <button class="disc-btn" onclick="filterDisc(this, 'podotherapeut')">Podotherapeut</button>
-      <button class="disc-btn" onclick="filterDisc(this, 'pedicure')">Pedicure</button>
-      <button class="disc-btn" onclick="filterDisc(this, 'orthopedisch schoenmaker')">Orthopedisch schoenmaker</button>
-      <button class="disc-btn" onclick="filterDisc(this, 'ergotherapeut')">Ergotherapeut</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'fysiotherapeut')">F – Fysiotherapeut</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'podotherapeut')">Po – Podotherapeut</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'pedicure')">Pe – Pedicure</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'orthopedisch schoenmaker')">O – Orth. schoenmaker</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'ergotherapeut')">Er – Ergotherapeut</button>
     </div>
 
     <!-- Leaflet kaart -->
@@ -1144,112 +1148,165 @@
     frame.src = '';
   }
 
-  // ── Discipline filter (kaarten)
-  function filterDisc(btn, disc) {
-    document.querySelectorAll('.disc-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.locatie-card').forEach(card => {
-      const disciplines = card.dataset.disciplines ? card.dataset.disciplines.split(',') : [card.dataset.discipline];
-      const match = disc === 'all' || disciplines.includes(disc);
-      card.style.display = match ? '' : 'none';
-    });
-  }
-
-  // ── Leaflet kaart
+  // ── Discipline configuratie
   const DISC_CONFIG = {
-    'fysiotherapeut':          { label: 'F',  cls: 'f',  color: '#1A5276' },
-    'podotherapeut':           { label: 'Po', cls: 'po', color: '#1E8449' },
-    'pedicure':                { label: 'Pe', cls: 'pe', color: '#B7770D' },
-    'orthopedisch schoenmaker':{ label: 'O',  cls: 'o',  color: '#6C3483' },
-    'ergotherapeut':           { label: 'Er', cls: 'er', color: '#C0392B' },
+    'fysiotherapeut':           { label: 'F',  cls: 'f',  color: '#1A5276' },
+    'podotherapeut':            { label: 'Po', cls: 'po', color: '#1E8449' },
+    'pedicure':                 { label: 'Pe', cls: 'pe', color: '#B7770D' },
+    'orthopedisch schoenmaker': { label: 'O',  cls: 'o',  color: '#6C3483' },
+    'ergotherapeut':            { label: 'Er', cls: 'er', color: '#C0392B' },
   };
 
-  // Locatiedata — voeg hier coördinaten toe / pas aan
+  // ── Locatiedata
+  // praktijken: array van { naam, url, disciplines[] } per locatie
+  // Locaties op hetzelfde adres worden samengevoegd tot één marker
   const LOCATIES = [
     {
-      naam: 'Monné Zorg & Beweging',
       adres: 'Industriekade 10, Breda (Belcrum)',
-      url: 'https://monne-zorgenbeweging.nl',
       lat: 51.6005, lng: 4.7720,
-      disciplines: ['fysiotherapeut'],
+      praktijken: [
+        { naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] },
+        { naam: 'Alewijnse Podotherapie', url: 'https://www.podotherapie-alewijnse.nl/', disciplines: ['podotherapeut'] },
+      ],
     },
     {
-      naam: 'Monné Zorg & Beweging',
       adres: 'Burgemeester Middelaerlaan 1, Breda (Ginneken)',
-      url: 'https://monne-zorgenbeweging.nl',
       lat: 51.5720, lng: 4.7780,
-      disciplines: ['fysiotherapeut'],
+      praktijken: [
+        { naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] },
+      ],
     },
     {
-      naam: 'Monné Zorg & Beweging',
       adres: 'Bernard de Wildestraat 400A, Breda',
-      url: 'https://monne-zorgenbeweging.nl',
       lat: 51.5950, lng: 4.8050,
-      disciplines: ['fysiotherapeut'],
+      praktijken: [
+        { naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] },
+      ],
     },
     {
-      naam: 'Monné Zorg & Beweging',
       adres: 'Hondsdonk 58, Breda',
-      url: 'https://monne-zorgenbeweging.nl',
       lat: 51.6100, lng: 4.7900,
-      disciplines: ['fysiotherapeut'],
+      praktijken: [
+        { naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] },
+      ],
     },
     {
-      naam: 'Monné Zorg & Beweging',
       adres: 'Merijntje Gijzenstraat 3e, Oosterhout',
-      url: 'https://monne-zorgenbeweging.nl',
       lat: 51.6430, lng: 4.8620,
-      disciplines: ['fysiotherapeut'],
-    },
-    {
-      naam: 'Alewijnse Podotherapie',
-      adres: 'Industriekade 10, Breda (Belcrum)',
-      url: 'https://www.podotherapie-alewijnse.nl/',
-      lat: 51.6010, lng: 4.7725,
-      disciplines: ['podotherapeut'],
+      praktijken: [
+        { naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] },
+      ],
     },
   ];
 
-  function maakMarkerHTML(disciplines) {
-    return disciplines.map(d => {
+  // ── Actieve disciplines (Set) — start met alles aan
+  const actieveDisc = new Set(Object.keys(DISC_CONFIG));
+
+  // ── Alle disciplines van een locatie (plat)
+  function alleDisc(loc) {
+    return [...new Set(loc.praktijken.flatMap(p => p.disciplines))];
+  }
+
+  // ── Marker pills HTML (alleen zichtbare disciplines)
+  function maakMarkerHTML(loc, actief) {
+    const disc = alleDisc(loc).filter(d => actief.size === 0 || actief.has(d));
+    return disc.map(d => {
       const cfg = DISC_CONFIG[d];
       if (!cfg) return '';
       return `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>`;
     }).join('');
   }
 
+  // ── Popup HTML: adres + per praktijk een rij
   function maakPopupHTML(loc) {
-    const tags = loc.disciplines.map(d => {
-      const cfg = DISC_CONFIG[d];
-      if (!cfg) return '';
-      return `<span class="popup-tag" style="background:${cfg.color}">${cfg.label} – ${d.charAt(0).toUpperCase()+d.slice(1)}</span>`;
+    const rijen = loc.praktijken.map(p => {
+      const pills = p.disciplines.map(d => {
+        const cfg = DISC_CONFIG[d];
+        return cfg ? `<span class="popup-tag" style="background:${cfg.color}">${cfg.label}</span>` : '';
+      }).join('');
+      return `
+        <div class="popup-praktijk">
+          <div class="popup-praktijk-pills">${pills}</div>
+          <div class="popup-praktijk-naam"><a href="${p.url}" target="_blank" rel="noopener">${p.naam}</a></div>
+        </div>`;
     }).join('');
     return `
-      <div class="popup-naam"><a href="${loc.url}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${loc.naam}</a></div>
-      <div class="popup-adres">📍 ${loc.adres}</div>
-      <div class="popup-tags">${tags}</div>
+      <div class="popup-adres">📍 <strong>${loc.adres}</strong></div>
+      <div class="popup-praktijken">${rijen}</div>
     `;
   }
 
+  // ── Kaart initialiseren
   const kaart = L.map('kaart').setView([51.5988, 4.7763], 12);
-
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
     maxZoom: 18,
   }).addTo(kaart);
 
-  LOCATIES.forEach(loc => {
-    const html = `<div class="disc-marker">${maakMarkerHTML(loc.disciplines)}</div>`;
+  // ── Markers aanmaken
+  const markers = LOCATIES.map(loc => {
     const icon = L.divIcon({
       className: '',
-      html: html,
+      html: `<div class="disc-marker">${maakMarkerHTML(loc, new Set())}</div>`,
       iconAnchor: [0, 13],
       popupAnchor: [13, -13],
     });
-    L.marker([loc.lat, loc.lng], { icon })
+    const marker = L.marker([loc.lat, loc.lng], { icon })
       .addTo(kaart)
-      .bindPopup(maakPopupHTML(loc), { maxWidth: 240 });
+      .bindPopup(maakPopupHTML(loc), { maxWidth: 260 });
+    return { loc, marker };
   });
+
+  // ── Filter updaten: kaartkaarten + kaart markers
+  function updateFilter() {
+    // Locatie-cards
+    document.querySelectorAll('.locatie-card').forEach(card => {
+      const disc = card.dataset.discipline;
+      const match = actieveDisc.size === Object.keys(DISC_CONFIG).length || actieveDisc.has(disc);
+      card.style.display = match ? '' : 'none';
+    });
+
+    // Kaartmarkers
+    markers.forEach(({ loc, marker }) => {
+      const discVanLoc = alleDisc(loc);
+      const zichtbaar = discVanLoc.some(d => actieveDisc.has(d));
+      const alleActief = actieveDisc.size === Object.keys(DISC_CONFIG).length;
+      const pillsHTML = maakMarkerHTML(loc, alleActief ? new Set() : actieveDisc);
+
+      if (zichtbaar && pillsHTML) {
+        marker.addTo(kaart);
+        marker.setIcon(L.divIcon({
+          className: '',
+          html: `<div class="disc-marker">${pillsHTML}</div>`,
+          iconAnchor: [0, 13],
+          popupAnchor: [13, -13],
+        }));
+      } else {
+        marker.remove();
+      }
+    });
+  }
+
+  // ── Discipline-knop toggle (multi-select)
+  function filterDisc(btn, disc) {
+    if (disc === 'all') {
+      Object.keys(DISC_CONFIG).forEach(d => actieveDisc.add(d));
+      document.querySelectorAll('.disc-btn').forEach(b => b.classList.add('active'));
+    } else {
+      document.querySelector('.disc-btn[onclick*="all"]').classList.remove('active');
+      if (actieveDisc.has(disc) && actieveDisc.size > 1) {
+        actieveDisc.delete(disc);
+        btn.classList.remove('active');
+      } else {
+        actieveDisc.add(disc);
+        btn.classList.add('active');
+      }
+      if (actieveDisc.size === Object.keys(DISC_CONFIG).length) {
+        document.querySelector('.disc-btn[onclick*="all"]').classList.add('active');
+      }
+    }
+    updateFilter();
+  }
 </script>
 
 </body>
