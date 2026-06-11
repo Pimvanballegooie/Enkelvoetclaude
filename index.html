@@ -6,6 +6,7 @@
   <title>Enkel Voet Netwerk Breda e.o.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -105,23 +106,19 @@
     .hero {
       background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%);
       color: var(--white);
-      padding: 72px 24px 80px;
+      padding: 72px 24px 0;
       text-align: center;
       position: relative;
-      overflow: hidden;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      bottom: -40px; left: 50%;
-      transform: translateX(-50%);
-      width: 700px; height: 140px;
-      background: var(--white);
-      border-radius: 50%;
-    }
+    .hero-inner { max-width: 680px; margin: 0 auto; position: relative; padding-bottom: 72px; }
 
-    .hero-inner { max-width: 680px; margin: 0 auto; position: relative; }
+    .hero-wave {
+      display: block;
+      width: 100%;
+      height: 60px;
+      margin-top: 0;
+    }
 
     .hero-badge {
       display: inline-block;
@@ -443,7 +440,7 @@
 
     .disc-btn {
       padding: 7px 16px;
-      border-radiu s: 999px;
+      border-radius: 999px;
       border: 2px solid var(--grey-border);
       background: var(--white);
       color: var(--text-muted);
@@ -575,6 +572,58 @@
     footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
     footer a:hover { color: var(--white); }
 
+    /* ── LEAFLET KAART ── */
+    #kaart {
+      height: 420px;
+      border-radius: var(--radius);
+      border: 1px solid var(--grey-border);
+      margin-bottom: 36px;
+      z-index: 1;
+    }
+
+    .disc-marker {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .disc-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 26px;
+      min-width: 26px;
+      padding: 0 7px;
+      border-radius: 13px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.02em;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      white-space: nowrap;
+      border: 2px solid rgba(255,255,255,0.7);
+    }
+
+    .disc-pill.f   { background: #1A5276; }
+    .disc-pill.po  { background: #1E8449; }
+    .disc-pill.pe  { background: #B7770D; }
+    .disc-pill.o   { background: #6C3483; }
+    .disc-pill.er  { background: #C0392B; }
+
+    .leaflet-popup-content-wrapper {
+      border-radius: 10px !important;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+    }
+
+    .popup-naam { font-weight: 700; color: var(--navy); font-size: 0.9rem; margin-bottom: 4px; }
+    .popup-adres { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; }
+    .popup-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+    .popup-tag {
+      font-size: 0.7rem; font-weight: 700;
+      padding: 2px 8px; border-radius: 999px;
+      color: #fff;
+    }
+
     /* ── HAMBURGER (mobile) ── */
     .hamburger {
       display: none;
@@ -664,6 +713,9 @@
       </div>
     </div>
   </div>
+  <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#F5F7FA"/>
+  </svg>
 </section>
 
 <!-- ── PROTOCOLLEN ── -->
@@ -937,6 +989,20 @@
       <button class="disc-btn" onclick="filterDisc(this, 'podotherapeut')">Podotherapeut</button>
       <button class="disc-btn" onclick="filterDisc(this, 'pedicure')">Pedicure</button>
       <button class="disc-btn" onclick="filterDisc(this, 'orthopedisch schoenmaker')">Orthopedisch schoenmaker</button>
+      <button class="disc-btn" onclick="filterDisc(this, 'ergotherapeut')">Ergotherapeut</button>
+    </div>
+
+    <!-- Leaflet kaart -->
+    <div id="kaart"></div>
+
+    <!-- Legenda -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;align-items:center;">
+      <span style="font-size:0.78rem;font-weight:600;color:var(--text-muted);margin-right:4px;">Legenda:</span>
+      <span class="disc-pill f">F</span><span style="font-size:0.78rem;color:var(--text-muted)">Fysiotherapeut</span>
+      <span class="disc-pill po">Po</span><span style="font-size:0.78rem;color:var(--text-muted)">Podotherapeut</span>
+      <span class="disc-pill pe">Pe</span><span style="font-size:0.78rem;color:var(--text-muted)">Pedicure</span>
+      <span class="disc-pill o">O</span><span style="font-size:0.78rem;color:var(--text-muted)">Orth. schoenmaker</span>
+      <span class="disc-pill er">Er</span><span style="font-size:0.78rem;color:var(--text-muted)">Ergotherapeut</span>
     </div>
 
     <div class="locaties-grid" id="locaties-grid">
@@ -1029,6 +1095,7 @@
   <p>© 2025 Enkel Voet Netwerk Breda e.o. &nbsp;·&nbsp; Samenwerking voor hoogwaardige enkel- en voetzorg</p>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
   // ── Navigatie toggle (mobiel)
   function toggleNav() {
@@ -1044,7 +1111,6 @@
   }
 
   // ── Protocol openen
-  // Vervang 'JOUW_GOOGLE_DOC_ID_HIER' per knop met het echte Google Doc ID
   function openProtocol(btn, naam, niveau, docId) {
     const viewer  = document.getElementById('protocol-viewer');
     const frame   = document.getElementById('viewer-frame');
@@ -1053,12 +1119,10 @@
     document.getElementById('viewer-title').textContent = naam;
     document.getElementById('viewer-level').textContent = niveau;
 
-    // Laad-indicator tonen
     frame.style.display  = 'none';
     loading.style.display = 'flex';
     viewer.classList.add('visible');
 
-    // Google Doc embed URL
     const url = `https://docs.google.com/document/d/${docId}/preview`;
     frame.src = url;
 
@@ -1067,7 +1131,6 @@
       frame.style.display   = 'block';
     };
 
-    // Scroll naar viewer
     setTimeout(() => {
       viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
@@ -1081,16 +1144,112 @@
     frame.src = '';
   }
 
-  // ── Discipline filter
+  // ── Discipline filter (kaarten)
   function filterDisc(btn, disc) {
     document.querySelectorAll('.disc-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
     document.querySelectorAll('.locatie-card').forEach(card => {
-      const match = disc === 'all' || card.dataset.discipline === disc;
+      const disciplines = card.dataset.disciplines ? card.dataset.disciplines.split(',') : [card.dataset.discipline];
+      const match = disc === 'all' || disciplines.includes(disc);
       card.style.display = match ? '' : 'none';
     });
   }
+
+  // ── Leaflet kaart
+  const DISC_CONFIG = {
+    'fysiotherapeut':          { label: 'F',  cls: 'f',  color: '#1A5276' },
+    'podotherapeut':           { label: 'Po', cls: 'po', color: '#1E8449' },
+    'pedicure':                { label: 'Pe', cls: 'pe', color: '#B7770D' },
+    'orthopedisch schoenmaker':{ label: 'O',  cls: 'o',  color: '#6C3483' },
+    'ergotherapeut':           { label: 'Er', cls: 'er', color: '#C0392B' },
+  };
+
+  // Locatiedata — voeg hier coördinaten toe / pas aan
+  const LOCATIES = [
+    {
+      naam: 'Monné Zorg & Beweging',
+      adres: 'Industriekade 10, Breda (Belcrum)',
+      url: 'https://monne-zorgenbeweging.nl',
+      lat: 51.6005, lng: 4.7720,
+      disciplines: ['fysiotherapeut'],
+    },
+    {
+      naam: 'Monné Zorg & Beweging',
+      adres: 'Burgemeester Middelaerlaan 1, Breda (Ginneken)',
+      url: 'https://monne-zorgenbeweging.nl',
+      lat: 51.5720, lng: 4.7780,
+      disciplines: ['fysiotherapeut'],
+    },
+    {
+      naam: 'Monné Zorg & Beweging',
+      adres: 'Bernard de Wildestraat 400A, Breda',
+      url: 'https://monne-zorgenbeweging.nl',
+      lat: 51.5950, lng: 4.8050,
+      disciplines: ['fysiotherapeut'],
+    },
+    {
+      naam: 'Monné Zorg & Beweging',
+      adres: 'Hondsdonk 58, Breda',
+      url: 'https://monne-zorgenbeweging.nl',
+      lat: 51.6100, lng: 4.7900,
+      disciplines: ['fysiotherapeut'],
+    },
+    {
+      naam: 'Monné Zorg & Beweging',
+      adres: 'Merijntje Gijzenstraat 3e, Oosterhout',
+      url: 'https://monne-zorgenbeweging.nl',
+      lat: 51.6430, lng: 4.8620,
+      disciplines: ['fysiotherapeut'],
+    },
+    {
+      naam: 'Alewijnse Podotherapie',
+      adres: 'Industriekade 10, Breda (Belcrum)',
+      url: 'https://www.podotherapie-alewijnse.nl/',
+      lat: 51.6010, lng: 4.7725,
+      disciplines: ['podotherapeut'],
+    },
+  ];
+
+  function maakMarkerHTML(disciplines) {
+    return disciplines.map(d => {
+      const cfg = DISC_CONFIG[d];
+      if (!cfg) return '';
+      return `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>`;
+    }).join('');
+  }
+
+  function maakPopupHTML(loc) {
+    const tags = loc.disciplines.map(d => {
+      const cfg = DISC_CONFIG[d];
+      if (!cfg) return '';
+      return `<span class="popup-tag" style="background:${cfg.color}">${cfg.label} – ${d.charAt(0).toUpperCase()+d.slice(1)}</span>`;
+    }).join('');
+    return `
+      <div class="popup-naam"><a href="${loc.url}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${loc.naam}</a></div>
+      <div class="popup-adres">📍 ${loc.adres}</div>
+      <div class="popup-tags">${tags}</div>
+    `;
+  }
+
+  const kaart = L.map('kaart').setView([51.5988, 4.7763], 12);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+    maxZoom: 18,
+  }).addTo(kaart);
+
+  LOCATIES.forEach(loc => {
+    const html = `<div class="disc-marker">${maakMarkerHTML(loc.disciplines)}</div>`;
+    const icon = L.divIcon({
+      className: '',
+      html: html,
+      iconAnchor: [0, 13],
+      popupAnchor: [13, -13],
+    });
+    L.marker([loc.lat, loc.lng], { icon })
+      .addTo(kaart)
+      .bindPopup(maakPopupHTML(loc), { maxWidth: 240 });
+  });
 </script>
 
 </body>
