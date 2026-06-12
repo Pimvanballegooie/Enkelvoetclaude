@@ -51,88 +51,42 @@
       height: 68px;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 40px; height: 40px; }
-
-    .logo-text {
-      color: var(--white);
-      font-weight: 700;
-      font-size: 1.05rem;
-      line-height: 1.2;
-    }
-
-    .logo-text span {
-      display: block;
-      font-weight: 300;
-      font-size: 0.75rem;
-      opacity: 0.7;
-      letter-spacing: 0.04em;
-    }
+    .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
+    .logo-text span { display: block; font-weight: 300; font-size: 0.75rem; opacity: 0.7; letter-spacing: 0.04em; }
 
     nav { display: flex; gap: 6px; }
-
-    nav a {
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 8px 14px;
-      border-radius: 6px;
-      transition: background 0.2s, color 0.2s;
-    }
-
+    nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s, color 0.2s; }
     nav a:hover { background: rgba(255,255,255,0.12); color: var(--white); }
-
-    nav a.cta {
-      background: var(--teal);
-      color: var(--white);
-      margin-left: 8px;
-    }
-
+    nav a.cta { background: var(--teal); color: var(--white); margin-left: 8px; }
     nav a.cta:hover { background: #238a7e; }
 
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-    }
-
-    .hamburger span {
-      display: block;
-      width: 24px; height: 2px;
-      background: var(--white);
-      border-radius: 2px;
-    }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
 
     /* ── HERO ── */
     .hero {
       background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%);
       color: var(--white);
-      padding: 64px 24px 72px;
+      padding: 72px 24px 0;
       text-align: center;
       position: relative;
-      overflow: hidden;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      bottom: -40px; left: 50%;
-      transform: translateX(-50%);
-      width: 700px; height: 130px;
-      background: var(--grey-bg);
-      border-radius: 50%;
+    .hero-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+      padding-bottom: 72px;
     }
 
-    .hero-inner { max-width: 640px; margin: 0 auto; position: relative; }
+    .hero-wave {
+      display: block;
+      width: 100%;
+      height: 60px;
+      margin-top: 0;
+    }
 
     .hero-badge {
       display: inline-block;
@@ -166,44 +120,17 @@
       line-height: 1.7;
     }
 
-    /* ── VOORDELEN ── */
-    .voordelen {
-      background: var(--grey-bg);
-      padding: 72px 24px;
-    }
-
+    /* ── SECTIES ── */
     .section-inner { max-width: 1100px; margin: 0 auto; }
-
-    .section-eyebrow {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 10px;
-    }
-
+    .section-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
     .section-header { margin-bottom: 48px; }
+    .section-header h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; }
+    .section-header p { margin-top: 10px; color: var(--text-muted); max-width: 520px; font-size: 0.95rem; }
 
-    .section-header h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      color: var(--navy);
-      letter-spacing: -0.02em;
-    }
+    /* ── VOORDELEN ── */
+    .voordelen { background: var(--grey-bg); padding: 72px 24px; }
 
-    .section-header p {
-      margin-top: 10px;
-      color: var(--text-muted);
-      max-width: 520px;
-      font-size: 0.95rem;
-    }
-
-    .voordelen-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 20px;
-    }
+    .voordelen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
 
     .voordeel-card {
       background: var(--white);
@@ -212,282 +139,63 @@
       padding: 28px 24px;
       transition: box-shadow 0.2s, transform 0.2s;
     }
-
-    .voordeel-card:hover {
-      box-shadow: var(--shadow);
-      transform: translateY(-2px);
-    }
-
-    .voordeel-icon {
-      width: 48px; height: 48px;
-      background: var(--teal-light);
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem;
-      margin-bottom: 16px;
-    }
-
-    .voordeel-card h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 8px;
-    }
-
-    .voordeel-card p {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
+    .voordeel-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .voordeel-icon { width: 48px; height: 48px; background: var(--teal-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
+    .voordeel-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .voordeel-card p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
 
     /* ── DISCIPLINES ── */
-    .disciplines {
-      background: var(--white);
-      padding: 72px 24px;
-    }
-
-    .disciplines-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-      margin-top: 40px;
-    }
-
-    .disc-card {
-      border: 2px solid var(--grey-border);
-      border-radius: var(--radius);
-      padding: 22px 20px;
-      text-align: center;
-      transition: border-color 0.2s, background 0.2s;
-      cursor: default;
-    }
-
-    .disc-card:hover {
-      border-color: var(--teal);
-      background: var(--teal-light);
-    }
-
+    .disciplines { background: var(--white); padding: 72px 24px; }
+    .disciplines-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 40px; }
+    .disc-card { border: 2px solid var(--grey-border); border-radius: var(--radius); padding: 22px 20px; text-align: center; transition: border-color 0.2s, background 0.2s; }
+    .disc-card:hover { border-color: var(--teal); background: var(--teal-light); }
     .disc-card .disc-emoji { font-size: 2rem; margin-bottom: 10px; }
-
-    .disc-card h3 {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--navy);
-    }
+    .disc-card h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
 
     /* ── STAPPEN ── */
-    .stappen {
-      background: var(--grey-bg);
-      padding: 72px 24px;
-    }
-
-    .stappen-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      max-width: 680px;
-      margin-top: 40px;
-    }
-
-    .stap {
-      display: grid;
-      grid-template-columns: 52px 1fr;
-      gap: 20px;
-      position: relative;
-      padding-bottom: 36px;
-    }
-
+    .stappen { background: var(--grey-bg); padding: 72px 24px; }
+    .stappen-list { display: flex; flex-direction: column; gap: 0; max-width: 680px; margin-top: 40px; }
+    .stap { display: grid; grid-template-columns: 52px 1fr; gap: 20px; position: relative; padding-bottom: 36px; }
     .stap:last-child { padding-bottom: 0; }
-
-    .stap-num {
-      width: 48px; height: 48px;
-      background: var(--navy);
-      color: var(--white);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700;
-      font-size: 1rem;
-      flex-shrink: 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .stap::before {
-      content: '';
-      position: absolute;
-      left: 23px; top: 48px;
-      width: 2px;
-      height: calc(100% - 48px);
-      background: var(--grey-border);
-    }
-
+    .stap-num { width: 48px; height: 48px; background: var(--navy); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; flex-shrink: 0; position: relative; z-index: 1; }
+    .stap::before { content: ''; position: absolute; left: 23px; top: 48px; width: 2px; height: calc(100% - 48px); background: var(--grey-border); }
     .stap:last-child::before { display: none; }
-
     .stap-content { padding-top: 10px; }
-
-    .stap-content h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-
-    .stap-content p {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
+    .stap-content h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .stap-content p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
 
     /* ── FORMULIER ── */
-    .formulier {
-      background: var(--white);
-      padding: 72px 24px;
-    }
-
-    .form-wrap {
-      max-width: 640px;
-      background: var(--grey-bg);
-      border: 1px solid var(--grey-border);
-      border-radius: 16px;
-      padding: 40px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.83rem;
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-
+    .formulier { background: var(--white); padding: 72px 24px; }
+    .form-wrap { max-width: 640px; background: var(--grey-bg); border: 1px solid var(--grey-border); border-radius: 16px; padding: 40px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; font-size: 0.83rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
     .form-group label .req { color: var(--teal); margin-left: 2px; }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%;
-      padding: 11px 14px;
-      border: 1.5px solid var(--grey-border);
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      color: var(--text);
-      background: var(--white);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--teal);
-      box-shadow: 0 0 0 3px rgba(42,157,143,0.12);
-    }
-
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text); background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
     .form-group textarea { resize: vertical; min-height: 110px; }
-
     .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7A99' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
-
-    .checkbox-group {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    .checkbox-group input[type="checkbox"] {
-      width: 18px; height: 18px;
-      accent-color: var(--teal);
-      margin-top: 2px;
-      flex-shrink: 0;
-      cursor: pointer;
-    }
-
-    .checkbox-group label {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .btn-submit {
-      width: 100%;
-      padding: 14px;
-      background: var(--teal);
-      color: var(--white);
-      border: none;
-      border-radius: 8px;
-      font-family: 'Inter', sans-serif;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
-    }
-
+    .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 24px; }
+    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--teal); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
+    .checkbox-group label { font-size: 0.85rem; color: var(--text-muted); cursor: pointer; }
+    .btn-submit { width: 100%; padding: 14px; background: var(--teal); color: var(--white); border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; }
     .btn-submit:hover { background: #238a7e; transform: translateY(-1px); }
-
-    .form-success {
-      display: none;
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    .form-success .success-icon {
-      font-size: 3rem;
-      margin-bottom: 16px;
-    }
-
-    .form-success h3 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 10px;
-    }
-
-    .form-success p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
+    .form-success { display: none; text-align: center; padding: 40px 20px; }
+    .form-success .success-icon { font-size: 3rem; margin-bottom: 16px; }
+    .form-success h3 { font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .form-success p { color: var(--text-muted); font-size: 0.9rem; }
 
     /* ── FOOTER ── */
-    footer {
-      background: #0F2340;
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      padding: 28px 24px;
-      font-size: 0.82rem;
-    }
-
+    footer { background: #0F2340; color: rgba(255,255,255,0.5); text-align: center; padding: 28px 24px; font-size: 0.82rem; }
     footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
     footer a:hover { color: var(--white); }
 
     @media (max-width: 700px) {
       .hamburger { display: flex; }
-
-      nav {
-        display: none;
-        position: absolute;
-        top: 68px; left: 0; right: 0;
-        background: var(--navy);
-        flex-direction: column;
-        padding: 12px 16px 20px;
-        gap: 4px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      }
-
+      nav { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--navy); flex-direction: column; padding: 12px 16px 20px; gap: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
       nav.open { display: flex; }
       nav a { padding: 10px 16px; border-radius: 8px; }
       nav a.cta { margin-left: 0; margin-top: 8px; text-align: center; }
-
       .form-row { grid-template-columns: 1fr; }
       .form-wrap { padding: 24px 20px; }
     }
@@ -501,8 +209,7 @@
     <a href="index.html" class="logo">
       <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="40" height="40" rx="10" fill="rgba(255,255,255,0.1)"/>
-        <path d="M13 28 C13 28 11 26 11 22 C11 16 14 10 20 10 C24 10 26 13 26 16 C26 19 24 20 22 20 L28 20 C29.5 20 30 21 30 22 C30 23 29 24 27 24 L25 24 C26 24 27 25 27 26 C27 27 26 28 24 28 L22 28 C23 28 23.5 29 23 30 C22.5 31 21 31 20 31 L15 31 C13.5 31 13 30 13 28 Z"
-          fill="white" fill-opacity="0.9"/>
+        <path d="M13 28 C13 28 11 26 11 22 C11 16 14 10 20 10 C24 10 26 13 26 16 C26 19 24 20 22 20 L28 20 C29.5 20 30 21 30 22 C30 23 29 24 27 24 L25 24 C26 24 27 25 27 26 C27 27 26 28 24 28 L22 28 C23 28 23.5 29 23 30 C22.5 31 21 31 20 31 L15 31 C13.5 31 13 30 13 28 Z" fill="white" fill-opacity="0.9"/>
       </svg>
       <div class="logo-text">
         Enkel Voet Netwerk
@@ -527,6 +234,9 @@
     <h1>Word onderdeel van het<br><em>Enkel Voet Netwerk</em></h1>
     <p>Sluit jouw praktijk aan en bied cliënten toegang tot eenduidige, up-to-date behandelprotocollen. Samen staan we sterker.</p>
   </div>
+  <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#F5F7FA"/>
+  </svg>
 </section>
 
 <!-- ── VOORDELEN ── -->
@@ -537,38 +247,13 @@
       <h2>Wat levert het jou op?</h2>
       <p>Als aangesloten locatie profiteer je van samenwerking, kwaliteit en zichtbaarheid.</p>
     </div>
-
     <div class="voordelen-grid">
-      <div class="voordeel-card">
-        <div class="voordeel-icon">📋</div>
-        <h3>Up-to-date protocollen</h3>
-        <p>Je hebt altijd toegang tot de meest actuele behandelprotocollen, bijgehouden door een team van experts.</p>
-      </div>
-      <div class="voordeel-card">
-        <div class="voordeel-icon">🤝</div>
-        <h3>Regionale samenwerking</h3>
-        <p>Werk samen met andere zorgverleners in de regio Breda. Eenduidige begeleiding voor betere cliëntuitkomsten.</p>
-      </div>
-      <div class="voordeel-card">
-        <div class="voordeel-icon">📍</div>
-        <h3>Zichtbaarheid op de site</h3>
-        <p>Jouw praktijk wordt vermeld op de locatiepagina van enkelvoet.net, vindbaar voor cliënten in de regio.</p>
-      </div>
-      <div class="voordeel-card">
-        <div class="voordeel-icon">🎓</div>
-        <h3>Drie leesniveaus</h3>
-        <p>Protocollen zijn beschikbaar op makkelijk, gemiddeld en complex niveau — voor zowel cliënt als professional.</p>
-      </div>
-      <div class="voordeel-card">
-        <div class="voordeel-icon">🔄</div>
-        <h3>Altijd actueel</h3>
-        <p>Wanneer een protocol wordt bijgewerkt, is de wijziging direct zichtbaar. Geen verouderde papieren protocollen meer.</p>
-      </div>
-      <div class="voordeel-card">
-        <div class="voordeel-icon">💶</div>
-        <h3>Gratis deelname</h3>
-        <p>Aansluiten bij het netwerk is kosteloos. Samen investeren we in kwaliteit zonder drempels.</p>
-      </div>
+      <div class="voordeel-card"><div class="voordeel-icon">📋</div><h3>Up-to-date protocollen</h3><p>Je hebt altijd toegang tot de meest actuele behandelprotocollen, bijgehouden door een team van experts.</p></div>
+      <div class="voordeel-card"><div class="voordeel-icon">🤝</div><h3>Regionale samenwerking</h3><p>Werk samen met andere zorgverleners in de regio Breda. Eenduidige begeleiding voor betere cliëntuitkomsten.</p></div>
+      <div class="voordeel-card"><div class="voordeel-icon">📍</div><h3>Zichtbaarheid op de site</h3><p>Jouw praktijk wordt vermeld op de locatiepagina van enkelvoet.net, vindbaar voor cliënten in de regio.</p></div>
+      <div class="voordeel-card"><div class="voordeel-icon">🎓</div><h3>Drie leesniveaus</h3><p>Protocollen zijn beschikbaar op makkelijk, gemiddeld en complex niveau — voor zowel cliënt als professional.</p></div>
+      <div class="voordeel-card"><div class="voordeel-icon">🔄</div><h3>Altijd actueel</h3><p>Wanneer een protocol wordt bijgewerkt, is de wijziging direct zichtbaar. Geen verouderde papieren protocollen meer.</p></div>
+      <div class="voordeel-card"><div class="voordeel-icon">💶</div><h3>Gratis deelname</h3><p>Aansluiten bij het netwerk is kosteloos. Samen investeren we in kwaliteit zonder drempels.</p></div>
     </div>
   </div>
 </section>
@@ -581,24 +266,11 @@
       <h2>Welke disciplines zijn welkom?</h2>
       <p>Het netwerk staat open voor alle zorgverleners die zich richten op enkel- en voetzorg.</p>
     </div>
-
     <div class="disciplines-grid">
-      <div class="disc-card">
-        <div class="disc-emoji">🏃</div>
-        <h3>Fysiotherapeut</h3>
-      </div>
-      <div class="disc-card">
-        <div class="disc-emoji">🦶</div>
-        <h3>Podotherapeut</h3>
-      </div>
-      <div class="disc-card">
-        <div class="disc-emoji">💅</div>
-        <h3>Pedicure</h3>
-      </div>
-      <div class="disc-card">
-        <div class="disc-emoji">👟</div>
-        <h3>Orthopedisch schoenmaker</h3>
-      </div>
+      <div class="disc-card"><div class="disc-emoji">🏃</div><h3>Fysiotherapeut</h3></div>
+      <div class="disc-card"><div class="disc-emoji">🦶</div><h3>Podotherapeut</h3></div>
+      <div class="disc-card"><div class="disc-emoji">💅</div><h3>Pedicure</h3></div>
+      <div class="disc-card"><div class="disc-emoji">👟</div><h3>Orthopedisch schoenmaker</h3></div>
     </div>
   </div>
 </section>
@@ -610,7 +282,6 @@
       <div class="section-eyebrow">Hoe werkt het</div>
       <h2>In drie stappen aangesloten</h2>
     </div>
-
     <div class="stappen-list">
       <div class="stap">
         <div class="stap-num">1</div>
@@ -645,25 +316,13 @@
       <h2>Meld jouw praktijk aan</h2>
       <p>Vul het formulier in en we nemen snel contact met je op.</p>
     </div>
-
     <div class="form-wrap">
       <div id="form-content">
         <div class="form-row">
-          <div class="form-group">
-            <label>Voornaam <span class="req">*</span></label>
-            <input type="text" id="voornaam" placeholder="Jan" />
-          </div>
-          <div class="form-group">
-            <label>Achternaam <span class="req">*</span></label>
-            <input type="text" id="achternaam" placeholder="Jansen" />
-          </div>
+          <div class="form-group"><label>Voornaam <span class="req">*</span></label><input type="text" id="voornaam" placeholder="Jan" /></div>
+          <div class="form-group"><label>Achternaam <span class="req">*</span></label><input type="text" id="achternaam" placeholder="Jansen" /></div>
         </div>
-
-        <div class="form-group">
-          <label>Naam praktijk <span class="req">*</span></label>
-          <input type="text" id="praktijk" placeholder="Fysiotherapie De Voet" />
-        </div>
-
+        <div class="form-group"><label>Naam praktijk <span class="req">*</span></label><input type="text" id="praktijk" placeholder="Fysiotherapie De Voet" /></div>
         <div class="form-group">
           <label>Discipline <span class="req">*</span></label>
           <select id="discipline">
@@ -675,41 +334,19 @@
             <option>Anders</option>
           </select>
         </div>
-
-        <div class="form-group">
-          <label>Adres praktijk <span class="req">*</span></label>
-          <input type="text" id="adres" placeholder="Straat 1, 4800 AB Breda" />
-        </div>
-
+        <div class="form-group"><label>Adres praktijk <span class="req">*</span></label><input type="text" id="adres" placeholder="Straat 1, 4800 AB Breda" /></div>
         <div class="form-row">
-          <div class="form-group">
-            <label>E-mailadres <span class="req">*</span></label>
-            <input type="email" id="email" placeholder="info@praktijk.nl" />
-          </div>
-          <div class="form-group">
-            <label>Telefoonnummer</label>
-            <input type="tel" id="telefoon" placeholder="076-0000000" />
-          </div>
+          <div class="form-group"><label>E-mailadres <span class="req">*</span></label><input type="email" id="email" placeholder="info@praktijk.nl" /></div>
+          <div class="form-group"><label>Telefoonnummer</label><input type="tel" id="telefoon" placeholder="076-0000000" /></div>
         </div>
-
-        <div class="form-group">
-          <label>Website</label>
-          <input type="url" id="website" placeholder="https://www.jouwpraktijk.nl" />
-        </div>
-
-        <div class="form-group">
-          <label>Toelichting</label>
-          <textarea id="toelichting" placeholder="Heb je vragen of wil je iets toelichten? Schrijf het hier."></textarea>
-        </div>
-
+        <div class="form-group"><label>Website</label><input type="url" id="website" placeholder="https://www.jouwpraktijk.nl" /></div>
+        <div class="form-group"><label>Toelichting</label><textarea id="toelichting" placeholder="Heb je vragen of wil je iets toelichten? Schrijf het hier."></textarea></div>
         <div class="checkbox-group">
           <input type="checkbox" id="akkoord" />
           <label for="akkoord">Ik ga akkoord met de verwerking van mijn gegevens voor het doel van aansluiting bij het Enkel Voet Netwerk.</label>
         </div>
-
         <button class="btn-submit" onclick="verstuurFormulier()">Aanmelding versturen →</button>
       </div>
-
       <div class="form-success" id="form-success">
         <div class="success-icon">✅</div>
         <h3>Aanmelding ontvangen!</h3>
@@ -730,51 +367,15 @@
   }
 
   function verstuurFormulier() {
-    // Validatie
     const verplicht = ['voornaam', 'achternaam', 'praktijk', 'discipline', 'adres', 'email'];
     let geldig = true;
-
     verplicht.forEach(id => {
       const el = document.getElementById(id);
-      if (!el.value.trim()) {
-        el.style.borderColor = '#E74C3C';
-        geldig = false;
-      } else {
-        el.style.borderColor = '';
-      }
+      if (!el.value.trim()) { el.style.borderColor = '#E74C3C'; geldig = false; }
+      else { el.style.borderColor = ''; }
     });
-
-    if (!document.getElementById('akkoord').checked) {
-      alert('Vink het akkoordvakje aan om door te gaan.');
-      return;
-    }
-
-    if (!geldig) {
-      alert('Vul alle verplichte velden in.');
-      return;
-    }
-
-    // ── Hier kun je de data doorsturen naar een e-mail service of backend ──
-    // Voorbeeld: je kunt Formspree.io gebruiken (gratis, geen backend nodig)
-    // Vervang de fetch hieronder met jouw Formspree endpoint.
-    //
-    // fetch('https://formspree.io/f/JOUW_FORMSPREE_ID', {
-    //   method: 'POST',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     voornaam: document.getElementById('voornaam').value,
-    //     achternaam: document.getElementById('achternaam').value,
-    //     praktijk: document.getElementById('praktijk').value,
-    //     discipline: document.getElementById('discipline').value,
-    //     adres: document.getElementById('adres').value,
-    //     email: document.getElementById('email').value,
-    //     telefoon: document.getElementById('telefoon').value,
-    //     website: document.getElementById('website').value,
-    //     toelichting: document.getElementById('toelichting').value,
-    //   })
-    // });
-
-    // Toon succesbericht
+    if (!document.getElementById('akkoord').checked) { alert('Vink het akkoordvakje aan om door te gaan.'); return; }
+    if (!geldig) { alert('Vul alle verplichte velden in.'); return; }
     document.getElementById('form-content').style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
   }
