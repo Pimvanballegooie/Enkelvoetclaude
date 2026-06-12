@@ -1,177 +1,64 @@
-{
-  "protocollen": [
-    {
-      "id": "re-insertie-buitenste-enkelpees",
-      "naam": "Re-insertie buitenste enkelpees",
-      "zone": "enkel",
-      "niveaus": {
-        "makkelijk": "1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8",
-        "gemiddeld":  "1QuMaGyKeYAaXf5KoNFxuXImrVMBeJCYKqaTj0msToyY",
-        "complex":    "1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8"
-      }
-    },
-    {
-      "id": "slijtage-enkel",
-      "naam": "Slijtage enkel",
-      "subtitel": "Bovenste spronggewricht",
-      "zone": "enkel",
-      "niveaus": {
-        "makkelijk": "17a83ILfD2vrwR-V5UocHypKLsqkyRxaGrj9djUzbc6I",
-        "gemiddeld":  "1kbT1OlHgghzvol_uRe1JH59pFZh5elQKn8gvcRSh5bY",
-        "complex":    "1A4Ow7j8R_jrPM1sPNvFBW-jLUue0t94vPyxiBZOwpeM"
-      }
-    },
-    {
-      "id": "instabiele-enkel",
-      "naam": "Instabiele Enkel",
-      "subtitel": "Chronische enkelverzwikking",
-      "zone": "enkel",
-      "niveaus": {
-        "makkelijk": "1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k",
-        "gemiddeld":  "1-waQ26QCTQPaTuF32S-3HpChcrI23q2lui3gxa37ffc",
-        "complex":    "1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k"
-      }
-    },
-    {
-      "id": "enkelverzwikking-acuut",
-      "naam": "Enkelverzwikking (acuut)",
-      "zone": "enkel",
-      "niveaus": {
-        "makkelijk": "1jhI7k1Qjx_WdLckj-lRt-n_Rv2Kzo6zMZnoXJvABg_U",
-        "gemiddeld":  "1iy4G6OKNtOEFEcdUAc6jTkhbqPKnfW4Ydfe1AvnGIG4",
-        "complex":    "1XWKb_X0XG5R18EsDKaRDRR2Ab9u9cK47HKnvU9TUGDc"
-      }
-    },
-    {
-      "id": "voorste-enkel-inklemming",
-      "naam": "Voorste enkel inklemming",
-      "subtitel": "Anterieure impingement",
-      "zone": "enkel",
-      "niveaus": {
-        "makkelijk": "1AtT1tDkSqQJnPrOF3AEnxOjABBZjVseL5B_XNorsFu8",
-        "gemiddeld":  "1e6lSiX1r5z6kkwPWDxt9e1Bh59o7chy-485jWbUmrSY",
-        "complex":    "1Xes-hfreQQpssqgf5-54PuyXVcD0AdbXBG9caVmCGLE"
-      }
-    },
-    {
-      "id": "achterste-enkel-inklemming",
-      "naam": "Achterste enkel inklemming",
-      "subtitel": "Posterieure impingement",
-      "zone": "enkel",
-      "niveaus": {
-        "makkelijk": "1ABr-B8psf7hL8rhSdmDdRe20wtcmULUZA4j-YM8YRPI",
-        "gemiddeld":  "1QVcJHBjaWavNgE1DDBAaFGmqLhWDZAx6J7CoQxJ6N6c",
-        "complex":    "16iyIb70sGn61_iu5is4g2AX6vouvSdsMWibPNaCrtPQ"
-      }
-    },
-    {
-      "id": "kraakbeenletsel-enkel",
-      "naam": "Kraakbeenletsel van de enkel",
-      "subtitel": "Osteochondraal lesie",
-      "zone": "enkel",
-      "niveaus": {
-        "makkelijk": "1MKU_cTB7D5tAKPd25Gljb9vJUmJco88PPx5euux8NBE",
-        "gemiddeld":  "1QyVlzSrp3QW3IusT5CY_fj_Sz2205oVCTu18vm_1uJk",
-        "complex":    "1buFDIWPlnzmHzu6_AL9t28jwbJdix9vPK0iVpyWmYbQ"
-      }
-    },
-    {
-      "id": "gewrichtsmuis-enkel",
-      "naam": "Gewrichtsmuis enkel",
-      "subtitel": "Corpus liberum",
-      "zone": "enkel",
-      "niveaus": {
-        "makkelijk": "1K0VFCWIXXKayi7d1N0zWfljljHT4dgNL81jnGE5xmR8",
-        "gemiddeld":  "1qct6cFPTso-oj1v74eMv5UILTJ273uv6Bj9LlkIXtW0",
-        "complex":    "1KU9ShZX0VKu7lHNe09TdH31iC7kZi6_eugs7umfffeU"
-      }
-    },
-    {
-      "id": "pijnlijke-achillespees",
-      "naam": "Pijnlijke achillespees",
-      "subtitel": "Achillespees tendinopathie",
-      "zone": "achtervoet",
-      "niveaus": {
-        "makkelijk": "1wQBtiLI8s2TUwa0R0W5rDzseH8Wd-mSakhrUxLPEKlM",
-        "gemiddeld":  "1IlVzc_DnLwyEV2xaurniV_JDY-11Go_mcXCp3f-xqJI",
-        "complex":    "17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec"
-      }
-    },
-    {
-      "id": "zenuwbeknelling-achtervoet",
-      "naam": "Zenuwbeknelling achtervoet",
-      "subtitel": "Tarsaal tunnel syndroom",
-      "zone": "achtervoet",
-      "niveaus": {
-        "makkelijk": "1thrzle_XKB0-rR9YLDhctniyjn6POJNyMTlj1ZqZ0Js",
-        "gemiddeld":  "1qpEDi6ny3AvyDEmbC8zKAw7ciGX3EKRpr3a5Mmy7Dn8",
-        "complex":    "17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec"
-      }
-    },
-    {
-      "id": "pijnlijke-kuitbeenpees",
-      "naam": "Pijnlijke kuitbeenpees",
-      "subtitel": "Tendinopathie personeuspees",
-      "zone": "achtervoet",
-      "niveaus": {
-        "makkelijk": "1lN1Yo65lAQI5Pzx-vG9WhIbGPkJRxEXfk6F9sdxQHTA",
-        "gemiddeld":  "1lRNux5xcHKTeyFh0FoO-NLa_nqduOn0etJCGjCOJCMY",
-        "complex":    "1GrAKht6k-bnvNTOrCmLMKM8tJj5QrHZSNsFhJ-yRSlE"
-      }
-    },
-    {
-      "id": "stugge-achtervoet",
-      "naam": "Stugge achtervoet",
-      "subtitel": "Tarsale coalitie",
-      "zone": "achtervoet",
-      "niveaus": {
-        "makkelijk": "1aA1LlJIcl10SttbM68fveCrpVETiKdi1mGTmHiloXpM",
-        "gemiddeld":  "12c1ikHffQV1BJSXDVTkPzd1oMcUnyg3c2ocLAK3jK1I",
-        "complex":    "1-bN-Am_-jEspl-cOYECUrWhrf838gjPu3Ft3gyrQU7s"
-      }
-    },
-    {
-      "id": "slijtage-achtervoet",
-      "naam": "Slijtage achtervoet",
-      "subtitel": "Artrose voetwortel",
-      "zone": "achtervoet",
-      "niveaus": {
-        "makkelijk": "1jx_9BvS_NPGlEHXKZIqZUBSpuDNU7AG-pTcMOWkU9CY",
-        "gemiddeld":  "1T7vxZ1rIp7hw9WrdlpbokxtTR3VhVq2UgYwCSl855Qg",
-        "complex":    "17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec"
-      }
-    },
-    {
-      "id": "slijtage-middenvoet",
-      "naam": "Slijtage middenvoet",
-      "subtitel": "Artrose middenvoet",
-      "zone": "middenvoet",
-      "niveaus": {
-        "makkelijk": "1eL03CIbZCedpgRiU0oX4xhFWd287qu6NboNPhi59KkU",
-        "gemiddeld":  "1bMuZAsdnxrAC-ivZBnItMcm_cRKOb6-4J_ucI9WyOQc",
-        "complex":    "1yLKQdE1YqLa_Fz-bt_pksADY8Q1GWZMri7n-YhC2Auw"
-      }
-    },
-    {
-      "id": "holvoet",
-      "naam": "Holvoet",
-      "subtitel": "Pes cavus",
-      "zone": "middenvoet",
-      "niveaus": {
-        "makkelijk": "1ncRB_OxvqHrjnPodSx4-J5WAZydO_t6-3Flo_Z17qjU",
-        "gemiddeld":  "1oDMZnwF9KhUxlxeQDr6ZlPujR_v_ta5YbDc61CXqvBM",
-        "complex":    "1i_RnCXY9stjnKNTcSMXAY8gFQOjiRkUmqdp2y-RI3ug"
-      }
-    },
-    {
-      "id": "voorbeeldprotocol-voorvoet",
-      "naam": "Voorbeeldprotocol voorvoet",
-      "zone": "voorvoet",
-      "niveaus": {
-        "makkelijk": "INVULLEN",
-        "gemiddeld":  "INVULLEN",
-        "complex":    "INVULLEN"
-      }
-    }
-  ]
-}
+name: Sync protocollen vanuit Google Docs
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Protocollen ophalen vanuit Google Docs
+        run: |
+          mkdir -p protocollen
+          python3 - <<'PYEOF'
+          import json, urllib.request, re, sys
+
+          with open('protocollen-config.json', 'r', encoding='utf-8') as f:
+              config = json.load(f)
+
+          fouten = []
+
+          for protocol in config['protocollen']:
+              for niveau, doc_id in protocol['niveaus'].items():
+                  if not doc_id or doc_id == 'INVULLEN':
+                      print(f"Overgeslagen: {protocol['id']} - {niveau}")
+                      continue
+                  url = f"https://docs.google.com/document/d/{doc_id}/export?format=html"
+                  bestandsnaam = f"protocollen/{protocol['id']}-{niveau}.html"
+                  try:
+                      req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+                      with urllib.request.urlopen(req, timeout=30) as resp:
+                          html = resp.read().decode('utf-8')
+                      body_match = re.search(r'<body[^>]*>(.*?)</body>', html, re.DOTALL | re.IGNORECASE)
+                      if body_match:
+                          body = body_match.group(1)
+                          body = re.sub(r'<style[^>]*>.*?</style>', '', body, flags=re.DOTALL)
+                          with open(bestandsnaam, 'w', encoding='utf-8') as out:
+                              out.write(body)
+                          print(f"OK: {bestandsnaam}")
+                      else:
+                          fouten.append(bestandsnaam)
+                  except Exception as e:
+                      fouten.append(f"{bestandsnaam}: {e}")
+                      print(f"Fout: {bestandsnaam}: {e}")
+
+          if fouten:
+              sys.exit(1)
+          PYEOF
+
+      - name: Wijzigingen committen en pushen
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add protocollen/
+          if git diff --cached --quiet; then
+            echo "Geen wijzigingen."
+          else
+            git commit -m "Protocollen bijgewerkt vanuit Google Docs"
+            git push
+          fi
