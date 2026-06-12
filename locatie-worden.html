@@ -557,8 +557,47 @@
       return;
     }
 
-    document.getElementById('form-content').style.display = 'none';
-    document.getElementById('form-success').style.display = 'block';
+    // Data verzamelen
+    const locatieData = [];
+    document.querySelectorAll('.locatie-blok').forEach(blok => {
+      const nr = blok.id.replace('locatie-', '');
+      locatieData.push({
+        praktijk:    document.getElementById(`praktijk-${nr}`).value,
+        adres:       document.getElementById(`adres-${nr}`).value,
+        website:     document.getElementById(`website-${nr}`).value || '',
+        disciplines: [...blok.querySelectorAll(`input[name="disc-${nr}"]:checked`)].map(cb => cb.value)
+      });
+    });
+
+    const payload = {
+      voornaam:    document.getElementById('voornaam').value,
+      achternaam:  document.getElementById('achternaam').value,
+      email:       document.getElementById('email').value,
+      telefoon:    document.getElementById('telefoon').value || '',
+      toelichting: document.getElementById('toelichting').value || '',
+      locaties:    locatieData
+    };
+
+    // Knop uitschakelen tijdens versturen
+    const knop = document.querySelector('.btn-submit');
+    knop.textContent = 'Versturen…';
+    knop.disabled = true;
+
+    fetch('https://script.google.com/macros/s/AKfycbzEo5Dt92jvyDlCcpNxVcAq8wSVbfn04NUbeTVhpM8bQhfyYTveOGkOERZLQpkS7GPTbQ/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(() => {
+      document.getElementById('form-content').style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    })
+    .catch(() => {
+      alert('Er ging iets mis bij het versturen. Probeer het opnieuw of neem contact op.');
+      knop.textContent = 'Aanmelding versturen →';
+      knop.disabled = false;
+    });
   }
 
   // Start met één locatie
