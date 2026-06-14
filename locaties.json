@@ -1,1 +1,32 @@
-[]
+[
+  {
+    "naam": "Test",
+    "adres": "Oranjelaan 3m2, Dordrecht",
+    "website": "monne-zorgenbeweging.nl",
+    "telefoon": "640580024",
+    "email": "info@monne-zorgenbeweging.nl",
+    "disciplines": [
+      "Fysiotherapeut"
+    ],
+    "tier": "partner",
+    "beschrijving": "Wat een mooie testlocatie",
+    "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
+    "lat": 51.815675,
+    "lng": 4.6861097
+  },
+  {
+    "naam": "Test 2",
+    "adres": "Oranjelaan 5, Dordrecht",
+    "website": "monne-zorgenbeweging.nl",
+    "telefoon": "765810491",
+    "email": "info@monne-zorgenbeweging.nl",
+    "disciplines": [
+      "Fysiotherapeut"
+    ],
+    "tier": "partner",
+    "beschrijving": "",
+    "logo_url": "",
+    "lat": 51.8152927,
+    "lng": 4.6861423
+  }
+]
