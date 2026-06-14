@@ -2,7 +2,7 @@
   {
     "naam": "Monné Zorg & Beweging",
     "adres": "Industriekade 10, Breda",
-    "website": "www.monne-zorgenbeweging.nl",
+    "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
     "disciplines": [
@@ -18,7 +18,7 @@
   {
     "naam": "Monné Zorg & Beweging",
     "adres": "Bernard de Wildestraat 400a, Breda",
-    "website": "www.monne-zorgenbeweging.nl",
+    "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
     "disciplines": [
@@ -34,7 +34,7 @@
   {
     "naam": "Monné Zorg & Beweging",
     "adres": "Hondsdonk 58, Breda",
-    "website": "www.monne-zorgenbeweging.nl",
+    "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
     "disciplines": [
@@ -50,7 +50,7 @@
   {
     "naam": "Monné Zorg & Beweging",
     "adres": "Burgemeester Middelaerlaan 1, Breda",
-    "website": "www.monne-zorgenbeweging.nl",
+    "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
     "disciplines": [
@@ -60,13 +60,13 @@
     "tier": "partner",
     "beschrijving": "",
     "logo_url": "",
-    "lat": 51.5686594,
-    "lng": 4.7893152
+    "lat": 51.5686373,
+    "lng": 4.7893167
   },
   {
     "naam": "Monné Zorg & Beweging",
     "adres": "Konijnenberg 6, Breda",
-    "website": "www.monne-zorgenbeweging.nl",
+    "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
     "disciplines": [
@@ -81,7 +81,7 @@
   {
     "naam": "Monné Zorg & Beweging",
     "adres": "Merijntje Gijzenstraat 3e, Oosterhout",
-    "website": "https://monne-oosterhout.nl/",
+    "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "0162 461998",
     "email": "info@monne-oosterhout.nl",
     "disciplines": [
