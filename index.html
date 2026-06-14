@@ -587,7 +587,7 @@
     <div class="hero-stats">
       <div class="stat"><div class="stat-num">3</div><div class="stat-label">Leesniveaus</div></div>
       <div class="stat"><div class="stat-num" id="stat-protocollen">–</div><div class="stat-label">Protocollen</div></div>
-      <div class="stat"><div class="stat-num" id="stat-praktijken">–</div><div class="stat-label">Praktijken</div></div>
+      <div class="stat"><div class="stat-num" id="stat-praktijken">–</div><div class="stat-label">Locaties</div></div>
     </div>
   </div>
   <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -1068,9 +1068,8 @@
       // Fallback: lege lijst tonen
       alleLocaties = [];
     }
-    // Unieke praktijknamen tellen
-    const uniekePraktijken = new Set(alleLocaties.map(l => l.naam)).size;
-    updateStats(uniekePraktijken);
+    // Alle locaties tellen (niet unieke praktijken)
+    updateStats(alleLocaties.length);
     bouwKaartEnLijst();
   }
 
@@ -1225,11 +1224,10 @@
   // ════════════════════════════════════════════════════════
   //  DYNAMISCHE HERO STATS
   // ════════════════════════════════════════════════════════
-  function updateStats(aantalPraktijken) {
-    // Protocollen tellen vanuit PROTOCOLLEN array
+  function updateStats(aantalLocaties) {
     const aantalProtocollen = PROTOCOLLEN.length;
-    document.getElementById('stat-protocollen').textContent = aantalProtocollen;
-    document.getElementById('stat-praktijken').textContent  = aantalPraktijken > 0 ? aantalPraktijken : '–';
+    document.getElementById('stat-protocollen').textContent = (aantalProtocollen - 1) + '+';
+    document.getElementById('stat-praktijken').textContent  = aantalLocaties > 0 ? (aantalLocaties - 1) + '+' : '–';
   }
 
   // ════════════════════════════════════════════════════════
