@@ -327,13 +327,34 @@
           <div class="form-section-title">Beschrijving van uw praktijk</div>
           <div class="form-group">
             <label>Korte beschrijving <span class="req">*</span></label>
-            <textarea id="beschrijving" placeholder="Beschrijf uw praktijk in 2-3 zinnen. Wat maakt uw praktijk uniek? Welke specialisaties heeft u?" style="min-height:120px;"></textarea>
+            <textarea id="beschrijving" placeholder="Beschrijf uw praktijk in 2-3 zinnen. Wat maakt uw praktijk uniek? Welke specialisaties heeft u?" style="min-height:120px;" maxlength="500" oninput="telTekens(this)"></textarea>
+            <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px"><span id="tekens-teller">0</span>/500 tekens — maximaal 200 tekens zijn zichtbaar, daarna verschijnt een "Lees meer" knop.</p>
           </div>
-          <!-- Logo upload alleen voor Partner -->
-          <div class="form-group" id="logo-sectie" style="display:none;">
-            <label>Website URL logo <span class="req">*</span></label>
-            <input type="url" id="logo-url" placeholder="https://www.uwpraktijk.nl/logo.png" />
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px;">Vul de URL in van uw logo (PNG of SVG). Wij helpen u indien nodig.</p>
+
+          <!-- Hoofdlocatie voor partnerpagina — alleen Partner -->
+          <div id="hoofdlocatie-sectie" style="display:none">
+            <div style="background:var(--gold-light);border:1px solid var(--gold);border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:0.85rem;color:#7a5800">
+              ⭐ Als partner wordt u weergegeven als één praktijk op de partnerpagina. Geef hieronder aan welk adres en contactgegeven daar zichtbaar moeten zijn.
+            </div>
+            <div class="form-group">
+              <label>Hoofdadres voor partnerpagina <span class="req">*</span></label>
+              <input type="text" id="partner-adres" placeholder="Industriekade 10, 4815 HD Breda" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Telefoon voor partnerpagina</label>
+                <input type="tel" id="partner-telefoon" placeholder="076-0000000" />
+              </div>
+              <div class="form-group">
+                <label>E-mail voor partnerpagina</label>
+                <input type="email" id="partner-email" placeholder="info@praktijk.nl" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Website URL logo</label>
+              <input type="url" id="logo-url" placeholder="https://www.uwpraktijk.nl/logo.png" />
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">Vul de URL in van uw logo (PNG of SVG). Wij helpen u indien nodig.</p>
+            </div>
           </div>
         </div>
 
@@ -372,6 +393,10 @@
   let locatieCount = 0;
   let geselecteerdeTier = '';
 
+  function telTekens(el) {
+    document.getElementById('tekens-teller').textContent = el.value.length;
+  }
+
   function selecteerTier(tier) {
     geselecteerdeTier = tier;
 
@@ -390,14 +415,14 @@
     document.getElementById('pakket-weergave').innerHTML = `<strong style="color:var(--navy)">${namen[tier]}</strong>`;
 
     // Beschrijving tonen bij Plus en Partner
-    const beschSectie = document.getElementById('beschrijving-sectie');
-    const logoSectie  = document.getElementById('logo-sectie');
+    const beschSectie      = document.getElementById('beschrijving-sectie');
+    const hoofdlocatieSectie = document.getElementById('hoofdlocatie-sectie');
     if (tier === 'plus' || tier === 'partner') {
       beschSectie.classList.add('zichtbaar');
-      logoSectie.style.display = tier === 'partner' ? 'block' : 'none';
+      hoofdlocatieSectie.style.display = tier === 'partner' ? 'block' : 'none';
     } else {
       beschSectie.classList.remove('zichtbaar');
-      logoSectie.style.display = 'none';
+      hoofdlocatieSectie.style.display = 'none';
     }
   }
 
@@ -514,6 +539,9 @@
       telefoon:    document.getElementById('telefoon').value || '',
       tier:        geselecteerdeTier,
       beschrijving: (geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner') ? document.getElementById('beschrijving').value : '',
+      partner_adres:    geselecteerdeTier === 'partner' ? (document.getElementById('partner-adres').value || '') : '',
+      partner_telefoon: geselecteerdeTier === 'partner' ? (document.getElementById('partner-telefoon').value || '') : '',
+      partner_email:    geselecteerdeTier === 'partner' ? (document.getElementById('partner-email').value || '') : '',
       logo_url:    geselecteerdeTier === 'partner' ? (document.getElementById('logo-url').value || '') : '',
       toelichting: document.getElementById('toelichting').value || '',
       locaties:    locatieData
