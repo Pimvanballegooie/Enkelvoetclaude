@@ -122,6 +122,17 @@
 
     .partner-website-btn:hover { background: var(--gold); color: var(--white); }
 
+    .lees-meer {
+      display: inline-block;
+      margin-left: 6px;
+      color: var(--teal);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .lees-meer:hover { text-decoration: underline; }
+
     .geen-partners { text-align: center; padding: 60px 24px; color: var(--text-muted); }
     .geen-partners .icon { font-size: 3rem; margin-bottom: 16px; }
 
@@ -204,6 +215,8 @@
 <script>
   function toggleNav() { document.getElementById('main-nav').classList.toggle('open'); }
 
+  const MAX_TEKENS = 200;
+
   async function laadPartners() {
     const container = document.getElementById('partners-container');
     try {
@@ -221,7 +234,24 @@
         return;
       }
 
-      container.innerHTML = `<div class="partners-grid">${partners.map(maakPartnerKaart).join('')}</div>`;
+      // Groepeer per praktijknaam — eerste locatie met beschrijving/logo is de hoofdlocatie
+      const gegroepeerd = {};
+      partners.forEach(loc => {
+        if (!gegroepeerd[loc.naam]) {
+          gegroepeerd[loc.naam] = loc; // Eerste locatie = hoofdlocatie
+        } else {
+          // Overschrijf alleen als hoofdlocatie geen beschrijving heeft maar deze wel
+          if (!gegroepeerd[loc.naam].beschrijving && loc.beschrijving) {
+            gegroepeerd[loc.naam].beschrijving = loc.beschrijving;
+          }
+          if (!gegroepeerd[loc.naam].logo_url && loc.logo_url) {
+            gegroepeerd[loc.naam].logo_url = loc.logo_url;
+          }
+        }
+      });
+
+      const uniekePartners = Object.values(gegroepeerd);
+      container.innerHTML = `<div class="partners-grid">${uniekePartners.map(maakPartnerKaart).join('')}</div>`;
     } catch(e) {
       container.innerHTML = `
         <div class="geen-partners">
@@ -236,6 +266,20 @@
       ? `<img class="partner-logo" src="${loc.logo_url}" alt="${loc.naam} logo" onerror="this.style.display='none'">`
       : `<div class="partner-logo-placeholder">🏥</div>`;
 
+    // Beschrijving met lees meer
+    let beschrijvingHTML = '';
+    if (loc.beschrijving) {
+      const kort = loc.beschrijving.length > MAX_TEKENS;
+      const tekst = kort ? loc.beschrijving.slice(0, MAX_TEKENS) + '…' : loc.beschrijving;
+      const id = 'beschr-' + loc.naam.replace(/\s+/g, '-').toLowerCase();
+      beschrijvingHTML = `
+        <p class="partner-beschrijving">
+          <span id="${id}-kort">${tekst}</span>
+          <span id="${id}-lang" style="display:none">${loc.beschrijving}</span>
+          ${kort ? `<a href="#" class="lees-meer" onclick="toggleBeschr(event,'${id}')">Lees meer</a>` : ''}
+        </p>`;
+    }
+
     return `
       <div class="partner-card">
         <div class="partner-badge">⭐ Partner</div>
@@ -246,14 +290,30 @@
             <div class="partner-disc">${loc.disciplines.join(', ')}</div>
           </div>
         </div>
-        ${loc.beschrijving ? `<p class="partner-beschrijving">${loc.beschrijving}</p>` : ''}
-        <div class="partner-adres">📍 ${loc.adres}</div>
+        ${beschrijvingHTML}
+        <div class="partner-adres">📍 ${loc.partner_adres || loc.adres}</div>
         <div class="partner-contact">
-          ${loc.email    ? `<a href="mailto:${loc.email}">✉ ${loc.email}</a>` : ''}
-          ${loc.telefoon ? `<a href="tel:${loc.telefoon.replace(/[^+\d]/g,'')}">📞 ${loc.telefoon}</a>` : ''}
+          ${(loc.partner_email || loc.email)    ? `<a href="mailto:${loc.partner_email || loc.email}">✉ ${loc.partner_email || loc.email}</a>` : ''}
+          ${(loc.partner_telefoon || loc.telefoon) ? `<a href="tel:${(loc.partner_telefoon || loc.telefoon).replace(/[^+\d]/g,'')}">📞 ${loc.partner_telefoon || loc.telefoon}</a>` : ''}
         </div>
         ${loc.website ? `<a href="${loc.website}" class="partner-website-btn" target="_blank" rel="noopener">🌐 Bezoek website →</a>` : ''}
       </div>`;
+  }
+
+  function toggleBeschr(e, id) {
+    e.preventDefault();
+    const kort = document.getElementById(id + '-kort');
+    const lang = document.getElementById(id + '-lang');
+    const link = e.target;
+    if (lang.style.display === 'none') {
+      kort.style.display = 'none';
+      lang.style.display = 'inline';
+      link.textContent = 'Lees minder';
+    } else {
+      kort.style.display = 'inline';
+      lang.style.display = 'none';
+      link.textContent = 'Lees meer';
+    }
   }
 
   laadPartners();
