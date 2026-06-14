@@ -393,6 +393,14 @@
   let locatieCount = 0;
   let geselecteerdeTier = '';
 
+  function fixUrl(url) {
+    url = url.trim();
+    if (!url) return '';
+    if (!url.startsWith('http://') && !url.startsWith('https://')) url = 'https://' + url;
+    url = url.replace('http://', 'https://');
+    return url;
+  }
+
   function telTekens(el) {
     document.getElementById('tekens-teller').textContent = el.value.length;
   }
@@ -525,7 +533,7 @@
       locatieData.push({
         praktijk:    document.getElementById(`praktijk-${nr}`).value,
         adres:       document.getElementById(`adres-${nr}`).value,
-        website:     document.getElementById(`website-${nr}`).value || '',
+        website:     fixUrl(document.getElementById(`website-${nr}`).value || ''),
         telefoon:    document.getElementById(`tel-locatie-${nr}`).value || '',
         email:       document.getElementById(`email-locatie-${nr}`).value || '',
         disciplines: [...blok.querySelectorAll(`input[name="disc-${nr}"]:checked`)].map(cb => cb.value)
