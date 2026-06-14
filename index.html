@@ -389,7 +389,13 @@
     }
 
     .disc-btn:hover { border-color: var(--navy); color: var(--navy); }
-    .disc-btn.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+
+    .disc-btn.active[onclick*="all"] { background: var(--navy); border-color: var(--navy); color: var(--white); }
+    .disc-btn.active[onclick*="fysiotherapeut"] { background: #1A5276; border-color: #1A5276; color: var(--white); }
+    .disc-btn.active[onclick*="podotherapeut"] { background: #1E8449; border-color: #1E8449; color: var(--white); }
+    .disc-btn.active[onclick*="pedicure"] { background: #B7770D; border-color: #B7770D; color: var(--white); }
+    .disc-btn.active[onclick*="orthopedisch"] { background: #6C3483; border-color: #6C3483; color: var(--white); }
+    .disc-btn.active[onclick*="ergotherapeut"] { background: #C0392B; border-color: #C0392B; color: var(--white); }
 
     .locaties-grid {
       display: grid;
@@ -634,11 +640,11 @@
 
     <div class="disciplines-filter">
       <button class="disc-btn active" onclick="filterDisc(this, 'all')">Alle disciplines</button>
-      <button class="disc-btn active" onclick="filterDisc(this, 'fysiotherapeut')">F – Fysiotherapeut</button>
-      <button class="disc-btn active" onclick="filterDisc(this, 'podotherapeut')">Po – Podotherapeut</button>
-      <button class="disc-btn active" onclick="filterDisc(this, 'pedicure')">Pe – Pedicure</button>
-      <button class="disc-btn active" onclick="filterDisc(this, 'orthopedisch schoenmaker')">O – Orth. schoenmaker</button>
-      <button class="disc-btn active" onclick="filterDisc(this, 'ergotherapeut')">Er – Ergotherapeut</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'fysiotherapeut')">Fysiotherapeut</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'podotherapeut')">Podotherapeut</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'pedicure')">Pedicure</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'orthopedisch schoenmaker')">Orth. schoenmaker</button>
+      <button class="disc-btn active" onclick="filterDisc(this, 'ergotherapeut')">Ergotherapeut</button>
     </div>
 
     <div id="kaart"></div>
