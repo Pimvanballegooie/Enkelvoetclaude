@@ -179,21 +179,39 @@
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge">⭐ Exclusief</div>
+    <div class="hero-badge">⭐ Partners & Organisaties</div>
     <h1>Onze <em>partners</em></h1>
-    <p>Deze praktijken zijn officieel partner van het Enkel Voet Netwerk en dragen bij aan hoogwaardige enkel- en voetzorg in de regio Breda.</p>
+    <p>Samen met zorgorganisaties en aangesloten praktijken werken wij aan hoogwaardige, geïntegreerde enkel- en voetzorg in de regio Breda.</p>
   </div>
   <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#F5F7FA"/>
   </svg>
 </section>
 
+<!-- ── SAMENWERKINGSORGANISATIES ── -->
+<section style="background:var(--white);padding:64px 24px;">
+  <div class="section-inner">
+    <div class="section-header">
+      <div class="section-eyebrow">Samenwerking</div>
+      <h2>Samenwerkingsorganisaties</h2>
+      <p>Deze organisaties werken samen met het Enkel Voet Netwerk aan geïntegreerde zorg in de regio.</p>
+    </div>
+
+    <div id="organisaties-grid" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:center;"></div>
+
+    <p style="text-align:center;font-size:0.82rem;color:var(--text-muted);margin-top:28px">
+      Wilt u ook samenwerken? <a href="mailto:info@enkelvoet.net" style="color:var(--teal);text-decoration:none;font-weight:600">Neem contact op →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ── PARTNERPRAKTIJKEN ── -->
 <section style="background:var(--grey-bg)">
   <div class="section-inner">
     <div class="section-header">
-      <div class="section-eyebrow">Partnerpraktijken</div>
-      <h2>Onze vaste partners</h2>
-      <p>Partners zijn geselecteerde praktijken die volledig zijn aangesloten bij het netwerk.</p>
+      <div class="section-eyebrow">Aangesloten praktijken</div>
+      <h2>Onze partnerpraktijken</h2>
+      <p>Deze praktijken zijn officieel partner van het Enkel Voet Netwerk.</p>
     </div>
 
     <div id="partners-container">
@@ -214,6 +232,54 @@
 
 <script>
   function toggleNav() { document.getElementById('main-nav').classList.toggle('open'); }
+
+  // ════════════════════════════════════════════════════════
+  //  SAMENWERKINGSORGANISATIES
+  //  ▶ Voeg hier organisaties toe zodra toestemming is verkregen
+  //  ▶ logo: URL naar afbeelding, of '' voor naamweergave
+  // ════════════════════════════════════════════════════════
+  const ORGANISATIES = [
+    // Verwijder de // om een organisatie toe te voegen:
+    // { naam: 'Amphia Ziekenhuis',           url: 'https://www.amphia.nl',      logo: '' },
+    // { naam: 'Huisartsen Zorggroep Breda',  url: 'https://www.hzbreda.nl',     logo: '' },
+    // { naam: 'Franciscus Gasthuis',         url: 'https://www.franciscus.nl',  logo: '' },
+  ];
+
+  function bouwOrganisatiesGrid() {
+    const grid = document.getElementById('organisaties-grid');
+    if (!grid) return;
+
+    if (ORGANISATIES.length === 0) {
+      grid.innerHTML = `
+        <div style="text-align:center;color:var(--text-muted);padding:32px;font-size:0.9rem;width:100%">
+          <div style="font-size:2rem;margin-bottom:12px">🤝</div>
+          <p>Samenwerkingsorganisaties worden hier vermeld zodra toestemming is verkregen.</p>
+        </div>`;
+      return;
+    }
+
+    grid.innerHTML = ORGANISATIES.map(o => {
+      const inhoud = o.logo
+        ? `<img src="${o.logo}" alt="${o.naam}"
+             style="max-width:140px;max-height:56px;object-fit:contain;filter:grayscale(100%);opacity:0.6;transition:all 0.2s"
+             onmouseover="this.style.filter='none';this.style.opacity='1'"
+             onmouseout="this.style.filter='grayscale(100%)';this.style.opacity='0.6'">`
+        : `<span style="font-weight:700;font-size:0.9rem;color:var(--text-muted);text-align:center">${o.naam}</span>`;
+
+      return `
+        <a href="${o.url}" target="_blank" rel="noopener"
+          style="display:flex;align-items:center;justify-content:center;
+                 background:var(--grey-bg);border:1px solid var(--grey-border);
+                 border-radius:10px;padding:18px 28px;min-width:160px;min-height:80px;
+                 text-decoration:none;transition:box-shadow 0.2s,transform 0.2s"
+          onmouseover="this.style.boxShadow='var(--shadow)';this.style.transform='translateY(-2px)'"
+          onmouseout="this.style.boxShadow='none';this.style.transform='none'">
+          ${inhoud}
+        </a>`;
+    }).join('');
+  }
+
+  bouwOrganisatiesGrid();
 
   const MAX_TEKENS = 200;
 
