@@ -9,109 +9,87 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Locaties ophalen en geocoderen
-        env:
-          SHEET_ID: ${{ secrets.SHEET_ID }}
+      - name: Maak Python script
         run: |
-          python3 - <<'PYEOF'
+          cat > sync.py << 'PYEOF'
 import json, urllib.request, urllib.parse, os, time, csv, io
 
-SHEET_ID = os.environ.get('SHEET_ID', '')
+SHEET_ID = os.environ.get("SHEET_ID", "")
 url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid=0"
-
-try:
-    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        csv_data = resp.read().decode('utf-8')
-except Exception as e:
-    print(f"Fout bij ophalen sheet: {e}")
-    exit(1)
+req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+with urllib.request.urlopen(req, timeout=30) as resp:
+    csv_data = resp.read().decode("utf-8")
 
 reader = csv.DictReader(io.StringIO(csv_data))
-rijen = list(reader)
-print(f"{len(rijen)} rijen gevonden")
 
 def geocodeer(adres):
     try:
-        query = urllib.parse.quote(adres + ', Nederland')
-        url = f"https://nominatim.openstreetmap.org/search?q={query}&format=json&limit=1"
-        req = urllib.request.Request(url, headers={'User-Agent': 'EVN-Website/1.0'})
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            resultaten = json.loads(resp.read())
-        if resultaten:
-            return float(resultaten[0]['lat']), float(resultaten[0]['lon'])
+        q = urllib.parse.quote(adres + ", Nederland")
+        u = f"https://nominatim.openstreetmap.org/search?q={q}&format=json&limit=1"
+        r = urllib.request.Request(u, headers={"User-Agent": "EVN/1.0"})
+        with urllib.request.urlopen(r, timeout=10) as resp:
+            res = json.loads(resp.read())
+        if res:
+            return float(res[0]["lat"]), float(res[0]["lon"])
     except Exception as e:
-        print(f"Geocoding mislukt voor '{adres}': {e}")
+        print(f"Geocoding fout: {e}")
     return None, None
 
 locaties = []
-geocode_cache = {}
+cache = {}
 
-for rij in rijen:
-    status = rij.get('Status', '').strip()
-    if status != 'Goedgekeurd':
+for rij in reader:
+    if rij.get("Status", "").strip() != "Goedgekeurd":
         continue
-
-    tier     = rij.get('Tier', 'basis').lower().strip()
-    praktijk = rij.get('Praktijknaam', '').strip()
-    adres    = rij.get('Adres', '').strip()
-    website  = rij.get('Website', '').strip()
-    telefoon = rij.get('Telefoon locatie', '').strip()
-    email    = rij.get('E-mail locatie', '').strip()
-    disc_str = rij.get('Disciplines', '').strip()
-    beschr   = rij.get('Beschrijving', '').strip()
-    logo_url = rij.get('Logo URL', '').strip()
-
-    if not praktijk or not adres:
+    tier  = rij.get("Tier", "basis").lower().strip()
+    naam  = rij.get("Praktijknaam", "").strip()
+    adres = rij.get("Adres", "").strip()
+    if not naam or not adres:
         continue
-
-    disciplines = [d.strip() for d in disc_str.split(',') if d.strip()]
-
-    if adres not in geocode_cache:
-        lat, lng = geocodeer(adres)
-        geocode_cache[adres] = (lat, lng)
+    if adres not in cache:
+        cache[adres] = geocodeer(adres)
         time.sleep(1)
-    else:
-        lat, lng = geocode_cache[adres]
-
-    if not lat or not lng:
-        print(f"Geen coordinaten voor: {adres} - overgeslagen")
+    lat, lng = cache[adres]
+    if not lat:
+        print(f"Geen coordinaten: {adres}")
         continue
-
     locaties.append({
-        'naam': praktijk,
-        'adres': adres,
-        'website': website,
-        'telefoon': telefoon,
-        'email': email,
-        'disciplines': disciplines,
-        'tier': tier,
-        'beschrijving': beschr if tier in ['plus', 'partner'] else '',
-        'logo_url': logo_url if tier == 'partner' else '',
-        'lat': lat,
-        'lng': lng
+        "naam": naam,
+        "adres": adres,
+        "website": rij.get("Website", "").strip(),
+        "telefoon": rij.get("Telefoon locatie", "").strip(),
+        "email": rij.get("E-mail locatie", "").strip(),
+        "disciplines": [d.strip() for d in rij.get("Disciplines", "").split(",") if d.strip()],
+        "tier": tier,
+        "beschrijving": rij.get("Beschrijving", "").strip() if tier in ["plus", "partner"] else "",
+        "logo_url": rij.get("Logo URL", "").strip() if tier == "partner" else "",
+        "lat": lat,
+        "lng": lng
     })
-    print(f"OK: {praktijk} ({tier})")
+    print(f"OK: {naam} ({tier})")
 
-tier_volgorde = {'partner': 0, 'plus': 1, 'basis': 2}
-locaties.sort(key=lambda l: tier_volgorde.get(l['tier'], 3))
+locaties.sort(key=lambda l: {"partner": 0, "plus": 1, "basis": 2}.get(l["tier"], 3))
 
-with open('locaties.json', 'w', encoding='utf-8') as f:
+with open("locaties.json", "w", encoding="utf-8") as f:
     json.dump(locaties, f, ensure_ascii=False, indent=2)
 
-print(f"Klaar! {len(locaties)} locaties opgeslagen")
+print(f"Klaar: {len(locaties)} locaties opgeslagen")
 PYEOF
 
-      - name: Wijzigingen committen
+      - name: Script uitvoeren
+        env:
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+        run: python3 sync.py
+
+      - name: Committen
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add locaties.json
           if git diff --cached --quiet; then
-            echo "Geen wijzigingen."
+            echo "Geen wijzigingen"
           else
             git commit -m "Locaties bijgewerkt vanuit Google Sheets"
             git push
