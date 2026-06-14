@@ -1114,9 +1114,23 @@
       ? `border-color:${tierStijl.rand};border-width:2px;`
       : '';
 
-    const beschrijving = loc.beschrijving
-      ? `<div style="font-size:0.83rem;color:var(--text-muted);margin-top:10px;line-height:1.55;padding-top:10px;border-top:1px solid var(--grey-border)">${loc.beschrijving}</div>`
-      : '';
+    const MAX_TEKENS = 120;
+    let beschrijving = '';
+    if (loc.beschrijving) {
+      const tekst = loc.beschrijving;
+      const kort  = tekst.length > MAX_TEKENS;
+      const id    = 'loc-' + Math.random().toString(36).slice(2);
+      beschrijving = `
+        <div style="font-size:0.83rem;color:var(--text-muted);margin-top:10px;line-height:1.55;padding-top:10px;border-top:1px solid var(--grey-border)">
+          <span id="${id}-kort">${kort ? tekst.slice(0, MAX_TEKENS) + '…' : tekst}</span>
+          ${kort ? `<span id="${id}-lang" style="display:none">${tekst}</span>
+          <a href="#" style="color:var(--teal);font-size:0.78rem;font-weight:600;margin-left:4px;text-decoration:none;white-space:nowrap"
+            onclick="event.preventDefault();
+              document.getElementById('${id}-kort').style.display=document.getElementById('${id}-kort').style.display==='none'?'inline':'none';
+              document.getElementById('${id}-lang').style.display=document.getElementById('${id}-lang').style.display==='none'?'inline':'none';
+              this.textContent=this.textContent==='Lees meer'?'Lees minder':'Lees meer'">Lees meer</a>` : ''}
+        </div>`;
+    }
 
     const cfg = DISC_CONFIG[discStr];
     const tagStijl = cfg ? `background:${cfg.color};color:#fff` : 'background:var(--teal-light);color:var(--teal)';
