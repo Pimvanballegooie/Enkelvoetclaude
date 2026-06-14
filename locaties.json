@@ -49,7 +49,7 @@
   },
   {
     "naam": "Monné Zorg & Beweging",
-    "adres": "Burgemeester Middelaerlaan 1",
+    "adres": "Burgemeester Middelaerlaan 1, Breda",
     "website": "www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
@@ -60,12 +60,12 @@
     "tier": "partner",
     "beschrijving": "",
     "logo_url": "",
-    "lat": 51.5687028,
-    "lng": 4.7893111
+    "lat": 51.5686594,
+    "lng": 4.7893152
   },
   {
     "naam": "Monné Zorg & Beweging",
-    "adres": "Konijnenberg 6",
+    "adres": "Konijnenberg 6, Breda",
     "website": "www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
@@ -75,8 +75,8 @@
     "tier": "partner",
     "beschrijving": "",
     "logo_url": "",
-    "lat": 51.616909,
-    "lng": 5.1897562
+    "lat": 51.6006664,
+    "lng": 4.7705656
   },
   {
     "naam": "Monné Zorg & Beweging",
