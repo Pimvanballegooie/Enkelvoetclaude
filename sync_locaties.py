@@ -68,6 +68,21 @@ for rij in reader:
 
 locaties.sort(key=lambda l: {"partner": 0, "plus": 1, "basis": 2}.get(l["tier"], 3))
 
+# Beschrijving en logo overnemen voor alle locaties van dezelfde praktijk
+beschrijving_per_praktijk = {}
+logo_per_praktijk = {}
+for loc in locaties:
+    if loc["beschrijving"] and loc["naam"] not in beschrijving_per_praktijk:
+        beschrijving_per_praktijk[loc["naam"]] = loc["beschrijving"]
+    if loc["logo_url"] and loc["naam"] not in logo_per_praktijk:
+        logo_per_praktijk[loc["naam"]] = loc["logo_url"]
+
+for loc in locaties:
+    if not loc["beschrijving"] and loc["naam"] in beschrijving_per_praktijk:
+        loc["beschrijving"] = beschrijving_per_praktijk[loc["naam"]]
+    if not loc["logo_url"] and loc["naam"] in logo_per_praktijk:
+        loc["logo_url"] = logo_per_praktijk[loc["naam"]]
+
 with open("locaties.json", "w", encoding="utf-8") as f:
     json.dump(locaties, f, ensure_ascii=False, indent=2)
 
