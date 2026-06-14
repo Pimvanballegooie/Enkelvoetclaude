@@ -197,7 +197,7 @@
       <p>Deze organisaties werken samen met het Enkel Voet Netwerk aan geïntegreerde zorg in de regio.</p>
     </div>
 
-    <div id="organisaties-grid" style="display:flex;flex-wrap:wrap;gap:16px;justify-content:center;align-items:center;"></div>
+    <div id="organisaties-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;"></div>
 
     <div style="text-align:center;margin-top:36px">
       <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:16px">Wilt u ook als organisatie samenwerken met het Enkel Voet Netwerk?</p>
@@ -245,10 +245,15 @@
   //  ▶ logo: URL naar afbeelding, of '' voor naamweergave
   // ════════════════════════════════════════════════════════
   const ORGANISATIES = [
-    { naam: 'Beweego', url: 'https://www.beweego.nl', logo: 'https://beweego.nl/wp-content/uploads/2020/05/Logo-BEWEEGO-versie-3-Transparantkopie-trimmed-1024x340.png' },
-    // { naam: 'Huisartsen Zorggroep Breda',  url: 'https://www.hzbreda.nl',     logo: '' },
-    // { naam: 'Franciscus Gasthuis',         url: 'https://www.franciscus.nl',  logo: '' },
-    // { naam: 'Amphia Ziekenhuis',           url: 'https://www.amphia.nl',      logo: '' },
+    { 
+      naam: 'Beweego', 
+      url: 'https://www.beweego.nl', 
+      logo: 'https://beweego.nl/wp-content/uploads/2020/05/Logo-BEWEEGO-versie-3-Transparantkopie-trimmed-1024x340.png',
+      beschrijving: 'Multidisciplinair netwerk van samenwerkende paramedische zorgverleners voor hoogwaardige beweegzorg. Met programma\'s gericht op COPD, hart- en vaatproblematiek, osteoporose, diabetes en COVID-19.'
+    },
+    // { naam: 'Huisartsen Zorggroep Breda', url: 'https://www.hzbreda.nl', logo: '', beschrijving: '' },
+    // { naam: 'Franciscus Gasthuis', url: 'https://www.franciscus.nl', logo: '', beschrijving: '' },
+    // { naam: 'Amphia Ziekenhuis', url: 'https://www.amphia.nl', logo: '', beschrijving: '' },
   ];
 
   function bouwOrganisatiesGrid() {
@@ -265,23 +270,26 @@
     }
 
     grid.innerHTML = ORGANISATIES.map(o => {
-      const inhoud = o.logo
+      const logo = o.logo
         ? `<img src="${o.logo}" alt="${o.naam}"
-             style="max-width:140px;max-height:56px;object-fit:contain;filter:grayscale(100%);opacity:0.6;transition:all 0.2s"
-             onmouseover="this.style.filter='none';this.style.opacity='1'"
-             onmouseout="this.style.filter='grayscale(100%)';this.style.opacity='0.6'">`
-        : `<span style="font-weight:700;font-size:0.9rem;color:var(--text-muted);text-align:center">${o.naam}</span>`;
+             style="max-width:140px;max-height:48px;object-fit:contain;margin-bottom:14px">`
+        : `<div style="font-weight:700;font-size:1rem;color:var(--navy);margin-bottom:14px">${o.naam}</div>`;
 
       return `
-        <a href="${o.url}" target="_blank" rel="noopener"
-          style="display:flex;align-items:center;justify-content:center;
-                 background:var(--grey-bg);border:1px solid var(--grey-border);
-                 border-radius:10px;padding:18px 28px;min-width:160px;min-height:80px;
-                 text-decoration:none;transition:box-shadow 0.2s,transform 0.2s"
+        <div style="background:var(--white);border:1px solid var(--grey-border);border-radius:12px;padding:24px;
+                    display:flex;flex-direction:column;transition:box-shadow 0.2s,transform 0.2s"
           onmouseover="this.style.boxShadow='var(--shadow)';this.style.transform='translateY(-2px)'"
           onmouseout="this.style.boxShadow='none';this.style.transform='none'">
-          ${inhoud}
-        </a>`;
+          ${logo}
+          <div style="font-weight:700;font-size:0.9rem;color:var(--navy);margin-bottom:8px">${o.naam}</div>
+          ${o.beschrijving ? `<p style="font-size:0.83rem;color:var(--text-muted);line-height:1.6;flex:1;margin-bottom:14px">${o.beschrijving}</p>` : ''}
+          <a href="${o.url}" target="_blank" rel="noopener"
+            style="display:inline-block;font-size:0.82rem;font-weight:600;color:var(--teal);text-decoration:none"
+            onmouseover="this.style.textDecoration='underline'"
+            onmouseout="this.style.textDecoration='none'">
+            🌐 Bezoek website →
+          </a>
+        </div>`;
     }).join('');
   }
 
