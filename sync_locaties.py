@@ -8,6 +8,15 @@ with urllib.request.urlopen(req, timeout=30) as resp:
 
 reader = csv.DictReader(io.StringIO(csv_data))
 
+def fix_url(url):
+    url = url.strip()
+    if not url:
+        return ""
+    if not url.startswith("http://") and not url.startswith("https://"):
+        url = "https://" + url
+    url = url.replace("http://", "https://")
+    return url
+
 def geocodeer(adres):
     try:
         q = urllib.parse.quote(adres + ", Nederland")
@@ -40,15 +49,18 @@ for rij in reader:
         print(f"Geen coordinaten: {adres}")
         continue
     locaties.append({
-        "naam": naam,
-        "adres": adres,
-        "website": rij.get("Website", "").strip(),
-        "telefoon": rij.get("Telefoon locatie", "").strip(),
-        "email": rij.get("E-mail locatie", "").strip(),
+        "naam":        naam,
+        "adres":       adres,
+        "website":     fix_url(rij.get("Website", "")),
+        "telefoon":    rij.get("Telefoon locatie", "").strip(),
+        "email":       rij.get("E-mail locatie", "").strip(),
         "disciplines": [d.strip() for d in rij.get("Disciplines", "").split(",") if d.strip()],
-        "tier": tier,
+        "tier":        tier,
         "beschrijving": rij.get("Beschrijving", "").strip() if tier in ["plus", "partner"] else "",
-        "logo_url": rij.get("Logo URL", "").strip() if tier == "partner" else "",
+        "logo_url":    fix_url(rij.get("Logo URL", "")) if tier == "partner" else "",
+        "partner_adres":    rij.get("Partner adres", "").strip(),
+        "partner_telefoon": rij.get("Partner telefoon", "").strip(),
+        "partner_email":    rij.get("Partner e-mail", "").strip(),
         "lat": lat,
         "lng": lng
     })
