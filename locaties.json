@@ -1,35 +1,5 @@
 [
   {
-    "naam": "Test",
-    "adres": "Oranjelaan 3m2, Dordrecht",
-    "website": "monne-zorgenbeweging.nl",
-    "telefoon": "640580024",
-    "email": "info@monne-zorgenbeweging.nl",
-    "disciplines": [
-      "Fysiotherapeut"
-    ],
-    "tier": "partner",
-    "beschrijving": "Wat een mooie testlocatie",
-    "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
-    "lat": 51.815675,
-    "lng": 4.6861097
-  },
-  {
-    "naam": "Test 2",
-    "adres": "Oranjelaan 5, Dordrecht",
-    "website": "monne-zorgenbeweging.nl",
-    "telefoon": "765810491",
-    "email": "info@monne-zorgenbeweging.nl",
-    "disciplines": [
-      "Fysiotherapeut"
-    ],
-    "tier": "partner",
-    "beschrijving": "",
-    "logo_url": "",
-    "lat": 51.8152927,
-    "lng": 4.6861423
-  },
-  {
     "naam": "Monné Zorg & Beweging",
     "adres": "Industriekade 10, Breda",
     "website": "www.monne-zorgenbeweging.nl",
@@ -57,7 +27,7 @@
     ],
     "tier": "partner",
     "beschrijving": "",
-    "logo_url": "",
+    "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
     "lat": 51.608335,
     "lng": 4.7980563
   },
@@ -73,7 +43,7 @@
     ],
     "tier": "partner",
     "beschrijving": "",
-    "logo_url": "",
+    "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
     "lat": 51.6061922,
     "lng": 4.7440119
   },
@@ -89,9 +59,9 @@
     ],
     "tier": "partner",
     "beschrijving": "",
-    "logo_url": "",
-    "lat": 51.5686373,
-    "lng": 4.7893167
+    "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
+    "lat": 51.5687028,
+    "lng": 4.7893111
   },
   {
     "naam": "Monné Zorg & Beweging",
@@ -104,7 +74,7 @@
     ],
     "tier": "partner",
     "beschrijving": "",
-    "logo_url": "",
+    "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
     "lat": 51.616909,
     "lng": 5.1897562
   },
@@ -120,7 +90,7 @@
     ],
     "tier": "partner",
     "beschrijving": "",
-    "logo_url": "",
+    "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
     "lat": 51.6514559,
     "lng": 4.8385176
   }
