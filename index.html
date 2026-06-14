@@ -659,71 +659,9 @@
     </div>
 
     <div class="locaties-grid" id="locaties-grid">
-      <div class="locatie-card" data-discipline="fysiotherapeut">
-        <div class="locatie-card-header">
-          <a href="https://monne-zorgenbeweging.nl" class="locatie-naam" target="_blank" rel="noopener">Monné Zorg &amp; Beweging</a>
-          <span class="discipline-tag">Fysiotherapeut</span>
-        </div>
-        <div class="locatie-adres">📍 Industriekade 10, 4815 HD Breda<br><small style="color:#aaa">Belcrum</small></div>
-        <div class="locatie-contact">
-          <a href="mailto:info@monne-zorgenbeweging.nl">✉ info@monne-zorgenbeweging.nl</a>
-          <a href="tel:+31765810491">📞 076-5810491</a>
-        </div>
-      </div>
-      <div class="locatie-card" data-discipline="fysiotherapeut">
-        <div class="locatie-card-header">
-          <a href="https://monne-zorgenbeweging.nl" class="locatie-naam" target="_blank" rel="noopener">Monné Zorg &amp; Beweging</a>
-          <span class="discipline-tag">Fysiotherapeut</span>
-        </div>
-        <div class="locatie-adres">📍 Burgemeester Middelaerlaan 1, 4835 EK Breda<br><small style="color:#aaa">Ginneken</small></div>
-        <div class="locatie-contact">
-          <a href="mailto:info@monne-zorgenbeweging.nl">✉ info@monne-zorgenbeweging.nl</a>
-          <a href="tel:+31765810491">📞 076-5810491</a>
-        </div>
-      </div>
-      <div class="locatie-card" data-discipline="fysiotherapeut">
-        <div class="locatie-card-header">
-          <a href="https://monne-zorgenbeweging.nl" class="locatie-naam" target="_blank" rel="noopener">Monné Zorg &amp; Beweging</a>
-          <span class="discipline-tag">Fysiotherapeut</span>
-        </div>
-        <div class="locatie-adres">📍 Bernard de Wildestraat 400A, 4827 EG Breda</div>
-        <div class="locatie-contact">
-          <a href="mailto:info@monne-zorgenbeweging.nl">✉ info@monne-zorgenbeweging.nl</a>
-          <a href="tel:+31765810491">📞 076-5810491</a>
-        </div>
-      </div>
-      <div class="locatie-card" data-discipline="fysiotherapeut">
-        <div class="locatie-card-header">
-          <a href="https://monne-zorgenbeweging.nl" class="locatie-naam" target="_blank" rel="noopener">Monné Zorg &amp; Beweging</a>
-          <span class="discipline-tag">Fysiotherapeut</span>
-        </div>
-        <div class="locatie-adres">📍 Hondsdonk 58, Breda</div>
-        <div class="locatie-contact">
-          <a href="mailto:info@monne-zorgenbeweging.nl">✉ info@monne-zorgenbeweging.nl</a>
-          <a href="tel:+31765810491">📞 076-5810491</a>
-        </div>
-      </div>
-      <div class="locatie-card" data-discipline="fysiotherapeut">
-        <div class="locatie-card-header">
-          <a href="https://monne-zorgenbeweging.nl" class="locatie-naam" target="_blank" rel="noopener">Monné Zorg &amp; Beweging</a>
-          <span class="discipline-tag">Fysiotherapeut</span>
-        </div>
-        <div class="locatie-adres">📍 Merijntje Gijzenstraat 3e, Oosterhout</div>
-        <div class="locatie-contact">
-          <a href="mailto:info@monne-zorgenbeweging.nl">✉ info@monne-zorgenbeweging.nl</a>
-          <a href="tel:+31765810491">📞 076-5810491</a>
-        </div>
-      </div>
-      <div class="locatie-card" data-discipline="podotherapeut">
-        <div class="locatie-card-header">
-          <a href="https://www.podotherapie-alewijnse.nl/" class="locatie-naam" target="_blank" rel="noopener">Alewijnse Podotherapie</a>
-          <span class="discipline-tag" style="background:#EAF0FB;color:#1A5276">Podotherapeut</span>
-        </div>
-        <div class="locatie-adres">📍 Industriekade 10, 4815 HD Breda<br><small style="color:#aaa">Belcrum</small></div>
-        <div class="locatie-contact">
-          <a href="mailto:info@podotherapie-alewijnse.nl">✉ info@podotherapie-alewijnse.nl</a>
-          <a href="tel:+31768200327">📞 076-8200327</a>
-        </div>
+      <div style="padding:32px;text-align:center;color:var(--text-muted);grid-column:1/-1">
+        <div class="spinner" style="margin:0 auto 12px"></div>
+        Praktijken laden…
       </div>
     </div>
   </div>
@@ -1073,7 +1011,7 @@
   }
 
   // ════════════════════════════════════════════════════════
-  //  KAART & LOCATIES
+  //  KAART & LOCATIES — dynamisch laden vanuit locaties.json
   // ════════════════════════════════════════════════════════
   const DISC_CONFIG = {
     'fysiotherapeut':           { label: 'F',  cls: 'f',  color: '#1A5276' },
@@ -1083,107 +1021,146 @@
     'ergotherapeut':            { label: 'Er', cls: 'er', color: '#C0392B' },
   };
 
-  const LOCATIES = [
-    {
-      adres: 'Industriekade 10, Breda (Belcrum)',
-      lat: 51.6005, lng: 4.7720,
-      praktijken: [
-        { naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] },
-        { naam: 'Alewijnse Podotherapie', url: 'https://www.podotherapie-alewijnse.nl/', disciplines: ['podotherapeut'] },
-      ],
-    },
-    {
-      adres: 'Burgemeester Middelaerlaan 1, Breda (Ginneken)',
-      lat: 51.5720, lng: 4.7780,
-      praktijken: [{ naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] }],
-    },
-    {
-      adres: 'Bernard de Wildestraat 400A, Breda',
-      lat: 51.5950, lng: 4.8050,
-      praktijken: [{ naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] }],
-    },
-    {
-      adres: 'Hondsdonk 58, Breda',
-      lat: 51.6100, lng: 4.7900,
-      praktijken: [{ naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] }],
-    },
-    {
-      adres: 'Merijntje Gijzenstraat 3e, Oosterhout',
-      lat: 51.6430, lng: 4.8620,
-      praktijken: [{ naam: 'Monné Zorg & Beweging', url: 'https://monne-zorgenbeweging.nl', disciplines: ['fysiotherapeut'] }],
-    },
-  ];
+  const TIER_STIJL = {
+    partner: { label: '⭐ Partner', bg: '#FEF9E7', kleur: '#C9940A', rand: '#C9940A' },
+    plus:    { label: '✚ Plus',    bg: '#EAF0FB', kleur: '#1A5276', rand: '#1A5276' },
+    basis:   { label: '',          bg: '',         kleur: '',        rand: '' },
+  };
 
   const actieveDisc = new Set(Object.keys(DISC_CONFIG));
-
-  function alleDisc(loc) {
-    return [...new Set(loc.praktijken.flatMap(p => p.disciplines))];
-  }
-
-  function maakMarkerHTML(loc, actief) {
-    return alleDisc(loc)
-      .filter(d => actief.size === 0 || actief.has(d))
-      .map(d => {
-        const cfg = DISC_CONFIG[d];
-        return cfg ? `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>` : '';
-      }).join('');
-  }
-
-  function maakPopupHTML(loc) {
-    const rijen = loc.praktijken.map(p => {
-      const pills = p.disciplines.map(d => {
-        const cfg = DISC_CONFIG[d];
-        return cfg ? `<span class="popup-tag" style="background:${cfg.color}">${cfg.label}</span>` : '';
-      }).join('');
-      return `<div class="popup-praktijk">
-        <div class="popup-praktijk-pills">${pills}</div>
-        <div class="popup-praktijk-naam"><a href="${p.url}" target="_blank" rel="noopener">${p.naam}</a></div>
-      </div>`;
-    }).join('');
-    return `<div class="popup-adres">📍 <strong>${loc.adres}</strong></div>
-            <div class="popup-praktijken">${rijen}</div>`;
-  }
+  let alleLocaties = [];
+  let kaartMarkers = [];
 
   const kaart = L.map('kaart').setView([51.5988, 4.7763], 12);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
-    maxZoom: 18,
+    attribution: '© <a href="https://www.openstreetmap.org/">OpenStreetMap</a>', maxZoom: 18
   }).addTo(kaart);
 
-  const markers = LOCATIES.map(loc => {
-    const icon = L.divIcon({
-      className: '',
-      html: `<div class="disc-marker">${maakMarkerHTML(loc, new Set())}</div>`,
-      iconAnchor: [0, 13],
-      popupAnchor: [13, -13],
+  // Locaties laden vanuit locaties.json
+  async function laadLocaties() {
+    try {
+      const resp = await fetch('locaties.json?t=' + Date.now());
+      if (!resp.ok) throw new Error('Niet gevonden');
+      alleLocaties = await resp.json();
+    } catch(e) {
+      // Fallback: lege lijst tonen
+      alleLocaties = [];
+    }
+    bouwKaartEnLijst();
+  }
+
+  function bouwKaartEnLijst() {
+    // Kaartmarkers verwijderen
+    kaartMarkers.forEach(m => m.remove());
+    kaartMarkers = [];
+
+    // Locatiekaarten genereren
+    const grid = document.getElementById('locaties-grid');
+    if (alleLocaties.length === 0) {
+      grid.innerHTML = '<p style="padding:24px;color:var(--text-muted);grid-column:1/-1">Nog geen aangesloten praktijken gevonden.</p>';
+    } else {
+      grid.innerHTML = alleLocaties.map(loc => maakLocatieKaart(loc)).join('');
+    }
+
+    // Kaartmarkers toevoegen
+    alleLocaties.forEach(loc => {
+      const disc = loc.disciplines.map(d => d.toLowerCase());
+      const pillsHTML = disc.map(d => {
+        const cfg = DISC_CONFIG[d];
+        return cfg ? `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>` : '';
+      }).join('');
+
+      if (!pillsHTML) return;
+
+      const icon = L.divIcon({
+        className: '',
+        html: `<div class="disc-marker">${pillsHTML}</div>`,
+        iconAnchor: [0,13], popupAnchor: [13,-13]
+      });
+
+      const popupHTML = `
+        <div class="popup-adres">📍 <strong>${loc.adres}</strong></div>
+        <div class="popup-praktijken">
+          <div class="popup-praktijk">
+            <div class="popup-praktijk-naam">
+              ${loc.website ? `<a href="${loc.website}" target="_blank" rel="noopener">${loc.naam}</a>` : loc.naam}
+            </div>
+          </div>
+        </div>`;
+
+      const marker = L.marker([loc.lat, loc.lng], { icon })
+        .addTo(kaart)
+        .bindPopup(popupHTML, { maxWidth: 260 });
+
+      kaartMarkers.push(marker);
+      marker._locData = loc;
     });
-    const marker = L.marker([loc.lat, loc.lng], { icon })
-      .addTo(kaart)
-      .bindPopup(maakPopupHTML(loc), { maxWidth: 260 });
-    return { loc, marker };
-  });
+
+    updateFilter();
+  }
+
+  function maakLocatieKaart(loc) {
+    const disc     = loc.disciplines.map(d => d.toLowerCase());
+    const tier     = (loc.tier || 'basis').toLowerCase();
+    const tierStijl = TIER_STIJL[tier] || TIER_STIJL.basis;
+    const discStr  = disc[0] || '';
+
+    const tierBadge = tierStijl.label
+      ? `<span style="font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:999px;background:${tierStijl.bg};color:${tierStijl.kleur};border:1px solid ${tierStijl.rand};margin-bottom:8px;display:inline-block">${tierStijl.label}</span>`
+      : '';
+
+    const randStijl = tier !== 'basis'
+      ? `border-color:${tierStijl.rand};border-width:2px;`
+      : '';
+
+    const beschrijving = loc.beschrijving
+      ? `<div style="font-size:0.83rem;color:var(--text-muted);margin-top:10px;line-height:1.55;padding-top:10px;border-top:1px solid var(--grey-border)">${loc.beschrijving}</div>`
+      : '';
+
+    const cfg = DISC_CONFIG[discStr];
+    const tagStijl = cfg ? `background:${cfg.color};color:#fff` : 'background:var(--teal-light);color:var(--teal)';
+
+    return `
+      <div class="locatie-card" data-discipline="${discStr}" style="${randStijl}">
+        ${tierBadge}
+        <div class="locatie-card-header">
+          ${loc.website
+            ? `<a href="${loc.website}" class="locatie-naam" target="_blank" rel="noopener">${loc.naam}</a>`
+            : `<span class="locatie-naam">${loc.naam}</span>`}
+          <span class="discipline-tag" style="${tagStijl}">${loc.disciplines[0] || ''}</span>
+        </div>
+        <div class="locatie-adres">📍 ${loc.adres}</div>
+        <div class="locatie-contact">
+          ${loc.email    ? `<a href="mailto:${loc.email}">✉ ${loc.email}</a>` : ''}
+          ${loc.telefoon ? `<a href="tel:${loc.telefoon.replace(/[^+\d]/g,'')}">📞 ${loc.telefoon}</a>` : ''}
+          ${loc.website  ? `<a href="${loc.website}" target="_blank" rel="noopener">🌐 Website</a>` : ''}
+        </div>
+        ${beschrijving}
+      </div>`;
+  }
 
   function updateFilter() {
+    // Kaartkaarten
     document.querySelectorAll('.locatie-card').forEach(card => {
-      const disc = card.dataset.discipline;
+      const disc = (card.dataset.discipline || '').toLowerCase();
       const match = actieveDisc.size === Object.keys(DISC_CONFIG).length || actieveDisc.has(disc);
       card.style.display = match ? '' : 'none';
     });
 
-    markers.forEach(({ loc, marker }) => {
-      const discVanLoc = alleDisc(loc);
-      const zichtbaar = discVanLoc.some(d => actieveDisc.has(d));
+    // Kaartmarkers
+    kaartMarkers.forEach(marker => {
+      const loc  = marker._locData;
+      const disc = (loc.disciplines || []).map(d => d.toLowerCase());
       const alleActief = actieveDisc.size === Object.keys(DISC_CONFIG).length;
-      const pillsHTML = maakMarkerHTML(loc, alleActief ? new Set() : actieveDisc);
+      const zichtbaar  = disc.some(d => actieveDisc.has(d));
 
-      if (zichtbaar && pillsHTML) {
+      if (zichtbaar) {
         marker.addTo(kaart);
-        marker.setIcon(L.divIcon({
-          className: '',
-          html: `<div class="disc-marker">${pillsHTML}</div>`,
-          iconAnchor: [0, 13],
-          popupAnchor: [13, -13],
-        }));
+        const pillsHTML = disc
+          .filter(d => alleActief || actieveDisc.has(d))
+          .map(d => { const cfg = DISC_CONFIG[d]; return cfg ? `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>` : ''; })
+          .join('');
+        marker.setIcon(L.divIcon({ className: '', html: `<div class="disc-marker">${pillsHTML}</div>`, iconAnchor: [0,13], popupAnchor: [13,-13] }));
       } else {
         marker.remove();
       }
@@ -1195,20 +1172,16 @@
       Object.keys(DISC_CONFIG).forEach(d => actieveDisc.add(d));
       document.querySelectorAll('.disc-btn').forEach(b => b.classList.add('active'));
     } else {
-      document.querySelector('.disc-btn[onclick*="all"]').classList.remove('active');
-      if (actieveDisc.has(disc) && actieveDisc.size > 1) {
-        actieveDisc.delete(disc);
-        btn.classList.remove('active');
-      } else {
-        actieveDisc.add(disc);
-        btn.classList.add('active');
-      }
-      if (actieveDisc.size === Object.keys(DISC_CONFIG).length) {
-        document.querySelector('.disc-btn[onclick*="all"]').classList.add('active');
-      }
+      document.querySelector('.disc-btn[onclick*="\'all\'"]').classList.remove('active');
+      if (actieveDisc.has(disc) && actieveDisc.size > 1) { actieveDisc.delete(disc); btn.classList.remove('active'); }
+      else { actieveDisc.add(disc); btn.classList.add('active'); }
+      if (actieveDisc.size === Object.keys(DISC_CONFIG).length)
+        document.querySelector('.disc-btn[onclick*="\'all\'"]').classList.add('active');
     }
     updateFilter();
   }
+
+  laadLocaties();
 
 </script>
 </body>
