@@ -586,8 +586,8 @@
     <p>Behandelprotocollen die continu worden bijgehouden door een team van experts. Transparant, eenduidig en beschikbaar op drie leesniveaus.</p>
     <div class="hero-stats">
       <div class="stat"><div class="stat-num">3</div><div class="stat-label">Leesniveaus</div></div>
-      <div class="stat"><div class="stat-num">17+</div><div class="stat-label">Protocollen</div></div>
-      <div class="stat"><div class="stat-num">6+</div><div class="stat-label">Praktijken</div></div>
+      <div class="stat"><div class="stat-num" id="stat-protocollen">–</div><div class="stat-label">Protocollen</div></div>
+      <div class="stat"><div class="stat-num" id="stat-praktijken">–</div><div class="stat-label">Praktijken</div></div>
     </div>
   </div>
   <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -646,6 +646,27 @@
       <button class="disc-btn active" onclick="filterDisc(this, 'pedicure')">Pedicure</button>
       <button class="disc-btn active" onclick="filterDisc(this, 'orthopedisch schoenmaker')">Orth. schoenmaker</button>
       <button class="disc-btn active" onclick="filterDisc(this, 'ergotherapeut')">Ergotherapeut</button>
+    </div>
+
+    <!-- Zoekbalk -->
+    <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+      <div style="display:flex;flex:1;min-width:220px;max-width:400px;border:1.5px solid var(--grey-border);border-radius:8px;overflow:hidden;background:var(--white);">
+        <input type="text" id="locatie-zoek" placeholder="Postcode of plaats…"
+          style="flex:1;padding:10px 14px;border:none;outline:none;font-family:inherit;font-size:0.9rem;color:var(--text);"
+          onkeydown="if(event.key==='Enter') zoekLocatie()" />
+        <button onclick="zoekLocatie()"
+          style="padding:10px 16px;background:var(--teal);color:#fff;border:none;cursor:pointer;font-weight:600;font-size:0.85rem;white-space:nowrap;transition:background 0.2s"
+          onmouseover="this.style.background='#238a7e'" onmouseout="this.style.background='var(--teal)'">
+          🔍 Zoek
+        </button>
+      </div>
+      <button onclick="gebruikMijnLocatie()"
+        style="padding:10px 16px;border:1.5px solid var(--grey-border);border-radius:8px;background:var(--white);color:var(--text-muted);font-family:inherit;font-size:0.85rem;font-weight:600;cursor:pointer;white-space:nowrap;transition:all 0.2s"
+        onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'"
+        onmouseout="this.style.borderColor='var(--grey-border)';this.style.color='var(--text-muted)'">
+        📍 Gebruik mijn locatie
+      </button>
+      <div id="zoek-status" style="font-size:0.82rem;color:var(--text-muted);align-self:center;display:none"></div>
     </div>
 
     <div id="kaart"></div>
@@ -1047,6 +1068,9 @@
       // Fallback: lege lijst tonen
       alleLocaties = [];
     }
+    // Unieke praktijknamen tellen
+    const uniekePraktijken = new Set(alleLocaties.map(l => l.naam)).size;
+    updateStats(uniekePraktijken);
     bouwKaartEnLijst();
   }
 
@@ -1197,6 +1221,82 @@
   }
 
   laadLocaties();
+
+  // ════════════════════════════════════════════════════════
+  //  DYNAMISCHE HERO STATS
+  // ════════════════════════════════════════════════════════
+  function updateStats(aantalPraktijken) {
+    // Protocollen tellen vanuit PROTOCOLLEN array
+    const aantalProtocollen = PROTOCOLLEN.length;
+    document.getElementById('stat-protocollen').textContent = aantalProtocollen;
+    document.getElementById('stat-praktijken').textContent  = aantalPraktijken > 0 ? aantalPraktijken : '–';
+  }
+
+  // ════════════════════════════════════════════════════════
+  //  LOCATIE ZOEKEN (postcode/plaats)
+  // ════════════════════════════════════════════════════════
+  async function zoekLocatie() {
+    const zoekterm = document.getElementById('locatie-zoek').value.trim();
+    if (!zoekterm) return;
+
+    const status = document.getElementById('zoek-status');
+    status.style.display = 'block';
+    status.textContent = 'Zoeken…';
+
+    try {
+      const query = encodeURIComponent(zoekterm + ', Nederland');
+      const url   = `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1&countrycodes=nl`;
+      const resp  = await fetch(url, { headers: { 'User-Agent': 'EVN-Website/1.0' } });
+      const data  = await resp.json();
+
+      if (data.length === 0) {
+        status.textContent = 'Locatie niet gevonden. Probeer een andere postcode of plaats.';
+        return;
+      }
+
+      const lat = parseFloat(data[0].lat);
+      const lng = parseFloat(data[0].lon);
+      kaart.setView([lat, lng], 13);
+      status.textContent = `📍 ${data[0].display_name.split(',').slice(0,2).join(',')}`;
+
+    } catch(e) {
+      status.textContent = 'Zoeken mislukt. Controleer uw internetverbinding.';
+    }
+  }
+
+  // ════════════════════════════════════════════════════════
+  //  GEBRUIK MIJN LOCATIE
+  // ════════════════════════════════════════════════════════
+  function gebruikMijnLocatie() {
+    const status = document.getElementById('zoek-status');
+    status.style.display = 'block';
+    status.textContent = 'Locatie ophalen…';
+
+    if (!navigator.geolocation) {
+      status.textContent = 'Geolocatie wordt niet ondersteund door uw browser.';
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        const lat = pos.coords.latitude;
+        const lng = pos.coords.longitude;
+        kaart.setView([lat, lng], 13);
+
+        // Blauwe stip op gebruikerslocatie
+        if (window._gebruikerMarker) window._gebruikerMarker.remove();
+        window._gebruikerMarker = L.circleMarker([lat, lng], {
+          radius: 8, fillColor: '#2A9D8F', color: '#fff',
+          weight: 2, fillOpacity: 1
+        }).addTo(kaart).bindPopup('📍 Uw locatie').openPopup();
+
+        status.textContent = '📍 Uw locatie gevonden';
+      },
+      err => {
+        status.textContent = 'Locatie niet beschikbaar. Controleer uw browserinstellingen.';
+      }
+    );
+  }
 
 </script>
 </body>
