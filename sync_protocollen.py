@@ -16,18 +16,49 @@ class TextExtractor(HTMLParser):
         if tag in ('style', 'script'):
             self.skip = False
         if tag in ('p', 'li', 'h1', 'h2', 'h3', 'br', 'tr'):
-            self.text.append('\n')
+            self.text.append(' ')
     def handle_data(self, data):
         if not self.skip:
             self.text.append(data)
     def get_text(self):
         return ' '.join(' '.join(self.text).split())
 
+def opschonen_html(body):
+    """Schoon Google Docs HTML op naar leesbare HTML"""
+    # Verwijder style en script tags
+    body = re.sub(r'<style[^>]*>.*?</style>', '', body, flags=re.DOTALL)
+    body = re.sub(r'<script[^>]*>.*?</script>', '', body, flags=re.DOTALL)
+    # Verwijder alle inline stijlen
+    body = re.sub(r' style="[^"]*"', '', body)
+    # Verwijder alle class attributen
+    body = re.sub(r' class="[^"]*"', '', body)
+    # Verwijder id attributen
+    body = re.sub(r' id="[^"]*"', '', body)
+    # Verwijder lege spans
+    body = re.sub(r'<span>\s*</span>', '', body)
+    body = re.sub(r'<span>(.*?)</span>', r'\1', body)
+    # Verwijder lege paragrafen
+    body = re.sub(r'<p>\s*</p>', '', body)
+    # Verwijder lege divs
+    body = re.sub(r'<div>\s*</div>', '', body)
+    # Vervang hr tags
+    body = re.sub(r'<hr[^>]*>', '<hr>', body)
+    # Netjes maken
+    body = re.sub(r'\n{3,}', '\n\n', body)
+    return body.strip()
+
+def extraheer_preview(body, max_alineas=3):
+    """Haal eerste alineas op als opgeschoonde HTML"""
+    body = opschonen_html(body)
+    blokken = re.findall(r'<(p|h1|h2|h3)[^>]*>.*?</\1>', body, re.DOTALL | re.IGNORECASE)
+    blokken = [b for b in blokken if len(re.sub(r'<[^>]+>', '', b).strip()) > 10]
+    return '\n'.join(blokken[:max_alineas])
+
 ZONES = {
-    'enkel':      'Enkel',
+    'enkel': 'Enkel',
     'achtervoet': 'Achtervoet',
     'middenvoet': 'Middenvoet',
-    'voorvoet':   'Voorvoet',
+    'voorvoet': 'Voorvoet',
 }
 
 os.makedirs('protocollen', exist_ok=True)
@@ -36,6 +67,9 @@ protocol_data = []
 
 for protocol in config['protocollen']:
     protocol_teksten = {}
+    protocol_previews = {}
+    protocol_volledige_html = {}
+
     for niveau, doc_id in protocol['niveaus'].items():
         if not doc_id or doc_id == 'INVULLEN':
             print(f"Overgeslagen: {protocol['id']} - {niveau}")
@@ -49,13 +83,15 @@ for protocol in config['protocollen']:
             body_match = re.search(r'<body[^>]*>(.*?)</body>', html, re.DOTALL | re.IGNORECASE)
             if body_match:
                 body = body_match.group(1)
-                body = re.sub(r'<style[^>]*>.*?</style>', '', body, flags=re.DOTALL)
+                body_schoon = opschonen_html(body)
                 with open(bestandsnaam, 'w', encoding='utf-8') as out:
-                    out.write(body)
+                    out.write(body_schoon)
                 print(f"OK: {bestandsnaam}")
                 extractor = TextExtractor()
-                extractor.feed(body)
+                extractor.feed(body_schoon)
                 protocol_teksten[niveau] = extractor.get_text()[:2000]
+                protocol_previews[niveau] = extraheer_preview(body, max_alineas=3)
+                protocol_volledige_html[niveau] = body_schoon
             else:
                 fouten.append(bestandsnaam)
         except Exception as e:
@@ -66,32 +102,47 @@ for protocol in config['protocollen']:
         'id': protocol['id'],
         'naam': protocol['naam'],
         'zone': protocol.get('zone', ''),
-        'teksten': protocol_teksten
+        'teksten': protocol_teksten,
+        'previews': protocol_previews,
+        'volledige_html': protocol_volledige_html
     })
 
-# Genereer protocollen.html
 print("Genereer protocollen.html...")
 
 protocol_kaarten = ''
 for p in protocol_data:
     zone_id = p['zone']
     zone_naam = ZONES.get(zone_id, zone_id.capitalize())
-    tekst = p['teksten'].get('makkelijk', p['teksten'].get('gemiddeld', ''))
-    tekst_kort = tekst[:300] + '…' if len(tekst) > 300 else tekst
-    tekst_data = tekst[:500].lower().replace('"', '').replace("'", '')
+    preview_html = p['previews'].get('makkelijk', p['previews'].get('gemiddeld', '<p>Geen preview beschikbaar.</p>'))
+    tekst_data = p['teksten'].get('makkelijk', '').get if callable(p['teksten'].get('makkelijk', '')) else p['teksten'].get('makkelijk', p['teksten'].get('gemiddeld', ''))
+    tekst_data = tekst_data[:500].lower().replace('"', '').replace("'", '')
+
+    # Volledige HTML per niveau als escaped JSON
+    import json as jsonlib
+    volledige_json = jsonlib.dumps(p['volledige_html'])
+
+    niveau_labels = {'makkelijk': 'Makkelijk', 'gemiddeld': 'Gemiddeld', 'complex': 'Complex'}
+    niveau_emojis = {'makkelijk': '📗', 'gemiddeld': '📘', 'complex': '📕'}
 
     niveaus_html = ''
     for n in p['teksten'].keys():
-        emoji = '📗' if n == 'makkelijk' else '📘' if n == 'gemiddeld' else '📕'
-        niveaus_html += f'<a href="index.html" class="niveau-btn niveau-{n}">{emoji} {n.capitalize()}</a>'
+        emoji = niveau_emojis.get(n, '')
+        label = niveau_labels.get(n, n.capitalize())
+        niveaus_html += f'<button class="niveau-btn niveau-{n}" onclick="openProtocol(\'{p["id"]}\', \'{n}\')">{emoji} {label}</button>\n'
 
-    protocol_kaarten += f'''
-<div class="protocol-kaart" data-naam="{p['naam'].lower()}" data-zone="{zone_id}" data-tekst="{tekst_data}">
+    protocol_kaarten += f'''<div class="protocol-kaart" id="kaart-{p['id']}" data-naam="{p['naam'].lower()}" data-zone="{zone_id}" data-tekst="{tekst_data}" data-html="{volledige_json.replace('"', '&quot;')}">
   <div class="protocol-zone-badge">{zone_naam}</div>
   <h2 class="protocol-naam">{p['naam']}</h2>
-  <p class="protocol-tekst">{tekst_kort}</p>
+  <div class="protocol-preview">{preview_html}</div>
   <div class="protocol-niveaus">
     {niveaus_html}
+  </div>
+  <div class="protocol-viewer" id="viewer-{p['id']}" style="display:none">
+    <div class="viewer-header">
+      <span id="viewer-titel-{p['id']}"></span>
+      <button onclick="sluitProtocol('{p['id']}')" style="background:none;border:none;cursor:pointer;font-size:1.2rem;color:var(--text-muted)">✕</button>
+    </div>
+    <div class="viewer-inhoud" id="viewer-inhoud-{p['id']}"></div>
   </div>
 </div>'''
 
@@ -106,11 +157,7 @@ html_pagina = '''<!DOCTYPE html>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4;
-      --grey-bg: #F5F7FA; --grey-border: #DDE3EC;
-      --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF;
-    }
+    :root { --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4; --grey-bg: #F5F7FA; --grey-border: #DDE3EC; --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF; }
     html { scroll-behavior: smooth; }
     body { font-family: "Inter", sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; }
     header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
@@ -138,23 +185,38 @@ html_pagina = '''<!DOCTYPE html>
     .zone-btn:hover, .zone-btn.actief { background: var(--navy); border-color: var(--navy); color: var(--white); }
     .container { max-width: 1100px; margin: 32px auto 64px; padding: 0 24px; }
     .resultaat-info { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
-    .protocollen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
-    .protocol-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 24px; transition: box-shadow 0.2s, transform 0.2s; }
-    .protocol-kaart:hover { box-shadow: 0 4px 20px rgba(27,58,92,0.10); transform: translateY(-2px); }
+    .protocollen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+    .protocol-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 24px; transition: box-shadow 0.2s; display: flex; flex-direction: column; }
+    .protocol-kaart:hover { box-shadow: 0 4px 20px rgba(27,58,92,0.10); }
     .protocol-kaart.verborgen { display: none; }
     .protocol-zone-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); background: var(--teal-light); padding: 2px 10px; border-radius: 999px; margin-bottom: 10px; }
-    .protocol-naam { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; line-height: 1.3; }
-    .protocol-tekst { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; }
-    .protocol-niveaus { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--grey-border); }
-    .niveau-btn { padding: 6px 14px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: all 0.15s; cursor: pointer; border: none; display: inline-block; }
+    .protocol-naam { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; line-height: 1.3; }
+    .protocol-preview { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; flex: 1; overflow: hidden; max-height: 120px; position: relative; }
+    .protocol-preview::after { content: ""; position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: linear-gradient(transparent, white); }
+    .protocol-preview h1, .protocol-preview h2, .protocol-preview h3 { color: var(--navy); font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; margin-top: 8px; }
+    .protocol-preview p { margin-bottom: 6px; }
+    .protocol-niveaus { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 14px; border-top: 1px solid var(--grey-border); margin-top: auto; }
+    .niveau-btn { padding: 6px 14px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; transition: all 0.15s; cursor: pointer; border: none; display: inline-block; }
     .niveau-makkelijk { background: #EAF7F0; color: #1E8449; }
     .niveau-makkelijk:hover { background: #1E8449; color: white; }
     .niveau-gemiddeld { background: #FEF9E7; color: #B7770D; }
     .niveau-gemiddeld:hover { background: #B7770D; color: white; }
     .niveau-complex { background: #EAF0FB; color: #1A5276; }
     .niveau-complex:hover { background: #1A5276; color: white; }
+    .protocol-viewer { margin-top: 20px; border-top: 2px solid var(--teal); padding-top: 16px; }
+    .viewer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .viewer-header span { font-size: 0.85rem; font-weight: 700; color: var(--teal); }
+    .viewer-inhoud { font-size: 0.9rem; line-height: 1.75; color: var(--text); max-height: 500px; overflow-y: auto; padding-right: 8px; }
+    .viewer-inhoud h1 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin: 1em 0 0.5em; }
+    .viewer-inhoud h2 { font-size: 1rem; font-weight: 700; color: var(--navy); margin: 1em 0 0.4em; }
+    .viewer-inhoud h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin: 0.8em 0 0.3em; }
+    .viewer-inhoud p { margin-bottom: 0.8em; }
+    .viewer-inhoud ul, .viewer-inhoud ol { margin: 0.4em 0 0.8em 1.5em; }
+    .viewer-inhoud li { margin-bottom: 0.3em; }
+    .viewer-inhoud table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.85rem; }
+    .viewer-inhoud td, .viewer-inhoud th { border: 1px solid var(--grey-border); padding: 6px 10px; text-align: left; }
+    .viewer-inhoud th { background: var(--grey-bg); font-weight: 600; }
     .geen-resultaten { text-align: center; padding: 64px 24px; color: var(--text-muted); display: none; }
-    .geen-resultaten .icon { font-size: 3rem; margin-bottom: 12px; }
     footer { background: #0F2340; color: rgba(255,255,255,0.5); text-align: center; padding: 28px 24px; font-size: 0.82rem; }
     footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
     @media (max-width: 700px) { nav { display: none; } .protocollen-grid { grid-template-columns: 1fr; } }
@@ -168,7 +230,7 @@ html_pagina = '''<!DOCTYPE html>
       <div class="logo-text">Enkel Voet Netwerk<span>Breda e.o.</span></div>
     </a>
     <nav>
-      <a href="index.html#protocollen">Protocollen</a>
+      <a href="protocollen.html">Protocollen</a>
       <a href="index.html#locaties">Locaties</a>
       <a href="partners.html">Partners</a>
       <a href="therapeut-worden.html">Aanmelden als therapeut</a>
@@ -182,17 +244,17 @@ html_pagina = '''<!DOCTYPE html>
   <div class="zoekbalk-wrap">
     <div class="zoekbalk">
       <input type="text" id="zoek-input" placeholder="Zoek bijv. enkelverzwikking, achillespees, slijtage..." oninput="zoek()" />
-      <button onclick="zoek()">Zoeken</button>
+      <button onclick="zoek()">🔍 Zoeken</button>
     </div>
   </div>
 </div>
 <div class="filter-wrap">
   <span class="filter-label">Zone:</span>
   <button class="zone-btn actief" onclick="filterZone(this, 'alle')">Alle zones</button>
-  <button class="zone-btn" onclick="filterZone(this, 'enkel')">Enkel</button>
-  <button class="zone-btn" onclick="filterZone(this, 'achtervoet')">Achtervoet</button>
-  <button class="zone-btn" onclick="filterZone(this, 'middenvoet')">Middenvoet</button>
-  <button class="zone-btn" onclick="filterZone(this, 'voorvoet')">Voorvoet</button>
+  <button class="zone-btn" onclick="filterZone(this, 'enkel')">🦵 Enkel</button>
+  <button class="zone-btn" onclick="filterZone(this, 'achtervoet')">🦶 Achtervoet</button>
+  <button class="zone-btn" onclick="filterZone(this, 'middenvoet')">👣 Middenvoet</button>
+  <button class="zone-btn" onclick="filterZone(this, 'voorvoet')">👣 Voorvoet</button>
 </div>
 <div class="container">
   <div class="resultaat-info" id="resultaat-info"></div>
@@ -200,16 +262,49 @@ html_pagina = '''<!DOCTYPE html>
     PROTOCOL_KAARTEN
   </div>
   <div class="geen-resultaten" id="geen-resultaten">
-    <div class="icon">Geen resultaten</div>
+    <div style="font-size:3rem;margin-bottom:12px">🔍</div>
     <div>Geen protocollen gevonden voor deze zoekopdracht.</div>
   </div>
 </div>
 <footer>
-  <p>2025 Enkel Voet Netwerk Breda e.o. - <a href="index.html">Terug naar home</a></p>
+  <p>2025 Enkel Voet Netwerk Breda e.o. &nbsp;·&nbsp; <a href="index.html">Terug naar home</a></p>
 </footer>
 <script>
   let actieveZone = "alle";
+
+  // Protocol data opgeslagen in kaart elementen
+  function openProtocol(id, niveau) {
+    const kaart = document.getElementById("kaart-" + id);
+    const viewer = document.getElementById("viewer-" + id);
+    const inhoud = document.getElementById("viewer-inhoud-" + id);
+    const titel = document.getElementById("viewer-titel-" + id);
+    const niveauLabels = {makkelijk: "📗 Makkelijk", gemiddeld: "📘 Gemiddeld", complex: "📕 Complex"};
+
+    // Sluit andere open viewers
+    document.querySelectorAll(".protocol-viewer").forEach(v => {
+      if (v.id !== "viewer-" + id) v.style.display = "none";
+    });
+
+    // Haal HTML op uit data attribuut
+    try {
+      const htmlData = JSON.parse(kaart.dataset.html.replace(/&quot;/g, '"'));
+      const html = htmlData[niveau] || "<p>Dit niveau is nog niet beschikbaar.</p>";
+      inhoud.innerHTML = html;
+      titel.textContent = niveauLabels[niveau] || niveau;
+      viewer.style.display = "block";
+      viewer.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } catch(e) {
+      inhoud.innerHTML = "<p>Protocol kon niet worden geladen.</p>";
+      viewer.style.display = "block";
+    }
+  }
+
+  function sluitProtocol(id) {
+    document.getElementById("viewer-" + id).style.display = "none";
+  }
+
   function normaliseer(t) { return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+
   function zoek() {
     const zoekterm = normaliseer(document.getElementById("zoek-input").value);
     const kaarten = document.querySelectorAll(".protocol-kaart");
@@ -225,6 +320,7 @@ html_pagina = '''<!DOCTYPE html>
     document.getElementById("resultaat-info").textContent = zoekterm || actieveZone !== "alle" ? zichtbaar + " protocollen gevonden" : "";
     document.getElementById("geen-resultaten").style.display = zichtbaar === 0 ? "block" : "none";
   }
+
   function filterZone(btn, zone) {
     actieveZone = zone;
     document.querySelectorAll(".zone-btn").forEach(b => b.classList.remove("actief"));
@@ -242,4 +338,4 @@ with open('protocollen.html', 'w', encoding='utf-8') as f:
 print(f"OK: protocollen.html gegenereerd met {len(protocol_data)} protocollen")
 
 if fouten:
-    print(f"WAARSCHUWING: {len(fouten)} fouten maar doorgaan")
+    print(f"WAARSCHUWING: {len(fouten)} fouten")
