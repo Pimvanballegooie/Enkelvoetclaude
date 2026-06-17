@@ -28,6 +28,8 @@ def opschonen_html(body):
     # Verwijder style en script tags
     body = re.sub(r'<style[^>]*>.*?</style>', '', body, flags=re.DOTALL)
     body = re.sub(r'<script[^>]*>.*?</script>', '', body, flags=re.DOTALL)
+    # Verwijder afbeeldingen (logo etc uit Google Docs)
+    body = re.sub(r'<img[^>]*>', '', body)
     # Verwijder alle inline stijlen
     body = re.sub(r' style="[^"]*"', '', body)
     # Verwijder alle class attributen
@@ -185,8 +187,8 @@ html_pagina = '''<!DOCTYPE html>
     .zone-btn:hover, .zone-btn.actief { background: var(--navy); border-color: var(--navy); color: var(--white); }
     .container { max-width: 1100px; margin: 32px auto 64px; padding: 0 24px; }
     .resultaat-info { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
-    .protocollen-grid { display: flex; flex-direction: column; gap: 16px; max-width: 800px; }
-    .protocol-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 24px; transition: box-shadow 0.2s; display: flex; flex-direction: column; }
+    .protocollen-grid { display: flex; flex-direction: column; gap: 16px; }
+    .protocol-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 28px 32px; transition: box-shadow 0.2s; display: flex; flex-direction: column; }
     .protocol-kaart:hover { box-shadow: 0 4px 20px rgba(27,58,92,0.10); }
     .protocol-kaart.verborgen { display: none; }
     .protocol-zone-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); background: var(--teal-light); padding: 2px 10px; border-radius: 999px; margin-bottom: 10px; }
@@ -206,7 +208,7 @@ html_pagina = '''<!DOCTYPE html>
     .protocol-viewer { margin-top: 20px; border-top: 2px solid var(--teal); padding-top: 16px; }
     .viewer-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
     .viewer-header span { font-size: 0.85rem; font-weight: 700; color: var(--teal); }
-    .viewer-inhoud { font-size: 0.9rem; line-height: 1.75; color: var(--text); max-height: 500px; overflow-y: auto; padding-right: 8px; }
+    .viewer-inhoud { font-size: 0.9rem; line-height: 1.75; color: var(--text); padding-right: 8px; }
     .viewer-inhoud h1 { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin: 1em 0 0.5em; }
     .viewer-inhoud h2 { font-size: 1rem; font-weight: 700; color: var(--navy); margin: 1em 0 0.4em; }
     .viewer-inhoud h3 { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin: 0.8em 0 0.3em; }
