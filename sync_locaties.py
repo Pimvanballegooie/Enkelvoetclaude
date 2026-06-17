@@ -46,6 +46,9 @@ def opschonen_html(body):
     body = re.sub(r'<div>\s*</div>', '', body)
     # Vervang hr tags
     body = re.sub(r'<hr[^>]*>', '<hr>', body)
+    # Verwijder Oefenfilmpjes sectie uit de tekst (staat al in zijbalk)
+    body = re.sub(r'<[^>]*>[^<]*Oefenfilmpjes[^<]*</[^>]*>.*?(?=<h[123]|$)', '', body, flags=re.DOTALL | re.IGNORECASE)
+
     # Netjes maken
     body = re.sub(r'\n{3,}', '\n\n', body)
 
@@ -153,7 +156,14 @@ for p in protocol_data:
     eerste_html = p['volledige_html'].get('makkelijk', p['volledige_html'].get('gemiddeld', ''))
     if eerste_html:
         import re as re2
-        links = re2.findall(r'<a href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"[^>]*>&#128249; ([^<]+)</a>', eerste_html)
+        # Gebruik set om dubbele links te voorkomen
+        gezien = set()
+        alle_links = re2.findall(r'<a href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"[^>]*>&#128249; ([^<]+)</a>', eerste_html)
+        links = []
+        for url, naam in alle_links:
+            if url not in gezien:
+                gezien.add(url)
+                links.append((url, naam))
         if links:
             oefenfilmpjes_html = '<div class="oefenfilmpjes-zijbalk"><div class="oefenfilmpjes-titel">📹 Oefenfilmpjes</div>'
             for url, naam in links:
@@ -227,7 +237,7 @@ html_pagina = '''<!DOCTYPE html>
     .protocol-kaart.verborgen { display: none; }
     .kaart-top { display: flex; gap: 24px; align-items: flex-start; }
     .kaart-links { flex: 1; }
-    .oefenfilmpjes-zijbalk { width: 200px; flex-shrink: 0; background: var(--teal-light); border-radius: 10px; padding: 16px; }
+    .oefenfilmpjes-zijbalk { width: 260px; flex-shrink: 0; background: var(--teal-light); border-radius: 10px; padding: 16px; }
     .oefenfilmpjes-titel { font-size: 0.82rem; font-weight: 700; color: var(--teal); margin-bottom: 10px; }
     .oefenfilmpje-knop { display: block; margin-bottom: 8px; padding: 8px 12px; background: white; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
     .oefenfilmpje-knop:hover { background: var(--teal); color: white; }
