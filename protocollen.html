@@ -103,7 +103,6 @@
 <div class="hero">
   <h1>Alle behandelprotocollen<br><em>enkel & voet</em></h1>
   <p>Zoek op aandoening, klacht of behandeling. Beschikbaar op drie leesniveaus.</p>
-  <p style="margin-top:14px;font-size:0.78rem;opacity:0.65;max-width:520px;margin-left:auto;margin-right:auto">⚠️ Deze protocollen zijn algemene informatie voor zorgverleners en patiënten. Ze vervangen geen persoonlijk advies van een arts of fysiotherapeut. Bij twijfel of alarmsymptomen altijd contact opnemen met een zorgverlener.</p>
   <div class="zoekbalk-wrap">
     <div class="zoekbalk">
       <input type="text" id="zoek-input" placeholder="Zoek bijv. enkelverzwikking, achillespees, slijtage..." oninput="zoek()" />
@@ -470,7 +469,12 @@
   </div>
 </div>
 <footer>
-  <p>2025 Enkel Voet Netwerk Breda e.o. &nbsp;·&nbsp; <a href="index.html">Terug naar home</a></p>
+  <div style="max-width:1200px;margin:0 auto 32px;padding:0 clamp(1rem,4vw,3rem)">
+  <p style="font-size:0.78rem;color:var(--text-muted);line-height:1.6">⚠️ Deze protocollen zijn algemene informatie voor zorgverleners en patiënten. Ze vervangen geen persoonlijk advies van een arts of fysiotherapeut. Bij twijfel of alarmsymptomen altijd contact opnemen met een zorgverlener.</p>
+</div>
+<footer>
+  <p>© 2025 Enkel Voet Netwerk Breda e.o. &nbsp;·&nbsp; <a href="index.html">Terug naar home</a> &nbsp;·&nbsp; <a href="privacy.html">Privacyverklaring</a></p>
+</footer>
 </footer>
 <script>
   let actieveZone = "alle";
