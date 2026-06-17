@@ -288,13 +288,17 @@
       </label>`).join('');
   }
 
+  function normaliseer(tekst) {
+    return tekst.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  }
+
   function filterPraktijken(zoekterm) {
     const items = document.querySelectorAll('#praktijk-checkboxes label');
-    const lower = zoekterm.toLowerCase();
+    const zoek = normaliseer(zoekterm);
     let zichtbaar = 0;
     items.forEach(item => {
-      const tekst = item.textContent.toLowerCase();
-      const match = tekst.includes(lower);
+      const tekst = normaliseer(item.textContent);
+      const match = tekst.includes(zoek);
       item.style.display = match ? '' : 'none';
       if (match) zichtbaar++;
     });
