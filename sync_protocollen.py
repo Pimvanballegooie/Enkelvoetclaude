@@ -148,12 +148,30 @@ for p in protocol_data:
         label = niveau_labels.get(n, n.capitalize())
         niveaus_html += f'<button class="niveau-btn niveau-{n}" onclick="openProtocol(\'{p["id"]}\', \'{n}\')">{emoji} {label}</button>\n'
 
+    # Extraheer oefenfilmpjes links uit de volledige HTML
+    oefenfilmpjes_html = ''
+    eerste_html = p['volledige_html'].get('makkelijk', p['volledige_html'].get('gemiddeld', ''))
+    if eerste_html:
+        import re as re2
+        links = re2.findall(r'<a href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"[^>]*>&#128249; ([^<]+)</a>', eerste_html)
+        if links:
+            oefenfilmpjes_html = '<div class="oefenfilmpjes-zijbalk"><div class="oefenfilmpjes-titel">📹 Oefenfilmpjes</div>'
+            for url, naam in links:
+                oefenfilmpjes_html += f'''<a href="{url}" target="_blank" rel="noopener" class="oefenfilmpje-knop">{naam.strip()}</a>'''
+            oefenfilmpjes_html += '<p class="oefenfilmpjes-disclaimer">Voor de juiste uitvoering en intensiteit is begeleiding van een therapeut noodzakelijk.</p>'
+            oefenfilmpjes_html += '</div>'
+
     protocol_kaarten += f'''<div class="protocol-kaart" id="kaart-{p['id']}" data-naam="{p['naam'].lower()}" data-zone="{zone_id}" data-tekst="{tekst_data}" data-html="{volledige_json.replace('"', '&quot;')}">
-  <div class="protocol-zone-badge">{zone_naam}</div>
-  <h2 class="protocol-naam">{p['naam']}</h2>
-  <div class="protocol-preview">{preview_html}</div>
-  <div class="protocol-niveaus">
-    {niveaus_html}
+  <div class="kaart-top">
+    <div class="kaart-links">
+      <div class="protocol-zone-badge">{zone_naam}</div>
+      <h2 class="protocol-naam">{p['naam']}</h2>
+      <div class="protocol-preview">{preview_html}</div>
+      <div class="protocol-niveaus">
+        {niveaus_html}
+      </div>
+    </div>
+    {oefenfilmpjes_html}
   </div>
   <div class="protocol-viewer" id="viewer-{p['id']}" style="display:none">
     <div class="viewer-header">
@@ -207,6 +225,13 @@ html_pagina = '''<!DOCTYPE html>
     .protocol-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 28px 32px; transition: box-shadow 0.2s; display: flex; flex-direction: column; }
     .protocol-kaart:hover { box-shadow: 0 4px 20px rgba(27,58,92,0.10); }
     .protocol-kaart.verborgen { display: none; }
+    .kaart-top { display: flex; gap: 24px; align-items: flex-start; }
+    .kaart-links { flex: 1; }
+    .oefenfilmpjes-zijbalk { width: 200px; flex-shrink: 0; background: var(--teal-light); border-radius: 10px; padding: 16px; }
+    .oefenfilmpjes-titel { font-size: 0.82rem; font-weight: 700; color: var(--teal); margin-bottom: 10px; }
+    .oefenfilmpje-knop { display: block; margin-bottom: 8px; padding: 8px 12px; background: white; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+    .oefenfilmpje-knop:hover { background: var(--teal); color: white; }
+    .oefenfilmpjes-disclaimer { font-size: 0.72rem; color: var(--text-muted); margin-top: 10px; line-height: 1.4; font-style: italic; }
     .protocol-zone-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); background: var(--teal-light); padding: 2px 10px; border-radius: 999px; margin-bottom: 10px; }
     .protocol-naam { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; line-height: 1.3; }
     .protocol-preview { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; flex: 1; overflow: hidden; max-height: 120px; position: relative; }
