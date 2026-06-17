@@ -130,7 +130,7 @@
 
     <div class="form-wrap">
       <div id="form-content">
-
+<input type="text" name="website_url" id="website_url" style="display:none" tabindex="-1" autocomplete="off" />
         <!-- Persoonsgegevens -->
         <div class="form-section">
           <div class="form-section-title">Persoonsgegevens</div>
@@ -442,6 +442,7 @@ function valideerFotoUrl(url) {
 }
   
   async function verstuurFormulier() {
+    if (document.getElementById('website_url').value !== '') return;
     const voornaam = document.getElementById('voornaam').value.trim();
     const achternaam = document.getElementById('achternaam').value.trim();
     const email = document.getElementById('email').value.trim();
