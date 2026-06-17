@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beheer — Aanmeldingen</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4;
+      --grey-bg: #F5F7FA; --grey-border: #DDE3EC;
+      --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF;
+      --green: #27AE60; --red: #E74C3C; --gold: #C9940A;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--grey-bg); color: var(--text); min-height: 100vh; }
+    header { background: var(--navy); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; }
+    header h1 { color: white; font-size: 1.2rem; font-weight: 700; }
+    header span { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
+    .container { max-width: 1000px; margin: 32px auto; padding: 0 24px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card { background: white; border-radius: 12px; padding: 20px 24px; border: 1px solid var(--grey-border); }
+    .stat-card .num { font-size: 2rem; font-weight: 700; color: var(--navy); }
+    .stat-card .label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+    .sectie-titel { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .badge { display: inline-block; background: #FEF3CD; color: #856404; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+    .kaart { background: white; border: 1px solid var(--grey-border); border-radius: 16px; padding: 24px; margin-bottom: 16px; }
+    .kaart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .kaart-naam { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+    .kaart-tier { display: inline-block; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-left: 8px; }
+    .tier-basis { background: var(--teal-light); color: var(--teal); }
+    .tier-plus { background: #EAF0FB; color: #1A5276; }
+    .tier-partner { background: #FEF9E7; color: var(--gold); }
+    .kaart-info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .info-item { font-size: 0.85rem; }
+    .info-item .info-label { color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .info-item .info-waarde { color: var(--text); }
+    .disciplines { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .disc-tag { background: var(--teal-light); color: var(--teal); font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+    .kaart-acties { display: flex; gap: 12px; padding-top: 16px; border-top: 1px solid var(--grey-border); }
+    .btn { padding: 10px 20px; border-radius: 8px; border: none; font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .btn-goedkeuren { background: var(--green); color: white; }
+    .btn-goedkeuren:hover { background: #219A52; }
+    .btn-afwijzen { background: none; border: 1.5px solid var(--red); color: var(--red); }
+    .btn-afwijzen:hover { background: var(--red); color: white; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .leeg { text-align: center; padding: 48px; color: var(--text-muted); }
+    .leeg .icon { font-size: 3rem; margin-bottom: 12px; }
+    .laden { text-align: center; padding: 48px; color: var(--text-muted); }
+    .beschrijving { background: var(--grey-bg); border-radius: 8px; padding: 12px 14px; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+    .datum { font-size: 0.78rem; color: var(--text-muted); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🔐 Beheer — Aanmeldingen</h1>
+  <span id="header-info">Laden...</span>
+</header>
+
+<div class="container">
+
+  <div class="stats">
+    <div class="stat-card">
+      <div class="num" id="stat-wachtend">—</div>
+      <div class="label">Wachtend op goedkeuring</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-actief">—</div>
+      <div class="label">Actieve praktijken</div>
+    </div>
+    <div class="stat-card">
+      <div class="num" id="stat-totaal">—</div>
+      <div class="label">Totaal aanmeldingen</div>
+    </div>
+  </div>
+
+  <div class="sectie-titel">
+    Wachtend op goedkeuring
+    <span class="badge" id="badge-aantal">0</span>
+  </div>
+
+  <div id="aanmeldingen-lijst">
+    <div class="laden">⏳ Laden...</div>
+  </div>
+
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
+  const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTY0NjMwMCwiZXhwIjoyMDk3MjIyMzAwfQ.FzVt-I4PNE2lUpdwNqDANYz3kBEdvP9pYe9cXnlYp0A';
+
+  const headers = {
+    'apikey': SERVICE_KEY,
+    'Authorization': `Bearer ${SERVICE_KEY}`,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+  };
+
+  async function laadData() {
+    // Haal alle praktijken op
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?select=*&order=aangemeld_op.desc`, { headers });
+    const praktijken = await resp.json();
+
+    const wachtend = praktijken.filter(p => !p.actief);
+    const actief = praktijken.filter(p => p.actief);
+
+    // Stats bijwerken
+    document.getElementById('stat-wachtend').textContent = wachtend.length;
+    document.getElementById('stat-actief').textContent = actief.length;
+    document.getElementById('stat-totaal').textContent = praktijken.length;
+    document.getElementById('badge-aantal').textContent = wachtend.length;
+    document.getElementById('header-info').textContent = `${wachtend.length} wachtend`;
+
+    // Lijst tonen
+    const lijst = document.getElementById('aanmeldingen-lijst');
+
+    if (wachtend.length === 0) {
+      lijst.innerHTML = `
+        <div class="leeg">
+          <div class="icon">✅</div>
+          <div>Geen aanmeldingen wachtend op goedkeuring</div>
+        </div>`;
+      return;
+    }
+
+    lijst.innerHTML = wachtend.map(p => `
+      <div class="kaart" id="kaart-${p.id}">
+        <div class="kaart-header">
+          <div>
+            <span class="kaart-naam">${p.naam}</span>
+            <span class="kaart-tier tier-${p.tier || 'basis'}">${p.tier || 'basis'}</span>
+          </div>
+          <span class="datum">${new Date(p.aangemeld_op).toLocaleDateString('nl-NL', {day:'numeric', month:'long', year:'numeric'})}</span>
+        </div>
+
+        <div class="kaart-info">
+          <div class="info-item">
+            <div class="info-label">Adres</div>
+            <div class="info-waarde">${p.straat || '—'}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Website</div>
+            <div class="info-waarde">${p.website ? `<a href="${p.website}" target="_blank">${p.website}</a>` : '—'}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Contact</div>
+            <div class="info-waarde">${p.contact_voornaam || ''} ${p.contact_achternaam || ''}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">E-mail contact</div>
+            <div class="info-waarde">${p.contact_email || '—'}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">Telefoon praktijk</div>
+            <div class="info-waarde">${p.telefoon || '—'}</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">E-mail praktijk</div>
+            <div class="info-waarde">${p.email || '—'}</div>
+          </div>
+        </div>
+
+        ${p.disciplines && p.disciplines.length > 0 ? `
+          <div class="disciplines">
+            ${p.disciplines.map(d => `<span class="disc-tag">${d}</span>`).join('')}
+          </div>` : ''}
+
+        ${p.beschrijving ? `<div class="beschrijving">"${p.beschrijving}"</div>` : ''}
+
+        ${p.toelichting ? `
+          <div class="info-item" style="margin-bottom:16px">
+            <div class="info-label">Toelichting</div>
+            <div class="info-waarde">${p.toelichting}</div>
+          </div>` : ''}
+
+        <div class="kaart-acties">
+          <button class="btn btn-goedkeuren" onclick="goedkeuren(${p.id})">✓ Goedkeuren</button>
+          <button class="btn btn-afwijzen" onclick="afwijzen(${p.id})">✕ Afwijzen</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  async function goedkeuren(id) {
+    if (!confirm('Weet je zeker dat je deze aanmelding wilt goedkeuren?')) return;
+    const kaart = document.getElementById(`kaart-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+
+    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, {
+      method: 'PATCH',
+      headers,
+      body: JSON.stringify({ actief: true })
+    });
+
+    kaart.style.opacity = '0.5';
+    kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadData(); }, 500);
+  }
+
+  async function afwijzen(id) {
+    if (!confirm('Weet je zeker dat je deze aanmelding wilt afwijzen en verwijderen?')) return;
+    const kaart = document.getElementById(`kaart-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+
+    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, {
+      method: 'DELETE',
+      headers
+    });
+
+    kaart.style.opacity = '0';
+    kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadData(); }, 500);
+  }
+
+  laadData();
+</script>
+</body>
+</html>
