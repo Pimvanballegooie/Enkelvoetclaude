@@ -91,6 +91,7 @@ for p in praktijken:
     tier = p.get("tier", "basis") or "basis"
 
     locaties.append({
+        "id":           p.get("id"),
         "naam":         naam,
         "adres":        volledig_adres,
         "postcode":     postcode,
