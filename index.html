@@ -24,525 +24,144 @@
     }
 
     html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text); background: var(--white); line-height: 1.6; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      font-size: 16px;
-      color: var(--text);
-      background: var(--white);
-      line-height: 1.6;
-    }
-
-    /* ── HEADER ── */
-    header {
-      background: var(--navy);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-    }
-
-    .header-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 68px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
+    header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 40px; height: 40px; }
-
-    .logo-text {
-      color: var(--white);
-      font-weight: 700;
-      font-size: 1.05rem;
-      line-height: 1.2;
-    }
-
-    .logo-text span {
-      display: block;
-      font-weight: 300;
-      font-size: 0.75rem;
-      opacity: 0.7;
-      letter-spacing: 0.04em;
-    }
-
+    .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
+    .logo-text span { display: block; font-weight: 300; font-size: 0.75rem; opacity: 0.7; letter-spacing: 0.04em; }
     nav { display: flex; gap: 6px; }
-
-    nav a {
-      color: rgba(255,255,255,0.8);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 8px 14px;
-      border-radius: 6px;
-      transition: background 0.2s, color 0.2s;
-    }
-
+    nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s, color 0.2s; }
     nav a:hover { background: rgba(255,255,255,0.12); color: var(--white); }
     nav a.cta { background: var(--teal); color: var(--white); margin-left: 8px; }
     nav a.cta:hover { background: #238a7e; }
 
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%);
-      color: var(--white);
-      padding: 72px 24px 0;
-      text-align: center;
-      position: relative;
-    }
-
+    .hero { background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%); color: var(--white); padding: 72px 24px 0; text-align: center; position: relative; }
     .hero-inner { max-width: 680px; margin: 0 auto; position: relative; padding-bottom: 72px; }
-
     .hero-wave { display: block; width: 100%; height: 60px; margin-top: 0; }
-
-    .hero-badge {
-      display: inline-block;
-      background: rgba(42,157,143,0.25);
-      border: 1px solid rgba(42,157,143,0.5);
-      color: #7FDED5;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      font-size: clamp(2rem, 5vw, 2.8rem);
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 18px;
-      letter-spacing: -0.02em;
-    }
-
+    .hero-badge { display: inline-block; background: rgba(42,157,143,0.25); border: 1px solid rgba(42,157,143,0.5); color: #7FDED5; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 14px; border-radius: 999px; margin-bottom: 20px; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 700; line-height: 1.15; margin-bottom: 18px; letter-spacing: -0.02em; }
     .hero h1 em { font-style: normal; color: #7FDED5; }
-
-    .hero p {
-      font-size: 1.05rem;
-      opacity: 0.85;
-      max-width: 560px;
-      margin: 0 auto 32px;
-      line-height: 1.7;
-    }
-
+    .hero p { font-size: 1.05rem; opacity: 0.85; max-width: 560px; margin: 0 auto 32px; line-height: 1.7; }
     .hero-stats { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-
     .stat { text-align: center; }
     .stat-num { font-size: 1.8rem; font-weight: 700; color: #7FDED5; line-height: 1; }
     .stat-label { font-size: 0.78rem; opacity: 0.7; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
 
-    /* ── SECTION BASE ── */
     section { padding: 64px 24px; }
     .section-inner { max-width: 1100px; margin: 0 auto; }
-
     .section-header { margin-bottom: 40px; }
-
-    .section-eyebrow {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--teal);
-      margin-bottom: 10px;
-    }
-
-    .section-header h2 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
-      font-weight: 700;
-      color: var(--navy);
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-    }
-
+    .section-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
+    .section-header h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.2; }
     .section-header p { margin-top: 10px; color: var(--text-muted); max-width: 540px; font-size: 0.95rem; }
 
-    /* ── PROTOCOL ZONES ── */
     #protocollen { background: var(--grey-bg); }
-
     .protocol-zone { margin-bottom: 28px; }
-
-    .zone-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px 20px;
-      background: var(--white);
-      border: 1px solid var(--grey-border);
-      border-radius: var(--radius) var(--radius) 0 0;
-      cursor: pointer;
-      user-select: none;
-      transition: background 0.15s;
-    }
-
+    .zone-header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; background: var(--white); border: 1px solid var(--grey-border); border-radius: var(--radius) var(--radius) 0 0; cursor: pointer; user-select: none; transition: background 0.15s; }
     .zone-header:hover { background: var(--grey-bg); }
-
-    .zone-icon {
-      width: 36px; height: 36px;
-      background: var(--teal-light);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--teal);
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
+    .zone-icon { width: 36px; height: 36px; background: var(--teal-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--teal); font-size: 1.1rem; flex-shrink: 0; }
     .zone-title { flex: 1; }
     .zone-title h3 { font-size: 1rem; font-weight: 700; color: var(--navy); }
     .zone-title p { font-size: 0.8rem; color: var(--text-muted); margin-top: 1px; }
-
     .zone-chevron { color: var(--text-muted); transition: transform 0.25s; font-size: 1.1rem; }
     .zone-header.open .zone-chevron { transform: rotate(180deg); }
-
-    .zone-body {
-      background: var(--white);
-      border: 1px solid var(--grey-border);
-      border-top: none;
-      border-radius: 0 0 var(--radius) var(--radius);
-      overflow: hidden;
-    }
-
-    .protocol-row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 16px;
-      padding: 14px 20px;
-      border-top: 1px solid var(--grey-border);
-      transition: background 0.15s;
-    }
-
+    .zone-body { background: var(--white); border: 1px solid var(--grey-border); border-top: none; border-radius: 0 0 var(--radius) var(--radius); overflow: hidden; }
+    .protocol-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; padding: 14px 20px; border-top: 1px solid var(--grey-border); transition: background 0.15s; }
     .protocol-row:first-child { border-top: none; }
     .protocol-row:hover { background: var(--grey-bg); }
-
     .protocol-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
     .protocol-name small { display: block; color: var(--text-muted); font-size: 0.78rem; font-weight: 400; margin-top: 2px; }
-
     .protocol-btns { display: flex; gap: 6px; flex-shrink: 0; }
-
-    .level-btn {
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-      text-decoration: none;
-      border: none;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-
+    .level-btn { padding: 5px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.15s; }
     .level-btn.easy   { background: #EAF7F0; color: #1E8449; }
     .level-btn.medium { background: #FEF9E7; color: #B7770D; }
     .level-btn.hard   { background: #EAF0FB; color: #1A5276; }
-
     .level-btn:hover.easy   { background: #1E8449; color: #fff; }
     .level-btn:hover.medium { background: #B7770D; color: #fff; }
     .level-btn:hover.hard   { background: #1A5276; color: #fff; }
 
-    /* ── PROTOCOL VIEWER ── */
-    .protocol-viewer {
-      display: none;
-      margin-top: 32px;
-      background: var(--white);
-      border: 1px solid var(--grey-border);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-    }
-
+    .protocol-viewer { display: none; margin-top: 32px; background: var(--white); border: 1px solid var(--grey-border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
     .protocol-viewer.visible { display: block; }
-
-    .viewer-header {
-      background: var(--navy);
-      color: var(--white);
-      padding: 16px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
+    .viewer-header { background: var(--navy); color: var(--white); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
     .viewer-header h3 { font-size: 0.95rem; font-weight: 600; }
-
-    .viewer-header .level-badge {
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.2);
-    }
-
-    .viewer-close {
-      background: none;
-      border: none;
-      color: rgba(255,255,255,0.7);
-      cursor: pointer;
-      font-size: 1.3rem;
-      padding: 0 0 0 16px;
-      line-height: 1;
-    }
-
+    .viewer-header .level-badge { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,0.2); }
+    .viewer-close { background: none; border: none; color: rgba(255,255,255,0.7); cursor: pointer; font-size: 1.3rem; padding: 0 0 0 16px; line-height: 1; }
     .viewer-close:hover { color: var(--white); }
-
-    /* Protocol inhoud (statische HTML van GitHub Action) */
-    .viewer-body {
-      padding: 28px 36px;
-      min-height: 200px;
-      max-width: 780px;
-      line-height: 1.75;
-    }
-
-    .viewer-body h1, .viewer-body h2, .viewer-body h3 {
-      color: var(--navy);
-      margin-top: 1.5em;
-      margin-bottom: 0.5em;
-      line-height: 1.3;
-    }
-
+    .viewer-body { padding: 28px 36px; min-height: 200px; max-width: 780px; line-height: 1.75; }
+    .viewer-body h1, .viewer-body h2, .viewer-body h3 { color: var(--navy); margin-top: 1.5em; margin-bottom: 0.5em; line-height: 1.3; }
     .viewer-body h1 { font-size: 1.4rem; }
     .viewer-body h2 { font-size: 1.15rem; }
     .viewer-body h3 { font-size: 1rem; }
-
     .viewer-body p { margin-bottom: 1em; color: var(--text); }
-
-    .viewer-body ul, .viewer-body ol {
-      margin: 0.5em 0 1em 1.5em;
-    }
-
+    .viewer-body ul, .viewer-body ol { margin: 0.5em 0 1em 1.5em; }
     .viewer-body li { margin-bottom: 0.3em; }
-
-    .viewer-body table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1em 0;
-      font-size: 0.9rem;
-    }
-
-    .viewer-body td, .viewer-body th {
-      border: 1px solid var(--grey-border);
-      padding: 8px 12px;
-      text-align: left;
-    }
-
-    .viewer-body th {
-      background: var(--grey-bg);
-      font-weight: 600;
-      color: var(--navy);
-    }
-
+    .viewer-body table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.9rem; }
+    .viewer-body td, .viewer-body th { border: 1px solid var(--grey-border); padding: 8px 12px; text-align: left; }
+    .viewer-body th { background: var(--grey-bg); font-weight: 600; color: var(--navy); }
     .viewer-body tr:nth-child(even) { background: #fafbfc; }
-
     .viewer-body strong { color: var(--navy); }
-
-    /* Fallback iframe voor als statisch bestand er nog niet is */
-    .viewer-body iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-    }
-
-    .viewer-loading {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 200px;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      gap: 12px;
-    }
-
-    .spinner {
-      width: 20px; height: 20px;
-      border: 2px solid var(--grey-border);
-      border-top-color: var(--teal);
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-    }
-
+    .viewer-body iframe { width: 100%; height: 600px; border: none; }
+    .viewer-loading { display: flex; align-items: center; justify-content: center; height: 200px; color: var(--text-muted); font-size: 0.9rem; gap: 12px; }
+    .spinner { width: 20px; height: 20px; border: 2px solid var(--grey-border); border-top-color: var(--teal); border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* ── LOCATIES ── */
     #locaties { background: var(--white); }
-
     .disciplines-filter { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
-
-    .disc-btn {
-      padding: 7px 16px;
-      border-radius: 999px;
-      border: 2px solid var(--grey-border);
-      background: var(--white);
-      color: var(--text-muted);
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
+    .disc-btn { padding: 7px 16px; border-radius: 999px; border: 2px solid var(--grey-border); background: var(--white); color: var(--text-muted); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .disc-btn:hover { border-color: var(--navy); color: var(--navy); }
-
     .disc-btn.active[onclick*="all"] { background: var(--navy); border-color: var(--navy); color: var(--white); }
     .disc-btn.active[onclick*="fysiotherapeut"] { background: #1A5276; border-color: #1A5276; color: var(--white); }
     .disc-btn.active[onclick*="podotherapeut"] { background: #1E8449; border-color: #1E8449; color: var(--white); }
     .disc-btn.active[onclick*="pedicure"] { background: #B7770D; border-color: #B7770D; color: var(--white); }
     .disc-btn.active[onclick*="orthopedisch"] { background: #6C3483; border-color: #6C3483; color: var(--white); }
     .disc-btn.active[onclick*="ergotherapeut"] { background: #C0392B; border-color: #C0392B; color: var(--white); }
-
-    .locaties-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 16px;
-    }
-
-    .locatie-card {
-      background: var(--grey-bg);
-      border: 1px solid var(--grey-border);
-      border-radius: var(--radius);
-      padding: 20px;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-
+    .locaties-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+    .locatie-card { background: var(--grey-bg); border: 1px solid var(--grey-border); border-radius: var(--radius); padding: 20px; transition: box-shadow 0.2s, transform 0.2s; }
     .locatie-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-
     .locatie-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
-
     .locatie-naam { font-weight: 700; font-size: 0.95rem; color: var(--navy); text-decoration: none; }
     .locatie-naam:hover { text-decoration: underline; }
-
-    .discipline-tag {
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 3px 9px;
-      border-radius: 999px;
-      background: var(--teal-light);
-      color: var(--teal);
-      white-space: nowrap;
-      margin-left: 8px;
-      flex-shrink: 0;
-    }
-
+    .discipline-tag { font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--teal-light); color: var(--teal); white-space: nowrap; margin-left: 8px; flex-shrink: 0; }
     .locatie-adres { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.5; }
-
     .locatie-contact { display: flex; flex-direction: column; gap: 4px; }
-
-    .locatie-contact a {
-      font-size: 0.83rem;
-      color: var(--teal);
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
+    .locatie-contact a { font-size: 0.83rem; color: var(--teal); text-decoration: none; display: flex; align-items: center; gap: 6px; }
     .locatie-contact a:hover { text-decoration: underline; }
+    .btn-therapeuten { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin-top: 14px; padding: 8px 16px; background: var(--teal); color: white; border-radius: 6px; font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: background 0.2s; width: 100%; }
+    .btn-therapeuten:hover { background: #238a7e; }
 
-    /* ── CTA ── */
-    .cta-section {
-      background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%);
-      color: var(--white);
-      text-align: center;
-      padding: 72px 24px;
-    }
-
+    .cta-section { background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%); color: var(--white); text-align: center; padding: 72px 24px; }
     .cta-section h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
     .cta-section p { opacity: 0.8; max-width: 480px; margin: 0 auto 32px; font-size: 0.95rem; }
-
-    .btn-primary {
-      display: inline-block;
-      background: var(--teal);
-      color: var(--white);
-      padding: 14px 32px;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.15s;
-    }
-
+    .btn-primary { display: inline-block; background: var(--teal); color: var(--white); padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: background 0.2s, transform 0.15s; }
     .btn-primary:hover { background: #238a7e; transform: translateY(-1px); }
 
-    /* ── FOOTER ── */
-    footer {
-      background: #0F2340;
-      color: rgba(255,255,255,0.5);
-      text-align: center;
-      padding: 28px 24px;
-      font-size: 0.82rem;
-    }
-
+    footer { background: #0F2340; color: rgba(255,255,255,0.5); text-align: center; padding: 28px 24px; font-size: 0.82rem; }
     footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
     footer a:hover { color: var(--white); }
 
-    /* ── LEAFLET KAART ── */
-    #kaart {
-      height: 420px;
-      border-radius: var(--radius);
-      border: 1px solid var(--grey-border);
-      margin-bottom: 36px;
-      z-index: 1;
-    }
-
+    #kaart { height: 420px; border-radius: var(--radius); border: 1px solid var(--grey-border); margin-bottom: 36px; z-index: 1; }
     .disc-marker { display: flex; gap: 3px; align-items: center; }
-
-    .disc-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 26px;
-      min-width: 26px;
-      padding: 0 7px;
-      border-radius: 13px;
-      font-size: 0.68rem;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: 0.02em;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
-      white-space: nowrap;
-      border: 2px solid rgba(255,255,255,0.7);
-    }
-
+    .disc-pill { display: inline-flex; align-items: center; justify-content: center; height: 26px; min-width: 26px; padding: 0 7px; border-radius: 13px; font-size: 0.68rem; font-weight: 800; color: #fff; letter-spacing: 0.02em; box-shadow: 0 2px 6px rgba(0,0,0,0.25); white-space: nowrap; border: 2px solid rgba(255,255,255,0.7); }
     .disc-pill.f   { background: #1A5276; }
     .disc-pill.po  { background: #1E8449; }
     .disc-pill.pe  { background: #B7770D; }
     .disc-pill.o   { background: #6C3483; }
     .disc-pill.er  { background: #C0392B; }
-
     .leaflet-popup-content-wrapper { border-radius: 10px !important; box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important; }
-
     .popup-adres { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
     .popup-praktijken { display: flex; flex-direction: column; gap: 8px; }
-    .popup-praktijk { display: flex; align-items: center; gap: 8px; }
-    .popup-praktijk-pills { display: flex; gap: 3px; flex-shrink: 0; }
     .popup-praktijk-naam { font-size: 0.83rem; font-weight: 600; color: var(--navy); }
     .popup-praktijk-naam a { color: inherit; text-decoration: none; }
     .popup-praktijk-naam a:hover { text-decoration: underline; }
-    .popup-tag { font-size: 0.7rem; font-weight: 700; padding: 2px 7px; border-radius: 999px; color: #fff; }
 
-    /* ── HAMBURGER ── */
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: all 0.3s; }
 
     @media (max-width: 700px) {
       .hamburger { display: flex; }
-      nav {
-        display: none;
-        position: absolute;
-        top: 68px; left: 0; right: 0;
-        background: var(--navy);
-        flex-direction: column;
-        padding: 12px 16px 20px;
-        gap: 4px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-      }
+      nav { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--navy); flex-direction: column; padding: 12px 16px 20px; gap: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
       nav.open { display: flex; }
       nav a { padding: 10px 16px; border-radius: 8px; }
       nav a.cta { margin-left: 0; margin-top: 8px; text-align: center; }
@@ -556,15 +175,11 @@
 </head>
 <body>
 
-<!-- ── HEADER ── -->
 <header>
   <div class="header-inner">
     <a href="#top" class="logo">
       <img class="logo-icon" src="EVN_Logo_transparant.png" alt="EVN Logo" />
-      <div class="logo-text">
-        Enkel Voet Netwerk
-        <span>Breda e.o.</span>
-      </div>
+      <div class="logo-text">Enkel Voet Netwerk<span>Breda e.o.</span></div>
     </a>
     <div class="hamburger" onclick="toggleNav()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -578,7 +193,6 @@
   </div>
 </header>
 
-<!-- ── HERO ── -->
 <section class="hero" id="top">
   <div class="hero-inner">
     <div class="hero-badge">Regio Breda e.o.</div>
@@ -595,7 +209,6 @@
   </svg>
 </section>
 
-<!-- ── PROTOCOLLEN ── -->
 <section id="protocollen">
   <div class="section-inner">
     <div class="section-header">
@@ -603,11 +216,7 @@
       <h2>Behandelprotocollen</h2>
       <p>Kies een zone en open het protocol in het gewenste leesniveau.</p>
     </div>
-
-    <!-- Zones worden door JavaScript ingevuld vanuit protocollen-config.json -->
     <div id="protocol-zones"></div>
-
-    <!-- Protocol viewer -->
     <div class="protocol-viewer" id="protocol-viewer">
       <div class="viewer-header">
         <div>
@@ -620,17 +229,12 @@
         </div>
       </div>
       <div class="viewer-body" id="viewer-body">
-        <div class="viewer-loading" id="viewer-loading">
-          <div class="spinner"></div>
-          Protocol laden…
-        </div>
+        <div class="viewer-loading"><div class="spinner"></div>Protocol laden…</div>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- ── LOCATIES ── -->
 <section id="locaties">
   <div class="section-inner">
     <div class="section-header">
@@ -648,7 +252,6 @@
       <button class="disc-btn active" onclick="filterDisc(this, 'ergotherapeut')">Ergotherapeut</button>
     </div>
 
-    <!-- Zoekbalk -->
     <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
       <div style="display:flex;flex:1;min-width:220px;max-width:400px;border:1.5px solid var(--grey-border);border-radius:8px;overflow:hidden;background:var(--white);">
         <input type="text" id="locatie-zoek" placeholder="Postcode of plaats…"
@@ -689,14 +292,12 @@
   </div>
 </section>
 
-<!-- ── CTA ── -->
 <section class="cta-section">
   <h2>Aansluiten bij het netwerk?</h2>
   <p>Sluit jouw praktijk aan en bied cliënten toegang tot eenduidige, up-to-date protocollen.</p>
   <a href="locatie-worden.html" class="btn-primary">Locatie worden →</a>
 </section>
 
-<!-- ── FOOTER ── -->
 <footer>
   <p>© 2025 Enkel Voet Netwerk Breda e.o. &nbsp;·&nbsp; Samenwerking voor hoogwaardige enkel- en voetzorg</p>
 </footer>
@@ -704,10 +305,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 
-  // ════════════════════════════════════════════════════════
-  //  ZONE-CONFIGURATIE
-  //  Zones met emoji, titel en beschrijving
-  // ════════════════════════════════════════════════════════
   const ZONES = {
     enkel:      { emoji: '🦵', titel: 'Enkel',      beschrijving: 'De enkel verbindt je onderbeen en voet' },
     achtervoet: { emoji: '🦶', titel: 'Achtervoet', beschrijving: 'Het hielbeen en sprongbeen' },
@@ -715,298 +312,72 @@
     voorvoet:   { emoji: '👣', titel: 'Voorvoet',   beschrijving: 'Balans en afzet' },
   };
 
-  // ════════════════════════════════════════════════════════
-  //  PROTOCOL-CONFIGURATIE
-  //  ▶ Vul hier de Google Doc IDs in per protocol en niveau
-  //  ▶ De ID staat in de URL van het Google Doc:
-  //    https://docs.google.com/document/d/[DIT_IS_HET_ID]/edit
-  //  ▶ Stel het doc in op "Iedereen met de link kan bekijken"
-  // ════════════════════════════════════════════════════════
   const PROTOCOLLEN = [
-    // ── ENKEL ──
-    {
-      id: 're-insertie-buitenste-enkelpees',
-      naam: 'Re-insertie buitenste enkelpees',
-      zone: 'enkel',
-      niveaus: {
-        makkelijk: '1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8',
-        gemiddeld:  '1QuMaGyKeYAaXf5KoNFxuXImrVMBeJCYKqaTj0msToyY',
-        complex:    '1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8', // ⚠️ zelfde als makkelijk — controleer of dit klopt
-      }
-    },
-    {
-      id: 'slijtage-enkel',
-      naam: 'Slijtage enkel',
-      subtitel: 'Bovenste spronggewricht',
-      zone: 'enkel',
-      niveaus: {
-        makkelijk: '17a83ILfD2vrwR-V5UocHypKLsqkyRxaGrj9djUzbc6I',
-        gemiddeld:  '1kbT1OlHgghzvol_uRe1JH59pFZh5elQKn8gvcRSh5bY',
-        complex:    '1A4Ow7j8R_jrPM1sPNvFBW-jLUue0t94vPyxiBZOwpeM',
-      }
-    },
-    {
-      id: 'instabiele-enkel',
-      naam: 'Instabiele Enkel',
-      subtitel: 'Chronische enkelverzwikking',
-      zone: 'enkel',
-      niveaus: {
-        makkelijk: '1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k',
-        gemiddeld:  '1-waQ26QCTQPaTuF32S-3HpChcrI23q2lui3gxa37ffc',
-        complex:    '1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k', // ⚠️ zelfde als makkelijk — controleer of dit klopt
-      }
-    },
-    {
-      id: 'enkelverzwikking-acuut',
-      naam: 'Enkelverzwikking (acuut)',
-      zone: 'enkel',
-      niveaus: {
-        makkelijk: '1jhI7k1Qjx_WdLckj-lRt-n_Rv2Kzo6zMZnoXJvABg_U',
-        gemiddeld:  '1iy4G6OKNtOEFEcdUAc6jTkhbqPKnfW4Ydfe1AvnGIG4',
-        complex:    '1XWKb_X0XG5R18EsDKaRDRR2Ab9u9cK47HKnvU9TUGDc',
-      }
-    },
-    {
-      id: 'voorste-enkel-inklemming',
-      naam: 'Voorste enkel inklemming',
-      subtitel: 'Anterieure impingement',
-      zone: 'enkel',
-      niveaus: {
-        makkelijk: '1AtT1tDkSqQJnPrOF3AEnxOjABBZjVseL5B_XNorsFu8',
-        gemiddeld:  '1e6lSiX1r5z6kkwPWDxt9e1Bh59o7chy-485jWbUmrSY',
-        complex:    '1Xes-hfreQQpssqgf5-54PuyXVcD0AdbXBG9caVmCGLE',
-      }
-    },
-    {
-      id: 'achterste-enkel-inklemming',
-      naam: 'Achterste enkel inklemming',
-      subtitel: 'Posterieure impingement',
-      zone: 'enkel',
-      niveaus: {
-        makkelijk: '1ABr-B8psf7hL8rhSdmDdRe20wtcmULUZA4j-YM8YRPI',
-        gemiddeld:  '1QVcJHBjaWavNgE1DDBAaFGmqLhWDZAx6J7CoQxJ6N6c',
-        complex:    '16iyIb70sGn61_iu5is4g2AX6vouvSdsMWibPNaCrtPQ',
-      }
-    },
-    {
-      id: 'kraakbeenletsel-enkel',
-      naam: 'Kraakbeenletsel van de enkel',
-      subtitel: 'Osteochondraal lesie',
-      zone: 'enkel',
-      niveaus: {
-        makkelijk: '1MKU_cTB7D5tAKPd25Gljb9vJUmJco88PPx5euux8NBE',
-        gemiddeld:  '1QyVlzSrp3QW3IusT5CY_fj_Sz2205oVCTu18vm_1uJk',
-        complex:    '1buFDIWPlnzmHzu6_AL9t28jwbJdix9vPK0iVpyWmYbQ',
-      }
-    },
-    {
-      id: 'gewrichtsmuis-enkel',
-      naam: 'Gewrichtsmuis enkel',
-      subtitel: 'Corpus liberum',
-      zone: 'enkel',
-      niveaus: {
-        makkelijk: '1K0VFCWIXXKayi7d1N0zWfljljHT4dgNL81jnGE5xmR8',
-        gemiddeld:  '1qct6cFPTso-oj1v74eMv5UILTJ273uv6Bj9LlkIXtW0',
-        complex:    '1KU9ShZX0VKu7lHNe09TdH31iC7kZi6_eugs7umfffeU',
-      }
-    },
-
-    // ── ACHTERVOET ──
-    {
-      id: 'pijnlijke-achillespees',
-      naam: 'Pijnlijke achillespees',
-      subtitel: 'Achillespees tendinopathie',
-      zone: 'achtervoet',
-      niveaus: {
-        makkelijk: '1wQBtiLI8s2TUwa0R0W5rDzseH8Wd-mSakhrUxLPEKlM',
-        gemiddeld:  '1IlVzc_DnLwyEV2xaurniV_JDY-11Go_mcXCp3f-xqJI',
-        complex:    '17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec',
-      }
-    },
-    {
-      id: 'zenuwbeknelling-achtervoet',
-      naam: 'Zenuwbeknelling achtervoet',
-      subtitel: 'Tarsaal tunnel syndroom',
-      zone: 'achtervoet',
-      niveaus: {
-        makkelijk: '1thrzle_XKB0-rR9YLDhctniyjn6POJNyMTlj1ZqZ0Js',
-        gemiddeld:  '1qpEDi6ny3AvyDEmbC8zKAw7ciGX3EKRpr3a5Mmy7Dn8',
-        complex:    '17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec', // ⚠️ zelfde als achillespees complex — controleer
-      }
-    },
-    {
-      id: 'pijnlijke-kuitbeenpees',
-      naam: 'Pijnlijke kuitbeenpees',
-      subtitel: 'Tendinopathie personeuspees',
-      zone: 'achtervoet',
-      niveaus: {
-        makkelijk: '1lN1Yo65lAQI5Pzx-vG9WhIbGPkJRxEXfk6F9sdxQHTA',
-        gemiddeld:  '1lRNux5xcHKTeyFh0FoO-NLa_nqduOn0etJCGjCOJCMY',
-        complex:    '1GrAKht6k-bnvNTOrCmLMKM8tJj5QrHZSNsFhJ-yRSlE',
-      }
-    },
-    {
-      id: 'stugge-achtervoet',
-      naam: 'Stugge achtervoet',
-      subtitel: 'Tarsale coalitie',
-      zone: 'achtervoet',
-      niveaus: {
-        makkelijk: '1aA1LlJIcl10SttbM68fveCrpVETiKdi1mGTmHiloXpM',
-        gemiddeld:  '12c1ikHffQV1BJSXDVTkPzd1oMcUnyg3c2ocLAK3jK1I',
-        complex:    '1-bN-Am_-jEspl-cOYECUrWhrf838gjPu3Ft3gyrQU7s',
-      }
-    },
-    {
-      id: 'slijtage-achtervoet',
-      naam: 'Slijtage achtervoet',
-      subtitel: 'Artrose voetwortel',
-      zone: 'achtervoet',
-      niveaus: {
-        makkelijk: '1jx_9BvS_NPGlEHXKZIqZUBSpuDNU7AG-pTcMOWkU9CY',
-        gemiddeld:  '1T7vxZ1rIp7hw9WrdlpbokxtTR3VhVq2UgYwCSl855Qg',
-        complex:    '17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec', // ⚠️ zelfde als achillespees complex — controleer
-      }
-    },
-
-    // ── MIDDENVOET ──
-    {
-      id: 'slijtage-middenvoet',
-      naam: 'Slijtage middenvoet',
-      subtitel: 'Artrose middenvoet',
-      zone: 'middenvoet',
-      niveaus: {
-        makkelijk: '1eL03CIbZCedpgRiU0oX4xhFWd287qu6NboNPhi59KkU',
-        gemiddeld:  '1bMuZAsdnxrAC-ivZBnItMcm_cRKOb6-4J_ucI9WyOQc',
-        complex:    '1yLKQdE1YqLa_Fz-bt_pksADY8Q1GWZMri7n-YhC2Auw',
-      }
-    },
-    {
-      id: 'holvoet',
-      naam: 'Holvoet',
-      subtitel: 'Pes cavus',
-      zone: 'middenvoet',
-      niveaus: {
-        makkelijk: '1ncRB_OxvqHrjnPodSx4-J5WAZydO_t6-3Flo_Z17qjU',
-        gemiddeld:  '1oDMZnwF9KhUxlxeQDr6ZlPujR_v_ta5YbDc61CXqvBM',
-        complex:    '1i_RnCXY9stjnKNTcSMXAY8gFQOjiRkUmqdp2y-RI3ug',
-      }
-    },
-
-    // ── VOORVOET ──
-    {
-      id: 'voorbeeldprotocol-voorvoet',
-      naam: 'Voorbeeldprotocol voorvoet',
-      zone: 'voorvoet',
-      niveaus: {
-        makkelijk: 'INVULLEN',
-        gemiddeld:  'INVULLEN',
-        complex:    'INVULLEN',
-      }
-    },
+    { id: 're-insertie-buitenste-enkelpees', naam: 'Re-insertie buitenste enkelpees', zone: 'enkel', niveaus: { makkelijk: '1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8', gemiddeld: '1QuMaGyKeYAaXf5KoNFxuXImrVMBeJCYKqaTj0msToyY', complex: '1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8' } },
+    { id: 'slijtage-enkel', naam: 'Slijtage enkel', subtitel: 'Bovenste spronggewricht', zone: 'enkel', niveaus: { makkelijk: '17a83ILfD2vrwR-V5UocHypKLsqkyRxaGrj9djUzbc6I', gemiddeld: '1kbT1OlHgghzvol_uRe1JH59pFZh5elQKn8gvcRSh5bY', complex: '1A4Ow7j8R_jrPM1sPNvFBW-jLUue0t94vPyxiBZOwpeM' } },
+    { id: 'instabiele-enkel', naam: 'Instabiele Enkel', subtitel: 'Chronische enkelverzwikking', zone: 'enkel', niveaus: { makkelijk: '1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k', gemiddeld: '1-waQ26QCTQPaTuF32S-3HpChcrI23q2lui3gxa37ffc', complex: '1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k' } },
+    { id: 'enkelverzwikking-acuut', naam: 'Enkelverzwikking (acuut)', zone: 'enkel', niveaus: { makkelijk: '1jhI7k1Qjx_WdLckj-lRt-n_Rv2Kzo6zMZnoXJvABg_U', gemiddeld: '1iy4G6OKNtOEFEcdUAc6jTkhbqPKnfW4Ydfe1AvnGIG4', complex: '1XWKb_X0XG5R18EsDKaRDRR2Ab9u9cK47HKnvU9TUGDc' } },
+    { id: 'voorste-enkel-inklemming', naam: 'Voorste enkel inklemming', subtitel: 'Anterieure impingement', zone: 'enkel', niveaus: { makkelijk: '1AtT1tDkSqQJnPrOF3AEnxOjABBZjVseL5B_XNorsFu8', gemiddeld: '1e6lSiX1r5z6kkwPWDxt9e1Bh59o7chy-485jWbUmrSY', complex: '1Xes-hfreQQpssqgf5-54PuyXVcD0AdbXBG9caVmCGLE' } },
+    { id: 'achterste-enkel-inklemming', naam: 'Achterste enkel inklemming', subtitel: 'Posterieure impingement', zone: 'enkel', niveaus: { makkelijk: '1ABr-B8psf7hL8rhSdmDdRe20wtcmULUZA4j-YM8YRPI', gemiddeld: '1QVcJHBjaWavNgE1DDBAaFGmqLhWDZAx6J7CoQxJ6N6c', complex: '16iyIb70sGn61_iu5is4g2AX6vouvSdsMWibPNaCrtPQ' } },
+    { id: 'kraakbeenletsel-enkel', naam: 'Kraakbeenletsel van de enkel', subtitel: 'Osteochondraal lesie', zone: 'enkel', niveaus: { makkelijk: '1MKU_cTB7D5tAKPd25Gljb9vJUmJco88PPx5euux8NBE', gemiddeld: '1QyVlzSrp3QW3IusT5CY_fj_Sz2205oVCTu18vm_1uJk', complex: '1buFDIWPlnzmHzu6_AL9t28jwbJdix9vPK0iVpyWmYbQ' } },
+    { id: 'gewrichtsmuis-enkel', naam: 'Gewrichtsmuis enkel', subtitel: 'Corpus liberum', zone: 'enkel', niveaus: { makkelijk: '1K0VFCWIXXKayi7d1N0zWfljljHT4dgNL81jnGE5xmR8', gemiddeld: '1qct6cFPTso-oj1v74eMv5UILTJ273uv6Bj9LlkIXtW0', complex: '1KU9ShZX0VKu7lHNe09TdH31iC7kZi6_eugs7umfffeU' } },
+    { id: 'pijnlijke-achillespees', naam: 'Pijnlijke achillespees', subtitel: 'Achillespees tendinopathie', zone: 'achtervoet', niveaus: { makkelijk: '1wQBtiLI8s2TUwa0R0W5rDzseH8Wd-mSakhrUxLPEKlM', gemiddeld: '1IlVzc_DnLwyEV2xaurniV_JDY-11Go_mcXCp3f-xqJI', complex: '17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec' } },
+    { id: 'zenuwbeknelling-achtervoet', naam: 'Zenuwbeknelling achtervoet', subtitel: 'Tarsaal tunnel syndroom', zone: 'achtervoet', niveaus: { makkelijk: '1thrzle_XKB0-rR9YLDhctniyjn6POJNyMTlj1ZqZ0Js', gemiddeld: '1qpEDi6ny3AvyDEmbC8zKAw7ciGX3EKRpr3a5Mmy7Dn8', complex: '17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec' } },
+    { id: 'pijnlijke-kuitbeenpees', naam: 'Pijnlijke kuitbeenpees', subtitel: 'Tendinopathie personeuspees', zone: 'achtervoet', niveaus: { makkelijk: '1lN1Yo65lAQI5Pzx-vG9WhIbGPkJRxEXfk6F9sdxQHTA', gemiddeld: '1lRNux5xcHKTeyFh0FoO-NLa_nqduOn0etJCGjCOJCMY', complex: '1GrAKht6k-bnvNTOrCmLMKM8tJj5QrHZSNsFhJ-yRSlE' } },
+    { id: 'stugge-achtervoet', naam: 'Stugge achtervoet', subtitel: 'Tarsale coalitie', zone: 'achtervoet', niveaus: { makkelijk: '1aA1LlJIcl10SttbM68fveCrpVETiKdi1mGTmHiloXpM', gemiddeld: '12c1ikHffQV1BJSXDVTkPzd1oMcUnyg3c2ocLAK3jK1I', complex: '1-bN-Am_-jEspl-cOYECUrWhrf838gjPu3Ft3gyrQU7s' } },
+    { id: 'slijtage-achtervoet', naam: 'Slijtage achtervoet', subtitel: 'Artrose voetwortel', zone: 'achtervoet', niveaus: { makkelijk: '1jx_9BvS_NPGlEHXKZIqZUBSpuDNU7AG-pTcMOWkU9CY', gemiddeld: '1T7vxZ1rIp7hw9WrdlpbokxtTR3VhVq2UgYwCSl855Qg', complex: '17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec' } },
+    { id: 'slijtage-middenvoet', naam: 'Slijtage middenvoet', subtitel: 'Artrose middenvoet', zone: 'middenvoet', niveaus: { makkelijk: '1eL03CIbZCedpgRiU0oX4xhFWd287qu6NboNPhi59KkU', gemiddeld: '1bMuZAsdnxrAC-ivZBnItMcm_cRKOb6-4J_ucI9WyOQc', complex: '1yLKQdE1YqLa_Fz-bt_pksADY8Q1GWZMri7n-YhC2Auw' } },
+    { id: 'holvoet', naam: 'Holvoet', subtitel: 'Pes cavus', zone: 'middenvoet', niveaus: { makkelijk: '1ncRB_OxvqHrjnPodSx4-J5WAZydO_t6-3Flo_Z17qjU', gemiddeld: '1oDMZnwF9KhUxlxeQDr6ZlPujR_v_ta5YbDc61CXqvBM', complex: '1i_RnCXY9stjnKNTcSMXAY8gFQOjiRkUmqdp2y-RI3ug' } },
+    { id: 'voorbeeldprotocol-voorvoet', naam: 'Voorbeeldprotocol voorvoet', zone: 'voorvoet', niveaus: { makkelijk: 'INVULLEN', gemiddeld: 'INVULLEN', complex: 'INVULLEN' } },
   ];
 
-  // ════════════════════════════════════════════════════════
-  //  ZONES RENDEREN
-  // ════════════════════════════════════════════════════════
   function bouwZones() {
     const container = document.getElementById('protocol-zones');
     const zonesGebruikt = [...new Set(PROTOCOLLEN.map(p => p.zone))];
-
     zonesGebruikt.forEach((zoneId, index) => {
       const zone = ZONES[zoneId];
       const protocollenInZone = PROTOCOLLEN.filter(p => p.zone === zoneId);
       const isOpen = index === 0;
-
       const rijen = protocollenInZone.map(p => `
         <div class="protocol-row">
-          <div class="protocol-name">
-            ${p.naam}
-            ${p.subtitel ? `<small>${p.subtitel}</small>` : ''}
-          </div>
+          <div class="protocol-name">${p.naam}${p.subtitel ? `<small>${p.subtitel}</small>` : ''}</div>
           <div class="protocol-btns">
             <button class="level-btn easy"   onclick="openProtocol('${p.id}', '${p.naam}', 'Makkelijk', '${p.niveaus.makkelijk}')">Makkelijk</button>
             <button class="level-btn medium" onclick="openProtocol('${p.id}', '${p.naam}', 'Gemiddeld',  '${p.niveaus.gemiddeld}')">Gemiddeld</button>
             <button class="level-btn hard"   onclick="openProtocol('${p.id}', '${p.naam}', 'Complex',    '${p.niveaus.complex}')">Complex</button>
           </div>
-        </div>
-      `).join('');
-
+        </div>`).join('');
       container.innerHTML += `
         <div class="protocol-zone">
           <div class="zone-header ${isOpen ? 'open' : ''}" onclick="toggleZone(this)">
             <div class="zone-icon">${zone.emoji}</div>
-            <div class="zone-title">
-              <h3>${zone.titel}</h3>
-              <p>${zone.beschrijving}</p>
-            </div>
+            <div class="zone-title"><h3>${zone.titel}</h3><p>${zone.beschrijving}</p></div>
             <span class="zone-chevron">▾</span>
           </div>
-          <div class="zone-body" ${isOpen ? '' : 'style="display:none"'}>
-            ${rijen}
-          </div>
-        </div>
-      `;
+          <div class="zone-body" ${isOpen ? '' : 'style="display:none"'}>${rijen}</div>
+        </div>`;
     });
   }
-
   bouwZones();
 
-  // ════════════════════════════════════════════════════════
-  //  NAVIGATIE
-  // ════════════════════════════════════════════════════════
-  function toggleNav() {
-    document.getElementById('main-nav').classList.toggle('open');
-  }
+  function toggleNav() { document.getElementById('main-nav').classList.toggle('open'); }
+  function toggleZone(header) { const body = header.nextElementSibling; const isOpen = header.classList.contains('open'); header.classList.toggle('open'); body.style.display = isOpen ? 'none' : 'block'; }
 
-  // ════════════════════════════════════════════════════════
-  //  ZONE OPEN/DICHT
-  // ════════════════════════════════════════════════════════
-  function toggleZone(header) {
-    const body = header.nextElementSibling;
-    const isOpen = header.classList.contains('open');
-    header.classList.toggle('open');
-    body.style.display = isOpen ? 'none' : 'block';
-  }
-
-  // ════════════════════════════════════════════════════════
-  //  PROTOCOL OPENEN
-  //  Probeert eerst het statische HTML-bestand (gegenereerd
-  //  door de GitHub Action). Valt terug op Google Docs
-  //  live preview als het bestand er nog niet is.
-  // ════════════════════════════════════════════════════════
   async function openProtocol(protocolId, naam, niveau, docId) {
-    const viewer  = document.getElementById('protocol-viewer');
-    const body    = document.getElementById('viewer-body');
-    const loading = document.getElementById('viewer-loading');
-
+    const viewer = document.getElementById('protocol-viewer');
+    const body = document.getElementById('viewer-body');
     document.getElementById('viewer-title').textContent = naam;
     document.getElementById('viewer-level').textContent = niveau;
-
     body.innerHTML = '<div class="viewer-loading"><div class="spinner"></div> Protocol laden…</div>';
     viewer.classList.add('visible');
-
-    setTimeout(() => {
-      viewer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-
-    // Niveau naar bestandsnaam
+    setTimeout(() => { viewer.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
     const niveauMap = { 'Makkelijk': 'makkelijk', 'Gemiddeld': 'gemiddeld', 'Complex': 'complex' };
     const niveauSlug = niveauMap[niveau] || niveau.toLowerCase();
     const statischBestand = `protocollen/${protocolId}-${niveauSlug}.html`;
-
-    // 1. Probeer statisch HTML-bestand (GitHub Action output)
     try {
       const resp = await fetch(statischBestand);
-      if (resp.ok) {
-        const html = await resp.text();
-        body.innerHTML = html;
-        return;
-      }
-    } catch (e) {
-      // Bestand bestaat nog niet, ga naar fallback
-    }
-
-    // 2. Fallback: Google Docs live preview via iframe
+      if (resp.ok) { body.innerHTML = await resp.text(); return; }
+    } catch (e) {}
     if (docId && docId !== 'INVULLEN') {
       const iframe = document.createElement('iframe');
       iframe.title = naam;
@@ -1015,26 +386,12 @@
       body.innerHTML = '';
       body.appendChild(iframe);
     } else {
-      body.innerHTML = `
-        <div style="padding:40px;text-align:center;color:var(--text-muted)">
-          <div style="font-size:2rem;margin-bottom:12px">📄</div>
-          <p>Dit protocol is nog niet gekoppeld aan een Google Doc.</p>
-          <p style="font-size:0.85rem;margin-top:8px">Voeg het document-ID toe in <code>index.html</code> bij <strong>${protocolId}</strong>.</p>
-        </div>`;
+      body.innerHTML = `<div style="padding:40px;text-align:center;color:var(--text-muted)"><div style="font-size:2rem;margin-bottom:12px">📄</div><p>Dit protocol is nog niet gekoppeld aan een Google Doc.</p></div>`;
     }
   }
 
-  // ════════════════════════════════════════════════════════
-  //  PROTOCOL SLUITEN
-  // ════════════════════════════════════════════════════════
-  function closeProtocol() {
-    document.getElementById('protocol-viewer').classList.remove('visible');
-    document.getElementById('viewer-body').innerHTML = '';
-  }
+  function closeProtocol() { document.getElementById('protocol-viewer').classList.remove('visible'); document.getElementById('viewer-body').innerHTML = ''; }
 
-  // ════════════════════════════════════════════════════════
-  //  KAART & LOCATIES — dynamisch laden vanuit locaties.json
-  // ════════════════════════════════════════════════════════
   const DISC_CONFIG = {
     'fysiotherapeut':           { label: 'F',  cls: 'f',  color: '#1A5276' },
     'podotherapeut':            { label: 'Po', cls: 'po', color: '#1E8449' },
@@ -1058,50 +415,30 @@
     attribution: '© <a href="https://www.openstreetmap.org/">OpenStreetMap</a>', maxZoom: 18
   }).addTo(kaart);
 
-  // Locaties laden vanuit locaties.json
   async function laadLocaties() {
     try {
       const resp = await fetch('locaties.json?t=' + Date.now());
       if (!resp.ok) throw new Error('Niet gevonden');
       alleLocaties = await resp.json();
-    } catch(e) {
-      // Fallback: lege lijst tonen
-      alleLocaties = [];
-    }
-    // Alle locaties tellen (niet unieke praktijken)
+    } catch(e) { alleLocaties = []; }
     updateStats(alleLocaties.length);
     bouwKaartEnLijst();
   }
 
   function bouwKaartEnLijst() {
-    // Kaartmarkers verwijderen
     kaartMarkers.forEach(m => m.remove());
     kaartMarkers = [];
-
-    // Locatiekaarten genereren
     const grid = document.getElementById('locaties-grid');
     if (alleLocaties.length === 0) {
       grid.innerHTML = '<p style="padding:24px;color:var(--text-muted);grid-column:1/-1">Nog geen aangesloten praktijken gevonden.</p>';
     } else {
       grid.innerHTML = alleLocaties.map(loc => maakLocatieKaart(loc)).join('');
     }
-
-    // Kaartmarkers toevoegen
     alleLocaties.forEach(loc => {
       const disc = loc.disciplines.map(d => d.toLowerCase());
-      const pillsHTML = disc.map(d => {
-        const cfg = DISC_CONFIG[d];
-        return cfg ? `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>` : '';
-      }).join('');
-
+      const pillsHTML = disc.map(d => { const cfg = DISC_CONFIG[d]; return cfg ? `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>` : ''; }).join('');
       if (!pillsHTML) return;
-
-      const icon = L.divIcon({
-        className: '',
-        html: `<div class="disc-marker">${pillsHTML}</div>`,
-        iconAnchor: [0,13], popupAnchor: [13,-13]
-      });
-
+      const icon = L.divIcon({ className: '', html: `<div class="disc-marker">${pillsHTML}</div>`, iconAnchor: [0,13], popupAnchor: [13,-13] });
       const popupHTML = `
         <div class="popup-adres">📍 <strong>${loc.adres}</strong></div>
         <div class="popup-praktijken">
@@ -1110,39 +447,30 @@
               ${loc.website ? `<a href="${loc.website}" target="_blank" rel="noopener">${loc.naam}</a>` : loc.naam}
             </div>
           </div>
+          <a href="therapeuten.html?praktijk=${loc.id}" style="display:inline-block;margin-top:8px;font-size:0.78rem;color:var(--teal);font-weight:600;text-decoration:none">👥 Bekijk therapeuten →</a>
         </div>`;
-
-      const marker = L.marker([loc.lat, loc.lng], { icon })
-        .addTo(kaart)
-        .bindPopup(popupHTML, { maxWidth: 260 });
-
+      const marker = L.marker([loc.lat, loc.lng], { icon }).addTo(kaart).bindPopup(popupHTML, { maxWidth: 260 });
       kaartMarkers.push(marker);
       marker._locData = loc;
     });
-
     updateFilter();
   }
 
   function maakLocatieKaart(loc) {
-    const disc     = loc.disciplines.map(d => d.toLowerCase());
-    const tier     = (loc.tier || 'basis').toLowerCase();
+    const disc = loc.disciplines.map(d => d.toLowerCase());
+    const tier = (loc.tier || 'basis').toLowerCase();
     const tierStijl = TIER_STIJL[tier] || TIER_STIJL.basis;
-    const discStr  = disc[0] || '';
-
+    const discStr = disc[0] || '';
     const tierBadge = tierStijl.label
       ? `<span style="font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:999px;background:${tierStijl.bg};color:${tierStijl.kleur};border:1px solid ${tierStijl.rand};margin-bottom:8px;display:inline-block">${tierStijl.label}</span>`
       : '';
-
-    const randStijl = tier !== 'basis'
-      ? `border-color:${tierStijl.rand};border-width:2px;`
-      : '';
-
+    const randStijl = tier !== 'basis' ? `border-color:${tierStijl.rand};border-width:2px;` : '';
     const MAX_TEKENS = 70;
     let beschrijving = '';
     if (loc.beschrijving) {
       const tekst = loc.beschrijving;
-      const kort  = tekst.length > MAX_TEKENS;
-      const id    = 'loc-' + Math.random().toString(36).slice(2);
+      const kort = tekst.length > MAX_TEKENS;
+      const id = 'loc-' + Math.random().toString(36).slice(2);
       beschrijving = `
         <div style="font-size:0.83rem;color:var(--text-muted);margin-top:10px;line-height:1.55;padding-top:10px;border-top:1px solid var(--grey-border)">
           <span id="${id}-kort">${kort ? tekst.slice(0, MAX_TEKENS) + '…' : tekst}</span>
@@ -1154,17 +482,13 @@
               this.textContent=this.textContent==='Lees meer'?'Lees minder':'Lees meer'">Lees meer</a>` : ''}
         </div>`;
     }
-
     const cfg = DISC_CONFIG[discStr];
     const tagStijl = cfg ? `background:${cfg.color};color:#fff` : 'background:var(--teal-light);color:var(--teal)';
-
     return `
-      <div class="locatie-card" data-discipline="${discStr}" style="${randStijl}">
+      <div class="locatie-card" data-discipline="${discStr}" data-id="${loc.id}" style="${randStijl}">
         ${tierBadge}
         <div class="locatie-card-header">
-          ${loc.website
-            ? `<a href="${loc.website}" class="locatie-naam" target="_blank" rel="noopener">${loc.naam}</a>`
-            : `<span class="locatie-naam">${loc.naam}</span>`}
+          ${loc.website ? `<a href="${loc.website}" class="locatie-naam" target="_blank" rel="noopener">${loc.naam}</a>` : `<span class="locatie-naam">${loc.naam}</span>`}
           <span class="discipline-tag" style="${tagStijl}">${loc.disciplines[0] || ''}</span>
         </div>
         <div class="locatie-adres">📍 ${loc.adres}</div>
@@ -1174,34 +498,28 @@
           ${loc.website  ? `<a href="${loc.website}" target="_blank" rel="noopener">🌐 Website</a>` : ''}
         </div>
         ${beschrijving}
+        <a href="therapeuten.html?praktijk=${loc.id}" class="btn-therapeuten">
+          👥 Bekijk therapeuten
+        </a>
       </div>`;
   }
 
   function updateFilter() {
-    // Kaartkaarten
     document.querySelectorAll('.locatie-card').forEach(card => {
       const disc = (card.dataset.discipline || '').toLowerCase();
       const match = actieveDisc.size === Object.keys(DISC_CONFIG).length || actieveDisc.has(disc);
       card.style.display = match ? '' : 'none';
     });
-
-    // Kaartmarkers
     kaartMarkers.forEach(marker => {
-      const loc  = marker._locData;
+      const loc = marker._locData;
       const disc = (loc.disciplines || []).map(d => d.toLowerCase());
       const alleActief = actieveDisc.size === Object.keys(DISC_CONFIG).length;
-      const zichtbaar  = disc.some(d => actieveDisc.has(d));
-
+      const zichtbaar = disc.some(d => actieveDisc.has(d));
       if (zichtbaar) {
         marker.addTo(kaart);
-        const pillsHTML = disc
-          .filter(d => alleActief || actieveDisc.has(d))
-          .map(d => { const cfg = DISC_CONFIG[d]; return cfg ? `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>` : ''; })
-          .join('');
+        const pillsHTML = disc.filter(d => alleActief || actieveDisc.has(d)).map(d => { const cfg = DISC_CONFIG[d]; return cfg ? `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>` : ''; }).join('');
         marker.setIcon(L.divIcon({ className: '', html: `<div class="disc-marker">${pillsHTML}</div>`, iconAnchor: [0,13], popupAnchor: [13,-13] }));
-      } else {
-        marker.remove();
-      }
+      } else { marker.remove(); }
     });
   }
 
@@ -1213,86 +531,48 @@
       document.querySelector('.disc-btn[onclick*="\'all\'"]').classList.remove('active');
       if (actieveDisc.has(disc) && actieveDisc.size > 1) { actieveDisc.delete(disc); btn.classList.remove('active'); }
       else { actieveDisc.add(disc); btn.classList.add('active'); }
-      if (actieveDisc.size === Object.keys(DISC_CONFIG).length)
-        document.querySelector('.disc-btn[onclick*="\'all\'"]').classList.add('active');
+      if (actieveDisc.size === Object.keys(DISC_CONFIG).length) document.querySelector('.disc-btn[onclick*="\'all\'"]').classList.add('active');
     }
     updateFilter();
   }
 
   laadLocaties();
 
-  // ════════════════════════════════════════════════════════
-  //  DYNAMISCHE HERO STATS
-  // ════════════════════════════════════════════════════════
   function updateStats(aantalLocaties) {
-    const aantalProtocollen = PROTOCOLLEN.length;
-    document.getElementById('stat-protocollen').textContent = (aantalProtocollen - 1) + '+';
-    document.getElementById('stat-praktijken').textContent  = aantalLocaties > 0 ? (aantalLocaties - 1) + '+' : '–';
+    document.getElementById('stat-protocollen').textContent = (PROTOCOLLEN.length - 1) + '+';
+    document.getElementById('stat-praktijken').textContent = aantalLocaties > 0 ? (aantalLocaties - 1) + '+' : '–';
   }
 
-  // ════════════════════════════════════════════════════════
-  //  LOCATIE ZOEKEN (postcode/plaats)
-  // ════════════════════════════════════════════════════════
   async function zoekLocatie() {
     const zoekterm = document.getElementById('locatie-zoek').value.trim();
     if (!zoekterm) return;
-
     const status = document.getElementById('zoek-status');
     status.style.display = 'block';
     status.textContent = 'Zoeken…';
-
     try {
       const query = encodeURIComponent(zoekterm + ', Nederland');
-      const url   = `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1&countrycodes=nl`;
-      const resp  = await fetch(url, { headers: { 'User-Agent': 'EVN-Website/1.0' } });
-      const data  = await resp.json();
-
-      if (data.length === 0) {
-        status.textContent = 'Locatie niet gevonden. Probeer een andere postcode of plaats.';
-        return;
-      }
-
-      const lat = parseFloat(data[0].lat);
-      const lng = parseFloat(data[0].lon);
-      kaart.setView([lat, lng], 13);
+      const url = `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1&countrycodes=nl`;
+      const resp = await fetch(url, { headers: { 'User-Agent': 'EVN-Website/1.0' } });
+      const data = await resp.json();
+      if (data.length === 0) { status.textContent = 'Locatie niet gevonden.'; return; }
+      kaart.setView([parseFloat(data[0].lat), parseFloat(data[0].lon)], 13);
       status.textContent = `📍 ${data[0].display_name.split(',').slice(0,2).join(',')}`;
-
-    } catch(e) {
-      status.textContent = 'Zoeken mislukt. Controleer uw internetverbinding.';
-    }
+    } catch(e) { status.textContent = 'Zoeken mislukt.'; }
   }
 
-  // ════════════════════════════════════════════════════════
-  //  GEBRUIK MIJN LOCATIE
-  // ════════════════════════════════════════════════════════
   function gebruikMijnLocatie() {
     const status = document.getElementById('zoek-status');
     status.style.display = 'block';
     status.textContent = 'Locatie ophalen…';
-
-    if (!navigator.geolocation) {
-      status.textContent = 'Geolocatie wordt niet ondersteund door uw browser.';
-      return;
-    }
-
+    if (!navigator.geolocation) { status.textContent = 'Geolocatie niet ondersteund.'; return; }
     navigator.geolocation.getCurrentPosition(
       pos => {
-        const lat = pos.coords.latitude;
-        const lng = pos.coords.longitude;
-        kaart.setView([lat, lng], 13);
-
-        // Blauwe stip op gebruikerslocatie
+        kaart.setView([pos.coords.latitude, pos.coords.longitude], 13);
         if (window._gebruikerMarker) window._gebruikerMarker.remove();
-        window._gebruikerMarker = L.circleMarker([lat, lng], {
-          radius: 8, fillColor: '#2A9D8F', color: '#fff',
-          weight: 2, fillOpacity: 1
-        }).addTo(kaart).bindPopup('📍 Uw locatie').openPopup();
-
+        window._gebruikerMarker = L.circleMarker([pos.coords.latitude, pos.coords.longitude], { radius: 8, fillColor: '#2A9D8F', color: '#fff', weight: 2, fillOpacity: 1 }).addTo(kaart).bindPopup('📍 Uw locatie').openPopup();
         status.textContent = '📍 Uw locatie gevonden';
       },
-      err => {
-        status.textContent = 'Locatie niet beschikbaar. Controleer uw browserinstellingen.';
-      }
+      () => { status.textContent = 'Locatie niet beschikbaar.'; }
     );
   }
 
