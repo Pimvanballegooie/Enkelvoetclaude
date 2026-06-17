@@ -1,0 +1,20 @@
+{
+  "naam": "Enkel Voet Netwerk",
+  "subtitel": "Breda e.o.",
+  "disciplines": [
+    "Fysiotherapeut",
+    "Ergotherapeut",
+    "Oefentherapeut",
+    "Podotherapeut",
+    "Medisch pedicure",
+    "Orthopedisch schoenmaker"
+  ],
+  "discipline_kleuren": {
+    "Fysiotherapeut": "#1A5276",
+    "Ergotherapeut": "#C0392B",
+    "Oefentherapeut": "#6C3483",
+    "Podotherapeut": "#1E8449",
+    "Medisch pedicure": "#B7770D",
+    "Orthopedisch schoenmaker": "#117A65"
+  }
+}
