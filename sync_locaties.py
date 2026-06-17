@@ -1,17 +1,22 @@
-import json, urllib.request, urllib.parse, os, time, csv, io
+import json, urllib.request, urllib.parse, os, time
 
-SHEET_ID = os.environ.get("SHEET_ID", "")
-url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid=0"
-req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-with urllib.request.urlopen(req, timeout=30) as resp:
-    csv_data = resp.read().decode("utf-8")
+SUPABASE_URL = os.environ.get("SUPABASE_URL", "")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY", "")
 
-reader = csv.DictReader(io.StringIO(csv_data))
+def supabase_get(tabel, params=""):
+    url = f"{SUPABASE_URL}/rest/v1/{tabel}?{params}"
+    req = urllib.request.Request(url, headers={
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}",
+        "Content-Type": "application/json"
+    })
+    with urllib.request.urlopen(req, timeout=30) as resp:
+        return json.loads(resp.read())
 
 def fix_url(url):
-    url = url.strip()
     if not url:
         return ""
+    url = url.strip()
     if not url.startswith("http://") and not url.startswith("https://"):
         url = "https://" + url
     url = url.replace("http://", "https://")
@@ -30,58 +35,78 @@ def geocodeer(adres):
         print(f"Geocoding fout: {e}")
     return None, None
 
-locaties = []
-cache = {}
+# Haal alle actieve praktijken op
+praktijken = supabase_get("praktijken", "actief=eq.true&select=*")
+print(f"{len(praktijken)} actieve praktijken gevonden")
 
-for rij in reader:
-    if rij.get("Status", "").strip() != "Goedgekeurd":
-        continue
-    tier  = rij.get("Tier", "basis").lower().strip()
-    naam  = rij.get("Praktijknaam", "").strip()
-    adres = rij.get("Adres", "").strip()
+# Haal therapeuten op per praktijk
+therapeuten_raw = supabase_get("therapeuten", "actief=eq.true&select=*,therapeut_subcategorieen(subcategorie_id,subcategorieen(naam,slug,categorieen(naam,slug)))")
+
+# Maak lookup: praktijk_id -> lijst therapeuten
+therapeuten_per_praktijk = {}
+for t in therapeuten_raw:
+    pid = t["praktijk_id"]
+    if pid not in therapeuten_per_praktijk:
+        therapeuten_per_praktijk[pid] = []
+    therapeuten_per_praktijk[pid].append(t)
+
+locaties = []
+geo_cache = {}
+
+for p in praktijken:
+    naam  = p.get("naam", "").strip()
+    adres = f"{p.get('straat', '')} {p.get('huisnummer', '')}, {p.get('stad', '')}".strip()
+    postcode = p.get("postcode", "").strip()
+    volledig_adres = f"{adres} {postcode}".strip()
+
     if not naam or not adres:
         continue
-    if adres not in cache:
-        cache[adres] = geocodeer(adres)
+
+    # Geocoderen
+    if volledig_adres not in geo_cache:
+        geo_cache[volledig_adres] = geocodeer(volledig_adres)
         time.sleep(1)
-    lat, lng = cache[adres]
+    lat, lng = geo_cache[volledig_adres]
+
     if not lat:
-        print(f"Geen coordinaten: {adres}")
+        print(f"Geen coordinaten: {volledig_adres}")
         continue
+
+    # Haal disciplines op via therapeuten
+    disciplines = set()
+    therapeuten_lijst = []
+    for t in therapeuten_per_praktijk.get(p["id"], []):
+        for ts in t.get("therapeut_subcategorieen", []):
+            sub = ts.get("subcategorieen", {})
+            if sub:
+                disciplines.add(sub.get("naam", ""))
+        therapeuten_lijst.append({
+            "naam": f"{t.get('voornaam', '')} {t.get('achternaam', '')}".strip(),
+            "foto": t.get("foto_url", ""),
+            "bio": t.get("bio", "")
+        })
+
+    tier = p.get("tier", "basis") or "basis"
+
     locaties.append({
-        "naam":        naam,
-        "adres":       adres,
-        "website":     fix_url(rij.get("Website", "")),
-        "telefoon":    rij.get("Telefoon locatie", "").strip(),
-        "email":       rij.get("E-mail locatie", "").strip(),
-        "disciplines": [d.strip() for d in rij.get("Disciplines", "").split(",") if d.strip()],
-        "tier":        tier,
-        "beschrijving": rij.get("Beschrijving", "").strip() if tier in ["plus", "partner"] else "",
-        "logo_url":    fix_url(rij.get("Logo URL", "")) if tier == "partner" else "",
-        "partner_adres":    rij.get("Partner adres", "").strip(),
-        "partner_telefoon": rij.get("Partner telefoon", "").strip(),
-        "partner_email":    rij.get("Partner e-mail", "").strip(),
-        "lat": lat,
-        "lng": lng
+        "naam":         naam,
+        "adres":        volledig_adres,
+        "postcode":     postcode,
+        "website":      fix_url(p.get("website", "")),
+        "telefoon":     p.get("telefoon", "").strip(),
+        "email":        p.get("email", "").strip(),
+        "disciplines":  sorted(list(disciplines)),
+        "tier":         tier,
+        "beschrijving": p.get("beschrijving", "") if tier in ["plus", "partner"] else "",
+        "logo_url":     fix_url(p.get("logo_url", "")) if tier == "partner" else "",
+        "therapeuten":  therapeuten_lijst,
+        "lat":          lat,
+        "lng":          lng
     })
-    print(f"OK: {naam} ({tier})")
+    print(f"OK: {naam} ({tier}) — {len(therapeuten_lijst)} therapeuten")
 
+# Sorteer op tier
 locaties.sort(key=lambda l: {"partner": 0, "plus": 1, "basis": 2}.get(l["tier"], 3))
-
-# Beschrijving en logo overnemen voor alle locaties van dezelfde praktijk
-beschrijving_per_praktijk = {}
-logo_per_praktijk = {}
-for loc in locaties:
-    if loc["beschrijving"] and loc["naam"] not in beschrijving_per_praktijk:
-        beschrijving_per_praktijk[loc["naam"]] = loc["beschrijving"]
-    if loc["logo_url"] and loc["naam"] not in logo_per_praktijk:
-        logo_per_praktijk[loc["naam"]] = loc["logo_url"]
-
-for loc in locaties:
-    if not loc["beschrijving"] and loc["naam"] in beschrijving_per_praktijk:
-        loc["beschrijving"] = beschrijving_per_praktijk[loc["naam"]]
-    if not loc["logo_url"] and loc["naam"] in logo_per_praktijk:
-        loc["logo_url"] = logo_per_praktijk[loc["naam"]]
 
 with open("locaties.json", "w", encoding="utf-8") as f:
     json.dump(locaties, f, ensure_ascii=False, indent=2)
