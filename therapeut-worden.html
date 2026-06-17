@@ -182,9 +182,17 @@
           <div class="form-section-title">Jouw praktijk</div>
           <div class="form-group">
             <label>Locatie(s) waar je werkt <span class="req">*</span></label>
-            <div id="praktijk-checkboxes" style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+            <div style="position:relative;margin-top:4px;margin-bottom:8px">
+              <input type="text" id="praktijk-zoek" placeholder="🔍 Zoek op praktijknaam of plaats…"
+                oninput="filterPraktijken(this.value)"
+                style="width:100%;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;font-family:inherit;font-size:0.875rem;outline:none;transition:border-color 0.2s"
+                onfocus="this.style.borderColor='var(--teal)'"
+                onblur="this.style.borderColor='var(--grey-border)'" />
+            </div>
+            <div id="praktijk-checkboxes" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;padding:2px">
               <div style="color:var(--text-muted);font-size:0.85rem">Laden…</div>
             </div>
+            <div id="praktijk-geen-resultaten" style="display:none;padding:12px;color:var(--text-muted);font-size:0.85rem;text-align:center">Geen locaties gevonden voor deze zoekopdracht.</div>
             <p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px">Staat jouw praktijk er niet bij? Meld de praktijk eerst aan via <a href="locatie-worden.html" style="color:var(--teal)">locatie worden</a>.</p>
           </div>
         </div>
@@ -278,6 +286,19 @@
           onchange="togglePraktijkStijl(this)" />
         <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">${p.naam} — ${p.straat}, ${p.stad}</span>
       </label>`).join('');
+  }
+
+  function filterPraktijken(zoekterm) {
+    const items = document.querySelectorAll('#praktijk-checkboxes label');
+    const lower = zoekterm.toLowerCase();
+    let zichtbaar = 0;
+    items.forEach(item => {
+      const tekst = item.textContent.toLowerCase();
+      const match = tekst.includes(lower);
+      item.style.display = match ? '' : 'none';
+      if (match) zichtbaar++;
+    });
+    document.getElementById('praktijk-geen-resultaten').style.display = zichtbaar === 0 ? 'block' : 'none';
   }
 
   function togglePraktijkStijl(checkbox) {
