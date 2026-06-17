@@ -419,8 +419,8 @@
   laadLocaties();
 
   function updateStats(aantalLocaties) {
-    document.getElementById('stat-protocollen').textContent = (PROTOCOLLEN.length - 1) + '+';
-    document.getElementById('stat-praktijken').textContent = aantalLocaties > 0 ? (aantalLocaties - 1) + '+' : '–';
+    document.getElementById('stat-protocollen').textContent = '15+';
+    document.getElementById('stat-praktijken').textContent = aantalLocaties > 0 ? aantalLocaties + '+' : '–';
   }
 
   async function zoekLocatie() {
