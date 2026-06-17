@@ -76,7 +76,7 @@
       <div class="logo-text">Enkel Voet Netwerk<span>Breda e.o.</span></div>
     </a>
     <nav>
-      <a href="index.html#protocollen">Protocollen</a>
+      <a href="protocollen.html">Protocollen</a>
       <a href="index.html#locaties">Locaties</a>
       <a href="partners.html">Partners</a>
       <a href="locatie-worden.html" class="cta">Locatie worden</a>
@@ -147,7 +147,7 @@
 
     // Haal therapeuten op
     const therapeutenResp = await fetch(
-      `${SUPABASE_URL}/rest/v1/therapeuten?praktijk_id=eq.${praktijkId}&actief=eq.true&select=*,therapeut_subcategorieen(subcategorieen(naam))`,
+      `${SUPABASE_URL}/rest/v1/therapeuten?praktijk_id=eq.${praktijkId}&actief=eq.true&select=id,voornaam,achternaam,foto_url,bio,disciplines,therapeut_subcategorieen(subcategorieen(naam))`,
       { headers: HEADERS }
     );
     const therapeuten = await therapeutenResp.json();
@@ -173,6 +173,10 @@
         ? `<img class="therapeut-foto" src="${t.foto_url}" alt="${naam}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="therapeut-avatar" style="display:none">👤</div>`
         : `<div class="therapeut-avatar">👤</div>`;
 
+      const disciplinesHtml = (t.disciplines || []).length > 0
+        ? `<div class="spec-tags" style="margin-bottom:8px">${(t.disciplines || []).map(d => `<span class="spec-tag" style="background:#E8F5F4;color:#2A9D8F">${d}</span>`).join('')}</div>`
+        : '';
+
       const tagsHtml = specialisaties.length > 0
         ? `<div class="spec-tags">${specialisaties.map(s => `<span class="spec-tag">${s}</span>`).join('')}</div>`
         : '';
@@ -181,6 +185,7 @@
         <div class="therapeut-kaart">
           ${fotoHtml}
           <div class="therapeut-naam">${naam}</div>
+          ${disciplinesHtml}
           ${t.bio ? `<div class="therapeut-bio">${t.bio}</div>` : ''}
           ${tagsHtml}
         </div>`;
