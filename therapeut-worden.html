@@ -278,17 +278,12 @@
     };
   }
 
-  // Laad disciplines vanuit site-config.json
-  async function laadDisciplines() {
-    try {
-      const resp = await fetch('site-config.json');
-      const config = await resp.json();
-      DISCIPLINES = config.disciplines;
-    } catch(e) {
-      DISCIPLINES = ['Fysiotherapeut','Ergotherapeut','Oefentherapeut','Podotherapeut','Medisch pedicure','Orthopedisch schoenmaker'];
-    }
+  // Disciplines direct beschikbaar (uit site-config)
+  DISCIPLINES = ['Fysiotherapeut','Ergotherapeut','Oefentherapeut','Podotherapeut','Medisch pedicure','Orthopedisch schoenmaker'];
 
+  function laadDisciplines() {
     const container = document.getElementById('discipline-checkboxes');
+    if (!container) return;
     container.innerHTML = DISCIPLINES.map(d => `
       <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white);transition:all 0.15s"
         onmouseover="if(!this.querySelector('input').checked){this.style.borderColor='var(--teal)';this.style.background='var(--teal-light)'}"
@@ -298,6 +293,17 @@
           onchange="toggleDisciplineStijl(this)" />
         <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">${d}</span>
       </label>`).join('');
+
+    // Probeer ook uit site-config.json te laden
+    fetch('site-config.json')
+      .then(r => r.json())
+      .then(config => {
+        if (config.disciplines && config.disciplines.length > 0) {
+          DISCIPLINES = config.disciplines;
+          laadDisciplines();
+        }
+      })
+      .catch(() => {});
   }
 
   function toggleDisciplineStijl(checkbox) {
