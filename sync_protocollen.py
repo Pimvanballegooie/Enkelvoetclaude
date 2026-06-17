@@ -48,6 +48,21 @@ def opschonen_html(body):
     body = re.sub(r'<hr[^>]*>', '<hr>', body)
     # Netjes maken
     body = re.sub(r'\n{3,}', '\n\n', body)
+
+    # Zet URLs naar fysioefeningen.nl om naar mooie knoppen
+    def maak_knop(match):
+        url = match.group(0).strip()
+        naam = url.replace('https://www.fysioefeningen.nl/', '').replace('https://fysioefeningen.nl/', '')
+        naam = naam.replace('-', ' ').strip().capitalize()
+        return (
+            '<a href="' + url + '" target="_blank" rel="noopener" '
+            'style="display:inline-flex;align-items:center;gap:8px;margin:6px 0;padding:10px 18px;'
+            'background:#E8F5F4;color:#2A9D8F;border:2px solid #2A9D8F;border-radius:8px;'
+            'font-size:0.875rem;font-weight:600;text-decoration:none;">&#128249; ' + naam + '</a>'
+        )
+
+    body = re.sub(r'https?://(?:www\.)?fysioefeningen\.nl/[^\s<>"\']+', maak_knop, body)
+
     return body.strip()
 
 def extraheer_preview(body, max_alineas=3):
