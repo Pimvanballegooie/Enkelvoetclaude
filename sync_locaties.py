@@ -75,14 +75,13 @@ for p in praktijken:
         print(f"Geen coordinaten: {volledig_adres}")
         continue
 
-    # Haal disciplines op via therapeuten
-    disciplines = set()
+    # Haal disciplines op uit praktijken tabel direct
+    disc_raw = p.get("disciplines") or []
+    disciplines = set(d.strip() for d in disc_raw if d)
+
+    # Therapeuten
     therapeuten_lijst = []
     for t in therapeuten_per_praktijk.get(p["id"], []):
-        for ts in t.get("therapeut_subcategorieen", []):
-            sub = ts.get("subcategorieen", {})
-            if sub:
-                disciplines.add(sub.get("naam", ""))
         therapeuten_lijst.append({
             "naam": f"{t.get('voornaam', '')} {t.get('achternaam', '')}".strip(),
             "foto": t.get("foto_url", ""),
