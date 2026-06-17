@@ -33,10 +33,10 @@ def opschonen_html(body):
     body = re.sub(r'<figure[^>]*>.*?</figure>', '', body, flags=re.DOTALL)
 
     # FIX: Google redirect URLs omzetten naar echte URLs
-    # Google Docs maakt van links: href="https://www.google.com/url?q=https://fysioefeningen.nl/..."
     def ontgoogle(match):
         href = match.group(1)
         if 'google.com/url' in href:
+            href = href.replace('&amp;', '&')
             parsed = urllib.parse.urlparse(href)
             params = urllib.parse.parse_qs(parsed.query)
             echte_url = params.get('q', [href])[0]
@@ -48,18 +48,17 @@ def opschonen_html(body):
     body = re.sub(r' style="[^"]*"', '', body)
     body = re.sub(r' class="[^"]*"', '', body)
     body = re.sub(r' id="[^"]*"', '', body)
-    body = re.sub(r'<span>\s*</span>', '', body)
-    body = re.sub(r'<span>(.*?)</span>', r'\1', body)
-    body = re.sub(r'<p>\s*</p>', '', body)
-    body = re.sub(r'<div>\s*</div>', '', body)
     body = re.sub(r'<hr[^>]*>', '<hr>', body)
     body = re.sub(r'\n{3,}', '\n\n', body)
 
-    # FIX: fysioefeningen.nl <a> links omzetten naar mooie knoppen
+    # FIX: fysioefeningen.nl links EERST omzetten naar knoppen, dan pas spans opruimen
+    # (anders worden de linkteksten in <span> tags weggegooid voor we ze kunnen gebruiken)
     # Gebruik de linktekst uit het doc als naam (niet de URL-slug)
     def maak_knop_van_link(match):
         url = match.group(1)
         linktekst = re.sub(r'<[^>]+>', '', match.group(2)).strip()
+        # Verwijder emoji als die al in de linktekst zit (bij dubbele sync runs)
+        linktekst = linktekst.replace('\U0001f4f9', '').replace('&#128249;', '').strip()
         naam = linktekst if linktekst and not linktekst.startswith('http') else \
                url.replace('https://www.fysioefeningen.nl/', '') \
                   .replace('https://fysioefeningen.nl/', '') \
@@ -78,7 +77,13 @@ def opschonen_html(body):
         flags=re.DOTALL
     )
 
-    # Verwijder ook losse fysioefeningen URLs als platte tekst (backup)
+    # Nu pas spans opruimen (na knop-conversie zodat linkteksten behouden blijven)
+    body = re.sub(r'<span>\s*</span>', '', body)
+    body = re.sub(r'<span>(.*?)</span>', r'\1', body)
+    body = re.sub(r'<p>\s*</p>', '', body)
+    body = re.sub(r'<div>\s*</div>', '', body)
+
+    # Verwijder losse fysioefeningen URLs als platte tekst (backup)
     body = re.sub(r'https?://(?:www\.)?fysioefeningen\.nl/[^\s<>"\']+', '', body)
 
     return body.strip()
@@ -90,19 +95,34 @@ def extraheer_preview(body, max_alineas=3):
     blokken = [b for b in blokken if len(re.sub(r'<[^>]+>', '', b).strip()) > 10]
     return '\n'.join(blokken[:max_alineas])
 
-def extraheer_oefenfilmpjes(html_niveaus):
-    """Zoek fysioefeningen.nl knoppen in alle niveaus, dedupliceer op URL"""
+def extraheer_oefenfilmpjes_ruw(rauwe_html_niveaus):
+    """Zoek fysioefeningen.nl links in RUWE Google Docs HTML (voor opschonen), dedupliceer op URL"""
     gezien = set()
     links = []
-    for niveau_html in html_niveaus:
-        alle_links = re.findall(
-            r'<a href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"[^>]*>&#128249; ([^<]+)</a>',
-            niveau_html
+    for rauwe_html in rauwe_html_niveaus:
+        # Zoek in ruwe HTML: Google redirect links naar fysioefeningen.nl
+        # Patroon: href="https://www.google.com/url?q=https://fysioefeningen.nl/..."
+        google_links = re.findall(
+            r'href="https?://(?:www\.)?google\.com/url\?[^"]*q=(https?://(?:www\.)?fysioefeningen\.nl/[^&"]+)[^"]*"[^>]*>([^<]*)</a>',
+            rauwe_html
         )
-        for url, naam in alle_links:
+        for url, naam in google_links:
+            url = urllib.parse.unquote(url)
+            naam = naam.strip()
             if url not in gezien:
                 gezien.add(url)
-                links.append((url, naam.strip()))
+                links.append((url, naam if naam else url.split('/')[-1].replace('-', ' ').capitalize()))
+        
+        # Zoek ook directe fysioefeningen.nl links (zonder Google redirect)
+        directe_links = re.findall(
+            r'href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"[^>]*>([^<]*)</a>',
+            rauwe_html
+        )
+        for url, naam in directe_links:
+            naam = naam.replace('&#128249;', '').replace('\U0001f4f9', '').strip()
+            if url not in gezien:
+                gezien.add(url)
+                links.append((url, naam if naam else url.split('/')[-1].replace('-', ' ').capitalize()))
     return links
 
 ZONES = {
@@ -120,6 +140,7 @@ for protocol in config['protocollen']:
     protocol_teksten = {}
     protocol_previews = {}
     protocol_volledige_html = {}
+    protocol_ruwe_html = {}  # voor oefenfilmpjes extractie
 
     for niveau, doc_id in protocol['niveaus'].items():
         if not doc_id or doc_id == 'INVULLEN':
@@ -143,6 +164,7 @@ for protocol in config['protocollen']:
                 protocol_teksten[niveau] = extractor.get_text()[:2000]
                 protocol_previews[niveau] = extraheer_preview(body, max_alineas=3)
                 protocol_volledige_html[niveau] = body_schoon
+                protocol_ruwe_html[niveau] = body  # bewaar ruwe HTML voor filmpjes
             else:
                 fouten.append(bestandsnaam)
         except Exception as e:
@@ -155,7 +177,8 @@ for protocol in config['protocollen']:
         'zone': protocol.get('zone', ''),
         'teksten': protocol_teksten,
         'previews': protocol_previews,
-        'volledige_html': protocol_volledige_html
+        'volledige_html': protocol_volledige_html,
+        'ruwe_html': protocol_ruwe_html
     })
 
 print("Genereer protocollen.html...")
@@ -182,7 +205,7 @@ for p in protocol_data:
 
     # FIX: zoek oefenfilmpjes in ALLE niveaus, niet alleen makkelijk
     oefenfilmpjes_html = ''
-    links = extraheer_oefenfilmpjes(list(p['volledige_html'].values()))
+    links = extraheer_oefenfilmpjes_ruw(list(p['ruwe_html'].values()))
     if links:
         oefenfilmpjes_html = '<div class="oefenfilmpjes-zijbalk"><div class="oefenfilmpjes-titel">📹 Oefenfilmpjes</div>'
         for url, naam in links:
