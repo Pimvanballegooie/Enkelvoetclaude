@@ -83,6 +83,18 @@ def opschonen_html(body):
     body = re.sub(r'<p>\s*</p>', '', body)
     body = re.sub(r'<div>\s*</div>', '', body)
 
+    # Vervang [VIDEO: Naam | URL] patronen door knoppen in de tekst
+    def maak_video_knop(match):
+        naam = match.group(1).strip()
+        url = match.group(2).strip()
+        return (
+            '<a href="' + url + '" target="_blank" rel="noopener" '
+            'style="display:inline-flex;align-items:center;gap:6px;margin:4px 0;padding:6px 14px;'
+            'background:#E8F5F4;color:#2A9D8F;border:1.5px solid #2A9D8F;border-radius:6px;'
+            'font-size:0.8rem;font-weight:600;text-decoration:none;">📹 ' + naam + '</a>'
+        )
+    body = re.sub(r'\[VIDEO:\s*([^|\]]+)\|\s*(https?://[^\]]+)\]', maak_video_knop, body)
+
     # Verwijder losse fysioefeningen URLs als platte tekst (backup)
     body = re.sub(r'https?://(?:www\.)?fysioefeningen\.nl/[^\s<>"\']+', '', body)
 
