@@ -95,34 +95,46 @@ def extraheer_preview(body, max_alineas=3):
     blokken = [b for b in blokken if len(re.sub(r'<[^>]+>', '', b).strip()) > 10]
     return '\n'.join(blokken[:max_alineas])
 
+def slug_naar_naam(url):
+    """Zet URL-slug om naar leesbare naam: fysioefeningen.nl/enkel-oefening -> Enkel oefening"""
+    slug = url.rstrip('/').split('/')[-1]
+    return slug.replace('-', ' ').strip().capitalize()
+
+def extraheer_tekst_uit_html(html):
+    """Haal platte tekst op uit HTML, strip alle tags"""
+    tekst = re.sub(r'<[^>]+>', '', html).strip()
+    tekst = tekst.replace('&#128249;', '').replace('\U0001f4f9', '').strip()
+    return tekst
+
 def extraheer_oefenfilmpjes_ruw(rauwe_html_niveaus):
-    """Zoek fysioefeningen.nl links in RUWE Google Docs HTML (voor opschonen), dedupliceer op URL"""
+    """Zoek fysioefeningen.nl links in RUWE Google Docs HTML, dedupliceer op URL"""
     gezien = set()
     links = []
     for rauwe_html in rauwe_html_niveaus:
-        # Zoek in ruwe HTML: Google redirect links naar fysioefeningen.nl
-        # Patroon: href="https://www.google.com/url?q=https://fysioefeningen.nl/..."
-        google_links = re.findall(
-            r'href="https?://(?:www\.)?google\.com/url\?[^"]*q=(https?://(?:www\.)?fysioefeningen\.nl/[^&"]+)[^"]*"[^>]*>([^<]*)</a>',
-            rauwe_html
-        )
-        for url, naam in google_links:
-            url = urllib.parse.unquote(url)
-            naam = naam.strip()
-            if url not in gezien:
-                gezien.add(url)
-                links.append((url, naam if naam else url.split('/')[-1].replace('-', ' ').capitalize()))
-        
-        # Zoek ook directe fysioefeningen.nl links (zonder Google redirect)
-        directe_links = re.findall(
-            r'href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"[^>]*>([^<]*)</a>',
-            rauwe_html
-        )
-        for url, naam in directe_links:
-            naam = naam.replace('&#128249;', '').replace('\U0001f4f9', '').strip()
-            if url not in gezien:
-                gezien.add(url)
-                links.append((url, naam if naam else url.split('/')[-1].replace('-', ' ').capitalize()))
+        # Zoek alle <a> tags met fysioefeningen.nl URL (direct of via Google redirect)
+        # Match de volledige <a>...</a> inclusief eventuele spans erin
+        alle_a_tags = re.findall(r'<a\s+href="([^"]*)"[^>]*>(.*?)</a>', rauwe_html, re.DOTALL)
+        for href, inhoud in alle_a_tags:
+            # Ontgoogle de href
+            echte_url = href
+            if 'google.com/url' in href:
+                href = href.replace('&amp;', '&')
+                parsed = urllib.parse.urlparse(href)
+                params = urllib.parse.parse_qs(parsed.query)
+                echte_url = params.get('q', [href])[0]
+            
+            # Alleen fysioefeningen.nl links
+            if 'fysioefeningen.nl' not in echte_url:
+                continue
+            
+            # Naam: uit linktekst of uit URL-slug
+            naam = extraheer_tekst_uit_html(inhoud)
+            if not naam or naam.startswith('http') or naam.startswith('www'):
+                naam = slug_naar_naam(echte_url)
+            
+            if echte_url not in gezien:
+                gezien.add(echte_url)
+                links.append((echte_url, naam))
     return links
 
 ZONES = {
@@ -212,9 +224,11 @@ for p in protocol_data:
         grid_class = "oefenfilmpjes-grid" if len(links_tonen) > 1 else "oefenfilmpjes-grid enkelvoudig"
         oefenfilmpjes_html = f'<div class="oefenfilmpjes-zijbalk"><div class="oefenfilmpjes-titel">📹 Oefenfilmpjes</div><div class="{grid_class}">'
         for url, naam in links_tonen:
-            # Naam inkorten: max 20 tekens
-            naam_kort = naam[:20] + '…' if len(naam) > 20 else naam
-            oefenfilmpjes_html += f'<a href="{url}" target="_blank" rel="noopener" class="oefenfilmpje-knop" title="{naam}">📹 {naam_kort}</a>'
+            # Gebruik slug als naam leeg of URL is
+            if not naam or naam.startswith('http'):
+                naam = slug_naar_naam(url)
+            naam_kort = naam[:18] + '…' if len(naam) > 18 else naam
+            oefenfilmpjes_html += f'<a href="{url}" target="_blank" rel="noopener" class="oefenfilmpje-knop" title="{naam}">{naam_kort}</a>'
         oefenfilmpjes_html += '</div><p class="oefenfilmpjes-disclaimer">Begeleiding van een therapeut is noodzakelijk.</p>'
         oefenfilmpjes_html += '</div>'
 
@@ -284,13 +298,13 @@ html_pagina = '''<!DOCTYPE html>
     .protocol-kaart.verborgen { display: none; }
     .kaart-top { display: flex; gap: 24px; align-items: flex-start; }
     .kaart-links { flex: 1; }
-    .oefenfilmpjes-zijbalk { width: 220px; flex-shrink: 0; background: var(--teal-light); border-radius: 10px; padding: 14px; }
+    .oefenfilmpjes-zijbalk { width: 200px; flex-shrink: 0; background: var(--teal-light); border-radius: 10px; padding: 14px; box-sizing: border-box; }
     .oefenfilmpjes-titel { font-size: 0.78rem; font-weight: 700; color: var(--teal); margin-bottom: 8px; }
-    .oefenfilmpjes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .oefenfilmpjes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; width: 100%; }
     .oefenfilmpjes-grid.enkelvoudig { grid-template-columns: 1fr; }
-    .oefenfilmpje-knop { display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px 8px; background: white; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 6px; font-size: 0.72rem; font-weight: 600; text-decoration: none; transition: all 0.2s; line-height: 1.3; min-height: 40px; }
+    .oefenfilmpje-knop { display: flex; align-items: center; justify-content: center; text-align: center; padding: 5px 4px; background: white; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 6px; font-size: 0.68rem; font-weight: 600; text-decoration: none; transition: all 0.2s; line-height: 1.3; min-height: 36px; overflow: hidden; word-break: break-word; }
     .oefenfilmpje-knop:hover { background: var(--teal); color: white; }
-    .oefenfilmpjes-disclaimer { font-size: 0.68rem; color: var(--text-muted); margin-top: 8px; line-height: 1.4; font-style: italic; }
+    .oefenfilmpjes-disclaimer { font-size: 0.65rem; color: var(--text-muted); margin-top: 8px; line-height: 1.3; font-style: italic; }
     .protocol-zone-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); background: var(--teal-light); padding: 2px 10px; border-radius: 999px; margin-bottom: 10px; }
     .protocol-naam { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; line-height: 1.3; }
     .protocol-preview { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; flex: 1; overflow: hidden; max-height: 120px; position: relative; }
