@@ -181,11 +181,11 @@
         <div class="form-section">
           <div class="form-section-title">Jouw praktijk</div>
           <div class="form-group">
-            <label>Praktijk <span class="req">*</span></label>
-            <select id="praktijk-id">
-              <option value="">— Laden…</option>
-            </select>
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">Staat jouw praktijk er niet bij? Meld de praktijk eerst aan via <a href="locatie-worden.html" style="color:var(--teal)">locatie worden</a>.</p>
+            <label>Locatie(s) waar je werkt <span class="req">*</span></label>
+            <div id="praktijk-checkboxes" style="display:flex;flex-direction:column;gap:8px;margin-top:4px">
+              <div style="color:var(--text-muted);font-size:0.85rem">Laden…</div>
+            </div>
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px">Staat jouw praktijk er niet bij? Meld de praktijk eerst aan via <a href="locatie-worden.html" style="color:var(--teal)">locatie worden</a>.</p>
           </div>
         </div>
 
@@ -260,18 +260,35 @@
     };
   }
 
-  // Laad actieve praktijken voor dropdown
+  // Laad actieve praktijken als checkboxes
   async function laadPraktijken() {
     const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?actief=eq.true&select=id,naam,straat,stad&order=naam`, { headers: HEADERS });
     const praktijken = await resp.json();
-    const select = document.getElementById('praktijk-id');
-    select.innerHTML = '<option value="">— Kies jouw praktijk —</option>';
-    // Groepeer op naam (meerdere locaties)
-    const gezien = {};
-    praktijken.forEach(p => {
-      const label = `${p.naam} — ${p.straat}, ${p.stad}`;
-      select.innerHTML += `<option value="${p.id}">${label}</option>`;
-    });
+    const container = document.getElementById('praktijk-checkboxes');
+    if (praktijken.length === 0) {
+      container.innerHTML = '<div style="color:var(--text-muted);font-size:0.85rem">Geen praktijken gevonden.</div>';
+      return;
+    }
+    container.innerHTML = praktijken.map(p => `
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white);transition:all 0.15s"
+        onmouseover="this.style.borderColor='var(--teal)';this.style.background='var(--teal-light)'"
+        onmouseout="if(!this.querySelector('input').checked){this.style.borderColor='var(--grey-border)';this.style.background='var(--white)'}">
+        <input type="checkbox" name="praktijk" value="${p.id}"
+          style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;cursor:pointer"
+          onchange="togglePraktijkStijl(this)" />
+        <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">${p.naam} — ${p.straat}, ${p.stad}</span>
+      </label>`).join('');
+  }
+
+  function togglePraktijkStijl(checkbox) {
+    const label = checkbox.closest('label');
+    if (checkbox.checked) {
+      label.style.borderColor = 'var(--teal)';
+      label.style.background = 'var(--teal-light)';
+    } else {
+      label.style.borderColor = 'var(--grey-border)';
+      label.style.background = 'var(--white)';
+    }
   }
 
   // Laad relevante subcategorieën
@@ -327,11 +344,13 @@
       else el.style.borderColor = '';
     });
 
-    if (!praktijkId) {
-      document.getElementById('praktijk-id').style.borderColor = '#E74C3C';
+    const geselecteerdePraktijken = [...document.querySelectorAll('input[name="praktijk"]:checked')].map(cb => cb.value);
+    if (geselecteerdePraktijken.length === 0) {
+      document.getElementById('praktijk-checkboxes').style.outline = '2px solid #E74C3C';
+      document.getElementById('praktijk-checkboxes').style.borderRadius = '8px';
       geldig = false;
     } else {
-      document.getElementById('praktijk-id').style.borderColor = '';
+      document.getElementById('praktijk-checkboxes').style.outline = '';
     }
 
     if (!document.getElementById('akkoord').checked) { alert('Vink het akkoordvakje aan.'); return; }
@@ -347,7 +366,6 @@
         method: 'POST',
         headers: { ...HEADERS, 'Prefer': 'return=representation' },
         body: JSON.stringify({
-          praktijk_id: parseInt(praktijkId),
           voornaam,
           achternaam,
           email,
@@ -361,7 +379,20 @@
       if (!therapeutResp.ok) throw new Error(await therapeutResp.text());
       const [therapeut] = await therapeutResp.json();
 
-      // 2. Sla specialisaties op
+      // 2. Sla praktijk koppelingen op
+      const geselecteerdePraktijken2 = [...document.querySelectorAll('input[name="praktijk"]:checked')].map(cb => cb.value);
+      if (geselecteerdePraktijken2.length > 0) {
+        await fetch(`${SUPABASE_URL}/rest/v1/therapeut_praktijken`, {
+          method: 'POST',
+          headers: HEADERS,
+          body: JSON.stringify(geselecteerdePraktijken2.map(pId => ({
+            therapeut_id: therapeut.id,
+            praktijk_id: parseInt(pId)
+          })))
+        });
+      }
+
+      // 3. Sla specialisaties op
       const geselecteerd = [...document.querySelectorAll('input[name="spec"]:checked')].map(cb => cb.value);
       if (geselecteerd.length > 0) {
         await fetch(`${SUPABASE_URL}/rest/v1/therapeut_subcategorieen`, {
