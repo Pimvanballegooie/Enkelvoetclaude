@@ -153,6 +153,7 @@
       <div class="stat"><div class="stat-num">3</div><div class="stat-label">Leesniveaus</div></div>
       <div class="stat"><div class="stat-num" id="stat-protocollen">–</div><div class="stat-label">Protocollen</div></div>
       <div class="stat"><div class="stat-num" id="stat-praktijken">–</div><div class="stat-label">Locaties</div></div>
+      <div class="stat"><div class="stat-num" id="stat-therapeuten">–</div><div class="stat-label">Therapeuten</div></div>
     </div>
   </div>
   <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -432,9 +433,20 @@
 
   laadLocaties();
 
-  function updateStats(aantalLocaties) {
+  async function updateStats(aantalLocaties) {
     document.getElementById('stat-protocollen').textContent = '15+';
     document.getElementById('stat-praktijken').textContent = aantalLocaties > 0 ? aantalLocaties + '+' : '–';
+
+    try {
+      const resp = await fetch(
+        `${SUPABASE_URL}/rest/v1/therapeuten?actief=eq.true&select=id`,
+        { headers: { ...HEADERS, 'Prefer': 'count=exact', 'Range': '0-0' } }
+      );
+      const count = resp.headers.get('Content-Range')?.split('/')[1];
+      document.getElementById('stat-therapeuten').textContent = count > 0 ? count + '+' : '–';
+    } catch(e) {
+      document.getElementById('stat-therapeuten').textContent = '–';
+    }
   }
 
   async function zoekLocatie() {
