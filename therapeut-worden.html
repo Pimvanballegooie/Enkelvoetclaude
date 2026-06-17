@@ -481,7 +481,7 @@
           achternaam,
           email,
           telefoon: document.getElementById('telefoon').value.trim(),
-          foto_url: document.getElementById('foto-url').value.trim(),
+          foto_url: valideerFotoUrl(document.getElementById('foto-url').value.trim()),
           bio,
           disciplines: [...document.querySelectorAll('input[name="discipline"]:checked')].map(cb => cb.value),
           actief: false
