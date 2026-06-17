@@ -220,7 +220,7 @@
     </div>
     <div class="form-wrap">
       <div id="form-content">
-
+<input type="text" name="website_url" id="website_url" style="display:none" tabindex="-1" autocomplete="off" />
         <div class="form-section" id="pakket-sectie" style="border-color: var(--teal);">
           <div class="form-section-title">Gekozen pakket</div>
           <p id="pakket-weergave" style="color:var(--text-muted);font-size:0.9rem;">Selecteer hierboven een pakket om verder te gaan.</p>
@@ -388,6 +388,7 @@
   }
 
   async function verstuurFormulier() {
+    if (document.getElementById('website_url').value !== '') return;
     if (!geselecteerdeTier) { alert('Selecteer eerst een pakket.'); return; }
 
     const verplicht = ['voornaam','achternaam','email'];
