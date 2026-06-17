@@ -55,9 +55,12 @@ geo_cache = {}
 
 for p in praktijken:
     naam  = p.get("naam", "").strip()
-    adres = f"{p.get('straat', '')} {p.get('huisnummer', '')}, {p.get('stad', '')}".strip()
-    postcode = p.get("postcode", "").strip()
-    volledig_adres = f"{adres} {postcode}".strip()
+    straat = (p.get('straat') or '').strip()
+    stad = (p.get('stad') or '').strip()
+    postcode = (p.get('postcode') or '').strip()
+    adres_delen = [d for d in [straat, postcode, stad] if d]
+    adres = ', '.join(adres_delen)
+    volledig_adres = adres
 
     if not naam or not adres:
         continue
