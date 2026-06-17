@@ -207,10 +207,15 @@ for p in protocol_data:
     oefenfilmpjes_html = ''
     links = extraheer_oefenfilmpjes_ruw(list(p['ruwe_html'].values()))
     if links:
-        oefenfilmpjes_html = '<div class="oefenfilmpjes-zijbalk"><div class="oefenfilmpjes-titel">📹 Oefenfilmpjes</div>'
-        for url, naam in links:
-            oefenfilmpjes_html += f'<a href="{url}" target="_blank" rel="noopener" class="oefenfilmpje-knop">{naam}</a>'
-        oefenfilmpjes_html += '<p class="oefenfilmpjes-disclaimer">Voor de juiste uitvoering en intensiteit is begeleiding van een therapeut noodzakelijk.</p>'
+        # Max 4 links tonen (2 rijen van 2), grid-class aanpassen op aantal
+        links_tonen = links[:4]
+        grid_class = "oefenfilmpjes-grid" if len(links_tonen) > 1 else "oefenfilmpjes-grid enkelvoudig"
+        oefenfilmpjes_html = f'<div class="oefenfilmpjes-zijbalk"><div class="oefenfilmpjes-titel">📹 Oefenfilmpjes</div><div class="{grid_class}">'
+        for url, naam in links_tonen:
+            # Naam inkorten: max 20 tekens
+            naam_kort = naam[:20] + '…' if len(naam) > 20 else naam
+            oefenfilmpjes_html += f'<a href="{url}" target="_blank" rel="noopener" class="oefenfilmpje-knop" title="{naam}">📹 {naam_kort}</a>'
+        oefenfilmpjes_html += '</div><p class="oefenfilmpjes-disclaimer">Begeleiding van een therapeut is noodzakelijk.</p>'
         oefenfilmpjes_html += '</div>'
 
     protocol_kaarten += f'''<div class="protocol-kaart" id="kaart-{p['id']}" data-naam="{p['naam'].lower()}" data-zone="{zone_id}" data-tekst="{tekst_data}" data-html="{volledige_json.replace('"', '&quot;')}">
@@ -279,11 +284,13 @@ html_pagina = '''<!DOCTYPE html>
     .protocol-kaart.verborgen { display: none; }
     .kaart-top { display: flex; gap: 24px; align-items: flex-start; }
     .kaart-links { flex: 1; }
-    .oefenfilmpjes-zijbalk { width: 260px; flex-shrink: 0; background: var(--teal-light); border-radius: 10px; padding: 16px; }
-    .oefenfilmpjes-titel { font-size: 0.82rem; font-weight: 700; color: var(--teal); margin-bottom: 10px; }
-    .oefenfilmpje-knop { display: block; margin-bottom: 8px; padding: 8px 12px; background: white; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+    .oefenfilmpjes-zijbalk { width: 220px; flex-shrink: 0; background: var(--teal-light); border-radius: 10px; padding: 14px; }
+    .oefenfilmpjes-titel { font-size: 0.78rem; font-weight: 700; color: var(--teal); margin-bottom: 8px; }
+    .oefenfilmpjes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .oefenfilmpjes-grid.enkelvoudig { grid-template-columns: 1fr; }
+    .oefenfilmpje-knop { display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px 8px; background: white; color: var(--teal); border: 1.5px solid var(--teal); border-radius: 6px; font-size: 0.72rem; font-weight: 600; text-decoration: none; transition: all 0.2s; line-height: 1.3; min-height: 40px; }
     .oefenfilmpje-knop:hover { background: var(--teal); color: white; }
-    .oefenfilmpjes-disclaimer { font-size: 0.72rem; color: var(--text-muted); margin-top: 10px; line-height: 1.4; font-style: italic; }
+    .oefenfilmpjes-disclaimer { font-size: 0.68rem; color: var(--text-muted); margin-top: 8px; line-height: 1.4; font-style: italic; }
     .protocol-zone-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); background: var(--teal-light); padding: 2px 10px; border-radius: 999px; margin-bottom: 10px; }
     .protocol-naam { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; line-height: 1.3; }
     .protocol-preview { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 16px; flex: 1; overflow: hidden; max-height: 120px; position: relative; }
