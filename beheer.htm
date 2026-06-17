@@ -14,9 +14,37 @@
       --green: #27AE60; --red: #E74C3C; --gold: #C9940A;
     }
     body { font-family: 'Inter', sans-serif; background: var(--grey-bg); color: var(--text); min-height: 100vh; }
+
+    /* ── INLOGSCHERM ── */
+    .login-wrap {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    }
+    .login-box {
+      background: white; border-radius: 16px; padding: 40px;
+      width: 100%; max-width: 400px; box-shadow: 0 4px 32px rgba(27,58,92,0.12);
+      border: 1px solid var(--grey-border);
+    }
+    .login-logo { text-align: center; margin-bottom: 28px; }
+    .login-logo .icon { font-size: 2.5rem; }
+    .login-logo h1 { font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-top: 8px; }
+    .login-logo p { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.83rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .form-group input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
+    .form-group input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
+    .btn-login { width: 100%; padding: 12px; background: var(--teal); color: white; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-top: 8px; }
+    .btn-login:hover { background: #238a7e; }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+    .login-fout { background: #FDE8E8; border: 1px solid var(--red); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; margin-top: 12px; display: none; }
+
+    /* ── BEHEERSCHERM ── */
+    .beheer-wrap { display: none; }
     header { background: var(--navy); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; }
     header h1 { color: white; font-size: 1.2rem; font-weight: 700; }
-    header span { color: rgba(255,255,255,0.6); font-size: 0.85rem; }
+    .header-rechts { display: flex; align-items: center; gap: 16px; }
+    .header-email { color: rgba(255,255,255,0.7); font-size: 0.85rem; }
+    .btn-uitloggen { background: rgba(255,255,255,0.15); color: white; border: none; border-radius: 6px; padding: 6px 14px; font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+    .btn-uitloggen:hover { background: rgba(255,255,255,0.25); }
     .container { max-width: 1000px; margin: 32px auto; padding: 0 24px; }
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
     .stat-card { background: white; border-radius: 12px; padding: 20px 24px; border: 1px solid var(--grey-border); }
@@ -33,8 +61,8 @@
     .tier-partner { background: #FEF9E7; color: var(--gold); }
     .kaart-info { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     .info-item { font-size: 0.85rem; }
-    .info-item .info-label { color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
-    .info-item .info-waarde { color: var(--text); }
+    .info-label { color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .info-waarde { color: var(--text); }
     .disciplines { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
     .disc-tag { background: var(--teal-light); color: var(--teal); font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
     .kaart-acties { display: flex; gap: 12px; padding-top: 16px; border-top: 1px solid var(--grey-border); }
@@ -46,81 +74,144 @@
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .leeg { text-align: center; padding: 48px; color: var(--text-muted); }
     .leeg .icon { font-size: 3rem; margin-bottom: 12px; }
-    .laden { text-align: center; padding: 48px; color: var(--text-muted); }
     .beschrijving { background: var(--grey-bg); border-radius: 8px; padding: 12px 14px; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
     .datum { font-size: 0.78rem; color: var(--text-muted); }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>🔐 Beheer — Aanmeldingen</h1>
-  <span id="header-info">Laden...</span>
-</header>
-
-<div class="container">
-
-  <div class="stats">
-    <div class="stat-card">
-      <div class="num" id="stat-wachtend">—</div>
-      <div class="label">Wachtend op goedkeuring</div>
+<!-- INLOGSCHERM -->
+<div class="login-wrap" id="login-scherm">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="icon">🔐</div>
+      <h1>Beheer aanmeldingen</h1>
+      <p>Log in met uw Supabase account</p>
     </div>
-    <div class="stat-card">
-      <div class="num" id="stat-actief">—</div>
-      <div class="label">Actieve praktijken</div>
+    <div class="form-group">
+      <label>E-mailadres</label>
+      <input type="email" id="login-email" placeholder="jouw@email.nl" />
     </div>
-    <div class="stat-card">
-      <div class="num" id="stat-totaal">—</div>
-      <div class="label">Totaal aanmeldingen</div>
+    <div class="form-group">
+      <label>Wachtwoord</label>
+      <input type="password" id="login-wachtwoord" placeholder="••••••••" onkeydown="if(event.key==='Enter') inloggen()" />
+    </div>
+    <button class="btn-login" onclick="inloggen()" id="login-knop">Inloggen →</button>
+    <div class="login-fout" id="login-fout">Ongeldig e-mailadres of wachtwoord.</div>
+  </div>
+</div>
+
+<!-- BEHEERSCHERM -->
+<div class="beheer-wrap" id="beheer-scherm">
+  <header>
+    <h1>🗂 Beheer — Aanmeldingen</h1>
+    <div class="header-rechts">
+      <span class="header-email" id="header-email"></span>
+      <button class="btn-uitloggen" onclick="uitloggen()">Uitloggen</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="num" id="stat-wachtend">—</div>
+        <div class="label">Wachtend op goedkeuring</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="stat-actief">—</div>
+        <div class="label">Actieve praktijken</div>
+      </div>
+      <div class="stat-card">
+        <div class="num" id="stat-totaal">—</div>
+        <div class="label">Totaal aanmeldingen</div>
+      </div>
+    </div>
+
+    <div class="sectie-titel">
+      Wachtend op goedkeuring
+      <span class="badge" id="badge-aantal">0</span>
+    </div>
+
+    <div id="aanmeldingen-lijst">
+      <div class="leeg"><div class="icon">⏳</div>Laden...</div>
     </div>
   </div>
-
-  <div class="sectie-titel">
-    Wachtend op goedkeuring
-    <span class="badge" id="badge-aantal">0</span>
-  </div>
-
-  <div id="aanmeldingen-lijst">
-    <div class="laden">⏳ Laden...</div>
-  </div>
-
 </div>
 
 <script>
   const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
-  const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MTY0NjMwMCwiZXhwIjoyMDk3MjIyMzAwfQ.FzVt-I4PNE2lUpdwNqDANYz3kBEdvP9pYe9cXnlYp0A';
+  const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
 
-  const headers = {
-    'apikey': SERVICE_KEY,
-    'Authorization': `Bearer ${SERVICE_KEY}`,
-    'Content-Type': 'application/json',
-    'Prefer': 'return=representation'
-  };
+  let toegangsToken = null;
+
+  async function inloggen() {
+    const email = document.getElementById('login-email').value.trim();
+    const wachtwoord = document.getElementById('login-wachtwoord').value;
+    const knop = document.getElementById('login-knop');
+    const fout = document.getElementById('login-fout');
+
+    if (!email || !wachtwoord) { fout.style.display = 'block'; fout.textContent = 'Vul e-mail en wachtwoord in.'; return; }
+
+    knop.textContent = 'Inloggen...';
+    knop.disabled = true;
+    fout.style.display = 'none';
+
+    const resp = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: wachtwoord })
+    });
+
+    const data = await resp.json();
+
+    if (!resp.ok || !data.access_token) {
+      fout.style.display = 'block';
+      fout.textContent = 'Ongeldig e-mailadres of wachtwoord.';
+      knop.textContent = 'Inloggen →';
+      knop.disabled = false;
+      return;
+    }
+
+    toegangsToken = data.access_token;
+    document.getElementById('header-email').textContent = data.user.email;
+    document.getElementById('login-scherm').style.display = 'none';
+    document.getElementById('beheer-scherm').style.display = 'block';
+    laadData();
+  }
+
+  function uitloggen() {
+    toegangsToken = null;
+    document.getElementById('login-scherm').style.display = 'flex';
+    document.getElementById('beheer-scherm').style.display = 'none';
+    document.getElementById('login-email').value = '';
+    document.getElementById('login-wachtwoord').value = '';
+  }
+
+  function getHeaders() {
+    return {
+      'apikey': ANON_KEY,
+      'Authorization': `Bearer ${toegangsToken}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation'
+    };
+  }
 
   async function laadData() {
-    // Haal alle praktijken op
-    const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?select=*&order=aangemeld_op.desc`, { headers });
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?select=*&order=aangemeld_op.desc`, { headers: getHeaders() });
     const praktijken = await resp.json();
 
     const wachtend = praktijken.filter(p => !p.actief);
     const actief = praktijken.filter(p => p.actief);
 
-    // Stats bijwerken
     document.getElementById('stat-wachtend').textContent = wachtend.length;
     document.getElementById('stat-actief').textContent = actief.length;
     document.getElementById('stat-totaal').textContent = praktijken.length;
     document.getElementById('badge-aantal').textContent = wachtend.length;
-    document.getElementById('header-info').textContent = `${wachtend.length} wachtend`;
 
-    // Lijst tonen
     const lijst = document.getElementById('aanmeldingen-lijst');
 
     if (wachtend.length === 0) {
-      lijst.innerHTML = `
-        <div class="leeg">
-          <div class="icon">✅</div>
-          <div>Geen aanmeldingen wachtend op goedkeuring</div>
-        </div>`;
+      lijst.innerHTML = `<div class="leeg"><div class="icon">✅</div><div>Geen aanmeldingen wachtend op goedkeuring</div></div>`;
       return;
     }
 
@@ -133,87 +224,50 @@
           </div>
           <span class="datum">${new Date(p.aangemeld_op).toLocaleDateString('nl-NL', {day:'numeric', month:'long', year:'numeric'})}</span>
         </div>
-
         <div class="kaart-info">
-          <div class="info-item">
-            <div class="info-label">Adres</div>
-            <div class="info-waarde">${p.straat || '—'}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Website</div>
-            <div class="info-waarde">${p.website ? `<a href="${p.website}" target="_blank">${p.website}</a>` : '—'}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Contact</div>
-            <div class="info-waarde">${p.contact_voornaam || ''} ${p.contact_achternaam || ''}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">E-mail contact</div>
-            <div class="info-waarde">${p.contact_email || '—'}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">Telefoon praktijk</div>
-            <div class="info-waarde">${p.telefoon || '—'}</div>
-          </div>
-          <div class="info-item">
-            <div class="info-label">E-mail praktijk</div>
-            <div class="info-waarde">${p.email || '—'}</div>
-          </div>
+          <div class="info-item"><div class="info-label">Adres</div><div class="info-waarde">${p.straat || '—'}</div></div>
+          <div class="info-item"><div class="info-label">Website</div><div class="info-waarde">${p.website ? `<a href="${p.website}" target="_blank">${p.website}</a>` : '—'}</div></div>
+          <div class="info-item"><div class="info-label">Contact</div><div class="info-waarde">${p.contact_voornaam || ''} ${p.contact_achternaam || ''}</div></div>
+          <div class="info-item"><div class="info-label">E-mail contact</div><div class="info-waarde">${p.contact_email || '—'}</div></div>
+          <div class="info-item"><div class="info-label">Telefoon</div><div class="info-waarde">${p.telefoon || '—'}</div></div>
+          <div class="info-item"><div class="info-label">E-mail praktijk</div><div class="info-waarde">${p.email || '—'}</div></div>
         </div>
-
-        ${p.disciplines && p.disciplines.length > 0 ? `
-          <div class="disciplines">
-            ${p.disciplines.map(d => `<span class="disc-tag">${d}</span>`).join('')}
-          </div>` : ''}
-
+        ${p.disciplines && p.disciplines.length > 0 ? `<div class="disciplines">${p.disciplines.map(d => `<span class="disc-tag">${d}</span>`).join('')}</div>` : ''}
         ${p.beschrijving ? `<div class="beschrijving">"${p.beschrijving}"</div>` : ''}
-
-        ${p.toelichting ? `
-          <div class="info-item" style="margin-bottom:16px">
-            <div class="info-label">Toelichting</div>
-            <div class="info-waarde">${p.toelichting}</div>
-          </div>` : ''}
-
+        ${p.toelichting ? `<div class="info-item" style="margin-bottom:16px"><div class="info-label">Toelichting</div><div class="info-waarde">${p.toelichting}</div></div>` : ''}
         <div class="kaart-acties">
           <button class="btn btn-goedkeuren" onclick="goedkeuren(${p.id})">✓ Goedkeuren</button>
           <button class="btn btn-afwijzen" onclick="afwijzen(${p.id})">✕ Afwijzen</button>
         </div>
-      </div>
-    `).join('');
+      </div>`).join('');
   }
 
   async function goedkeuren(id) {
     if (!confirm('Weet je zeker dat je deze aanmelding wilt goedkeuren?')) return;
     const kaart = document.getElementById(`kaart-${id}`);
     kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-
     await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, {
       method: 'PATCH',
-      headers,
+      headers: getHeaders(),
       body: JSON.stringify({ actief: true })
     });
-
-    kaart.style.opacity = '0.5';
+    kaart.style.opacity = '0';
     kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadData(); }, 500);
+    setTimeout(() => { kaart.remove(); laadData(); }, 400);
   }
 
   async function afwijzen(id) {
     if (!confirm('Weet je zeker dat je deze aanmelding wilt afwijzen en verwijderen?')) return;
     const kaart = document.getElementById(`kaart-${id}`);
     kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-
     await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, {
       method: 'DELETE',
-      headers
+      headers: getHeaders()
     });
-
     kaart.style.opacity = '0';
     kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadData(); }, 500);
+    setTimeout(() => { kaart.remove(); laadData(); }, 400);
   }
-
-  laadData();
 </script>
 </body>
 </html>
