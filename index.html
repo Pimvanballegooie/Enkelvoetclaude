@@ -57,8 +57,6 @@
     .section-header h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.2; }
     .section-header p { margin-top: 10px; color: var(--text-muted); max-width: 540px; font-size: 0.95rem; }
 
-    .protocol-name small { display: block; color: var(--text-muted); font-size: 0.78rem; font-weight: 400; margin-top: 2px; }
-
     .spinner { width: 20px; height: 20px; border: 2px solid var(--grey-border); border-top-color: var(--teal); border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -121,9 +119,8 @@
       nav a { padding: 10px 16px; border-radius: 8px; }
       nav a.cta { margin-left: 0; margin-top: 8px; text-align: center; }
       .hero-stats { gap: 24px; }
-        .level-btn { font-size: 0.72rem; padding: 4px 9px; }
       .protocol-row { grid-template-columns: 1fr; }
-      }
+    }
   </style>
 </head>
 <body>
@@ -250,8 +247,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 
-
   function toggleNav() { document.getElementById('main-nav').classList.toggle('open'); }
+
+  const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
+  const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
+  const HEADERS = { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` };
+
   const DISC_CONFIG = {
     'fysiotherapeut':           { label: 'F',  cls: 'f',  color: '#1A5276' },
     'podotherapeut':            { label: 'Po', cls: 'po', color: '#1E8449' },
@@ -277,10 +278,41 @@
 
   async function laadLocaties() {
     try {
+      // 1. Haal locaties op uit locaties.json
       const resp = await fetch('locaties.json?t=' + Date.now());
       if (!resp.ok) throw new Error('Niet gevonden');
       alleLocaties = await resp.json();
-    } catch(e) { alleLocaties = []; }
+
+      // 2. Haal live disciplines op via therapeut_praktijken (alleen actieve therapeuten)
+      const koppelResp = await fetch(
+        `${SUPABASE_URL}/rest/v1/therapeut_praktijken?select=praktijk_id,therapeuten(disciplines,actief)`,
+        { headers: HEADERS }
+      );
+      const koppelingen = await koppelResp.json();
+
+      // 3. Bouw map: praktijk_id -> unieke disciplines van actieve therapeuten
+      const liveDisc = {};
+      koppelingen.forEach(k => {
+        if (!k.therapeuten || !k.therapeuten.actief) return;
+        const pid = String(k.praktijk_id);
+        if (!liveDisc[pid]) liveDisc[pid] = new Set();
+        (k.therapeuten.disciplines || []).forEach(d => liveDisc[pid].add(d));
+      });
+
+      // 4. Overschrijf disciplines per locatie met live data
+      alleLocaties = alleLocaties.map(loc => {
+        const live = liveDisc[String(loc.id)];
+        if (live && live.size > 0) {
+          return { ...loc, disciplines: [...live] };
+        }
+        return loc; // geen actieve therapeuten: houd originele disciplines
+      });
+
+    } catch(e) {
+      console.warn('Fout bij laden locaties/disciplines:', e);
+      alleLocaties = [];
+    }
+
     updateStats(alleLocaties.length);
     bouwKaartEnLijst();
   }
@@ -345,7 +377,7 @@
     const cfg = DISC_CONFIG[discStr];
     const tagStijl = cfg ? `background:${cfg.color};color:#fff` : 'background:var(--teal-light);color:var(--teal)';
     return `
-      <div class="locatie-card" data-discipline="${discStr}" data-id="${loc.id}" style="${randStijl}">
+      <div class="locatie-card" data-discipline="${discStr}" data-disciplines="${disc.join(',')}" data-id="${loc.id}" style="${randStijl}">
         ${tierBadge}
         <div class="locatie-card-header">
           ${loc.website ? `<a href="${loc.website}" class="locatie-naam" target="_blank" rel="noopener">${loc.naam}</a>` : `<span class="locatie-naam">${loc.naam}</span>`}
@@ -366,15 +398,17 @@
 
   function updateFilter() {
     document.querySelectorAll('.locatie-card').forEach(card => {
-      const disc = (card.dataset.discipline || '').toLowerCase();
-      const match = actieveDisc.size === Object.keys(DISC_CONFIG).length || actieveDisc.has(disc);
+      // Check alle disciplines van de kaart, niet alleen de eerste
+      const disc = (card.dataset.disciplines || card.dataset.discipline || '').split(',').map(d => d.trim().toLowerCase());
+      const alleActief = actieveDisc.size === Object.keys(DISC_CONFIG).length;
+      const match = alleActief || disc.some(d => actieveDisc.has(d));
       card.style.display = match ? '' : 'none';
     });
     kaartMarkers.forEach(marker => {
       const loc = marker._locData;
       const disc = (loc.disciplines || []).map(d => d.toLowerCase());
       const alleActief = actieveDisc.size === Object.keys(DISC_CONFIG).length;
-      const zichtbaar = disc.some(d => actieveDisc.has(d));
+      const zichtbaar = alleActief || disc.some(d => actieveDisc.has(d));
       if (zichtbaar) {
         marker.addTo(kaart);
         const pillsHTML = disc.filter(d => alleActief || actieveDisc.has(d)).map(d => { const cfg = DISC_CONFIG[d]; return cfg ? `<span class="disc-pill ${cfg.cls}">${cfg.label}</span>` : ''; }).join('');
