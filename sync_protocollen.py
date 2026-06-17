@@ -1,4 +1,4 @@
-import json, urllib.request, re, sys, os
+import json, urllib.request, urllib.parse, re, sys, os
 from html.parser import HTMLParser
 
 with open('protocollen-config.json', 'r', encoding='utf-8') as f:
@@ -28,32 +28,42 @@ def opschonen_html(body):
     # Verwijder style en script tags
     body = re.sub(r'<style[^>]*>.*?</style>', '', body, flags=re.DOTALL)
     body = re.sub(r'<script[^>]*>.*?</script>', '', body, flags=re.DOTALL)
-    # Verwijder afbeeldingen en figure tags (logo etc uit Google Docs)
+    # Verwijder afbeeldingen en figure tags
     body = re.sub(r'<img[^>]*/?>', '', body)
     body = re.sub(r'<figure[^>]*>.*?</figure>', '', body, flags=re.DOTALL)
-    # Verwijder alle inline stijlen
+
+    # FIX: Google redirect URLs omzetten naar echte URLs
+    # Google Docs maakt van links: href="https://www.google.com/url?q=https://fysioefeningen.nl/..."
+    def ontgoogle(match):
+        href = match.group(1)
+        if 'google.com/url' in href:
+            parsed = urllib.parse.urlparse(href)
+            params = urllib.parse.parse_qs(parsed.query)
+            echte_url = params.get('q', [href])[0]
+            return f'href="{echte_url}"'
+        return match.group(0)
+    body = re.sub(r'href="([^"]*)"', ontgoogle, body)
+
+    # Verwijder inline stijlen, classes, ids
     body = re.sub(r' style="[^"]*"', '', body)
-    # Verwijder alle class attributen
     body = re.sub(r' class="[^"]*"', '', body)
-    # Verwijder id attributen
     body = re.sub(r' id="[^"]*"', '', body)
-    # Verwijder lege spans
     body = re.sub(r'<span>\s*</span>', '', body)
     body = re.sub(r'<span>(.*?)</span>', r'\1', body)
-    # Verwijder lege paragrafen
     body = re.sub(r'<p>\s*</p>', '', body)
-    # Verwijder lege divs
     body = re.sub(r'<div>\s*</div>', '', body)
-    # Vervang hr tags
     body = re.sub(r'<hr[^>]*>', '<hr>', body)
-    # Netjes maken
     body = re.sub(r'\n{3,}', '\n\n', body)
 
-    # Zet URLs naar fysioefeningen.nl om naar mooie knoppen
-    def maak_knop(match):
-        url = match.group(0).strip()
-        naam = url.replace('https://www.fysioefeningen.nl/', '').replace('https://fysioefeningen.nl/', '')
-        naam = naam.replace('-', ' ').strip().capitalize()
+    # FIX: fysioefeningen.nl <a> links omzetten naar mooie knoppen
+    # Gebruik de linktekst uit het doc als naam (niet de URL-slug)
+    def maak_knop_van_link(match):
+        url = match.group(1)
+        linktekst = re.sub(r'<[^>]+>', '', match.group(2)).strip()
+        naam = linktekst if linktekst and not linktekst.startswith('http') else \
+               url.replace('https://www.fysioefeningen.nl/', '') \
+                  .replace('https://fysioefeningen.nl/', '') \
+                  .replace('-', ' ').strip().capitalize()
         return (
             '<a href="' + url + '" target="_blank" rel="noopener" '
             'style="display:inline-flex;align-items:center;gap:8px;margin:6px 0;padding:10px 18px;'
@@ -61,7 +71,15 @@ def opschonen_html(body):
             'font-size:0.875rem;font-weight:600;text-decoration:none;">&#128249; ' + naam + '</a>'
         )
 
-    body = re.sub(r'https?://(?:www\.)?fysioefeningen\.nl/[^\s<>"\']+', maak_knop, body)
+    body = re.sub(
+        r'<a href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"[^>]*>(.*?)</a>',
+        maak_knop_van_link,
+        body,
+        flags=re.DOTALL
+    )
+
+    # Verwijder ook losse fysioefeningen URLs als platte tekst (backup)
+    body = re.sub(r'https?://(?:www\.)?fysioefeningen\.nl/[^\s<>"\']+', '', body)
 
     return body.strip()
 
@@ -71,6 +89,21 @@ def extraheer_preview(body, max_alineas=3):
     blokken = re.findall(r'<(p|h1|h2|h3)[^>]*>.*?</\1>', body, re.DOTALL | re.IGNORECASE)
     blokken = [b for b in blokken if len(re.sub(r'<[^>]+>', '', b).strip()) > 10]
     return '\n'.join(blokken[:max_alineas])
+
+def extraheer_oefenfilmpjes(html_niveaus):
+    """Zoek fysioefeningen.nl knoppen in alle niveaus, dedupliceer op URL"""
+    gezien = set()
+    links = []
+    for niveau_html in html_niveaus:
+        alle_links = re.findall(
+            r'<a href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"[^>]*>&#128249; ([^<]+)</a>',
+            niveau_html
+        )
+        for url, naam in alle_links:
+            if url not in gezien:
+                gezien.add(url)
+                links.append((url, naam.strip()))
+    return links
 
 ZONES = {
     'enkel': 'Enkel',
@@ -132,10 +165,9 @@ for p in protocol_data:
     zone_id = p['zone']
     zone_naam = ZONES.get(zone_id, zone_id.capitalize())
     preview_html = p['previews'].get('makkelijk', p['previews'].get('gemiddeld', '<p>Geen preview beschikbaar.</p>'))
-    tekst_data = p['teksten'].get('makkelijk', '').get if callable(p['teksten'].get('makkelijk', '')) else p['teksten'].get('makkelijk', p['teksten'].get('gemiddeld', ''))
+    tekst_data = p['teksten'].get('makkelijk', p['teksten'].get('gemiddeld', ''))
     tekst_data = tekst_data[:500].lower().replace('"', '').replace("'", '')
 
-    # Volledige HTML per niveau als escaped JSON
     import json as jsonlib
     volledige_json = jsonlib.dumps(p['volledige_html'])
 
@@ -148,25 +180,15 @@ for p in protocol_data:
         label = niveau_labels.get(n, n.capitalize())
         niveaus_html += f'<button class="niveau-btn niveau-{n}" onclick="openProtocol(\'{p["id"]}\', \'{n}\')">{emoji} {label}</button>\n'
 
-    # Extraheer oefenfilmpjes links uit de volledige HTML
+    # FIX: zoek oefenfilmpjes in ALLE niveaus, niet alleen makkelijk
     oefenfilmpjes_html = ''
-    eerste_html = p['volledige_html'].get('makkelijk', p['volledige_html'].get('gemiddeld', ''))
-    if eerste_html:
-        import re as re2
-        # Gebruik set om dubbele links te voorkomen
-        gezien = set()
-        alle_links = re2.findall(r'<a href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"[^>]*>&#128249; ([^<]+)</a>', eerste_html)
-        links = []
-        for url, naam in alle_links:
-            if url not in gezien:
-                gezien.add(url)
-                links.append((url, naam))
-        if links:
-            oefenfilmpjes_html = '<div class="oefenfilmpjes-zijbalk"><div class="oefenfilmpjes-titel">📹 Oefenfilmpjes</div>'
-            for url, naam in links:
-                oefenfilmpjes_html += f'''<a href="{url}" target="_blank" rel="noopener" class="oefenfilmpje-knop">{naam.strip()}</a>'''
-            oefenfilmpjes_html += '<p class="oefenfilmpjes-disclaimer">Voor de juiste uitvoering en intensiteit is begeleiding van een therapeut noodzakelijk.</p>'
-            oefenfilmpjes_html += '</div>'
+    links = extraheer_oefenfilmpjes(list(p['volledige_html'].values()))
+    if links:
+        oefenfilmpjes_html = '<div class="oefenfilmpjes-zijbalk"><div class="oefenfilmpjes-titel">📹 Oefenfilmpjes</div>'
+        for url, naam in links:
+            oefenfilmpjes_html += f'<a href="{url}" target="_blank" rel="noopener" class="oefenfilmpje-knop">{naam}</a>'
+        oefenfilmpjes_html += '<p class="oefenfilmpjes-disclaimer">Voor de juiste uitvoering en intensiteit is begeleiding van een therapeut noodzakelijk.</p>'
+        oefenfilmpjes_html += '</div>'
 
     protocol_kaarten += f'''<div class="protocol-kaart" id="kaart-{p['id']}" data-naam="{p['naam'].lower()}" data-zone="{zone_id}" data-tekst="{tekst_data}" data-html="{volledige_json.replace('"', '&quot;')}">
   <div class="kaart-top">
@@ -300,11 +322,11 @@ html_pagina = '''<!DOCTYPE html>
 </div>
 <div class="filter-wrap">
   <span class="filter-label">Zone:</span>
-  <button class="zone-btn actief" onclick="filterZone(this, 'alle')">Alle zones</button>
-  <button class="zone-btn" onclick="filterZone(this, 'enkel')">🦵 Enkel</button>
-  <button class="zone-btn" onclick="filterZone(this, 'achtervoet')">🦶 Achtervoet</button>
-  <button class="zone-btn" onclick="filterZone(this, 'middenvoet')">👣 Middenvoet</button>
-  <button class="zone-btn" onclick="filterZone(this, 'voorvoet')">👣 Voorvoet</button>
+  <button class="zone-btn actief" onclick="filterZone(this, \'alle\')">Alle zones</button>
+  <button class="zone-btn" onclick="filterZone(this, \'enkel\')">🦵 Enkel</button>
+  <button class="zone-btn" onclick="filterZone(this, \'achtervoet\')">🦶 Achtervoet</button>
+  <button class="zone-btn" onclick="filterZone(this, \'middenvoet\')">👣 Middenvoet</button>
+  <button class="zone-btn" onclick="filterZone(this, \'voorvoet\')">👣 Voorvoet</button>
 </div>
 <div class="container">
   <div class="resultaat-info" id="resultaat-info"></div>
@@ -321,23 +343,17 @@ html_pagina = '''<!DOCTYPE html>
 </footer>
 <script>
   let actieveZone = "alle";
-
-  // Protocol data opgeslagen in kaart elementen
   function openProtocol(id, niveau) {
     const kaart = document.getElementById("kaart-" + id);
     const viewer = document.getElementById("viewer-" + id);
     const inhoud = document.getElementById("viewer-inhoud-" + id);
     const titel = document.getElementById("viewer-titel-" + id);
     const niveauLabels = {makkelijk: "📗 Makkelijk", gemiddeld: "📘 Gemiddeld", complex: "📕 Complex"};
-
-    // Sluit andere open viewers
     document.querySelectorAll(".protocol-viewer").forEach(v => {
       if (v.id !== "viewer-" + id) v.style.display = "none";
     });
-
-    // Haal HTML op uit data attribuut
     try {
-      const htmlData = JSON.parse(kaart.dataset.html.replace(/&quot;/g, '"'));
+      const htmlData = JSON.parse(kaart.dataset.html.replace(/&quot;/g, \'"\'));
       const html = htmlData[niveau] || "<p>Dit niveau is nog niet beschikbaar.</p>";
       inhoud.innerHTML = html;
       titel.textContent = niveauLabels[niveau] || niveau;
@@ -348,13 +364,10 @@ html_pagina = '''<!DOCTYPE html>
       viewer.style.display = "block";
     }
   }
-
   function sluitProtocol(id) {
     document.getElementById("viewer-" + id).style.display = "none";
   }
-
   function normaliseer(t) { return t.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
-
   function zoek() {
     const zoekterm = normaliseer(document.getElementById("zoek-input").value);
     const kaarten = document.querySelectorAll(".protocol-kaart");
@@ -370,7 +383,6 @@ html_pagina = '''<!DOCTYPE html>
     document.getElementById("resultaat-info").textContent = zoekterm || actieveZone !== "alle" ? zichtbaar + " protocollen gevonden" : "";
     document.getElementById("geen-resultaten").style.display = zichtbaar === 0 ? "block" : "none";
   }
-
   function filterZone(btn, zone) {
     actieveZone = zone;
     document.querySelectorAll(".zone-btn").forEach(b => b.classList.remove("actief"));
