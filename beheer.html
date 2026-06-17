@@ -15,15 +15,9 @@
     }
     body { font-family: 'Inter', sans-serif; background: var(--grey-bg); color: var(--text); min-height: 100vh; }
 
-    /* ── INLOGSCHERM ── */
-    .login-wrap {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    }
-    .login-box {
-      background: white; border-radius: 16px; padding: 40px;
-      width: 100%; max-width: 400px; box-shadow: 0 4px 32px rgba(27,58,92,0.12);
-      border: 1px solid var(--grey-border);
-    }
+    /* LOGIN */
+    .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+    .login-box { background: white; border-radius: 16px; padding: 40px; width: 100%; max-width: 400px; box-shadow: 0 4px 32px rgba(27,58,92,0.12); border: 1px solid var(--grey-border); }
     .login-logo { text-align: center; margin-bottom: 28px; }
     .login-logo .icon { font-size: 2.5rem; }
     .login-logo h1 { font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-top: 8px; }
@@ -37,7 +31,7 @@
     .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
     .login-fout { background: #FDE8E8; border: 1px solid var(--red); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; margin-top: 12px; display: none; }
 
-    /* ── BEHEERSCHERM ── */
+    /* BEHEER */
     .beheer-wrap { display: none; }
     header { background: var(--navy); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; }
     header h1 { color: white; font-size: 1.2rem; font-weight: 700; }
@@ -45,13 +39,26 @@
     .header-email { color: rgba(255,255,255,0.7); font-size: 0.85rem; }
     .btn-uitloggen { background: rgba(255,255,255,0.15); color: white; border: none; border-radius: 6px; padding: 6px 14px; font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: background 0.2s; }
     .btn-uitloggen:hover { background: rgba(255,255,255,0.25); }
+
+    /* TABS */
+    .tabs { background: white; border-bottom: 1px solid var(--grey-border); padding: 0 32px; display: flex; gap: 0; }
+    .tab { padding: 16px 24px; font-size: 0.875rem; font-weight: 600; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; }
+    .tab:hover { color: var(--navy); }
+    .tab.actief { color: var(--teal); border-bottom-color: var(--teal); }
+    .tab-badge { display: inline-block; background: #FEF3CD; color: #856404; font-size: 0.68rem; font-weight: 700; padding: 1px 6px; border-radius: 999px; margin-left: 6px; }
+
     .container { max-width: 1000px; margin: 32px auto; padding: 0 24px; }
+    .tab-content { display: none; }
+    .tab-content.actief { display: block; }
+
     .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 32px; }
     .stat-card { background: white; border-radius: 12px; padding: 20px 24px; border: 1px solid var(--grey-border); }
     .stat-card .num { font-size: 2rem; font-weight: 700; color: var(--navy); }
     .stat-card .label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+
     .sectie-titel { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
     .badge { display: inline-block; background: #FEF3CD; color: #856404; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+
     .kaart { background: white; border: 1px solid var(--grey-border); border-radius: 16px; padding: 24px; margin-bottom: 16px; }
     .kaart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
     .kaart-naam { font-size: 1.1rem; font-weight: 700; color: var(--navy); }
@@ -76,6 +83,12 @@
     .leeg .icon { font-size: 3rem; margin-bottom: 12px; }
     .beschrijving { background: var(--grey-bg); border-radius: 8px; padding: 12px 14px; font-size: 0.875rem; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
     .datum { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* Therapeut foto */
+    .therapeut-foto { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid var(--grey-border); flex-shrink: 0; }
+    .therapeut-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--teal-light); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
+    .therapeut-header { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
+    .therapeut-info { flex: 1; }
   </style>
 </head>
 <body>
@@ -86,7 +99,7 @@
     <div class="login-logo">
       <div class="icon">🔐</div>
       <h1>Beheer aanmeldingen</h1>
-      <p>Log in met uw Supabase account</p>
+      <p>Log in met uw account</p>
     </div>
     <div class="form-group">
       <label>E-mailadres</label>
@@ -111,37 +124,45 @@
     </div>
   </header>
 
+  <div class="tabs">
+    <div class="tab actief" onclick="toonTab('praktijken')">
+      Praktijken <span class="tab-badge" id="badge-praktijken">0</span>
+    </div>
+    <div class="tab" onclick="toonTab('therapeuten')">
+      Therapeuten <span class="tab-badge" id="badge-therapeuten">0</span>
+    </div>
+  </div>
+
   <div class="container">
-    <div class="stats">
-      <div class="stat-card">
-        <div class="num" id="stat-wachtend">—</div>
-        <div class="label">Wachtend op goedkeuring</div>
+
+    <!-- TAB PRAKTIJKEN -->
+    <div class="tab-content actief" id="tab-praktijken">
+      <div class="stats">
+        <div class="stat-card"><div class="num" id="stat-wachtend-p">—</div><div class="label">Wachtend op goedkeuring</div></div>
+        <div class="stat-card"><div class="num" id="stat-actief-p">—</div><div class="label">Actieve praktijken</div></div>
+        <div class="stat-card"><div class="num" id="stat-totaal-p">—</div><div class="label">Totaal aanmeldingen</div></div>
       </div>
-      <div class="stat-card">
-        <div class="num" id="stat-actief">—</div>
-        <div class="label">Actieve praktijken</div>
-      </div>
-      <div class="stat-card">
-        <div class="num" id="stat-totaal">—</div>
-        <div class="label">Totaal aanmeldingen</div>
-      </div>
+      <div class="sectie-titel">Wachtend op goedkeuring <span class="badge" id="badge-p-aantal">0</span></div>
+      <div id="praktijken-lijst"><div class="leeg"><div class="icon">⏳</div>Laden...</div></div>
     </div>
 
-    <div class="sectie-titel">
-      Wachtend op goedkeuring
-      <span class="badge" id="badge-aantal">0</span>
+    <!-- TAB THERAPEUTEN -->
+    <div class="tab-content" id="tab-therapeuten">
+      <div class="stats">
+        <div class="stat-card"><div class="num" id="stat-wachtend-t">—</div><div class="label">Wachtend op goedkeuring</div></div>
+        <div class="stat-card"><div class="num" id="stat-actief-t">—</div><div class="label">Actieve therapeuten</div></div>
+        <div class="stat-card"><div class="num" id="stat-totaal-t">—</div><div class="label">Totaal aanmeldingen</div></div>
+      </div>
+      <div class="sectie-titel">Wachtend op goedkeuring <span class="badge" id="badge-t-aantal">0</span></div>
+      <div id="therapeuten-lijst"><div class="leeg"><div class="icon">⏳</div>Laden...</div></div>
     </div>
 
-    <div id="aanmeldingen-lijst">
-      <div class="leeg"><div class="icon">⏳</div>Laden...</div>
-    </div>
   </div>
 </div>
 
 <script>
   const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
   const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
-
   let toegangsToken = null;
 
   async function inloggen() {
@@ -149,34 +170,23 @@
     const wachtwoord = document.getElementById('login-wachtwoord').value;
     const knop = document.getElementById('login-knop');
     const fout = document.getElementById('login-fout');
-
     if (!email || !wachtwoord) { fout.style.display = 'block'; fout.textContent = 'Vul e-mail en wachtwoord in.'; return; }
-
-    knop.textContent = 'Inloggen...';
-    knop.disabled = true;
-    fout.style.display = 'none';
-
+    knop.textContent = 'Inloggen...'; knop.disabled = true; fout.style.display = 'none';
     const resp = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
       method: 'POST',
       headers: { 'apikey': ANON_KEY, 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password: wachtwoord })
     });
-
     const data = await resp.json();
-
     if (!resp.ok || !data.access_token) {
-      fout.style.display = 'block';
-      fout.textContent = 'Ongeldig e-mailadres of wachtwoord.';
-      knop.textContent = 'Inloggen →';
-      knop.disabled = false;
-      return;
+      fout.style.display = 'block'; fout.textContent = 'Ongeldig e-mailadres of wachtwoord.';
+      knop.textContent = 'Inloggen →'; knop.disabled = false; return;
     }
-
     toegangsToken = data.access_token;
     document.getElementById('header-email').textContent = data.user.email;
     document.getElementById('login-scherm').style.display = 'none';
     document.getElementById('beheer-scherm').style.display = 'block';
-    laadData();
+    laadAlles();
   }
 
   function uitloggen() {
@@ -188,44 +198,44 @@
   }
 
   function getHeaders() {
-    return {
-      'apikey': ANON_KEY,
-      'Authorization': `Bearer ${toegangsToken}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=representation'
-    };
+    return { 'apikey': ANON_KEY, 'Authorization': `Bearer ${toegangsToken}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
   }
 
-  async function laadData() {
+  function toonTab(naam) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('actief'));
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('actief'));
+    document.querySelector(`.tab[onclick*="${naam}"]`).classList.add('actief');
+    document.getElementById(`tab-${naam}`).classList.add('actief');
+  }
+
+  async function laadAlles() {
+    await laadPraktijken();
+    await laadTherapeutenBeheer();
+  }
+
+  async function laadPraktijken() {
     const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?select=*&order=aangemeld_op.desc`, { headers: getHeaders() });
     const praktijken = await resp.json();
-
     const wachtend = praktijken.filter(p => !p.actief);
     const actief = praktijken.filter(p => p.actief);
-
-    document.getElementById('stat-wachtend').textContent = wachtend.length;
-    document.getElementById('stat-actief').textContent = actief.length;
-    document.getElementById('stat-totaal').textContent = praktijken.length;
-    document.getElementById('badge-aantal').textContent = wachtend.length;
-
-    const lijst = document.getElementById('aanmeldingen-lijst');
-
+    document.getElementById('stat-wachtend-p').textContent = wachtend.length;
+    document.getElementById('stat-actief-p').textContent = actief.length;
+    document.getElementById('stat-totaal-p').textContent = praktijken.length;
+    document.getElementById('badge-p-aantal').textContent = wachtend.length;
+    document.getElementById('badge-praktijken').textContent = wachtend.length;
+    const lijst = document.getElementById('praktijken-lijst');
     if (wachtend.length === 0) {
-      lijst.innerHTML = `<div class="leeg"><div class="icon">✅</div><div>Geen aanmeldingen wachtend op goedkeuring</div></div>`;
+      lijst.innerHTML = `<div class="leeg"><div class="icon">✅</div><div>Geen praktijken wachtend op goedkeuring</div></div>`;
       return;
     }
-
     lijst.innerHTML = wachtend.map(p => `
-      <div class="kaart" id="kaart-${p.id}">
+      <div class="kaart" id="kaart-p-${p.id}">
         <div class="kaart-header">
-          <div>
-            <span class="kaart-naam">${p.naam}</span>
-            <span class="kaart-tier tier-${p.tier || 'basis'}">${p.tier || 'basis'}</span>
-          </div>
+          <div><span class="kaart-naam">${p.naam}</span><span class="kaart-tier tier-${p.tier || 'basis'}">${p.tier || 'basis'}</span></div>
           <span class="datum">${new Date(p.aangemeld_op).toLocaleDateString('nl-NL', {day:'numeric', month:'long', year:'numeric'})}</span>
         </div>
         <div class="kaart-info">
-          <div class="info-item"><div class="info-label">Adres</div><div class="info-waarde">${p.straat || '—'}</div></div>
+          <div class="info-item"><div class="info-label">Adres</div><div class="info-waarde">${p.straat || '—'}, ${p.stad || '—'}</div></div>
           <div class="info-item"><div class="info-label">Website</div><div class="info-waarde">${p.website ? `<a href="${p.website}" target="_blank">${p.website}</a>` : '—'}</div></div>
           <div class="info-item"><div class="info-label">Contact</div><div class="info-waarde">${p.contact_voornaam || ''} ${p.contact_achternaam || ''}</div></div>
           <div class="info-item"><div class="info-label">E-mail contact</div><div class="info-waarde">${p.contact_email || '—'}</div></div>
@@ -236,37 +246,90 @@
         ${p.beschrijving ? `<div class="beschrijving">"${p.beschrijving}"</div>` : ''}
         ${p.toelichting ? `<div class="info-item" style="margin-bottom:16px"><div class="info-label">Toelichting</div><div class="info-waarde">${p.toelichting}</div></div>` : ''}
         <div class="kaart-acties">
-          <button class="btn btn-goedkeuren" onclick="goedkeuren(${p.id})">✓ Goedkeuren</button>
-          <button class="btn btn-afwijzen" onclick="afwijzen(${p.id})">✕ Afwijzen</button>
+          <button class="btn btn-goedkeuren" onclick="goedkeurenPraktijk(${p.id})">✓ Goedkeuren</button>
+          <button class="btn btn-afwijzen" onclick="afwijzenPraktijk(${p.id})">✕ Afwijzen</button>
         </div>
       </div>`).join('');
   }
 
-  async function goedkeuren(id) {
-    if (!confirm('Weet je zeker dat je deze aanmelding wilt goedkeuren?')) return;
-    const kaart = document.getElementById(`kaart-${id}`);
-    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, {
-      method: 'PATCH',
-      headers: getHeaders(),
-      body: JSON.stringify({ actief: true })
-    });
-    kaart.style.opacity = '0';
-    kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadData(); }, 400);
+  async function laadTherapeutenBeheer() {
+    const resp = await fetch(
+      `${SUPABASE_URL}/rest/v1/therapeuten?select=*,praktijken(naam,straat,stad)&order=aangemeld_op.desc`,
+      { headers: getHeaders() }
+    );
+    const therapeuten = await resp.json();
+    const wachtend = therapeuten.filter(t => !t.actief);
+    const actief = therapeuten.filter(t => t.actief);
+    document.getElementById('stat-wachtend-t').textContent = wachtend.length;
+    document.getElementById('stat-actief-t').textContent = actief.length;
+    document.getElementById('stat-totaal-t').textContent = therapeuten.length;
+    document.getElementById('badge-t-aantal').textContent = wachtend.length;
+    document.getElementById('badge-therapeuten').textContent = wachtend.length;
+    const lijst = document.getElementById('therapeuten-lijst');
+    if (wachtend.length === 0) {
+      lijst.innerHTML = `<div class="leeg"><div class="icon">✅</div><div>Geen therapeuten wachtend op goedkeuring</div></div>`;
+      return;
+    }
+    lijst.innerHTML = wachtend.map(t => {
+      const naam = `${t.voornaam} ${t.achternaam}`;
+      const praktijk = t.praktijken ? `${t.praktijken.naam} — ${t.praktijken.straat}, ${t.praktijken.stad}` : '—';
+      const fotoHtml = t.foto_url
+        ? `<img class="therapeut-foto" src="${t.foto_url}" alt="${naam}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="therapeut-avatar" style="display:none">👤</div>`
+        : `<div class="therapeut-avatar">👤</div>`;
+      return `
+        <div class="kaart" id="kaart-t-${t.id}">
+          <div class="therapeut-header">
+            ${fotoHtml}
+            <div class="therapeut-info">
+              <div class="kaart-naam">${naam}</div>
+              <div style="font-size:0.85rem;color:var(--text-muted);margin-top:4px">📍 ${praktijk}</div>
+              <div style="font-size:0.82rem;color:var(--text-muted)">${t.email || ''}</div>
+            </div>
+            <span class="datum">${new Date(t.aangemeld_op).toLocaleDateString('nl-NL', {day:'numeric', month:'long', year:'numeric'})}</span>
+          </div>
+          ${t.bio ? `<div class="beschrijving">"${t.bio}"</div>` : ''}
+          <div class="kaart-acties">
+            <button class="btn btn-goedkeuren" onclick="goedkeurenTherapeut(${t.id})">✓ Goedkeuren</button>
+            <button class="btn btn-afwijzen" onclick="afwijzenTherapeut(${t.id})">✕ Afwijzen</button>
+          </div>
+        </div>`;
+    }).join('');
   }
 
-  async function afwijzen(id) {
-    if (!confirm('Weet je zeker dat je deze aanmelding wilt afwijzen en verwijderen?')) return;
-    const kaart = document.getElementById(`kaart-${id}`);
+  async function goedkeurenPraktijk(id) {
+    if (!confirm('Weet je zeker dat je deze praktijk wilt goedkeuren?')) return;
+    const kaart = document.getElementById(`kaart-p-${id}`);
     kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: getHeaders()
-    });
-    kaart.style.opacity = '0';
-    kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadData(); }, 400);
+    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, { method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ actief: true }) });
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadPraktijken(); }, 400);
+  }
+
+  async function afwijzenPraktijk(id) {
+    if (!confirm('Weet je zeker dat je deze praktijk wilt afwijzen?')) return;
+    const kaart = document.getElementById(`kaart-p-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadPraktijken(); }, 400);
+  }
+
+  async function goedkeurenTherapeut(id) {
+    if (!confirm('Weet je zeker dat je deze therapeut wilt goedkeuren?')) return;
+    const kaart = document.getElementById(`kaart-t-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, { method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ actief: true }) });
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
+  }
+
+  async function afwijzenTherapeut(id) {
+    if (!confirm('Weet je zeker dat je deze therapeut wilt afwijzen?')) return;
+    const kaart = document.getElementById(`kaart-t-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
   }
 </script>
 </body>
