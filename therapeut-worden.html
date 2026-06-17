@@ -431,7 +431,16 @@
   function toggleSpec(label) {
     label.classList.toggle('geselecteerd', label.querySelector('input').checked);
   }
-
+  
+function valideerFotoUrl(url) {
+  if (!url) return '';
+  if (!url.startsWith('https://')) return '';
+  if (url.toLowerCase().endsWith('.svg')) return '';
+  if (url.toLowerCase().endsWith('.html')) return '';
+  if (url.toLowerCase().endsWith('.js')) return '';
+  return url;
+}
+  
   async function verstuurFormulier() {
     const voornaam = document.getElementById('voornaam').value.trim();
     const achternaam = document.getElementById('achternaam').value.trim();
