@@ -57,53 +57,8 @@
     .section-header h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; line-height: 1.2; }
     .section-header p { margin-top: 10px; color: var(--text-muted); max-width: 540px; font-size: 0.95rem; }
 
-    #protocollen { background: var(--grey-bg); }
-    .protocol-zone { margin-bottom: 28px; }
-    .zone-header { display: flex; align-items: center; gap: 12px; padding: 16px 20px; background: var(--white); border: 1px solid var(--grey-border); border-radius: var(--radius) var(--radius) 0 0; cursor: pointer; user-select: none; transition: background 0.15s; }
-    .zone-header:hover { background: var(--grey-bg); }
-    .zone-icon { width: 36px; height: 36px; background: var(--teal-light); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--teal); font-size: 1.1rem; flex-shrink: 0; }
-    .zone-title { flex: 1; }
-    .zone-title h3 { font-size: 1rem; font-weight: 700; color: var(--navy); }
-    .zone-title p { font-size: 0.8rem; color: var(--text-muted); margin-top: 1px; }
-    .zone-chevron { color: var(--text-muted); transition: transform 0.25s; font-size: 1.1rem; }
-    .zone-header.open .zone-chevron { transform: rotate(180deg); }
-    .zone-body { background: var(--white); border: 1px solid var(--grey-border); border-top: none; border-radius: 0 0 var(--radius) var(--radius); overflow: hidden; }
-    .protocol-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; padding: 14px 20px; border-top: 1px solid var(--grey-border); transition: background 0.15s; }
-    .protocol-row:first-child { border-top: none; }
-    .protocol-row:hover { background: var(--grey-bg); }
-    .protocol-name { font-size: 0.9rem; font-weight: 500; color: var(--text); }
     .protocol-name small { display: block; color: var(--text-muted); font-size: 0.78rem; font-weight: 400; margin-top: 2px; }
-    .protocol-btns { display: flex; gap: 6px; flex-shrink: 0; }
-    .level-btn { padding: 5px 12px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-decoration: none; border: none; cursor: pointer; transition: all 0.15s; }
-    .level-btn.easy   { background: #EAF7F0; color: #1E8449; }
-    .level-btn.medium { background: #FEF9E7; color: #B7770D; }
-    .level-btn.hard   { background: #EAF0FB; color: #1A5276; }
-    .level-btn:hover.easy   { background: #1E8449; color: #fff; }
-    .level-btn:hover.medium { background: #B7770D; color: #fff; }
-    .level-btn:hover.hard   { background: #1A5276; color: #fff; }
 
-    .protocol-viewer { display: none; margin-top: 32px; background: var(--white); border: 1px solid var(--grey-border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
-    .protocol-viewer.visible { display: block; }
-    .viewer-header { background: var(--navy); color: var(--white); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
-    .viewer-header h3 { font-size: 0.95rem; font-weight: 600; }
-    .viewer-header .level-badge { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,0.2); }
-    .viewer-close { background: none; border: none; color: rgba(255,255,255,0.7); cursor: pointer; font-size: 1.3rem; padding: 0 0 0 16px; line-height: 1; }
-    .viewer-close:hover { color: var(--white); }
-    .viewer-body { padding: 28px 36px; min-height: 200px; max-width: 780px; line-height: 1.75; }
-    .viewer-body h1, .viewer-body h2, .viewer-body h3 { color: var(--navy); margin-top: 1.5em; margin-bottom: 0.5em; line-height: 1.3; }
-    .viewer-body h1 { font-size: 1.4rem; }
-    .viewer-body h2 { font-size: 1.15rem; }
-    .viewer-body h3 { font-size: 1rem; }
-    .viewer-body p { margin-bottom: 1em; color: var(--text); }
-    .viewer-body ul, .viewer-body ol { margin: 0.5em 0 1em 1.5em; }
-    .viewer-body li { margin-bottom: 0.3em; }
-    .viewer-body table { width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.9rem; }
-    .viewer-body td, .viewer-body th { border: 1px solid var(--grey-border); padding: 8px 12px; text-align: left; }
-    .viewer-body th { background: var(--grey-bg); font-weight: 600; color: var(--navy); }
-    .viewer-body tr:nth-child(even) { background: #fafbfc; }
-    .viewer-body strong { color: var(--navy); }
-    .viewer-body iframe { width: 100%; height: 600px; border: none; }
-    .viewer-loading { display: flex; align-items: center; justify-content: center; height: 200px; color: var(--text-muted); font-size: 0.9rem; gap: 12px; }
     .spinner { width: 20px; height: 20px; border: 2px solid var(--grey-border); border-top-color: var(--teal); border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -166,11 +121,9 @@
       nav a { padding: 10px 16px; border-radius: 8px; }
       nav a.cta { margin-left: 0; margin-top: 8px; text-align: center; }
       .hero-stats { gap: 24px; }
-      .protocol-btns { flex-wrap: wrap; }
-      .level-btn { font-size: 0.72rem; padding: 4px 9px; }
+        .level-btn { font-size: 0.72rem; padding: 4px 9px; }
       .protocol-row { grid-template-columns: 1fr; }
-      .viewer-body { padding: 20px; }
-    }
+      }
   </style>
 </head>
 <body>
@@ -185,7 +138,7 @@
       <span></span><span></span><span></span>
     </div>
     <nav id="main-nav">
-      <a href="#protocollen">Protocollen</a>
+      <a href="protocollen.html">Protocollen</a>
       <a href="#locaties">Locaties</a>
       <a href="partners.html">Partners</a>
       <a href="therapeut-worden.html">Aanmelden als therapeut</a>
@@ -210,27 +163,35 @@
   </svg>
 </section>
 
-<section id="protocollen">
+<section id="protocollen" style="background:var(--grey-bg)">
   <div class="section-inner">
-    <div class="section-header">
-      <div class="section-eyebrow">Fysiotherapie</div>
-      <h2>Behandelprotocollen</h2>
-      <p>Kies een zone en open het protocol in het gewenste leesniveau.</p>
-    </div>
-    <div id="protocol-zones"></div>
-    <div class="protocol-viewer" id="protocol-viewer">
-      <div class="viewer-header">
-        <div>
-          <div style="font-size:0.72rem;opacity:0.6;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.06em">Protocol</div>
-          <h3 id="viewer-title">–</h3>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px">
-          <span class="level-badge" id="viewer-level">–</span>
-          <button class="viewer-close" onclick="closeProtocol()" title="Sluiten">✕</button>
+    <div style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:32px;flex-wrap:wrap">
+      <div>
+        <div class="section-eyebrow">Fysiotherapie</div>
+        <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:var(--navy);letter-spacing:-0.02em;margin-bottom:12px">Behandelprotocollen</h2>
+        <p style="color:var(--text-muted);font-size:0.95rem;max-width:520px;line-height:1.7">Onze behandelprotocollen worden continu bijgehouden door een team van experts. Beschikbaar op drie leesniveaus — voor patiënten, verwijzers en professionals. Zoek op aandoening, klacht of behandeling.</p>
+        <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
+          <a href="protocollen.html" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px">📋 Bekijk alle protocollen →</a>
+          <a href="protocollen.html" style="display:inline-flex;align-items:center;gap:6px;padding:12px 20px;border:2px solid var(--grey-border);border-radius:8px;color:var(--text-muted);text-decoration:none;font-size:0.875rem;font-weight:600;transition:all 0.2s" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--grey-border)';this.style.color='var(--text-muted)'">🔍 Zoek op klacht</a>
         </div>
       </div>
-      <div class="viewer-body" id="viewer-body">
-        <div class="viewer-loading"><div class="spinner"></div>Protocol laden…</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;min-width:240px">
+        <div style="background:white;border-radius:12px;padding:16px;border:1px solid var(--grey-border);text-align:center">
+          <div style="font-size:1.8rem;font-weight:700;color:var(--teal)">15+</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">Protocollen</div>
+        </div>
+        <div style="background:white;border-radius:12px;padding:16px;border:1px solid var(--grey-border);text-align:center">
+          <div style="font-size:1.8rem;font-weight:700;color:var(--teal)">3</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">Leesniveaus</div>
+        </div>
+        <div style="background:white;border-radius:12px;padding:16px;border:1px solid var(--grey-border);text-align:center">
+          <div style="font-size:1.5rem">📗</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">Makkelijk</div>
+        </div>
+        <div style="background:white;border-radius:12px;padding:16px;border:1px solid var(--grey-border);text-align:center">
+          <div style="font-size:1.5rem">📘📕</div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:4px">Gemiddeld & Complex</div>
+        </div>
       </div>
     </div>
   </div>
@@ -309,93 +270,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 
-  const ZONES = {
-    enkel:      { emoji: '🦵', titel: 'Enkel',      beschrijving: 'De enkel verbindt je onderbeen en voet' },
-    achtervoet: { emoji: '🦶', titel: 'Achtervoet', beschrijving: 'Het hielbeen en sprongbeen' },
-    middenvoet: { emoji: '👣', titel: 'Middenvoet', beschrijving: 'Stabiliteit en afrollen' },
-    voorvoet:   { emoji: '👣', titel: 'Voorvoet',   beschrijving: 'Balans en afzet' },
-  };
-
-  const PROTOCOLLEN = [
-    { id: 're-insertie-buitenste-enkelpees', naam: 'Re-insertie buitenste enkelpees', zone: 'enkel', niveaus: { makkelijk: '1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8', gemiddeld: '1QuMaGyKeYAaXf5KoNFxuXImrVMBeJCYKqaTj0msToyY', complex: '1uaX3e3KsRrTVROm2TWEX-qGR6cXc0GMZ3NZHGOFzbw8' } },
-    { id: 'slijtage-enkel', naam: 'Slijtage enkel', subtitel: 'Bovenste spronggewricht', zone: 'enkel', niveaus: { makkelijk: '17a83ILfD2vrwR-V5UocHypKLsqkyRxaGrj9djUzbc6I', gemiddeld: '1kbT1OlHgghzvol_uRe1JH59pFZh5elQKn8gvcRSh5bY', complex: '1A4Ow7j8R_jrPM1sPNvFBW-jLUue0t94vPyxiBZOwpeM' } },
-    { id: 'instabiele-enkel', naam: 'Instabiele Enkel', subtitel: 'Chronische enkelverzwikking', zone: 'enkel', niveaus: { makkelijk: '1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k', gemiddeld: '1-waQ26QCTQPaTuF32S-3HpChcrI23q2lui3gxa37ffc', complex: '1-glPLnX0nJFP0T_kZJCJSlIiCPu0V6JcfWPXvorPs7k' } },
-    { id: 'enkelverzwikking-acuut', naam: 'Enkelverzwikking (acuut)', zone: 'enkel', niveaus: { makkelijk: '1jhI7k1Qjx_WdLckj-lRt-n_Rv2Kzo6zMZnoXJvABg_U', gemiddeld: '1iy4G6OKNtOEFEcdUAc6jTkhbqPKnfW4Ydfe1AvnGIG4', complex: '1XWKb_X0XG5R18EsDKaRDRR2Ab9u9cK47HKnvU9TUGDc' } },
-    { id: 'voorste-enkel-inklemming', naam: 'Voorste enkel inklemming', subtitel: 'Anterieure impingement', zone: 'enkel', niveaus: { makkelijk: '1AtT1tDkSqQJnPrOF3AEnxOjABBZjVseL5B_XNorsFu8', gemiddeld: '1e6lSiX1r5z6kkwPWDxt9e1Bh59o7chy-485jWbUmrSY', complex: '1Xes-hfreQQpssqgf5-54PuyXVcD0AdbXBG9caVmCGLE' } },
-    { id: 'achterste-enkel-inklemming', naam: 'Achterste enkel inklemming', subtitel: 'Posterieure impingement', zone: 'enkel', niveaus: { makkelijk: '1ABr-B8psf7hL8rhSdmDdRe20wtcmULUZA4j-YM8YRPI', gemiddeld: '1QVcJHBjaWavNgE1DDBAaFGmqLhWDZAx6J7CoQxJ6N6c', complex: '16iyIb70sGn61_iu5is4g2AX6vouvSdsMWibPNaCrtPQ' } },
-    { id: 'kraakbeenletsel-enkel', naam: 'Kraakbeenletsel van de enkel', subtitel: 'Osteochondraal lesie', zone: 'enkel', niveaus: { makkelijk: '1MKU_cTB7D5tAKPd25Gljb9vJUmJco88PPx5euux8NBE', gemiddeld: '1QyVlzSrp3QW3IusT5CY_fj_Sz2205oVCTu18vm_1uJk', complex: '1buFDIWPlnzmHzu6_AL9t28jwbJdix9vPK0iVpyWmYbQ' } },
-    { id: 'gewrichtsmuis-enkel', naam: 'Gewrichtsmuis enkel', subtitel: 'Corpus liberum', zone: 'enkel', niveaus: { makkelijk: '1K0VFCWIXXKayi7d1N0zWfljljHT4dgNL81jnGE5xmR8', gemiddeld: '1qct6cFPTso-oj1v74eMv5UILTJ273uv6Bj9LlkIXtW0', complex: '1KU9ShZX0VKu7lHNe09TdH31iC7kZi6_eugs7umfffeU' } },
-    { id: 'pijnlijke-achillespees', naam: 'Pijnlijke achillespees', subtitel: 'Achillespees tendinopathie', zone: 'achtervoet', niveaus: { makkelijk: '1wQBtiLI8s2TUwa0R0W5rDzseH8Wd-mSakhrUxLPEKlM', gemiddeld: '1IlVzc_DnLwyEV2xaurniV_JDY-11Go_mcXCp3f-xqJI', complex: '17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec' } },
-    { id: 'zenuwbeknelling-achtervoet', naam: 'Zenuwbeknelling achtervoet', subtitel: 'Tarsaal tunnel syndroom', zone: 'achtervoet', niveaus: { makkelijk: '1thrzle_XKB0-rR9YLDhctniyjn6POJNyMTlj1ZqZ0Js', gemiddeld: '1qpEDi6ny3AvyDEmbC8zKAw7ciGX3EKRpr3a5Mmy7Dn8', complex: '17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec' } },
-    { id: 'pijnlijke-kuitbeenpees', naam: 'Pijnlijke kuitbeenpees', subtitel: 'Tendinopathie personeuspees', zone: 'achtervoet', niveaus: { makkelijk: '1lN1Yo65lAQI5Pzx-vG9WhIbGPkJRxEXfk6F9sdxQHTA', gemiddeld: '1lRNux5xcHKTeyFh0FoO-NLa_nqduOn0etJCGjCOJCMY', complex: '1GrAKht6k-bnvNTOrCmLMKM8tJj5QrHZSNsFhJ-yRSlE' } },
-    { id: 'stugge-achtervoet', naam: 'Stugge achtervoet', subtitel: 'Tarsale coalitie', zone: 'achtervoet', niveaus: { makkelijk: '1aA1LlJIcl10SttbM68fveCrpVETiKdi1mGTmHiloXpM', gemiddeld: '12c1ikHffQV1BJSXDVTkPzd1oMcUnyg3c2ocLAK3jK1I', complex: '1-bN-Am_-jEspl-cOYECUrWhrf838gjPu3Ft3gyrQU7s' } },
-    { id: 'slijtage-achtervoet', naam: 'Slijtage achtervoet', subtitel: 'Artrose voetwortel', zone: 'achtervoet', niveaus: { makkelijk: '1jx_9BvS_NPGlEHXKZIqZUBSpuDNU7AG-pTcMOWkU9CY', gemiddeld: '1T7vxZ1rIp7hw9WrdlpbokxtTR3VhVq2UgYwCSl855Qg', complex: '17uLj0QAuTYEe8_3Y0dZWAQAUB0CAdM6GLeZKyNVSfec' } },
-    { id: 'slijtage-middenvoet', naam: 'Slijtage middenvoet', subtitel: 'Artrose middenvoet', zone: 'middenvoet', niveaus: { makkelijk: '1eL03CIbZCedpgRiU0oX4xhFWd287qu6NboNPhi59KkU', gemiddeld: '1bMuZAsdnxrAC-ivZBnItMcm_cRKOb6-4J_ucI9WyOQc', complex: '1yLKQdE1YqLa_Fz-bt_pksADY8Q1GWZMri7n-YhC2Auw' } },
-    { id: 'holvoet', naam: 'Holvoet', subtitel: 'Pes cavus', zone: 'middenvoet', niveaus: { makkelijk: '1ncRB_OxvqHrjnPodSx4-J5WAZydO_t6-3Flo_Z17qjU', gemiddeld: '1oDMZnwF9KhUxlxeQDr6ZlPujR_v_ta5YbDc61CXqvBM', complex: '1i_RnCXY9stjnKNTcSMXAY8gFQOjiRkUmqdp2y-RI3ug' } },
-    { id: 'voorbeeldprotocol-voorvoet', naam: 'Voorbeeldprotocol voorvoet', zone: 'voorvoet', niveaus: { makkelijk: 'INVULLEN', gemiddeld: 'INVULLEN', complex: 'INVULLEN' } },
-  ];
-
-  function bouwZones() {
-    const container = document.getElementById('protocol-zones');
-    const zonesGebruikt = [...new Set(PROTOCOLLEN.map(p => p.zone))];
-    zonesGebruikt.forEach((zoneId, index) => {
-      const zone = ZONES[zoneId];
-      const protocollenInZone = PROTOCOLLEN.filter(p => p.zone === zoneId);
-      const isOpen = index === 0;
-      const rijen = protocollenInZone.map(p => `
-        <div class="protocol-row">
-          <div class="protocol-name">${p.naam}${p.subtitel ? `<small>${p.subtitel}</small>` : ''}</div>
-          <div class="protocol-btns">
-            <button class="level-btn easy"   onclick="openProtocol('${p.id}', '${p.naam}', 'Makkelijk', '${p.niveaus.makkelijk}')">Makkelijk</button>
-            <button class="level-btn medium" onclick="openProtocol('${p.id}', '${p.naam}', 'Gemiddeld',  '${p.niveaus.gemiddeld}')">Gemiddeld</button>
-            <button class="level-btn hard"   onclick="openProtocol('${p.id}', '${p.naam}', 'Complex',    '${p.niveaus.complex}')">Complex</button>
-          </div>
-        </div>`).join('');
-      container.innerHTML += `
-        <div class="protocol-zone">
-          <div class="zone-header ${isOpen ? 'open' : ''}" onclick="toggleZone(this)">
-            <div class="zone-icon">${zone.emoji}</div>
-            <div class="zone-title"><h3>${zone.titel}</h3><p>${zone.beschrijving}</p></div>
-            <span class="zone-chevron">▾</span>
-          </div>
-          <div class="zone-body" ${isOpen ? '' : 'style="display:none"'}>${rijen}</div>
-        </div>`;
-    });
-  }
-  bouwZones();
 
   function toggleNav() { document.getElementById('main-nav').classList.toggle('open'); }
-  function toggleZone(header) { const body = header.nextElementSibling; const isOpen = header.classList.contains('open'); header.classList.toggle('open'); body.style.display = isOpen ? 'none' : 'block'; }
-
-  async function openProtocol(protocolId, naam, niveau, docId) {
-    const viewer = document.getElementById('protocol-viewer');
-    const body = document.getElementById('viewer-body');
-    document.getElementById('viewer-title').textContent = naam;
-    document.getElementById('viewer-level').textContent = niveau;
-    body.innerHTML = '<div class="viewer-loading"><div class="spinner"></div> Protocol laden…</div>';
-    viewer.classList.add('visible');
-    setTimeout(() => { viewer.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
-    const niveauMap = { 'Makkelijk': 'makkelijk', 'Gemiddeld': 'gemiddeld', 'Complex': 'complex' };
-    const niveauSlug = niveauMap[niveau] || niveau.toLowerCase();
-    const statischBestand = `protocollen/${protocolId}-${niveauSlug}.html`;
-    try {
-      const resp = await fetch(statischBestand);
-      if (resp.ok) { body.innerHTML = await resp.text(); return; }
-    } catch (e) {}
-    if (docId && docId !== 'INVULLEN') {
-      const iframe = document.createElement('iframe');
-      iframe.title = naam;
-      iframe.style.cssText = 'width:100%;height:600px;border:none;';
-      iframe.src = `https://docs.google.com/document/d/${docId}/preview`;
-      body.innerHTML = '';
-      body.appendChild(iframe);
-    } else {
-      body.innerHTML = `<div style="padding:40px;text-align:center;color:var(--text-muted)"><div style="font-size:2rem;margin-bottom:12px">📄</div><p>Dit protocol is nog niet gekoppeld aan een Google Doc.</p></div>`;
-    }
-  }
-
-  function closeProtocol() { document.getElementById('protocol-viewer').classList.remove('visible'); document.getElementById('viewer-body').innerHTML = ''; }
-
   const DISC_CONFIG = {
     'fysiotherapeut':           { label: 'F',  cls: 'f',  color: '#1A5276' },
     'podotherapeut':            { label: 'Po', cls: 'po', color: '#1E8449' },
