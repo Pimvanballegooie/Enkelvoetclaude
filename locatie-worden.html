@@ -47,76 +47,28 @@
     .section-header h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; }
     .section-header p { margin-top: 10px; color: var(--text-muted); max-width: 520px; font-size: 0.95rem; }
 
-    /* ── TIER CARDS ── */
     .tiers { background: var(--grey-bg); }
     .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-
-    .tier-card {
-      background: var(--white);
-      border: 2px solid var(--grey-border);
-      border-radius: 16px;
-      padding: 28px 24px;
-      cursor: pointer;
-      transition: all 0.2s;
-      position: relative;
-    }
-
+    .tier-card { background: var(--white); border: 2px solid var(--grey-border); border-radius: 16px; padding: 28px 24px; cursor: pointer; transition: all 0.2s; position: relative; }
     .tier-card:hover { border-color: var(--teal); box-shadow: var(--shadow); transform: translateY(-2px); }
     .tier-card.geselecteerd { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.15); }
     .tier-card.geselecteerd.partner { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,148,10,0.15); }
-
-    .tier-badge {
-      display: inline-block;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 999px;
-      margin-bottom: 14px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
+    .tier-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
     .tier-badge.basis   { background: var(--teal-light); color: var(--teal); }
     .tier-badge.plus    { background: #EAF0FB; color: #1A5276; }
     .tier-badge.partner { background: var(--gold-light); color: var(--gold); }
-
     .tier-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-
     .tier-features { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
     .tier-features li { font-size: 0.875rem; color: var(--text-muted); display: flex; align-items: flex-start; gap: 8px; }
     .tier-features li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
     .tier-features li.nee { color: #BCC5D3; }
     .tier-features li.nee::before { content: '–'; color: #BCC5D3; }
-
     .tier-card.partner .tier-features li::before { color: var(--gold); }
-
-    .tier-check {
-      position: absolute;
-      top: 16px; right: 16px;
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      border: 2px solid var(--grey-border);
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s;
-    }
-
+    .tier-check { position: absolute; top: 16px; right: 16px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--grey-border); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
     .tier-card.geselecteerd .tier-check { background: var(--teal); border-color: var(--teal); color: var(--white); font-size: 0.7rem; }
     .tier-card.geselecteerd.partner .tier-check { background: var(--gold); border-color: var(--gold); }
+    .partner-label { background: linear-gradient(135deg, var(--gold), #E8A800); color: var(--white); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); white-space: nowrap; letter-spacing: 0.05em; }
 
-    .partner-label {
-      background: linear-gradient(135deg, var(--gold), #E8A800);
-      color: var(--white);
-      font-size: 0.65rem;
-      font-weight: 700;
-      padding: 2px 8px;
-      border-radius: 999px;
-      position: absolute;
-      top: -10px; left: 50%; transform: translateX(-50%);
-      white-space: nowrap;
-      letter-spacing: 0.05em;
-    }
-
-    /* ── FORMULIER ── */
     .formulier { background: var(--white); }
     .form-wrap { max-width: 720px; }
     .form-section { background: var(--grey-bg); border: 1px solid var(--grey-border); border-radius: 16px; padding: 32px; margin-bottom: 24px; }
@@ -134,28 +86,21 @@
     .form-group input, .form-group textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text); background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
     .form-group input:focus, .form-group textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
     .form-group textarea { resize: vertical; min-height: 90px; }
-
-    /* Plus beschrijving veld */
     .beschrijving-sectie { display: none; }
     .beschrijving-sectie.zichtbaar { display: block; }
-
     .disciplines-check { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
     .disc-check-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; cursor: pointer; transition: all 0.15s; background: var(--white); }
     .disc-check-item:hover { border-color: var(--teal); background: var(--teal-light); }
     .disc-check-item.geselecteerd { border-color: var(--teal); background: var(--teal-light); }
     .disc-check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--teal); flex-shrink: 0; cursor: pointer; }
     .disc-check-item span { font-size: 0.85rem; font-weight: 500; color: var(--navy); }
-
     .btn-toevoegen { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border: 2px dashed var(--grey-border); border-radius: 12px; background: none; color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; width: 100%; justify-content: center; transition: all 0.2s; margin-bottom: 24px; }
     .btn-toevoegen:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
-
     .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 24px; }
     .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--teal); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
     .checkbox-group label { font-size: 0.85rem; color: var(--text-muted); cursor: pointer; }
-
     .btn-submit { width: 100%; padding: 14px; background: var(--teal); color: var(--white); border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; }
     .btn-submit:hover { background: #238a7e; transform: translateY(-1px); }
-
     .form-success { display: none; text-align: center; padding: 40px 20px; }
     .form-success .success-icon { font-size: 3rem; margin-bottom: 16px; }
     .form-success h3 { font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
@@ -207,7 +152,7 @@
   </svg>
 </section>
 
-<!-- ── TIERS ── -->
+<!-- TIERS -->
 <section class="tiers">
   <div class="section-inner">
     <div class="section-header">
@@ -215,18 +160,12 @@
       <h2>Kies uw aansluiting</h2>
       <p>Selecteer het pakket dat het beste bij uw praktijk past. U kunt later altijd upgraden.</p>
     </div>
-
     <div class="tier-grid">
-
-      <!-- Basis -->
       <div class="tier-card" id="tier-basis" onclick="selecteerTier('basis')">
         <div class="tier-check" id="check-basis"></div>
         <div class="tier-badge basis">Basis</div>
         <h3>Vermeld op de kaart</h3>
-        <div style="margin:12px 0 4px">
-          <span style="font-size:1.8rem;font-weight:700;color:var(--navy)">€5</span>
-          <span style="font-size:0.82rem;color:var(--text-muted)"> / locatie / maand</span>
-        </div>
+        <div style="margin:12px 0 4px"><span style="font-size:1.8rem;font-weight:700;color:var(--navy)">€5</span><span style="font-size:0.82rem;color:var(--text-muted)"> / locatie / maand</span></div>
         <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px">€3/maand per extra locatie</p>
         <p style="font-size:0.875rem;color:var(--text-muted)">Uw praktijk is zichtbaar op de locatiekaart en in de praktijkenlijst op de website.</p>
         <ul class="tier-features">
@@ -238,16 +177,11 @@
           <li class="nee">Vermelding op de partnerpagina</li>
         </ul>
       </div>
-
-      <!-- Plus -->
       <div class="tier-card" id="tier-plus" onclick="selecteerTier('plus')">
         <div class="tier-check" id="check-plus"></div>
         <div class="tier-badge plus">Plus</div>
         <h3>Met beschrijving</h3>
-        <div style="margin:12px 0 4px">
-          <span style="font-size:1.8rem;font-weight:700;color:var(--navy)">€10</span>
-          <span style="font-size:0.82rem;color:var(--text-muted)"> / locatie / maand</span>
-        </div>
+        <div style="margin:12px 0 4px"><span style="font-size:1.8rem;font-weight:700;color:var(--navy)">€10</span><span style="font-size:0.82rem;color:var(--text-muted)"> / locatie / maand</span></div>
         <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px">€6/maand per extra locatie</p>
         <p style="font-size:0.875rem;color:var(--text-muted)">Alles van Basis, plus een korte beschrijving van uw praktijk onder uw vermelding.</p>
         <ul class="tier-features">
@@ -259,17 +193,12 @@
           <li class="nee">Vermelding op de partnerpagina</li>
         </ul>
       </div>
-
-      <!-- Partner -->
       <div class="tier-card partner" id="tier-partner" onclick="selecteerTier('partner')">
         <div class="partner-label">⭐ Meest compleet</div>
         <div class="tier-check" id="check-partner"></div>
         <div class="tier-badge partner">Partner</div>
         <h3>Volledig partnerschap</h3>
-        <div style="margin:12px 0 4px">
-          <span style="font-size:1.8rem;font-weight:700;color:var(--gold)">€50</span>
-          <span style="font-size:0.82rem;color:var(--text-muted)"> / locatie / maand</span>
-        </div>
+        <div style="margin:12px 0 4px"><span style="font-size:1.8rem;font-weight:700;color:var(--gold)">€50</span><span style="font-size:0.82rem;color:var(--text-muted)"> / locatie / maand</span></div>
         <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px">€25/maand per extra locatie</p>
         <p style="font-size:0.875rem;color:var(--text-muted)">De meest prominente positie in het netwerk, inclusief vermelding op de exclusieve partnerpagina.</p>
         <ul class="tier-features">
@@ -281,12 +210,11 @@
           <li>Logo + profiel op de partnerpagina</li>
         </ul>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ── FORMULIER ── -->
+<!-- FORMULIER -->
 <section class="formulier" id="aanmelden">
   <div class="section-inner">
     <div class="section-header">
@@ -294,17 +222,14 @@
       <h2>Meld uw praktijk aan</h2>
       <p>Vul het formulier in en we nemen spoedig contact met u op.</p>
     </div>
-
     <div class="form-wrap">
       <div id="form-content">
 
-        <!-- Geselecteerd pakket -->
         <div class="form-section" id="pakket-sectie" style="border-color: var(--teal);">
           <div class="form-section-title">Gekozen pakket</div>
           <p id="pakket-weergave" style="color:var(--text-muted);font-size:0.9rem;">Selecteer hierboven een pakket om verder te gaan.</p>
         </div>
 
-        <!-- Contactgegevens -->
         <div class="form-section">
           <div class="form-section-title">Uw contactgegevens</div>
           <div class="form-row">
@@ -317,48 +242,34 @@
           </div>
         </div>
 
-        <!-- Locaties -->
         <div id="locaties-container"></div>
 
         <button type="button" class="btn-toevoegen" onclick="voegLocatieToe()">+ Nog een locatie toevoegen</button>
 
-        <!-- Beschrijving (alleen Plus en Partner) -->
         <div class="form-section beschrijving-sectie" id="beschrijving-sectie">
           <div class="form-section-title">Beschrijving van uw praktijk</div>
           <div class="form-group">
             <label>Korte beschrijving <span class="req">*</span></label>
-            <textarea id="beschrijving" placeholder="Beschrijf uw praktijk in 2-3 zinnen. Wat maakt uw praktijk uniek? Welke specialisaties heeft u?" style="min-height:120px;" maxlength="500" oninput="telTekens(this)"></textarea>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px"><span id="tekens-teller">0</span>/500 tekens — maximaal 200 tekens zijn zichtbaar, daarna verschijnt een "Lees meer" knop.</p>
+            <textarea id="beschrijving" placeholder="Beschrijf uw praktijk in 2-3 zinnen." style="min-height:120px;" maxlength="500" oninput="telTekens(this)"></textarea>
+            <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px"><span id="tekens-teller">0</span>/500 tekens</p>
           </div>
-
-          <!-- Hoofdlocatie voor partnerpagina — alleen Partner -->
           <div id="hoofdlocatie-sectie" style="display:none">
             <div style="background:var(--gold-light);border:1px solid var(--gold);border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:0.85rem;color:#7a5800">
-              ⭐ Als partner wordt u weergegeven als één praktijk op de partnerpagina. Geef hieronder aan welk adres en contactgegeven daar zichtbaar moeten zijn.
+              ⭐ Als partner wordt u weergegeven als één praktijk op de partnerpagina.
             </div>
-            <div class="form-group">
-              <label>Hoofdadres voor partnerpagina <span class="req">*</span></label>
-              <input type="text" id="partner-adres" placeholder="Industriekade 10, 4815 HD Breda" />
-            </div>
+            <div class="form-group"><label>Hoofdadres voor partnerpagina <span class="req">*</span></label><input type="text" id="partner-adres" placeholder="Industriekade 10, 4815 HD Breda" /></div>
             <div class="form-row">
-              <div class="form-group">
-                <label>Telefoon voor partnerpagina</label>
-                <input type="tel" id="partner-telefoon" placeholder="076-0000000" />
-              </div>
-              <div class="form-group">
-                <label>E-mail voor partnerpagina</label>
-                <input type="email" id="partner-email" placeholder="info@praktijk.nl" />
-              </div>
+              <div class="form-group"><label>Telefoon voor partnerpagina</label><input type="tel" id="partner-telefoon" placeholder="076-0000000" /></div>
+              <div class="form-group"><label>E-mail voor partnerpagina</label><input type="email" id="partner-email" placeholder="info@praktijk.nl" /></div>
             </div>
             <div class="form-group">
               <label>Website URL logo</label>
               <input type="url" id="logo-url" placeholder="https://www.uwpraktijk.nl/logo.png" />
-              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">Vul de URL in van uw logo (PNG of SVG). Wij helpen u indien nodig.</p>
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">Vul de URL in van uw logo (PNG of SVG).</p>
             </div>
           </div>
         </div>
 
-        <!-- Overige info -->
         <div class="form-section">
           <div class="form-section-title">Overige informatie</div>
           <div class="form-group">
@@ -389,6 +300,10 @@
 </footer>
 
 <script>
+  // ── SUPABASE CONFIGURATIE ──
+  const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_Uka15I88sCFGTFcH4Nb2cg_ztXm9UmS';
+
   const DISCIPLINES = ['Fysiotherapeut','Podotherapeut','Pedicure','Orthopedisch schoenmaker','Ergotherapeut','Anders'];
   let locatieCount = 0;
   let geselecteerdeTier = '';
@@ -407,23 +322,15 @@
 
   function selecteerTier(tier) {
     geselecteerdeTier = tier;
-
-    // Alle cards resetten
     ['basis','plus','partner'].forEach(t => {
       document.getElementById(`tier-${t}`).classList.remove('geselecteerd');
       document.getElementById(`check-${t}`).textContent = '';
     });
-
-    // Geselecteerde card markeren
     document.getElementById(`tier-${tier}`).classList.add('geselecteerd');
     document.getElementById(`check-${tier}`).textContent = '✓';
-
-    // Pakket weergave updaten
     const namen = { basis: '📍 Basis — Vermelding op de kaart', plus: '📝 Plus — Met beschrijving', partner: '⭐ Partner — Volledig partnerschap' };
     document.getElementById('pakket-weergave').innerHTML = `<strong style="color:var(--navy)">${namen[tier]}</strong>`;
-
-    // Beschrijving tonen bij Plus en Partner
-    const beschSectie      = document.getElementById('beschrijving-sectie');
+    const beschSectie = document.getElementById('beschrijving-sectie');
     const hoofdlocatieSectie = document.getElementById('hoofdlocatie-sectie');
     if (tier === 'plus' || tier === 'partner') {
       beschSectie.classList.add('zichtbaar');
@@ -441,60 +348,56 @@
     const blok = document.createElement('div');
     blok.className = 'locatie-blok';
     blok.id = `locatie-${nr}`;
-
     const disciplineCheckboxes = DISCIPLINES.map(d => `
       <label class="disc-check-item" onclick="toggleDisc(this)">
         <input type="checkbox" name="disc-${nr}" value="${d}" />
         <span>${d}</span>
       </label>`).join('');
-
     blok.innerHTML = `
       <div class="locatie-blok-header">
         <div class="locatie-blok-title">Locatie ${nr}</div>
         ${nr > 1 ? `<button type="button" class="btn-verwijder" onclick="verwijderLocatie(${nr})">✕ Verwijderen</button>` : ''}
       </div>
-      <div class="form-group">
-        <label>Naam praktijk <span class="req">*</span></label>
-        <input type="text" id="praktijk-${nr}" placeholder="Fysiotherapie De Voet" />
+      <div class="form-group"><label>Naam praktijk <span class="req">*</span></label><input type="text" id="praktijk-${nr}" placeholder="Fysiotherapie De Voet" /></div>
+      <div class="form-group"><label>Adres <span class="req">*</span></label><input type="text" id="adres-${nr}" placeholder="Straat 1, 4800 AB Breda" /></div>
+      <div class="form-group"><label>Website</label><input type="url" id="website-${nr}" placeholder="https://www.jouwpraktijk.nl" /></div>
+      <div class="form-row">
+        <div class="form-group"><label>Telefoonnummer locatie</label><input type="tel" id="tel-locatie-${nr}" placeholder="076-0000000" /></div>
+        <div class="form-group"><label>E-mail locatie</label><input type="email" id="email-locatie-${nr}" placeholder="info@praktijk.nl" /></div>
       </div>
-      <div class="form-group">
-        <label>Adres <span class="req">*</span></label>
-        <input type="text" id="adres-${nr}" placeholder="Straat 1, 4800 AB Breda" />
-      </div>
-      <div class="form-group">
-        <label>Website</label>
-        <input type="url" id="website-${nr}" placeholder="https://www.jouwpraktijk.nl" />
-      </div>
-      <div class="form-group">
-        <label>Telefoonnummer locatie</label>
-        <input type="tel" id="tel-locatie-${nr}" placeholder="076-0000000" />
-      </div>
-      <div class="form-group">
-        <label>E-mail locatie</label>
-        <input type="email" id="email-locatie-${nr}" placeholder="info@praktijk.nl" />
-      </div>
-      <div class="form-group">
-        <label>Discipline(s) <span class="req">*</span></label>
-        <div class="disciplines-check">${disciplineCheckboxes}</div>
-      </div>`;
-
+      <div class="form-group"><label>Discipline(s) <span class="req">*</span></label><div class="disciplines-check">${disciplineCheckboxes}</div></div>`;
     container.appendChild(blok);
     hernummerLocaties();
   }
 
   function toggleDisc(label) { label.classList.toggle('geselecteerd', label.querySelector('input').checked); }
-
   function verwijderLocatie(nr) { document.getElementById(`locatie-${nr}`).remove(); hernummerLocaties(); }
-
   function hernummerLocaties() {
     document.querySelectorAll('.locatie-blok').forEach((blok, i) => {
       blok.querySelector('.locatie-blok-title').textContent = `Locatie ${i + 1}`;
     });
   }
-
   function toggleNav() { document.getElementById('main-nav').classList.toggle('open'); }
 
-  function verstuurFormulier() {
+  async function schrijfNaarSupabase(tabel, data) {
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/${tabel}`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify(data)
+    });
+    if (!resp.ok) {
+      const err = await resp.text();
+      throw new Error(`Supabase fout (${tabel}): ${err}`);
+    }
+    return await resp.json();
+  }
+
+  async function verstuurFormulier() {
     if (!geselecteerdeTier) { alert('Selecteer eerst een pakket.'); return; }
 
     const verplicht = ['voornaam','achternaam','email'];
@@ -515,65 +418,65 @@
       const disciplines = blok.querySelectorAll(`input[name="disc-${nr}"]:checked`);
       if (!praktijk.value.trim()) { praktijk.style.borderColor = '#E74C3C'; geldig = false; } else { praktijk.style.borderColor = ''; }
       if (!adres.value.trim()) { adres.style.borderColor = '#E74C3C'; geldig = false; } else { adres.style.borderColor = ''; }
-      if (disciplines.length === 0) { blok.querySelector('.disciplines-check').style.outline = '2px solid #E74C3C'; blok.querySelector('.disciplines-check').style.borderRadius = '8px'; geldig = false; }
+      if (disciplines.length === 0) { blok.querySelector('.disciplines-check').style.outline = '2px solid #E74C3C'; geldig = false; }
       else { blok.querySelector('.disciplines-check').style.outline = ''; }
     });
 
     if ((geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner') && !document.getElementById('beschrijving').value.trim()) {
-      document.getElementById('beschrijving').style.borderColor = '#E74C3C';
-      geldig = false;
+      document.getElementById('beschrijving').style.borderColor = '#E74C3C'; geldig = false;
     }
 
     if (!document.getElementById('akkoord').checked) { alert('Vink het akkoordvakje aan.'); return; }
     if (!geldig) { alert('Vul alle verplichte velden in.'); return; }
 
-    const locatieData = [];
-    blokken.forEach(blok => {
-      const nr = blok.id.replace('locatie-','');
-      locatieData.push({
-        praktijk:    document.getElementById(`praktijk-${nr}`).value,
-        adres:       document.getElementById(`adres-${nr}`).value,
-        website:     fixUrl(document.getElementById(`website-${nr}`).value || ''),
-        telefoon:    document.getElementById(`tel-locatie-${nr}`).value || '',
-        email:       document.getElementById(`email-locatie-${nr}`).value || '',
-        disciplines: [...blok.querySelectorAll(`input[name="disc-${nr}"]:checked`)].map(cb => cb.value)
-      });
-    });
-
-    const payload = {
-      voornaam:    document.getElementById('voornaam').value,
-      achternaam:  document.getElementById('achternaam').value,
-      email:       document.getElementById('email').value,
-      telefoon:    document.getElementById('telefoon').value || '',
-      tier:        geselecteerdeTier,
-      beschrijving: (geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner') ? document.getElementById('beschrijving').value : '',
-      partner_adres:    geselecteerdeTier === 'partner' ? (document.getElementById('partner-adres').value || '') : '',
-      partner_telefoon: geselecteerdeTier === 'partner' ? (document.getElementById('partner-telefoon').value || '') : '',
-      partner_email:    geselecteerdeTier === 'partner' ? (document.getElementById('partner-email').value || '') : '',
-      logo_url:    geselecteerdeTier === 'partner' ? (document.getElementById('logo-url').value || '') : '',
-      toelichting: document.getElementById('toelichting').value || '',
-      locaties:    locatieData
-    };
-
     const knop = document.querySelector('.btn-submit');
     knop.textContent = 'Versturen…';
     knop.disabled = true;
 
-    fetch('https://script.google.com/macros/s/AKfycbzEo5Dt92jvyDlCcpNxVcAq8wSVbfn04NUbeTVhpM8bQhfyYTveOGkOERZLQpkS7GPTbQ/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-    .then(() => {
+    try {
+      // Sla elke locatie op als aparte praktijk in Supabase
+      for (const blok of blokken) {
+        const nr = blok.id.replace('locatie-','');
+        const disciplines = [...blok.querySelectorAll(`input[name="disc-${nr}"]:checked`)].map(cb => cb.value);
+
+        // Splits adres in straat/huisnummer en postcode/stad
+        const adresRaw = document.getElementById(`adres-${nr}`).value.trim();
+
+        const praktijkData = {
+          naam:         document.getElementById(`praktijk-${nr}`).value.trim(),
+          straat:       adresRaw,
+          postcode:     '',
+          stad:         '',
+          telefoon:     document.getElementById(`tel-locatie-${nr}`).value.trim(),
+          email:        document.getElementById(`email-locatie-${nr}`).value.trim(),
+          website:      fixUrl(document.getElementById(`website-${nr}`).value || ''),
+          aangemeld_via: 'enkelvoet.net',
+          tier:         geselecteerdeTier,
+          beschrijving: (geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner')
+                          ? document.getElementById('beschrijving').value.trim() : '',
+          logo_url:     geselecteerdeTier === 'partner'
+                          ? fixUrl(document.getElementById('logo-url').value || '') : '',
+          disciplines:  disciplines,
+          contact_voornaam: document.getElementById('voornaam').value.trim(),
+          contact_achternaam: document.getElementById('achternaam').value.trim(),
+          contact_email: document.getElementById('email').value.trim(),
+          contact_telefoon: document.getElementById('telefoon').value.trim(),
+          toelichting:  document.getElementById('toelichting').value.trim(),
+          actief:       false  // staat op false tot goedkeuring
+        };
+
+        await schrijfNaarSupabase('praktijken', praktijkData);
+      }
+
       document.getElementById('form-content').style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
-    })
-    .catch(() => {
-      alert('Er ging iets mis. Probeer het opnieuw.');
+
+    } catch (err) {
+      console.error(err);
+      alert('Er ging iets mis bij het versturen. Probeer het opnieuw.');
       knop.textContent = 'Aanmelding versturen →';
       knop.disabled = false;
-    });
+    }
   }
 
   voegLocatieToe();
