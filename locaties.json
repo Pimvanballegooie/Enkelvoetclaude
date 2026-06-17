@@ -1,5 +1,6 @@
 [
   {
+    "id": 7,
     "naam": "Monné Zorg & Beweging",
     "adres": "Industriekade 10, Breda",
     "postcode": "",
@@ -18,6 +19,7 @@
     "lng": 4.7700536
   },
   {
+    "id": 8,
     "naam": "Monné Zorg & Beweging",
     "adres": "Bernard de Wildestraat 400a, Breda",
     "postcode": "",
@@ -36,6 +38,7 @@
     "lng": 4.7980563
   },
   {
+    "id": 9,
     "naam": "Monné Zorg & Beweging",
     "adres": "Hondsdonk 58, Breda",
     "postcode": "",
@@ -54,6 +57,7 @@
     "lng": 4.7440119
   },
   {
+    "id": 10,
     "naam": "Monné Zorg & Beweging",
     "adres": "Burgemeester Middelaerlaan 1, Breda",
     "postcode": "",
@@ -72,6 +76,7 @@
     "lng": 4.7893167
   },
   {
+    "id": 11,
     "naam": "Monné Zorg & Beweging",
     "adres": "Konijnenberg 6, Breda",
     "postcode": "",
@@ -89,6 +94,7 @@
     "lng": 4.7705656
   },
   {
+    "id": 12,
     "naam": "Monné Zorg & Beweging",
     "adres": "Merijntje Gijzenstraat 3e, Oosterhout",
     "postcode": "",
