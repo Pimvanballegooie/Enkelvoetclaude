@@ -37,7 +37,7 @@
     .zone-btn:hover, .zone-btn.actief { background: var(--navy); border-color: var(--navy); color: var(--white); }
     .container { max-width: 1100px; margin: 32px auto 64px; padding: 0 24px; }
     .resultaat-info { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
-    .protocollen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+    .protocollen-grid { display: flex; flex-direction: column; gap: 16px; max-width: 800px; }
     .protocol-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 24px; transition: box-shadow 0.2s; display: flex; flex-direction: column; }
     .protocol-kaart:hover { box-shadow: 0 4px 20px rgba(27,58,92,0.10); }
     .protocol-kaart.verborgen { display: none; }
