@@ -88,12 +88,6 @@
     .form-group textarea { resize: vertical; min-height: 90px; }
     .beschrijving-sectie { display: none; }
     .beschrijving-sectie.zichtbaar { display: block; }
-    .disciplines-check { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
-    .disc-check-item { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; cursor: pointer; transition: all 0.15s; background: var(--white); }
-    .disc-check-item:hover { border-color: var(--teal); background: var(--teal-light); }
-    .disc-check-item.geselecteerd { border-color: var(--teal); background: var(--teal-light); }
-    .disc-check-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--teal); flex-shrink: 0; cursor: pointer; }
-    .disc-check-item span { font-size: 0.85rem; font-weight: 500; color: var(--navy); }
     .btn-toevoegen { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border: 2px dashed var(--grey-border); border-radius: 12px; background: none; color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; width: 100%; justify-content: center; transition: all 0.2s; margin-bottom: 24px; }
     .btn-toevoegen:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
     .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 24px; }
@@ -105,6 +99,8 @@
     .form-success .success-icon { font-size: 3rem; margin-bottom: 16px; }
     .form-success h3 { font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
     .form-success p { color: var(--text-muted); font-size: 0.9rem; }
+
+    .disciplines-info { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; background: var(--teal-light); border: 1px solid rgba(42,157,143,0.3); border-radius: 8px; font-size: 0.83rem; color: #1a6b62; margin-top: 4px; }
 
     footer { background: #0F2340; color: rgba(255,255,255,0.5); text-align: center; padding: 28px 24px; font-size: 0.82rem; }
     footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
@@ -118,7 +114,6 @@
       nav a.cta { margin-left: 0; margin-top: 8px; text-align: center; }
       .form-row { grid-template-columns: 1fr; }
       .form-section, .locatie-blok { padding: 20px; }
-      .disciplines-check { grid-template-columns: 1fr; }
       .tier-grid { grid-template-columns: 1fr; }
     }
   </style>
@@ -172,7 +167,7 @@
         <ul class="tier-features">
           <li>Vermelding op de interactieve kaart</li>
           <li>Naam, adres en contactgegevens</li>
-          <li>Disciplines zichtbaar</li>
+          <li>Disciplines automatisch via therapeuten</li>
           <li class="nee">Beschrijving onder uw kaart</li>
           <li class="nee">Voorrangspositie in de lijst</li>
           <li class="nee">Vermelding op de partnerpagina</li>
@@ -188,7 +183,7 @@
         <ul class="tier-features">
           <li>Vermelding op de interactieve kaart</li>
           <li>Naam, adres en contactgegevens</li>
-          <li>Disciplines zichtbaar</li>
+          <li>Disciplines automatisch via therapeuten</li>
           <li>Beschrijving onder uw kaart</li>
           <li class="nee">Voorrangspositie in de lijst</li>
           <li class="nee">Vermelding op de partnerpagina</li>
@@ -205,7 +200,7 @@
         <ul class="tier-features">
           <li>Vermelding op de interactieve kaart</li>
           <li>Naam, adres en contactgegevens</li>
-          <li>Disciplines zichtbaar</li>
+          <li>Disciplines automatisch via therapeuten</li>
           <li>Beschrijving onder uw kaart</li>
           <li>Bovenaan de praktijkenlijst</li>
           <li>Logo + profiel op de partnerpagina</li>
@@ -301,11 +296,9 @@
 </footer>
 
 <script>
-  // ── SUPABASE CONFIGURATIE ──
   const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
 
-  const DISCIPLINES = ['Fysiotherapeut','Podotherapeut','Pedicure','Orthopedisch schoenmaker','Ergotherapeut','Anders'];
   let locatieCount = 0;
   let geselecteerdeTier = '';
 
@@ -349,11 +342,6 @@
     const blok = document.createElement('div');
     blok.className = 'locatie-blok';
     blok.id = `locatie-${nr}`;
-    const disciplineCheckboxes = DISCIPLINES.map(d => `
-      <label class="disc-check-item" onclick="toggleDisc(this)">
-        <input type="checkbox" name="disc-${nr}" value="${d}" />
-        <span>${d}</span>
-      </label>`).join('');
     blok.innerHTML = `
       <div class="locatie-blok-header">
         <div class="locatie-blok-title">Locatie ${nr}</div>
@@ -366,12 +354,13 @@
         <div class="form-group"><label>Telefoonnummer locatie</label><input type="tel" id="tel-locatie-${nr}" placeholder="076-0000000" /></div>
         <div class="form-group"><label>E-mail locatie</label><input type="email" id="email-locatie-${nr}" placeholder="info@praktijk.nl" /></div>
       </div>
-      <div class="form-group"><label>Discipline(s) <span class="req">*</span></label><div class="disciplines-check">${disciplineCheckboxes}</div></div>`;
+      <div class="disciplines-info">
+        ℹ️ De disciplines van uw locatie worden automatisch bepaald op basis van de therapeuten die zich aanmelden bij deze praktijk.
+      </div>`;
     container.appendChild(blok);
     hernummerLocaties();
   }
 
-  function toggleDisc(label) { label.classList.toggle('geselecteerd', label.querySelector('input').checked); }
   function verwijderLocatie(nr) { document.getElementById(`locatie-${nr}`).remove(); hernummerLocaties(); }
   function hernummerLocaties() {
     document.querySelectorAll('.locatie-blok').forEach((blok, i) => {
@@ -416,11 +405,8 @@
       const nr = blok.id.replace('locatie-','');
       const praktijk = document.getElementById(`praktijk-${nr}`);
       const adres = document.getElementById(`adres-${nr}`);
-      const disciplines = blok.querySelectorAll(`input[name="disc-${nr}"]:checked`);
       if (!praktijk.value.trim()) { praktijk.style.borderColor = '#E74C3C'; geldig = false; } else { praktijk.style.borderColor = ''; }
       if (!adres.value.trim()) { adres.style.borderColor = '#E74C3C'; geldig = false; } else { adres.style.borderColor = ''; }
-      if (disciplines.length === 0) { blok.querySelector('.disciplines-check').style.outline = '2px solid #E74C3C'; geldig = false; }
-      else { blok.querySelector('.disciplines-check').style.outline = ''; }
     });
 
     if ((geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner') && !document.getElementById('beschrijving').value.trim()) {
@@ -435,12 +421,8 @@
     knop.disabled = true;
 
     try {
-      // Sla elke locatie op als aparte praktijk in Supabase
       for (const blok of blokken) {
         const nr = blok.id.replace('locatie-','');
-        const disciplines = [...blok.querySelectorAll(`input[name="disc-${nr}"]:checked`)].map(cb => cb.value);
-
-        // Splits adres in straat/huisnummer en postcode/stad
         const adresRaw = document.getElementById(`adres-${nr}`).value.trim();
 
         const praktijkData = {
@@ -457,13 +439,13 @@
                           ? document.getElementById('beschrijving').value.trim() : '',
           logo_url:     geselecteerdeTier === 'partner'
                           ? fixUrl(document.getElementById('logo-url').value || '') : '',
-          disciplines:  disciplines,
+          disciplines:  [], // wordt automatisch gevuld via therapeuten
           contact_voornaam: document.getElementById('voornaam').value.trim(),
           contact_achternaam: document.getElementById('achternaam').value.trim(),
           contact_email: document.getElementById('email').value.trim(),
           contact_telefoon: document.getElementById('telefoon').value.trim(),
           toelichting:  document.getElementById('toelichting').value.trim(),
-          actief:       false  // staat op false tot goedkeuring
+          actief:       false
         };
 
         await schrijfNaarSupabase('praktijken', praktijkData);
