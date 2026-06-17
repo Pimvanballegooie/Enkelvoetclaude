@@ -437,8 +437,8 @@
           tier:         geselecteerdeTier,
           beschrijving: (geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner')
                           ? document.getElementById('beschrijving').value.trim() : '',
-          logo_url:     geselecteerdeTier === 'partner'
-                          ? fixUrl(document.getElementById('logo-url').value || '') : '',
+          logo_url: geselecteerdeTier === 'partner'
+            ? valideerFotoUrl(fixUrl(document.getElementById('logo-url').value || '')) : '',
           disciplines:  [], // wordt automatisch gevuld via therapeuten
           contact_voornaam: document.getElementById('voornaam').value.trim(),
           contact_achternaam: document.getElementById('achternaam').value.trim(),
