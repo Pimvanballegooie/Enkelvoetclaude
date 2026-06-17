@@ -28,8 +28,9 @@ def opschonen_html(body):
     # Verwijder style en script tags
     body = re.sub(r'<style[^>]*>.*?</style>', '', body, flags=re.DOTALL)
     body = re.sub(r'<script[^>]*>.*?</script>', '', body, flags=re.DOTALL)
-    # Verwijder afbeeldingen (logo etc uit Google Docs)
-    body = re.sub(r'<img[^>]*>', '', body)
+    # Verwijder afbeeldingen en figure tags (logo etc uit Google Docs)
+    body = re.sub(r'<img[^>]*/?>', '', body)
+    body = re.sub(r'<figure[^>]*>.*?</figure>', '', body, flags=re.DOTALL)
     # Verwijder alle inline stijlen
     body = re.sub(r' style="[^"]*"', '', body)
     # Verwijder alle class attributen
@@ -163,7 +164,7 @@ html_pagina = '''<!DOCTYPE html>
     html { scroll-behavior: smooth; }
     body { font-family: "Inter", sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; }
     header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
-    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .header-inner { max-width: 1200px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 3rem); display: flex; align-items: center; justify-content: space-between; height: 68px; }
     .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 40px; height: 40px; }
     .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
@@ -181,11 +182,11 @@ html_pagina = '''<!DOCTYPE html>
     .zoekbalk input { flex: 1; padding: 14px 20px; border: none; outline: none; font-family: inherit; font-size: 1rem; color: var(--text); }
     .zoekbalk button { padding: 14px 24px; background: var(--teal); color: white; border: none; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: background 0.2s; }
     .zoekbalk button:hover { background: #238a7e; }
-    .filter-wrap { max-width: 1100px; margin: 32px auto 0; padding: 0 24px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .filter-wrap { max-width: 1200px; margin: 32px auto 0; padding: 0 clamp(1rem, 4vw, 3rem); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
     .filter-label { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-right: 4px; }
     .zone-btn { padding: 6px 16px; border-radius: 999px; border: 2px solid var(--grey-border); background: var(--white); color: var(--text-muted); font-size: 0.82rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .zone-btn:hover, .zone-btn.actief { background: var(--navy); border-color: var(--navy); color: var(--white); }
-    .container { max-width: 1100px; margin: 32px auto 64px; padding: 0 24px; }
+    .container { max-width: 1200px; margin: 32px auto 64px; padding: 0 clamp(1rem, 4vw, 3rem); }
     .resultaat-info { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
     .protocollen-grid { display: flex; flex-direction: column; gap: 16px; }
     .protocol-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 28px 32px; transition: box-shadow 0.2s; display: flex; flex-direction: column; }
