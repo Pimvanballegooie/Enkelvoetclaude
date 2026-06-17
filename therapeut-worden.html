@@ -100,7 +100,7 @@
       <div class="logo-text">Enkel Voet Netwerk<span>Breda e.o.</span></div>
     </a>
     <nav>
-      <a href="index.html#protocollen">Protocollen</a>
+      <a href="protocollen.html">Protocollen</a>
       <a href="index.html#locaties">Locaties</a>
       <a href="partners.html">Partners</a>
       <a href="therapeut-worden.html">Aanmelden als therapeut</a>
@@ -198,6 +198,15 @@
           </div>
         </div>
 
+        <!-- Disciplines -->
+        <div class="form-section">
+          <div class="form-section-title">Jouw discipline(s) <span class="req">*</span></div>
+          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:16px">Welke paramedische discipline(s) beoefen jij?</p>
+          <div id="discipline-checkboxes" style="display:flex;flex-direction:column;gap:8px;">
+            <div style="color:var(--text-muted);font-size:0.85rem">Laden…</div>
+          </div>
+        </div>
+
         <!-- Specialisaties -->
         <div class="form-section">
           <div class="form-section-title">Specialisaties</div>
@@ -267,6 +276,39 @@
       preview.classList.remove('zichtbaar');
       placeholder.style.display = 'flex';
     };
+  }
+
+  // Laad disciplines vanuit site-config.json
+  async function laadDisciplines() {
+    try {
+      const resp = await fetch('site-config.json');
+      const config = await resp.json();
+      DISCIPLINES = config.disciplines;
+    } catch(e) {
+      DISCIPLINES = ['Fysiotherapeut','Ergotherapeut','Oefentherapeut','Podotherapeut','Medisch pedicure','Orthopedisch schoenmaker'];
+    }
+
+    const container = document.getElementById('discipline-checkboxes');
+    container.innerHTML = DISCIPLINES.map(d => `
+      <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white);transition:all 0.15s"
+        onmouseover="if(!this.querySelector('input').checked){this.style.borderColor='var(--teal)';this.style.background='var(--teal-light)'}"
+        onmouseout="if(!this.querySelector('input').checked){this.style.borderColor='var(--grey-border)';this.style.background='var(--white)'}">
+        <input type="checkbox" name="discipline" value="${d}"
+          style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;cursor:pointer"
+          onchange="toggleDisciplineStijl(this)" />
+        <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">${d}</span>
+      </label>`).join('');
+  }
+
+  function toggleDisciplineStijl(checkbox) {
+    const label = checkbox.closest('label');
+    if (checkbox.checked) {
+      label.style.borderColor = 'var(--teal)';
+      label.style.background = 'var(--teal-light)';
+    } else {
+      label.style.borderColor = 'var(--grey-border)';
+      label.style.background = 'var(--white)';
+    }
   }
 
   // Laad actieve praktijken als checkboxes
@@ -368,6 +410,16 @@
       else el.style.borderColor = '';
     });
 
+    // Valideer disciplines
+    const geselecteerdeDisciplines = [...document.querySelectorAll('input[name="discipline"]:checked')].map(cb => cb.value);
+    if (geselecteerdeDisciplines.length === 0) {
+      document.getElementById('discipline-checkboxes').style.outline = '2px solid #E74C3C';
+      document.getElementById('discipline-checkboxes').style.borderRadius = '8px';
+      geldig = false;
+    } else {
+      document.getElementById('discipline-checkboxes').style.outline = '';
+    }
+
     const geselecteerdePraktijken = [...document.querySelectorAll('input[name="praktijk"]:checked')].map(cb => cb.value);
     if (geselecteerdePraktijken.length === 0) {
       document.getElementById('praktijk-checkboxes').style.outline = '2px solid #E74C3C';
@@ -396,6 +448,7 @@
           telefoon: document.getElementById('telefoon').value.trim(),
           foto_url: document.getElementById('foto-url').value.trim(),
           bio,
+          disciplines: [...document.querySelectorAll('input[name="discipline"]:checked')].map(cb => cb.value),
           actief: false
         })
       });
@@ -441,6 +494,7 @@
   }
 
   // Init
+  laadDisciplines();
   laadPraktijken();
   laadSubcategorieen();
 </script>
