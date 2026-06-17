@@ -281,7 +281,7 @@
   // Disciplines direct beschikbaar (uit site-config)
   DISCIPLINES = ['Fysiotherapeut','Ergotherapeut','Oefentherapeut','Podotherapeut','Medisch pedicure','Orthopedisch schoenmaker'];
 
-  function laadDisciplines() {
+  function vulDisciplineCheckboxes() {
     const container = document.getElementById('discipline-checkboxes');
     if (!container) return;
     container.innerHTML = DISCIPLINES.map(d => `
@@ -293,17 +293,21 @@
           onchange="toggleDisciplineStijl(this)" />
         <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">${d}</span>
       </label>`).join('');
+  }
 
-    // Probeer ook uit site-config.json te laden
+  function laadDisciplines() {
+    // Probeer site-config.json te laden voor disciplines
     fetch('site-config.json')
       .then(r => r.json())
       .then(config => {
         if (config.disciplines && config.disciplines.length > 0) {
           DISCIPLINES = config.disciplines;
-          laadDisciplines();
         }
+        vulDisciplineCheckboxes();
       })
-      .catch(() => {});
+      .catch(() => {
+        vulDisciplineCheckboxes();
+      });
   }
 
   function toggleDisciplineStijl(checkbox) {
