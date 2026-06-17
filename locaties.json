@@ -6,7 +6,10 @@
     "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
-    "disciplines": [],
+    "disciplines": [
+      "Ergotherapeut",
+      "Fysiotherapeut"
+    ],
     "tier": "partner",
     "beschrijving": "Monné Zorg & Beweging is een toonaangevende zorgpraktijk met meerdere locaties in Breda en Oosterhout. Bij ons staat u altijd centraal — met een persoonlijke aanpak, een breed zorgaanbod en een ervaren team van fysiotherapeuten, ergotherapeuten en fitnessbegeleiders. Dankzij onze nauwe samenwerking met huisartsen, het ziekenhuis en andere zorgpartners in de regio bieden wij complete begeleiding die écht bij u past.",
     "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
@@ -21,7 +24,10 @@
     "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
-    "disciplines": [],
+    "disciplines": [
+      "Ergotherapeut",
+      "Fysiotherapeut"
+    ],
     "tier": "partner",
     "beschrijving": "Monné Zorg & Beweging is een toonaangevende zorgpraktijk met meerdere locaties in Breda en Oosterhout. Bij ons staat u altijd centraal — met een persoonlijke aanpak, een breed zorgaanbod en een ervaren team van fysiotherapeuten, ergotherapeuten en fitnessbegeleiders. Dankzij onze nauwe samenwerking met huisartsen, het ziekenhuis en andere zorgpartners in de regio bieden wij complete begeleiding die écht bij u past.",
     "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
@@ -36,7 +42,10 @@
     "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
-    "disciplines": [],
+    "disciplines": [
+      "Ergotherapeut",
+      "Fysiotherapeut"
+    ],
     "tier": "partner",
     "beschrijving": "Monné Zorg & Beweging is een toonaangevende zorgpraktijk met meerdere locaties in Breda en Oosterhout. Bij ons staat u altijd centraal — met een persoonlijke aanpak, een breed zorgaanbod en een ervaren team van fysiotherapeuten, ergotherapeuten en fitnessbegeleiders. Dankzij onze nauwe samenwerking met huisartsen, het ziekenhuis en andere zorgpartners in de regio bieden wij complete begeleiding die écht bij u past.",
     "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
@@ -51,13 +60,16 @@
     "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
-    "disciplines": [],
+    "disciplines": [
+      "Ergotherapeut",
+      "Fysiotherapeut"
+    ],
     "tier": "partner",
     "beschrijving": "Monné Zorg & Beweging is een toonaangevende zorgpraktijk met meerdere locaties in Breda en Oosterhout. Bij ons staat u altijd centraal — met een persoonlijke aanpak, een breed zorgaanbod en een ervaren team van fysiotherapeuten, ergotherapeuten en fitnessbegeleiders. Dankzij onze nauwe samenwerking met huisartsen, het ziekenhuis en andere zorgpartners in de regio bieden wij complete begeleiding die écht bij u past.",
     "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
     "therapeuten": [],
-    "lat": 51.5686594,
-    "lng": 4.7893152
+    "lat": 51.5686373,
+    "lng": 4.7893167
   },
   {
     "naam": "Monné Zorg & Beweging",
@@ -66,7 +78,9 @@
     "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "076 5810491",
     "email": "info@monne-zorgenbeweging.nl",
-    "disciplines": [],
+    "disciplines": [
+      "Fysiotherapeut"
+    ],
     "tier": "partner",
     "beschrijving": "Monné Zorg & Beweging is een toonaangevende zorgpraktijk met meerdere locaties in Breda en Oosterhout. Bij ons staat u altijd centraal — met een persoonlijke aanpak, een breed zorgaanbod en een ervaren team van fysiotherapeuten, ergotherapeuten en fitnessbegeleiders. Dankzij onze nauwe samenwerking met huisartsen, het ziekenhuis en andere zorgpartners in de regio bieden wij complete begeleiding die écht bij u past.",
     "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
@@ -81,7 +95,10 @@
     "website": "https://www.monne-zorgenbeweging.nl",
     "telefoon": "0162 461998",
     "email": "info@monne-oosterhout.nl",
-    "disciplines": [],
+    "disciplines": [
+      "Ergotherapeut",
+      "Fysiotherapeut"
+    ],
     "tier": "partner",
     "beschrijving": "Monné Zorg & Beweging is een toonaangevende zorgpraktijk met meerdere locaties in Breda en Oosterhout. Bij ons staat u altijd centraal — met een persoonlijke aanpak, een breed zorgaanbod en een ervaren team van fysiotherapeuten, ergotherapeuten en fitnessbegeleiders. Dankzij onze nauwe samenwerking met huisartsen, het ziekenhuis en andere zorgpartners in de regio bieden wij complete begeleiding die écht bij u past.",
     "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
