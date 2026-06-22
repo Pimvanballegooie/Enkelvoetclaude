@@ -5,6 +5,9 @@ from datetime import date
 with open('protocollen-config.json', 'r', encoding='utf-8') as f:
     config = json.load(f)
 
+with open('locaties.json', 'r', encoding='utf-8') as f:
+    locaties = json.load(f)
+
 class TextExtractor(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -140,6 +143,35 @@ def maak_niveau_label(niveau):
     labels = {'makkelijk': '📗 Makkelijk', 'gemiddeld': '📘 Gemiddeld', 'complex': '📕 Complex'}
     return labels.get(niveau, niveau.capitalize())
 
+def maak_cta_blok():
+    """Genereer een vast CTA-blok onderaan elke protocolpagina"""
+    return '''
+<div class="cta-blok">
+  <div class="cta-sectie cta-afspraak">
+    <h2 class="cta-titel">Klaar om aan de slag te gaan?</h2>
+    <p class="cta-sub">Vind een aangesloten therapeut bij jou in de buurt en maak een afspraak.</p>
+    <div class="cta-knoppen">
+      <a href="../locaties.html" class="btn-primary">🗺 Vind een locatie bij mij in de buurt</a>
+      <a href="../locatie-worden.html" class="btn-outline">Locatie aanmelden</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cta-blok { margin-top: 3rem; border-top: 2px solid var(--teal-light); padding-top: 2rem; }
+  .cta-sectie { border-radius: 14px; padding: 2rem; }
+  .cta-titel { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .cta-sub { font-size: 0.88rem; margin-bottom: 1.5rem; }
+  .cta-afspraak { background: #1B3A5C; }
+  .cta-afspraak .cta-titel { color: white; }
+  .cta-afspraak .cta-sub { color: rgba(255,255,255,0.7); }
+  .cta-knoppen { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-primary { background: var(--teal); color: white; padding: 11px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: background 0.2s; }
+  .btn-primary:hover { background: #238a7e; }
+  .btn-outline { background: transparent; color: rgba(255,255,255,0.8); border: 1.5px solid rgba(255,255,255,0.3); padding: 11px 22px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .btn-outline:hover { border-color: white; color: white; }
+</style>'''
+
 def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam):
     titel = maak_protocol_titel(protocol_naam, niveau)
     description = maak_meta_description(protocol_naam, niveau, body_schoon)
@@ -149,6 +181,8 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
     andere_niveaus_html = ''
     for n in andere_niveaus:
         andere_niveaus_html += f'<a href="{protocol_id}-{n}.html" class="niveau-badge link">{maak_niveau_label(n)}</a>\n'
+
+    cta_blok = maak_cta_blok()
 
     return f'''<!DOCTYPE html>
 <html lang="nl">
@@ -257,6 +291,7 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
   <div class="content">
     {body_schoon}
   </div>
+  {cta_blok}
 </div>
 
 <footer>
