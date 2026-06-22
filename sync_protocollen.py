@@ -1,5 +1,6 @@
-import json, urllib.request, urllib.parse, re, sys, os
+import json, urllib.request, urllib.parse, re, os
 from html.parser import HTMLParser
+from datetime import date
 
 with open('protocollen-config.json', 'r', encoding='utf-8') as f:
     config = json.load(f)
@@ -24,7 +25,6 @@ class TextExtractor(HTMLParser):
         return ' '.join(' '.join(self.text).split())
 
 def opschonen_html(body):
-    """Schoon Google Docs HTML op naar leesbare HTML"""
     body = re.sub(r'<style[^>]*>.*?</style>', '', body, flags=re.DOTALL)
     body = re.sub(r'<script[^>]*>.*?</script>', '', body, flags=re.DOTALL)
     body = re.sub(r'<img[^>]*/?>', '', body)
@@ -89,14 +89,12 @@ def opschonen_html(body):
     return body.strip()
 
 def extraheer_preview(body, max_alineas=3):
-    """Haal eerste alineas op als opgeschoonde HTML"""
     body = opschonen_html(body)
     blokken = re.findall(r'<(p|h1|h2|h3)[^>]*>.*?</\1>', body, re.DOTALL | re.IGNORECASE)
     blokken = [b for b in blokken if len(re.sub(r'<[^>]+>', '', b).strip()) > 10]
     return '\n'.join(blokken[:max_alineas])
 
 def extraheer_oefenfilmpjes_ruw(rauwe_html_niveaus):
-    """Zoek [VIDEO: Naam | URL] patronen in ruwe HTML, dedupliceer op URL"""
     gezien = set()
     links = []
     for rauwe_html in rauwe_html_niveaus:
@@ -112,7 +110,7 @@ def extraheer_oefenfilmpjes_ruw(rauwe_html_niveaus):
     return links
 
 # ─────────────────────────────────────────────────────────────
-# NIEUW: hulpfuncties voor volledige HTML-pagina's per protocol
+# Hulpfuncties voor volledige HTML-pagina's per protocol
 # ─────────────────────────────────────────────────────────────
 
 def maak_protocol_titel(protocol_naam, niveau):
@@ -143,7 +141,6 @@ def maak_niveau_label(niveau):
     return labels.get(niveau, niveau.capitalize())
 
 def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam):
-    """Genereer een volledige HTML-pagina met title, meta, breadcrumb en navigatie"""
     titel = maak_protocol_titel(protocol_naam, niveau)
     description = maak_meta_description(protocol_naam, niveau, body_schoon)
     niveau_label = maak_niveau_label(niveau)
@@ -302,7 +299,6 @@ for protocol in config['protocollen']:
                 body = body_match.group(1)
                 body_schoon = opschonen_html(body)
 
-                # GEWIJZIGD: schrijf volledige HTML-pagina in plaats van alleen de content
                 zone_naam_display = ZONES.get(protocol.get('zone', ''), 'Enkel & voet')
                 volledige_pagina = maak_html_pagina(
                     protocol_naam=protocol['naam'],
@@ -585,6 +581,46 @@ html_pagina = html_pagina.replace('PROTOCOL_KAARTEN', protocol_kaarten)
 with open('protocollen.html', 'w', encoding='utf-8') as f:
     f.write(html_pagina)
 print(f"OK: protocollen.html gegenereerd met {len(protocol_data)} protocollen")
+
+# ─────────────────────────────────────────────────────────────
+# Genereer sitemap.xml
+# ─────────────────────────────────────────────────────────────
+print("Genereer sitemap.xml...")
+vandaag = date.today().isoformat()
+
+sitemap_urls = [
+    f'  <url><loc>https://enkelvoet.net/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>',
+    f'  <url><loc>https://enkelvoet.net/protocollen.html</loc><lastmod>{vandaag}</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>',
+    f'  <url><loc>https://enkelvoet.net/locaties.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>',
+    f'  <url><loc>https://enkelvoet.net/partners.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>',
+]
+
+for p in protocol_data:
+    for niveau in p['teksten'].keys():
+        url = f"https://enkelvoet.net/protocollen/{p['id']}-{niveau}.html"
+        sitemap_urls.append(f'  <url><loc>{url}</loc><lastmod>{vandaag}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>')
+
+sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
+sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+sitemap += '\n'.join(sitemap_urls)
+sitemap += '\n</urlset>'
+
+with open('sitemap.xml', 'w', encoding='utf-8') as f:
+    f.write(sitemap)
+print(f"OK: sitemap.xml gegenereerd met {len(sitemap_urls)} URLs")
+
+# ─────────────────────────────────────────────────────────────
+# Genereer robots.txt
+# ─────────────────────────────────────────────────────────────
+print("Genereer robots.txt...")
+
+robots = """User-agent: *
+Allow: /
+Sitemap: https://enkelvoet.net/sitemap.xml"""
+
+with open('robots.txt', 'w', encoding='utf-8') as f:
+    f.write(robots)
+print("OK: robots.txt gegenereerd")
 
 if fouten:
     print(f"WAARSCHUWING: {len(fouten)} fouten")
