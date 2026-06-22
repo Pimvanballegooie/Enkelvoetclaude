@@ -19,7 +19,7 @@ jobs:
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add protocollen/ protocollen.html
+          git add protocollen/ protocollen.html sitemap.xml robots.txt
           if git diff --cached --quiet; then
             echo "Geen wijzigingen."
           else
