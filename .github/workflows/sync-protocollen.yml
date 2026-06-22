@@ -15,11 +15,14 @@ jobs:
       - name: Protocollen ophalen en pagina genereren
         run: python3 sync_protocollen.py
 
+      - name: Structured data genereren
+        run: python3 genereer_structured_data.py
+
       - name: Wijzigingen committen en pushen
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
-          git add protocollen/ protocollen.html sitemap.xml robots.txt
+          git add protocollen/ protocollen.html sitemap.xml robots.txt index.html
           if git diff --cached --quiet; then
             echo "Geen wijzigingen."
           else
