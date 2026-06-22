@@ -172,6 +172,13 @@ def maak_cta_blok():
   .btn-outline:hover { border-color: white; color: white; }
 </style>'''
 
+def extraheer_fysioefeningen_urls(body_schoon):
+    """Haal alle fysioefeningen.nl URLs op uit de opgeschoonde body"""
+    return re.findall(
+        r'href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"',
+        body_schoon
+    )
+
 def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam):
     titel = maak_protocol_titel(protocol_naam, niveau)
     description = maak_meta_description(protocol_naam, niveau, body_schoon)
@@ -183,6 +190,14 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
         andere_niveaus_html += f'<a href="{protocol_id}-{n}.html" class="niveau-badge link">{maak_niveau_label(n)}</a>\n'
 
     cta_blok = maak_cta_blok()
+
+    # Haal fysioefeningen.nl URLs op voor structured data
+    fysio_urls = extraheer_fysioefeningen_urls(body_schoon)
+    if fysio_urls:
+        fysio_links = ',\n    '.join([f'"relatedLink": "{u}"' for u in fysio_urls])
+        structured_data_extra = f',\n    {fysio_links}'
+    else:
+        structured_data_extra = ''
 
     return f'''<!DOCTYPE html>
 <html lang="nl">
@@ -249,7 +264,7 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
     "description": "{description}",
     "url": "https://enkelvoet.net/protocollen/{protocol_id}-{niveau}.html",
     "inLanguage": "nl",
-    "isPartOf": {{"@type": "WebSite", "name": "Enkel Voet Netwerk", "url": "https://enkelvoet.net"}}
+    "isPartOf": {{"@type": "WebSite", "name": "Enkel Voet Netwerk", "url": "https://enkelvoet.net"}}{structured_data_extra}
   }}
   </script>
 </head>
