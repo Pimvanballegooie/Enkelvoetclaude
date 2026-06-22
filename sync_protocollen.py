@@ -25,14 +25,11 @@ class TextExtractor(HTMLParser):
 
 def opschonen_html(body):
     """Schoon Google Docs HTML op naar leesbare HTML"""
-    # Verwijder style en script tags
     body = re.sub(r'<style[^>]*>.*?</style>', '', body, flags=re.DOTALL)
     body = re.sub(r'<script[^>]*>.*?</script>', '', body, flags=re.DOTALL)
-    # Verwijder afbeeldingen en figure tags
     body = re.sub(r'<img[^>]*/?>', '', body)
     body = re.sub(r'<figure[^>]*>.*?</figure>', '', body, flags=re.DOTALL)
 
-    # FIX: Google redirect URLs omzetten naar echte URLs
     def ontgoogle(match):
         href = match.group(1)
         if 'google.com/url' in href:
@@ -44,20 +41,15 @@ def opschonen_html(body):
         return match.group(0)
     body = re.sub(r'href="([^"]*)"', ontgoogle, body)
 
-    # Verwijder inline stijlen, classes, ids
     body = re.sub(r' style="[^"]*"', '', body)
     body = re.sub(r' class="[^"]*"', '', body)
     body = re.sub(r' id="[^"]*"', '', body)
     body = re.sub(r'<hr[^>]*>', '<hr>', body)
     body = re.sub(r'\n{3,}', '\n\n', body)
 
-    # FIX: fysioefeningen.nl links EERST omzetten naar knoppen, dan pas spans opruimen
-    # (anders worden de linkteksten in <span> tags weggegooid voor we ze kunnen gebruiken)
-    # Gebruik de linktekst uit het doc als naam (niet de URL-slug)
     def maak_knop_van_link(match):
         url = match.group(1)
         linktekst = re.sub(r'<[^>]+>', '', match.group(2)).strip()
-        # Verwijder emoji als die al in de linktekst zit (bij dubbele sync runs)
         linktekst = linktekst.replace('\U0001f4f9', '').replace('&#128249;', '').strip()
         naam = linktekst if linktekst and not linktekst.startswith('http') else \
                url.replace('https://www.fysioefeningen.nl/', '') \
@@ -77,13 +69,11 @@ def opschonen_html(body):
         flags=re.DOTALL
     )
 
-    # Nu pas spans opruimen (na knop-conversie zodat linkteksten behouden blijven)
     body = re.sub(r'<span>\s*</span>', '', body)
     body = re.sub(r'<span>(.*?)</span>', r'\1', body)
     body = re.sub(r'<p>\s*</p>', '', body)
     body = re.sub(r'<div>\s*</div>', '', body)
 
-    # Vervang [VIDEO: Naam | URL] patronen door knoppen in de tekst
     def maak_video_knop(match):
         naam = match.group(1).strip()
         url = match.group(2).strip()
@@ -94,8 +84,6 @@ def opschonen_html(body):
             'font-size:0.8rem;font-weight:600;text-decoration:none;">📹 ' + naam + '</a>'
         )
     body = re.sub(r'\[VIDEO:\s*([^|\]]+)\|\s*(https?://[^\]]+)\]', maak_video_knop, body)
-
-    # Verwijder losse fysioefeningen URLs als platte tekst (backup)
     body = re.sub(r'https?://(?:www\.)?fysioefeningen\.nl/[^\s<>"\']+', '', body)
 
     return body.strip()
@@ -112,10 +100,8 @@ def extraheer_oefenfilmpjes_ruw(rauwe_html_niveaus):
     gezien = set()
     links = []
     for rauwe_html in rauwe_html_niveaus:
-        # Strip HTML tags zodat we platte tekst hebben
         tekst = re.sub(r'<[^>]+>', ' ', rauwe_html)
         tekst = re.sub(r'\s+', ' ', tekst)
-        # Zoek [VIDEO: Naam | URL]
         gevonden = re.findall(r'\[VIDEO:\s*([^|\]]+)\|\s*(https?://[^\]]+)\]', tekst)
         for naam, url in gevonden:
             naam = naam.strip()
@@ -124,6 +110,165 @@ def extraheer_oefenfilmpjes_ruw(rauwe_html_niveaus):
                 gezien.add(url)
                 links.append((url, naam))
     return links
+
+# ─────────────────────────────────────────────────────────────
+# NIEUW: hulpfuncties voor volledige HTML-pagina's per protocol
+# ─────────────────────────────────────────────────────────────
+
+def maak_protocol_titel(protocol_naam, niveau):
+    niveau_labels = {
+        'makkelijk': 'basisinformatie',
+        'gemiddeld': 'voor zorgverleners',
+        'complex': 'verdiepend'
+    }
+    label = niveau_labels.get(niveau, niveau)
+    return f"{protocol_naam} — {label} | Enkel Voet Netwerk"
+
+def maak_meta_description(protocol_naam, niveau, body_schoon):
+    niveau_intro = {
+        'makkelijk': 'Begrijpelijke uitleg over',
+        'gemiddeld': 'Behandelprotocol voor',
+        'complex': 'Verdiepend behandelprotocol voor'
+    }
+    intro = niveau_intro.get(niveau, 'Behandelprotocol voor')
+    extractor = TextExtractor()
+    extractor.feed(body_schoon)
+    tekst = extractor.get_text()[:200].strip()
+    if tekst:
+        return f"{intro} {protocol_naam.lower()}. {tekst}..."
+    return f"{intro} {protocol_naam.lower()}. Fysiotherapie Breda — Enkel Voet Netwerk."
+
+def maak_niveau_label(niveau):
+    labels = {'makkelijk': '📗 Makkelijk', 'gemiddeld': '📘 Gemiddeld', 'complex': '📕 Complex'}
+    return labels.get(niveau, niveau.capitalize())
+
+def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam):
+    """Genereer een volledige HTML-pagina met title, meta, breadcrumb en navigatie"""
+    titel = maak_protocol_titel(protocol_naam, niveau)
+    description = maak_meta_description(protocol_naam, niveau, body_schoon)
+    niveau_label = maak_niveau_label(niveau)
+
+    andere_niveaus = [n for n in ['makkelijk', 'gemiddeld', 'complex'] if n != niveau]
+    andere_niveaus_html = ''
+    for n in andere_niveaus:
+        andere_niveaus_html += f'<a href="{protocol_id}-{n}.html" class="niveau-badge link">{maak_niveau_label(n)}</a>\n'
+
+    return f'''<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{titel}</title>
+  <meta name="description" content="{description}" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://enkelvoet.net/protocollen/{protocol_id}-{niveau}.html" />
+  <meta property="og:title" content="{titel}" />
+  <meta property="og:description" content="{description}" />
+  <meta property="og:type" content="article" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    :root {{ --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4; --grey-bg: #F5F7FA; --grey-border: #DDE3EC; --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF; }}
+    body {{ font-family: "Inter", sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; }}
+    header {{ background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }}
+    .header-inner {{ max-width: 1200px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 3rem); display: flex; align-items: center; justify-content: space-between; height: 68px; }}
+    .logo {{ display: flex; align-items: center; gap: 12px; text-decoration: none; }}
+    .logo-icon {{ width: 40px; height: 40px; }}
+    .logo-text {{ color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }}
+    .logo-text span {{ display: block; font-weight: 300; font-size: 0.75rem; opacity: 0.7; }}
+    nav {{ display: flex; gap: 6px; }}
+    nav a {{ color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s; }}
+    nav a:hover {{ background: rgba(255,255,255,0.12); color: var(--white); }}
+    .breadcrumb {{ max-width: 860px; margin: 24px auto 0; padding: 0 clamp(1rem, 4vw, 3rem); font-size: 0.82rem; color: var(--text-muted); }}
+    .breadcrumb a {{ color: var(--teal); text-decoration: none; }}
+    .breadcrumb a:hover {{ text-decoration: underline; }}
+    .page-header {{ max-width: 860px; margin: 16px auto 0; padding: 0 clamp(1rem, 4vw, 3rem); }}
+    .zone-badge {{ display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); background: var(--teal-light); padding: 2px 10px; border-radius: 999px; margin-bottom: 10px; }}
+    h1 {{ font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--navy); line-height: 1.25; margin-bottom: 12px; }}
+    .niveau-badges {{ display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px; }}
+    .niveau-badge {{ padding: 6px 14px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; text-decoration: none; }}
+    .niveau-badge.actief {{ background: var(--navy); color: white; cursor: default; }}
+    .niveau-badge.link {{ background: var(--grey-bg); color: var(--text-muted); border: 1px solid var(--grey-border); }}
+    .niveau-badge.link:hover {{ background: var(--grey-border); }}
+    .content-wrap {{ max-width: 860px; margin: 0 auto 64px; padding: 0 clamp(1rem, 4vw, 3rem); }}
+    .disclaimer {{ background: #FEF9E7; border: 1px solid #F0D060; border-radius: 8px; padding: 12px 16px; font-size: 0.82rem; color: #7D6608; margin-bottom: 24px; }}
+    .terug-link {{ display: inline-flex; align-items: center; gap: 6px; color: var(--teal); font-size: 0.85rem; font-weight: 600; text-decoration: none; margin-bottom: 20px; }}
+    .terug-link:hover {{ text-decoration: underline; }}
+    .content {{ background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: clamp(1.5rem, 4vw, 3rem); font-size: 0.92rem; line-height: 1.8; }}
+    .content h2 {{ font-size: 1.15rem; font-weight: 700; color: var(--navy); margin: 1.6em 0 0.5em; padding-bottom: 6px; border-bottom: 2px solid var(--teal-light); }}
+    .content h3 {{ font-size: 1rem; font-weight: 700; color: var(--navy); margin: 1.2em 0 0.4em; }}
+    .content h4 {{ font-size: 0.9rem; font-weight: 700; color: var(--text-muted); margin: 1em 0 0.3em; text-transform: uppercase; letter-spacing: 0.05em; }}
+    .content p {{ margin-bottom: 0.9em; }}
+    .content ul, .content ol {{ margin: 0.4em 0 0.9em 1.6em; }}
+    .content li {{ margin-bottom: 0.35em; }}
+    .content hr {{ border: none; border-top: 1px solid var(--grey-border); margin: 1.8em 0; }}
+    .content table {{ width: 100%; border-collapse: collapse; margin: 1em 0; font-size: 0.85rem; }}
+    .content td, .content th {{ border: 1px solid var(--grey-border); padding: 8px 12px; text-align: left; }}
+    .content th {{ background: var(--grey-bg); font-weight: 600; }}
+    footer {{ background: #0F2340; color: rgba(255,255,255,0.5); text-align: center; padding: 28px 24px; font-size: 0.82rem; }}
+    footer a {{ color: rgba(255,255,255,0.7); text-decoration: none; }}
+    @media (max-width: 700px) {{ nav {{ display: none; }} }}
+  </style>
+  <script type="application/ld+json">
+  {{
+    "@context": "https://schema.org",
+    "@type": "MedicalWebPage",
+    "name": "{titel}",
+    "description": "{description}",
+    "url": "https://enkelvoet.net/protocollen/{protocol_id}-{niveau}.html",
+    "inLanguage": "nl",
+    "isPartOf": {{"@type": "WebSite", "name": "Enkel Voet Netwerk", "url": "https://enkelvoet.net"}}
+  }}
+  </script>
+</head>
+<body>
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../EVN_Logo_transparant.png" alt="EVN Logo" />
+      <div class="logo-text">Enkel Voet Netwerk<span>Breda e.o.</span></div>
+    </a>
+    <nav>
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+    </nav>
+  </div>
+</header>
+
+<div class="breadcrumb">
+  <a href="../index.html">Home</a> &rsaquo;
+  <a href="../protocollen.html">Protocollen</a> &rsaquo;
+  {protocol_naam}
+</div>
+
+<div class="page-header">
+  <div class="zone-badge">{zone_naam}</div>
+  <h1>{protocol_naam}</h1>
+  <div class="niveau-badges">
+    <span class="niveau-badge actief">{niveau_label}</span>
+    {andere_niveaus_html}
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="disclaimer">
+    ⚠️ Dit protocol is algemene informatie voor zorgverleners en patiënten. Het vervangt geen persoonlijk advies van een arts of fysiotherapeut.
+  </div>
+  <a href="../protocollen.html" class="terug-link">&#8592; Terug naar alle protocollen</a>
+  <div class="content">
+    {body_schoon}
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk Breda e.o. &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+</body>
+</html>'''
+
+# ─────────────────────────────────────────────────────────────
 
 ZONES = {
     'enkel': 'Enkel',
@@ -140,7 +285,7 @@ for protocol in config['protocollen']:
     protocol_teksten = {}
     protocol_previews = {}
     protocol_volledige_html = {}
-    protocol_ruwe_html = {}  # voor oefenfilmpjes extractie
+    protocol_ruwe_html = {}
 
     for niveau, doc_id in protocol['niveaus'].items():
         if not doc_id or doc_id == 'INVULLEN':
@@ -156,15 +301,26 @@ for protocol in config['protocollen']:
             if body_match:
                 body = body_match.group(1)
                 body_schoon = opschonen_html(body)
+
+                # GEWIJZIGD: schrijf volledige HTML-pagina in plaats van alleen de content
+                zone_naam_display = ZONES.get(protocol.get('zone', ''), 'Enkel & voet')
+                volledige_pagina = maak_html_pagina(
+                    protocol_naam=protocol['naam'],
+                    protocol_id=protocol['id'],
+                    niveau=niveau,
+                    body_schoon=body_schoon,
+                    zone_naam=zone_naam_display
+                )
                 with open(bestandsnaam, 'w', encoding='utf-8') as out:
-                    out.write(body_schoon)
+                    out.write(volledige_pagina)
+
                 print(f"OK: {bestandsnaam}")
                 extractor = TextExtractor()
                 extractor.feed(body_schoon)
                 protocol_teksten[niveau] = extractor.get_text()[:2000]
                 protocol_previews[niveau] = extraheer_preview(body, max_alineas=3)
                 protocol_volledige_html[niveau] = body_schoon
-                protocol_ruwe_html[niveau] = body  # bewaar ruwe HTML voor filmpjes
+                protocol_ruwe_html[niveau] = body
             else:
                 fouten.append(bestandsnaam)
         except Exception as e:
@@ -203,18 +359,15 @@ for p in protocol_data:
         label = niveau_labels.get(n, n.capitalize())
         niveaus_html += f'<button class="niveau-btn niveau-{n}" onclick="openProtocol(\'{p["id"]}\', \'{n}\')">{emoji} {label}</button>\n'
 
-    # FIX: zoek oefenfilmpjes in ALLE niveaus, niet alleen makkelijk
     oefenfilmpjes_html = ''
     links = extraheer_oefenfilmpjes_ruw(list(p['ruwe_html'].values()))
     if links:
-        # Max 4 links tonen (2 rijen van 2), grid-class aanpassen op aantal
         links_tonen = links[:4]
         grid_class = "oefenfilmpjes-grid" if len(links_tonen) > 1 else "oefenfilmpjes-grid enkelvoudig"
         oefenfilmpjes_html = f'<div class="oefenfilmpjes-zijbalk"><div class="oefenfilmpjes-titel">📹 Oefenfilmpjes</div><div class="{grid_class}">'
         for url, naam in links_tonen:
-            # Gebruik slug als naam leeg of URL is
             if not naam or naam.startswith('http'):
-                naam = slug_naar_naam(url)
+                naam = url.replace('https://www.fysioefeningen.nl/', '').replace('https://fysioefeningen.nl/', '').replace('-', ' ').strip().capitalize()
             naam_kort = naam[:18] + '…' if len(naam) > 18 else naam
             oefenfilmpjes_html += f'<a href="{url}" target="_blank" rel="noopener" class="oefenfilmpje-knop" title="{naam}">{naam_kort}</a>'
         oefenfilmpjes_html += '</div><p class="oefenfilmpjes-disclaimer">Begeleiding van een therapeut is noodzakelijk.</p>'
