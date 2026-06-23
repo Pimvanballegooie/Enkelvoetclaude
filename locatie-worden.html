@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Locatie worden – Enkel Voet Netwerk Breda e.o.</title>
+  <title>Locatie worden - Enkel Voet Netwerk Breda e.o.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -40,15 +40,21 @@
     .hero h1 em { font-style: normal; color: #7FDED5; }
     .hero p { font-size: 1rem; opacity: 0.85; max-width: 520px; margin: 0 auto; line-height: 1.7; }
 
+    /* Kwaliteitsbanner */
+    .kwaliteit-banner { background: var(--teal-light); border-bottom: 2px solid rgba(42,157,143,0.2); padding: 20px 24px; text-align: center; }
+    .kwaliteit-banner-inner { max-width: 800px; margin: 0 auto; }
+    .kwaliteit-banner p { font-size: 0.95rem; color: var(--navy); font-weight: 500; }
+    .kwaliteit-banner strong { color: var(--teal); }
+
     section { padding: 64px 24px; }
     .section-inner { max-width: 1100px; margin: 0 auto; }
     .section-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
     .section-header { margin-bottom: 40px; }
     .section-header h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; }
-    .section-header p { margin-top: 10px; color: var(--text-muted); max-width: 520px; font-size: 0.95rem; }
+    .section-header p { margin-top: 10px; color: var(--text-muted); max-width: 560px; font-size: 0.95rem; }
 
     .tiers { background: var(--grey-bg); }
-    .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+    .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
     .tier-card { background: var(--white); border: 2px solid var(--grey-border); border-radius: 16px; padding: 28px 24px; cursor: pointer; transition: all 0.2s; position: relative; }
     .tier-card:hover { border-color: var(--teal); box-shadow: var(--shadow); transform: translateY(-2px); }
     .tier-card.geselecteerd { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.15); }
@@ -58,16 +64,28 @@
     .tier-badge.plus    { background: #EAF0FB; color: #1A5276; }
     .tier-badge.partner { background: var(--gold-light); color: var(--gold); }
     .tier-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .prijs-blok { margin: 12px 0 4px; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
+    .prijs-huidig { font-size: 1.8rem; font-weight: 700; color: var(--navy); }
+    .prijs-huidig.partner-prijs { color: var(--gold); }
+    .prijs-unit { font-size: 0.82rem; color: var(--text-muted); }
+    .prijs-normaal { font-size: 0.78rem; color: var(--text-muted); text-decoration: line-through; }
+    .prijs-actie { font-size: 0.72rem; font-weight: 700; background: #FEF3C7; color: #92400E; padding: 2px 8px; border-radius: 999px; }
+    .prijs-extra { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; }
     .tier-features { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
     .tier-features li { font-size: 0.875rem; color: var(--text-muted); display: flex; align-items: flex-start; gap: 8px; }
     .tier-features li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
     .tier-features li.nee { color: #BCC5D3; }
-    .tier-features li.nee::before { content: '–'; color: #BCC5D3; }
+    .tier-features li.nee::before { content: '-'; color: #BCC5D3; }
+    .tier-features li.highlight { color: var(--navy); font-weight: 600; }
+    .tier-features li.highlight::before { content: '✓'; color: var(--teal); }
     .tier-card.partner .tier-features li::before { color: var(--gold); }
+    .tier-card.partner .tier-features li.highlight::before { color: var(--gold); }
     .tier-check { position: absolute; top: 16px; right: 16px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--grey-border); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
     .tier-card.geselecteerd .tier-check { background: var(--teal); border-color: var(--teal); color: var(--white); font-size: 0.7rem; }
     .tier-card.geselecteerd.partner .tier-check { background: var(--gold); border-color: var(--gold); }
     .partner-label { background: linear-gradient(135deg, var(--gold), #E8A800); color: var(--white); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); white-space: nowrap; letter-spacing: 0.05em; }
+    .kwaliteit-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 700; color: var(--teal); background: var(--teal-light); border: 1px solid rgba(42,157,143,0.3); border-radius: 999px; padding: 3px 10px; margin-top: 14px; }
+    .tier-card.partner .kwaliteit-tag { color: var(--gold); background: var(--gold-light); border-color: rgba(201,148,10,0.3); }
 
     .formulier { background: var(--white); }
     .form-wrap { max-width: 720px; }
@@ -99,7 +117,6 @@
     .form-success .success-icon { font-size: 3rem; margin-bottom: 16px; }
     .form-success h3 { font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
     .form-success p { color: var(--text-muted); font-size: 0.9rem; }
-
     .disciplines-info { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; background: var(--teal-light); border: 1px solid rgba(42,157,143,0.3); border-radius: 8px; font-size: 0.83rem; color: #1a6b62; margin-top: 4px; }
 
     footer { background: #0F2340; color: rgba(255,255,255,0.5); text-align: center; padding: 28px 24px; font-size: 0.82rem; }
@@ -148,64 +165,97 @@
   </svg>
 </section>
 
+<div class="kwaliteit-banner">
+  <div class="kwaliteit-banner-inner">
+    <p>Aansluiting bij het Enkel Voet Netwerk is gebaseerd op <strong>kwaliteit en bewezen werkwijze</strong> — niet op betalen voor een hogere positie. Elke aangesloten praktijk bevestigt te werken volgens de EVN-behandelprotocollen.</p>
+  </div>
+</div>
+
 <!-- TIERS -->
 <section class="tiers">
   <div class="section-inner">
     <div class="section-header">
       <div class="section-eyebrow">Pakketten</div>
       <h2>Kies uw aansluiting</h2>
-      <p>Selecteer het pakket dat het beste bij uw praktijk past. U kunt later altijd upgraden.</p>
+      <p>Zichtbaarheid wordt bepaald door kwaliteit. Hogere pakketten bieden meer mogelijkheden voor professionele ontwikkeling van uw therapeuten.</p>
     </div>
     <div class="tier-grid">
+
+      <!-- BASIS -->
       <div class="tier-card" id="tier-basis" onclick="selecteerTier('basis')">
         <div class="tier-check" id="check-basis"></div>
         <div class="tier-badge basis">Basis</div>
-        <h3>Vermeld op de kaart</h3>
-        <div style="margin:12px 0 4px"><span style="font-size:1.8rem;font-weight:700;color:var(--navy)">€5</span><span style="font-size:0.82rem;color:var(--text-muted)"> / locatie / maand</span></div>
-        <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px">€3/maand per extra locatie</p>
-        <p style="font-size:0.875rem;color:var(--text-muted)">Uw praktijk is zichtbaar op de locatiekaart en in de praktijkenlijst op de website.</p>
+        <h3>Zichtbaar in het netwerk</h3>
+        <div class="prijs-blok">
+          <span class="prijs-huidig">€5</span>
+          <span class="prijs-unit">/ locatie / maand</span>
+        </div>
+        <p class="prijs-extra">€3/maand per extra locatie</p>
+        <p style="font-size:0.875rem;color:var(--text-muted)">Uw praktijk is zichtbaar op de locatiekaart en in de praktijkenlijst. U bevestigt te werken volgens de EVN-behandelprotocollen.</p>
         <ul class="tier-features">
           <li>Vermelding op de interactieve kaart</li>
           <li>Naam, adres en contactgegevens</li>
           <li>Disciplines automatisch via therapeuten</li>
+          <li class="highlight">Bevestiging: werkt volgens EVN-protocollen</li>
           <li class="nee">Beschrijving onder uw kaart</li>
-          <li class="nee">Voorrangspositie in de lijst</li>
+          <li class="nee">Toegang tot online cursussen</li>
           <li class="nee">Vermelding op de partnerpagina</li>
         </ul>
+        <div class="kwaliteit-tag">🏅 EVN-protocol gecertificeerd</div>
       </div>
+
+      <!-- PLUS -->
       <div class="tier-card" id="tier-plus" onclick="selecteerTier('plus')">
         <div class="tier-check" id="check-plus"></div>
         <div class="tier-badge plus">Plus</div>
-        <h3>Met beschrijving</h3>
-        <div style="margin:12px 0 4px"><span style="font-size:1.8rem;font-weight:700;color:var(--navy)">€10</span><span style="font-size:0.82rem;color:var(--text-muted)"> / locatie / maand</span></div>
-        <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px">€6/maand per extra locatie</p>
-        <p style="font-size:0.875rem;color:var(--text-muted)">Alles van Basis, plus een korte beschrijving van uw praktijk onder uw vermelding.</p>
+        <h3>Specialisatie aantonen</h3>
+        <div class="prijs-blok">
+          <span class="prijs-huidig">€10</span>
+          <span class="prijs-unit">/ locatie / maand</span>
+          <span class="prijs-normaal">€20</span>
+          <span class="prijs-actie">Tijdelijk €10 korting</span>
+        </div>
+        <p class="prijs-extra">€10/maand per extra locatie (normaal €20)</p>
+        <p style="font-size:0.875rem;color:var(--text-muted)">Alles van Basis, plus de mogelijkheid om specialisme aan te tonen via EVN-cursussen. Tot 5 therapeuten per locatie.</p>
         <ul class="tier-features">
           <li>Vermelding op de interactieve kaart</li>
           <li>Naam, adres en contactgegevens</li>
           <li>Disciplines automatisch via therapeuten</li>
+          <li class="highlight">Bevestiging: werkt volgens EVN-protocollen</li>
           <li>Beschrijving onder uw kaart</li>
-          <li class="nee">Voorrangspositie in de lijst</li>
+          <li class="highlight">Tot 5 therapeuten toegang tot online cursussen</li>
+          <li class="highlight">Toont specialisme aan via EVN-cursussen</li>
           <li class="nee">Vermelding op de partnerpagina</li>
         </ul>
+        <div class="kwaliteit-tag">🎓 EVN-gecertificeerde therapeuten</div>
       </div>
+
+      <!-- PARTNER -->
       <div class="tier-card partner" id="tier-partner" onclick="selecteerTier('partner')">
-        <div class="partner-label">⭐ Meest compleet</div>
+        <div class="partner-label">Meest compleet</div>
         <div class="tier-check" id="check-partner"></div>
         <div class="tier-badge partner">Partner</div>
         <h3>Volledig partnerschap</h3>
-        <div style="margin:12px 0 4px"><span style="font-size:1.8rem;font-weight:700;color:var(--gold)">€50</span><span style="font-size:0.82rem;color:var(--text-muted)"> / locatie / maand</span></div>
-        <p style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px">€25/maand per extra locatie</p>
-        <p style="font-size:0.875rem;color:var(--text-muted)">De meest prominente positie in het netwerk, inclusief vermelding op de exclusieve partnerpagina.</p>
+        <div class="prijs-blok">
+          <span class="prijs-huidig partner-prijs">€50</span>
+          <span class="prijs-unit">/ locatie / maand</span>
+        </div>
+        <p class="prijs-extra">€25/maand per extra locatie</p>
+        <p style="font-size:0.875rem;color:var(--text-muted)">De meest complete aansluiting. Alle therapeuten op de locatie kunnen deelnemen aan EVN-cursussen en specialisme aantonen.</p>
         <ul class="tier-features">
           <li>Vermelding op de interactieve kaart</li>
           <li>Naam, adres en contactgegevens</li>
           <li>Disciplines automatisch via therapeuten</li>
+          <li class="highlight">Bevestiging: werkt volgens EVN-protocollen</li>
           <li>Beschrijving onder uw kaart</li>
-          <li>Bovenaan de praktijkenlijst</li>
-          <li>Logo + profiel op de partnerpagina</li>
+          <li class="highlight">Onbeperkt therapeuten toegang tot online cursussen</li>
+          <li class="highlight">Toont specialisme aan via EVN-cursussen</li>
+          <li class="highlight">Vermelding op de exclusieve partnerpagina</li>
+          <li class="highlight">Logo + profiel op de partnerpagina</li>
         </ul>
+        <div class="kwaliteit-tag">🌟 EVN-partner met volledig specialisme</div>
       </div>
+
     </div>
   </div>
 </section>
@@ -220,7 +270,7 @@
     </div>
     <div class="form-wrap">
       <div id="form-content">
-<input type="text" name="website_url" id="website_url" style="display:none" tabindex="-1" autocomplete="off" />
+        <input type="text" name="website_url" id="website_url" style="display:none" tabindex="-1" autocomplete="off" />
         <div class="form-section" id="pakket-sectie" style="border-color: var(--teal);">
           <div class="form-section-title">Gekozen pakket</div>
           <p id="pakket-weergave" style="color:var(--text-muted);font-size:0.9rem;">Selecteer hierboven een pakket om verder te gaan.</p>
@@ -251,7 +301,7 @@
           </div>
           <div id="hoofdlocatie-sectie" style="display:none">
             <div style="background:var(--gold-light);border:1px solid var(--gold);border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:0.85rem;color:#7a5800">
-              ⭐ Als partner wordt u weergegeven als één praktijk op de partnerpagina.
+              Als partner wordt u weergegeven als één praktijk op de partnerpagina.
             </div>
             <div class="form-group"><label>Hoofdadres voor partnerpagina <span class="req">*</span></label><input type="text" id="partner-adres" placeholder="Industriekade 10, 4815 HD Breda" /></div>
             <div class="form-row">
@@ -263,6 +313,14 @@
               <input type="url" id="logo-url" placeholder="https://www.uwpraktijk.nl/logo.png" />
               <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">Vul de URL in van uw logo (PNG of SVG).</p>
             </div>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-section-title">Bevestiging werkwijze</div>
+          <div class="checkbox-group">
+            <input type="checkbox" id="protocol-akkoord" />
+            <label for="protocol-akkoord">Ik bevestig dat onze praktijk werkt volgens de behandelprotocollen van het Enkel Voet Netwerk en deze als leidraad gebruikt bij de behandeling van enkel- en voetklachten.</label>
           </div>
         </div>
 
@@ -279,7 +337,7 @@
           <label for="akkoord">Ik ga akkoord met de verwerking van mijn gegevens voor zichtbaarheid binnen het Enkel Voet Netwerk, zoals beschreven in onze <a href="privacy.html" style="color:var(--teal)">privacyverklaring</a>.</label>
         </div>
 
-        <button class="btn-submit" onclick="verstuurFormulier()">Aanmelding versturen →</button>
+        <button class="btn-submit" onclick="verstuurFormulier()">Aanmelding versturen</button>
       </div>
 
       <div class="form-success" id="form-success">
@@ -292,7 +350,7 @@
 </section>
 
 <footer>
-  <p>© 2025 Enkel Voet Netwerk Breda e.o. &nbsp;·&nbsp; <a href="index.html">Terug naar home</a> &nbsp;·&nbsp; <a href="privacy.html">Privacyverklaring</a></p>
+  <p>2025 Enkel Voet Netwerk Breda e.o. &nbsp;&middot;&nbsp; <a href="index.html">Terug naar home</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacyverklaring</a></p>
 </footer>
 
 <script>
@@ -317,13 +375,17 @@
   function selecteerTier(tier) {
     geselecteerdeTier = tier;
     ['basis','plus','partner'].forEach(t => {
-      document.getElementById(`tier-${t}`).classList.remove('geselecteerd');
-      document.getElementById(`check-${t}`).textContent = '';
+      document.getElementById('tier-' + t).classList.remove('geselecteerd');
+      document.getElementById('check-' + t).textContent = '';
     });
-    document.getElementById(`tier-${tier}`).classList.add('geselecteerd');
-    document.getElementById(`check-${tier}`).textContent = '✓';
-    const namen = { basis: '📍 Basis — Vermelding op de kaart', plus: '📝 Plus — Met beschrijving', partner: '⭐ Partner — Volledig partnerschap' };
-    document.getElementById('pakket-weergave').innerHTML = `<strong style="color:var(--navy)">${namen[tier]}</strong>`;
+    document.getElementById('tier-' + tier).classList.add('geselecteerd');
+    document.getElementById('check-' + tier).textContent = '✓';
+    const namen = {
+      basis: '🏅 Basis - Zichtbaar in het netwerk (€5/maand)',
+      plus: '🎓 Plus - Specialisatie aantonen (€10/maand tijdelijk)',
+      partner: '🌟 Partner - Volledig partnerschap (€50/maand)'
+    };
+    document.getElementById('pakket-weergave').innerHTML = '<strong style="color:var(--navy)">' + namen[tier] + '</strong>';
     const beschSectie = document.getElementById('beschrijving-sectie');
     const hoofdlocatieSectie = document.getElementById('hoofdlocatie-sectie');
     if (tier === 'plus' || tier === 'partner') {
@@ -341,40 +403,45 @@
     const container = document.getElementById('locaties-container');
     const blok = document.createElement('div');
     blok.className = 'locatie-blok';
-    blok.id = `locatie-${nr}`;
-    blok.innerHTML = `
-      <div class="locatie-blok-header">
-        <div class="locatie-blok-title">Locatie ${nr}</div>
-        ${nr > 1 ? `<button type="button" class="btn-verwijder" onclick="verwijderLocatie(${nr})">✕ Verwijderen</button>` : ''}
-      </div>
-      <div class="form-group"><label>Naam praktijk <span class="req">*</span></label><input type="text" id="praktijk-${nr}" placeholder="Fysiotherapie De Voet" /></div>
-      <div class="form-group"><label>Adres <span class="req">*</span></label><input type="text" id="adres-${nr}" placeholder="Straat 1, 4800 AB Breda" /></div>
-      <div class="form-group"><label>Website</label><input type="url" id="website-${nr}" placeholder="https://www.jouwpraktijk.nl" /></div>
-      <div class="form-row">
-        <div class="form-group"><label>Telefoonnummer locatie</label><input type="tel" id="tel-locatie-${nr}" placeholder="076-0000000" /></div>
-        <div class="form-group"><label>E-mail locatie</label><input type="email" id="email-locatie-${nr}" placeholder="info@praktijk.nl" /></div>
-      </div>
-      <div class="disciplines-info">
-        ℹ️ De disciplines van uw locatie worden automatisch bepaald op basis van de therapeuten die zich aanmelden bij deze praktijk.
-      </div>`;
+    blok.id = 'locatie-' + nr;
+    blok.innerHTML =
+      '<div class="locatie-blok-header">' +
+        '<div class="locatie-blok-title">Locatie ' + nr + '</div>' +
+        (nr > 1 ? '<button type="button" class="btn-verwijder" onclick="verwijderLocatie(' + nr + ')">Verwijderen</button>' : '') +
+      '</div>' +
+      '<div class="form-group"><label>Naam praktijk <span class="req">*</span></label><input type="text" id="praktijk-' + nr + '" placeholder="Fysiotherapie De Voet" /></div>' +
+      '<div class="form-group"><label>Adres <span class="req">*</span></label><input type="text" id="adres-' + nr + '" placeholder="Straat 1, 4800 AB Breda" /></div>' +
+      '<div class="form-group"><label>Website</label><input type="url" id="website-' + nr + '" placeholder="https://www.jouwpraktijk.nl" /></div>' +
+      '<div class="form-row">' +
+        '<div class="form-group"><label>Telefoonnummer locatie</label><input type="tel" id="tel-locatie-' + nr + '" placeholder="076-0000000" /></div>' +
+        '<div class="form-group"><label>E-mail locatie</label><input type="email" id="email-locatie-' + nr + '" placeholder="info@praktijk.nl" /></div>' +
+      '</div>' +
+      '<div class="disciplines-info">De disciplines van uw locatie worden automatisch bepaald op basis van de therapeuten die zich aanmelden bij deze praktijk.</div>';
     container.appendChild(blok);
     hernummerLocaties();
   }
 
-  function verwijderLocatie(nr) { document.getElementById(`locatie-${nr}`).remove(); hernummerLocaties(); }
+  function verwijderLocatie(nr) {
+    document.getElementById('locatie-' + nr).remove();
+    hernummerLocaties();
+  }
+
   function hernummerLocaties() {
-    document.querySelectorAll('.locatie-blok').forEach((blok, i) => {
-      blok.querySelector('.locatie-blok-title').textContent = `Locatie ${i + 1}`;
+    document.querySelectorAll('.locatie-blok').forEach(function(blok, i) {
+      blok.querySelector('.locatie-blok-title').textContent = 'Locatie ' + (i + 1);
     });
   }
-  function toggleNav() { document.getElementById('main-nav').classList.toggle('open'); }
+
+  function toggleNav() {
+    document.getElementById('main-nav').classList.toggle('open');
+  }
 
   async function schrijfNaarSupabase(tabel, data) {
-    const resp = await fetch(`${SUPABASE_URL}/rest/v1/${tabel}`, {
+    const resp = await fetch(SUPABASE_URL + '/rest/v1/' + tabel, {
       method: 'POST',
       headers: {
         'apikey': SUPABASE_KEY,
-        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
         'Content-Type': 'application/json',
         'Prefer': 'return=representation'
       },
@@ -382,7 +449,7 @@
     });
     if (!resp.ok) {
       const err = await resp.text();
-      throw new Error(`Supabase fout (${tabel}): ${err}`);
+      throw new Error('Supabase fout (' + tabel + '): ' + err);
     }
     return await resp.json();
   }
@@ -390,22 +457,23 @@
   async function verstuurFormulier() {
     if (document.getElementById('website_url').value !== '') return;
     if (!geselecteerdeTier) { alert('Selecteer eerst een pakket.'); return; }
+    if (!document.getElementById('protocol-akkoord').checked) { alert('Bevestig dat u werkt volgens de EVN-behandelprotocollen.'); return; }
 
     const verplicht = ['voornaam','achternaam','email'];
     let geldig = true;
-    verplicht.forEach(id => {
+    verplicht.forEach(function(id) {
       const el = document.getElementById(id);
       if (!el.value.trim()) { el.style.borderColor = '#E74C3C'; geldig = false; }
       else { el.style.borderColor = ''; }
     });
 
     const blokken = document.querySelectorAll('.locatie-blok');
-    if (blokken.length === 0) { alert('Voeg minimaal één locatie toe.'); return; }
+    if (blokken.length === 0) { alert('Voeg minimaal een locatie toe.'); return; }
 
-    blokken.forEach(blok => {
+    blokken.forEach(function(blok) {
       const nr = blok.id.replace('locatie-','');
-      const praktijk = document.getElementById(`praktijk-${nr}`);
-      const adres = document.getElementById(`adres-${nr}`);
+      const praktijk = document.getElementById('praktijk-' + nr);
+      const adres = document.getElementById('adres-' + nr);
       if (!praktijk.value.trim()) { praktijk.style.borderColor = '#E74C3C'; geldig = false; } else { praktijk.style.borderColor = ''; }
       if (!adres.value.trim()) { adres.style.borderColor = '#E74C3C'; geldig = false; } else { adres.style.borderColor = ''; }
     });
@@ -418,47 +486,40 @@
     if (!geldig) { alert('Vul alle verplichte velden in.'); return; }
 
     const knop = document.querySelector('.btn-submit');
-    knop.textContent = 'Versturen…';
+    knop.textContent = 'Versturen...';
     knop.disabled = true;
 
     try {
       for (const blok of blokken) {
         const nr = blok.id.replace('locatie-','');
-        const adresRaw = document.getElementById(`adres-${nr}`).value.trim();
-
         const praktijkData = {
-          naam:         document.getElementById(`praktijk-${nr}`).value.trim(),
-          straat:       adresRaw,
-          postcode:     '',
-          stad:         '',
-          telefoon:     document.getElementById(`tel-locatie-${nr}`).value.trim(),
-          email:        document.getElementById(`email-locatie-${nr}`).value.trim(),
-          website:      fixUrl(document.getElementById(`website-${nr}`).value || ''),
+          naam: document.getElementById('praktijk-' + nr).value.trim(),
+          straat: document.getElementById('adres-' + nr).value.trim(),
+          postcode: '',
+          stad: '',
+          telefoon: document.getElementById('tel-locatie-' + nr).value.trim(),
+          email: document.getElementById('email-locatie-' + nr).value.trim(),
+          website: fixUrl(document.getElementById('website-' + nr).value || ''),
           aangemeld_via: 'enkelvoet.net',
-          tier:         geselecteerdeTier,
-          beschrijving: (geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner')
-                          ? document.getElementById('beschrijving').value.trim() : '',
-          logo_url: geselecteerdeTier === 'partner'
-            ? valideerFotoUrl(fixUrl(document.getElementById('logo-url').value || '')) : '',
-          disciplines:  [], // wordt automatisch gevuld via therapeuten
+          tier: geselecteerdeTier,
+          beschrijving: (geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner') ? document.getElementById('beschrijving').value.trim() : '',
+          logo_url: geselecteerdeTier === 'partner' ? fixUrl(document.getElementById('logo-url').value || '') : '',
+          disciplines: [],
           contact_voornaam: document.getElementById('voornaam').value.trim(),
           contact_achternaam: document.getElementById('achternaam').value.trim(),
           contact_email: document.getElementById('email').value.trim(),
           contact_telefoon: document.getElementById('telefoon').value.trim(),
-          toelichting:  document.getElementById('toelichting').value.trim(),
-          actief:       false
+          toelichting: document.getElementById('toelichting').value.trim(),
+          actief: false
         };
-
         await schrijfNaarSupabase('praktijken', praktijkData);
       }
-
       document.getElementById('form-content').style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
-
     } catch (err) {
       console.error(err);
       alert('Er ging iets mis bij het versturen. Probeer het opnieuw.');
-      knop.textContent = 'Aanmelding versturen →';
+      knop.textContent = 'Aanmelding versturen';
       knop.disabled = false;
     }
   }
