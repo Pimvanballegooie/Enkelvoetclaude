@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cursus: Instabiele enkel - Enkel Voet Netwerk</title>
-  <meta name="description" content="Online cursusmodule instabiele enkel voor fysiotherapeuten. Gebaseerd op EVN-protocollen met anatomie, diagnostiek en operatieve aspecten." />
+  <title>Cursusportaal - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusportaal voor fysiotherapeuten aangesloten bij het Enkel Voet Netwerk." />
   <meta name="robots" content="noindex" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -17,12 +17,19 @@
       --green: #1E8449; --green-light: #EAF7F0;
       --red: #C0392B; --red-light: #FDEDEC;
       --blue-light: #EAF0FB; --blue: #1A5276;
+      --gold: #C9940A; --gold-light: #FEF9E7;
     }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; min-height: 100vh; }
 
     header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
-    .header-inner { max-width: 860px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .header-inner { max-width: 1000px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    nav { display: flex; gap: 6px; }
+    nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s; }
+    nav a:hover { background: rgba(255,255,255,0.12); color: white; }
+    nav a.cta { background: var(--teal); color: white; margin-left: 8px; }
+    nav a.cta:hover { background: #238a7e; }
+    @media (max-width: 700px) { nav { display: none; } }
     .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 36px; height: 36px; }
     .logo-text { color: var(--white); font-weight: 700; font-size: 1rem; line-height: 1.2; }
@@ -36,11 +43,11 @@
     .btn-uitloggen.zichtbaar { display: block; }
     .btn-uitloggen:hover { background: rgba(255,255,255,0.2); }
 
-    .wrap { max-width: 720px; margin: 0 auto; padding: 32px 24px 64px; }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 24px 64px; }
 
     /* INLOGSCHERM */
-    #scherm-inlog { display: block; }
-    .inlog-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 16px; padding: 36px 32px; max-width: 420px; }
+    #scherm-inlog { display: flex; align-items: flex-start; gap: 48px; flex-wrap: wrap; }
+    .inlog-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 16px; padding: 36px 32px; width: 380px; flex-shrink: 0; }
     .inlog-tag { display: inline-block; background: var(--teal-light); color: var(--teal); font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
     .inlog-kaart h1 { font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
     .inlog-kaart p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
@@ -55,96 +62,82 @@
     .demo-hint { background: var(--grey-bg); border-radius: 8px; padding: 10px 14px; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; line-height: 1.6; }
     .demo-hint strong { color: var(--text); }
 
-    /* CURSUSSCHERM */
-    #scherm-cursus { display: none; }
+    .inlog-uitleg { flex: 1; min-width: 240px; padding-top: 8px; }
+    .inlog-uitleg h2 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .uitleg-stap { display: flex; gap: 14px; margin-bottom: 20px; }
+    .uitleg-num { width: 28px; height: 28px; border-radius: 50%; background: var(--teal-light); color: var(--teal); font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .uitleg-tekst { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+    .uitleg-tekst strong { color: var(--navy); display: block; margin-bottom: 2px; font-size: 0.9rem; }
 
-    .cursus-header { margin-bottom: 24px; }
-    .cursus-tag { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
-    .cursus-titel { font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-    .cursus-beschrijving { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+    /* PORTAALSCHERM */
+    #scherm-portaal { display: none; }
 
-    .voortgang-wrap { margin: 20px 0; }
-    .voortgang-balk-bg { background: var(--grey-border); border-radius: 99px; height: 7px; overflow: hidden; }
-    .voortgang-balk-fill { height: 7px; background: var(--teal); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
-    .voortgang-labels { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; }
+    .portaal-header { margin-bottom: 32px; }
+    .welkom-tekst { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 4px; }
+    .portaal-titel { font-size: 1.6rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .portaal-sub { font-size: 0.88rem; color: var(--text-muted); }
 
-    /* BLOKKEN */
-    .blok { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; overflow: hidden; margin-bottom: 12px; }
-    .blok-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; cursor: pointer; user-select: none; background: var(--white); transition: background 0.15s; }
-    .blok-header:hover { background: var(--grey-bg); }
-    .blok-header.vergrendeld { cursor: default; }
-    .blok-header.vergrendeld:hover { background: var(--white); }
-    .blok-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; flex-shrink: 0; }
-    .blok-num.actief { background: var(--blue-light); color: var(--blue); }
-    .blok-num.klaar { background: var(--green-light); color: var(--green); }
-    .blok-num.gezakt { background: var(--red-light); color: var(--red); }
-    .blok-num.vergrendeld { background: var(--grey-bg); color: var(--grey-border); border: 1px solid var(--grey-border); }
-    .blok-info { flex: 1; }
-    .blok-titel { font-size: 0.95rem; font-weight: 600; color: var(--navy); }
-    .blok-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
-    .blok-status { font-size: 0.75rem; color: var(--text-muted); }
-    .blok-body { display: none; padding: 20px 20px 16px; border-top: 1px solid var(--grey-border); }
-    .blok-body.open { display: block; }
+    /* SPECIALISATIE BANNER */
+    .spec-banner { display: none; background: var(--gold-light); border: 1px solid rgba(201,148,10,0.3); border-radius: 12px; padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 14px; }
+    .spec-banner.zichtbaar { display: flex; }
+    .spec-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .spec-tekst strong { display: block; font-size: 0.95rem; color: var(--gold); font-weight: 700; margin-bottom: 2px; }
+    .spec-tekst span { font-size: 0.82rem; color: var(--text-muted); }
 
-    /* THEORIE */
-    .theorie-blok { background: var(--grey-bg); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 14px 16px; margin-bottom: 16px; }
-    .theorie-kop { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-    .theorie-tekst { font-size: 0.86rem; color: var(--text-muted); line-height: 1.7; }
-    .theorie-lijst { margin-top: 10px; padding-left: 18px; font-size: 0.84rem; color: var(--text-muted); line-height: 1.7; }
-    .theorie-lijst li { margin-bottom: 3px; }
+    /* VOORTGANG */
+    .voortgang-sectie { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 20px 24px; margin-bottom: 28px; }
+    .voortgang-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 12px; }
+    .voortgang-balk-bg { background: var(--grey-border); border-radius: 99px; height: 8px; overflow: hidden; margin-bottom: 8px; }
+    .voortgang-balk-fill { height: 8px; background: var(--teal); border-radius: 99px; transition: width 0.5s ease; }
+    .voortgang-info { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); }
 
-    /* VRAGEN */
-    .vragen-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin: 20px 0 14px; padding-top: 16px; border-top: 1px solid var(--grey-border); }
-    .vraag-wrap { margin-bottom: 24px; }
-    .vraag-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
-    .niveau-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
-    .niveau-badge.basis { background: var(--green-light); color: var(--green); }
-    .niveau-badge.verdiepend { background: var(--blue-light); color: var(--blue); }
-    .vraag-num { font-size: 0.72rem; color: var(--text-muted); }
-    .vraag-tekst { font-size: 0.92rem; font-weight: 600; color: var(--navy); margin-bottom: 12px; line-height: 1.55; }
-    .optie { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1.5px solid var(--grey-border); border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.86rem; color: var(--text); transition: all 0.15s; line-height: 1.5; }
-    .optie:hover:not(.disabled) { border-color: var(--teal); background: var(--teal-light); }
-    .optie.geselecteerd { border-color: var(--teal); background: var(--teal-light); }
-    .optie.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
-    .optie.fout { border-color: var(--red); background: var(--red-light); color: var(--red); }
-    .optie.disabled { cursor: default; pointer-events: none; }
-    .optie-letter { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-    .feedback { font-size: 0.82rem; padding: 10px 14px; border-radius: 8px; margin-top: 8px; line-height: 1.6; }
-    .feedback.correct { background: var(--green-light); color: var(--green); }
-    .feedback.fout { background: var(--red-light); color: var(--red); }
-    .bron { font-size: 0.72rem; color: var(--text-muted); margin-top: 6px; font-style: italic; }
+    /* MODULE GRID */
+    .modules-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 14px; }
+    .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 32px; }
+    .module-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 20px; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.2s, transform 0.15s; position: relative; overflow: hidden; }
+    .module-kaart:hover:not(.vergrendeld):not(.niet-geslaagd-kaart) { box-shadow: 0 4px 20px rgba(27,58,92,0.10); transform: translateY(-2px); }
+    .module-kaart.vergrendeld { opacity: 0.55; cursor: default; pointer-events: none; }
+    .module-kaart.geslaagd-kaart { border-color: rgba(30,132,73,0.3); }
+    .module-kaart.niet-geslaagd-kaart { border-color: rgba(192,57,43,0.2); }
+    .module-zone { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); background: var(--teal-light); padding: 2px 8px; border-radius: 999px; display: inline-block; margin-bottom: 10px; }
+    .module-titel { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .module-beschrijving { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
+    .module-meta { display: flex; gap: 12px; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; }
+    .module-status { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; padding-top: 12px; border-top: 1px solid var(--grey-border); }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .status-dot.beschikbaar { background: var(--teal); }
+    .status-dot.geslaagd { background: var(--green); }
+    .status-dot.niet-geslaagd { background: var(--red); }
+    .status-dot.vergrendeld { background: var(--grey-border); }
+    .module-status.beschikbaar { color: var(--teal); }
+    .module-status.geslaagd { color: var(--green); }
+    .module-status.niet-geslaagd { color: var(--red); }
+    .module-status.vergrendeld { color: var(--text-muted); }
+    .module-slot { position: absolute; top: 16px; right: 16px; font-size: 1rem; opacity: 0.4; }
 
-    /* BLOK FOOTER */
-    .blok-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--grey-border); margin-top: 8px; }
-    .blok-score { font-size: 0.82rem; color: var(--text-muted); }
-    .blok-score.klaar { color: var(--green); font-weight: 600; }
-    .btn-afronden { background: var(--navy); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-family: 'Inter', sans-serif; font-size: 0.86rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-    .btn-afronden:hover { background: #2A4A73; }
-    .btn-afronden:disabled { opacity: 0.35; cursor: default; }
+    /* BINNENKORT */
+    .binnenkort-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 14px; }
+    .binnenkort-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .binnenkort-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 12px; padding: 16px; opacity: 0.6; }
+    .binnenkort-zone { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .binnenkort-titel { font-size: 0.88rem; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .binnenkort-tag { font-size: 0.7rem; color: var(--text-muted); background: var(--grey-bg); padding: 2px 8px; border-radius: 999px; display: inline-block; }
 
-    /* RESULTAAT BLOK */
-    .blok-resultaat { margin-top: 20px; border-radius: 10px; padding: 16px 20px; }
-    .blok-resultaat.geslaagd { background: var(--green-light); border: 1px solid rgba(30,132,73,0.3); }
-    .blok-resultaat.gezakt { background: var(--red-light); border: 1px solid rgba(192,57,43,0.3); }
-    .resultaat-score { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
-    .blok-resultaat.geslaagd .resultaat-score { color: var(--green); }
-    .blok-resultaat.gezakt .resultaat-score { color: var(--red); }
-    .resultaat-tekst { font-size: 0.84rem; margin-bottom: 12px; }
-    .blok-resultaat.geslaagd .resultaat-tekst { color: var(--green); }
-    .blok-resultaat.gezakt .resultaat-tekst { color: var(--red); }
-    .btn-opnieuw { background: var(--red); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-family: 'Inter', sans-serif; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-    .btn-opnieuw:hover { background: #a93226; }
+    .pakket-banner { display: flex; gap: 14px; align-items: flex-start; background: var(--blue-light); border: 1px solid rgba(26,82,118,0.2); border-radius: 10px; padding: 14px 16px; margin-top: 24px; }
+    .pakket-banner-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .pakket-banner-tekst { font-size: 0.82rem; color: var(--text-muted); line-height: 1.65; }
+    .pakket-banner-tekst strong { color: var(--navy); display: block; margin-bottom: 4px; font-size: 0.88rem; }
+    .pakket-banner-tekst a { color: var(--teal); font-weight: 600; text-decoration: none; display: inline-block; margin-top: 6px; }
+    .pakket-banner-tekst a:hover { text-decoration: underline; }
 
-    /* CERTIFICAAT */
-    #cert-banner { display: none; background: var(--green-light); border: 1px solid rgba(30,132,73,0.3); border-radius: 14px; padding: 28px 24px; text-align: center; margin-top: 20px; }
-    #cert-banner.zichtbaar { display: block; }
-    #cert-banner h2 { font-size: 1.2rem; font-weight: 700; color: var(--green); margin-bottom: 8px; }
-    #cert-banner p { font-size: 0.88rem; color: var(--green); margin-bottom: 16px; }
-    .btn-volgende { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
-    .btn-volgende:hover { background: #238a7e; }
-
-    footer { background: #0F2340; color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 0.78rem; margin-top: 48px; }
+    footer { background: #0F2340; color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 0.78rem; }
     footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      #scherm-inlog { flex-direction: column; }
+      .inlog-kaart { width: 100%; }
+      .modules-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -155,10 +148,13 @@
       <img class="logo-icon" src="../EVN_Logo_transparant.png" alt="EVN Logo" />
       <div class="logo-text">Enkel Voet Netwerk<span>Cursusportaal</span></div>
     </a>
-    <nav style="display:flex;gap:6px;">
-      <a href="../protocollen.html" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.875rem;font-weight:500;padding:8px 14px;border-radius:6px;">Protocollen</a>
-      <a href="./" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.875rem;font-weight:500;padding:8px 14px;border-radius:6px;">Cursussen</a>
-      <a href="../index.html#locaties" style="color:rgba(255,255,255,0.8);text-decoration:none;font-size:0.875rem;font-weight:500;padding:8px 14px;border-radius:6px;">Locaties</a>
+    <nav>
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="./" style="background:rgba(255,255,255,0.12);color:white;">Cursussen</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
     </nav>
     <div class="header-right">
       <div class="therapeut-info" id="header-therapeut">
@@ -188,35 +184,68 @@
         Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong>
       </div>
     </div>
+
+    <div class="inlog-uitleg">
+      <h2>Hoe werkt het cursusportaal?</h2>
+      <div class="uitleg-stap">
+        <div class="uitleg-num">1</div>
+        <div class="uitleg-tekst"><strong>Log in met uw persoonlijke code</strong>U ontvangt een unieke inlogcode van het EVN-beheer na aanmelding als therapeut.</div>
+      </div>
+      <div class="uitleg-stap">
+        <div class="uitleg-num">2</div>
+        <div class="uitleg-tekst"><strong>Volg de cursusmodules</strong>Elke module bestaat uit theorie en toetsvragen. Minimaal 80% correct om een blok af te ronden.</div>
+      </div>
+      <div class="uitleg-stap">
+        <div class="uitleg-num">3</div>
+        <div class="uitleg-tekst"><strong>Behaal uw specialisatie</strong>Na het afronden van alle vereiste modules wordt uw specialisatie automatisch zichtbaar op uw locatiepagina.</div>
+      </div>
+
+      <div class="pakket-banner">
+        <div class="pakket-banner-icon">🎓</div>
+        <div class="pakket-banner-tekst">
+          <strong>Beschikbaar vanaf het Plus pakket</strong>
+          Cursustoegang is inbegrepen in het <strong>Plus</strong> pakket (tot 5 therapeuten) en het <strong>Partner</strong> pakket (onbeperkt therapeuten). Niet beschikbaar in het Basis pakket.
+          <a href="../locatie-worden.html">Bekijk de pakketten →</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- CURSUSSCHERM -->
-  <div id="scherm-cursus">
-    <div class="cursus-header">
-      <span class="cursus-tag">Enkel — Zone 1</span>
-      <h1 class="cursus-titel">Instabiele enkel</h1>
-      <p class="cursus-beschrijving">Gebaseerd op het EVN-protocol (complex niveau) met anatomie, diagnostiek, operatieve aspecten en revalidatiecriteria. Inclusief wetenschappelijke bronnen.</p>
+  <!-- PORTAALSCHERM -->
+  <div id="scherm-portaal">
+
+    <div class="portaal-header">
+      <div class="welkom-tekst">Welkom terug,</div>
+      <div class="portaal-titel" id="portaal-naam"></div>
+      <div class="portaal-sub" id="portaal-praktijk"></div>
     </div>
 
-    <div class="voortgang-wrap">
-      <div class="voortgang-balk-bg">
-        <div class="voortgang-balk-fill" id="voortgang-fill"></div>
+    <div class="spec-banner" id="spec-banner">
+      <div class="spec-icon">🌟</div>
+      <div class="spec-tekst">
+        <strong>Gespecialiseerd in enkel & voet</strong>
+        <span>U heeft alle vereiste modules afgerond. Uw specialisatie is zichtbaar op uw locatiepagina.</span>
       </div>
-      <div class="voortgang-labels">
-        <span id="voortgang-tekst">0 van 3 blokken afgerond</span>
+    </div>
+
+    <div class="voortgang-sectie">
+      <div class="voortgang-label">Uw voortgang</div>
+      <div class="voortgang-balk-bg">
+        <div class="voortgang-balk-fill" id="voortgang-fill" style="width:0%"></div>
+      </div>
+      <div class="voortgang-info">
+        <span id="voortgang-tekst">0 van 4 modules afgerond</span>
         <span id="voortgang-pct">0%</span>
       </div>
     </div>
 
-    <div id="blokken-container"></div>
+    <div class="modules-label">Beschikbare modules</div>
+    <div class="modules-grid" id="modules-grid"></div>
 
-    <div id="cert-banner">
-      <h2>Module afgerond</h2>
-      <p id="cert-tekst"></p>
-      <a href="../cursussen/" class="btn-volgende">Terug naar cursusoverzicht →</a>
-    </div>
+    <div class="binnenkort-label">Binnenkort beschikbaar</div>
+    <div class="binnenkort-grid" id="binnenkort-grid"></div>
+
   </div>
-
 </div>
 
 <footer>
@@ -225,252 +254,40 @@
 
 <script>
 // ─────────────────────────────────────────────────────────────
-// CURSUSDATA — pas hier de inhoud aan
+// MODULES CONFIG — voeg hier nieuwe modules toe
 // ─────────────────────────────────────────────────────────────
-const CURSUS = {
-  id: "instabiele-enkel-v1",
-  titel: "Instabiele enkel",
-  zone: "Enkel",
-  blokken: [
-    {
-      id: "blok-1",
-      titel: "Anatomie & pathofysiologie",
-      nummer: 1,
-      theorie: [
-        {
-          kop: "Het laterale bandapparaat",
-          tekst: "Het laterale enkelbandapparaat bestaat uit drie ligamenten. Het ligamentum talofibulare anterius (ATFL) is de primaire stabilisator bij plantairflexie en het meest kwetsbaar. Het ligamentum calcaneofibulare (CFL) is actief bij dorsaalflexie en kruist twee gewrichten. Het ligamentum talofibulare posterius (PTFL) is het sterkste van de drie en wordt zelden beschadigd.",
-          lijst: ["ATFL: smalste band, meest kwetsbaar, primaire stabilisator bij plantairflexie", "CFL: kruist bovenste en onderste spronggewricht", "PTFL: sterkste laterale band, ruptuur alleen bij ernstig luxatietrauma"]
-        },
-        {
-          kop: "Mechanoreceptoren en proprioceptie",
-          tekst: "De enkelbanden bevatten vier typen mechanoreceptoren: Ruffini-lichaampjes (langzame adaptatie, standsverandering), Pacini-lichaampjes (snelle adaptatie, bewegingsdetectie), Golgi-peesorganen (spierspanning) en vrije zenuwuiteinden (pijn). Bij bandletsel raken deze receptoren beschadigd, wat leidt tot verminderde proprioceptie en vertraagde neuromusculaire respons — de primaire oorzaak van chronische functionele instabiliteit.",
-          lijst: null
-        }
-      ],
-      vragen: [
-        {
-          id: "v1-1",
-          tekst: "Welk mechanoreceptortype in het ATFL is primair verantwoordelijk voor het detecteren van plotselinge inversiebewegingen?",
-          niveau: "verdiepend",
-          opties: [
-            { tekst: "Ruffini-lichaampjes — langzame adaptatie, standsverandering", correct: false },
-            { tekst: "Pacini-lichaampjes — snelle adaptatie, bewegingsdetectie", correct: true },
-            { tekst: "Golgi-peesorganen — spierspanning en belasting", correct: false },
-            { tekst: "Vrije zenuwuiteinden — nociceptie", correct: false }
-          ],
-          feedback_correct: "Juist. Pacini-lichaampjes zijn snel-adapterende mechanoreceptoren ideaal voor het detecteren van snelle bewegingsveranderingen. Ze reageren op versnelling en vibratie.",
-          feedback_fout: "Niet correct. Pacini-lichaampjes zijn de snel-adapterende receptoren voor bewegingsdetectie. Ruffini-lichaampjes detecteren langzame standsveranderingen.",
-          bron: "Freeman MA et al. (1965) — The etiology and prevention of functional instability of the foot."
-        },
-        {
-          id: "v1-2",
-          tekst: "Bij welke enkelpositie is het ATFL het meest gespannen en daarmee het meest kwetsbaar voor ruptuur?",
-          niveau: "basis",
-          opties: [
-            { tekst: "Maximale dorsaalflexie met lichte eversie", correct: false },
-            { tekst: "Neutrale positie zonder rotatie", correct: false },
-            { tekst: "Plantairflexie met inversie", correct: true },
-            { tekst: "Dorsaalflexie met inversie", correct: false }
-          ],
-          feedback_correct: "Correct. In plantairflexie staat het ATFL maximaal gespannen. Gecombineerd met inversie is dit de klassieke verzwikbeweging met hoogste ruptuurrisico.",
-          feedback_fout: "Niet correct. Het ATFL is primaire stabilisator bij plantairflexie. In deze positie gecombineerd met inversie is de band het meest kwetsbaar.",
-          bron: null
-        },
-        {
-          id: "v1-3",
-          tekst: "Een patiënt heeft zes maanden geleden een ATFL-ruptuur doorgemaakt en klaagt over herhaaldelijk 'omknikken'. Bandlaxiteit is gering bij manueel onderzoek. Wat is de meest waarschijnlijke verklaring?",
-          niveau: "verdiepend",
-          opties: [
-            { tekst: "Niet volledig genezen bandletsel met structurele laxiteit", correct: false },
-            { tekst: "Functionele instabiliteit door beschadiging van mechanoreceptoren en verminderde proprioceptie", correct: true },
-            { tekst: "Peroneus longus zwakte als primaire oorzaak", correct: false },
-            { tekst: "Subtalaire instabiliteit als hoofddiagnose", correct: false }
-          ],
-          feedback_correct: "Juist. Dit is het klassieke beeld van functionele instabiliteit (CAI). Ondanks minimale bandlaxiteit is er proprioceptief tekort door beschadiging van mechanoreceptoren in het ATFL, wat leidt tot vertraagde peroneusactivatie.",
-          feedback_fout: "Niet correct. Bij gering bandlaxiteit met persisterende instabiliteit is functionele instabiliteit (proprioceptief tekort) de meest waarschijnlijke diagnose.",
-          bron: "Hertel J (2002) — Functional anatomy, pathomechanics, and pathophysiology of lateral ankle instability."
-        }
-      ]
-    },
-    {
-      id: "blok-2",
-      titel: "Diagnostiek & klinisch redeneren",
-      nummer: 2,
-      theorie: [
-        {
-          kop: "Ottawa Ankle Rules",
-          tekst: "De Ottawa Ankle Rules (OAR) bepalen wanneer röntgenonderzoek geïndiceerd is. Sensitiviteit ~98% voor fracturen. Indicatie bij pijn over de malleoluszones (distale 6 cm fibula of tibia posterieur) én onvermogen tot belasten, OF bij pijn over het os naviculare of de basis van het 5e middenvoetsbeentje.",
-          lijst: ["Zones A/B: distale 6 cm fibula of tibia posterieur", "Zone C: basis 5e middenvoetsbeentje", "Zone D: os naviculare", "Belasten: onvermogen tot 4 stappen = positief criterium"]
-        },
-        {
-          kop: "Klinische tests bij lateraal bandletsel",
-          tekst: "De anterieure schuifladetest (AST) test ATFL-integriteit door anterieure translatie van de talus. Positief bij >3mm asymmetrie ten opzichte van contralateraal. De talar tilt test beoordeelt het CFL. Beide tests zijn het meest betrouwbaar subacuut (3-5 dagen) — bij acuut trauma maskeert reflexmatige spierbescherming de bandlaxiteit.",
-          lijst: null
-        },
-        {
-          kop: "FAAM — patiënt-gerapporteerde uitkomstmaat",
-          tekst: "De Foot and Ankle Ability Measure (FAAM) is de gevalideerde uitkomstmaat bij enkelpathologie. Twee subschalen: ADL (21 items) en Sport (8 items). Minimaal klinisch relevant verschil (MCID): 8 punten ADL, 9 punten Sport. Gebruik bij intake en ontslag om behandeleffect objectief te meten.",
-          lijst: null
-        }
-      ],
-      vragen: [
-        {
-          id: "v2-1",
-          tekst: "Een 24-jarige voetballer verzwikt zijn enkel. Er is pijn mediaal anterieur over de tibia en hij kan 5 stappen lopen. Wat is de juiste interpretatie van de Ottawa Ankle Rules?",
-          niveau: "basis",
-          opties: [
-            { tekst: "Röntgenonderzoek is geïndiceerd — pijn mediaal over de tibia is een positief criterium", correct: false },
-            { tekst: "Röntgenonderzoek is niet geïndiceerd — pijn zit anterieur, niet posterieur, en hij kan belasten", correct: true },
-            { tekst: "Röntgenonderzoek is altijd geïndiceerd bij mediaal letsel", correct: false },
-            { tekst: "Alleen MRI is geschikt voor uitsluiting van botletsel", correct: false }
-          ],
-          feedback_correct: "Correct. De OAR vereisen pijn over de posterieure rand of top van de malleolus (distale 6 cm). Anterieure mediale pijn valt buiten deze zones. Hij kan bovendien belasten. Röntgen is niet geïndiceerd.",
-          feedback_fout: "Niet correct. De OAR zijn specifiek voor de posterieure rand van de malleolus. Anterieure pijn is geen positief criterium, en hij kan belasten.",
-          bron: "Stiell IG et al. (1992) — A study to develop clinical decision rules for the use of radiography in acute ankle injuries."
-        },
-        {
-          id: "v2-2",
-          tekst: "Waarom is de anterieure schuifladetest minder betrouwbaar direct na een acuut inversietrauma?",
-          niveau: "verdiepend",
-          opties: [
-            { tekst: "Zwelling belemmert de palpatie van de fibulapunt", correct: false },
-            { tekst: "Reflexmatige cocontractie van peroneusmusculatuur maskeert bandlaxiteit", correct: true },
-            { tekst: "De talus is te pijnlijk om anterieur te transleren", correct: false },
-            { tekst: "Acute haematoomvorming fixeert het gewricht mechanisch", correct: false }
-          ],
-          feedback_correct: "Juist. Direct na trauma activeert pijn reflexmatige musculaire cocontractie. Dit compressiemechanisme stabiliseert het gewricht actief en maskeert de passieve bandlaxiteit. Subacuut (dag 3-5) is de reflex verminderd.",
-          feedback_fout: "Niet correct. Het primaire probleem is reflexmatige musculaire cocontractie die bandlaxiteit maskeert. Dit is de reden voor subacuut herhalen van de test.",
-          bron: null
-        },
-        {
-          id: "v2-3",
-          tekst: "Een patiënt scoort 64/84 op de FAAM-ADL bij intake en 71/84 na 6 weken. Is er sprake van een klinisch relevant behandeleffect?",
-          niveau: "verdiepend",
-          opties: [
-            { tekst: "Ja — elke verbetering is klinisch relevant", correct: false },
-            { tekst: "Nee — de MCID van 8 punten is niet bereikt (verschil = 7 punten)", correct: true },
-            { tekst: "Ja — een verbetering van 7 punten overschrijdt de MCID van 5", correct: false },
-            { tekst: "De FAAM is niet geschikt voor het meten van behandeleffect", correct: false }
-          ],
-          feedback_correct: "Correct. De MCID voor FAAM-ADL is 8 punten. Een verschil van 7 punten valt hieronder — statistisch mogelijk significant, maar niet klinisch relevant. Dit onderscheid is essentieel in evidence-based practice.",
-          feedback_fout: "Niet correct. De MCID voor de FAAM-ADL is 8 punten. Het verschil van 7 punten is onvoldoende voor klinische relevantie.",
-          bron: "Martin RL et al. (2005) — Evidence of validity for the Foot and Ankle Ability Measure."
-        }
-      ]
-    },
-    {
-      id: "blok-3",
-      titel: "Operatieve aspecten & revalidatie",
-      nummer: 3,
-      theorie: [
-        {
-          kop: "Chirurgische reconstructie bij CAI",
-          tekst: "Bij therapieresistente CAI is de Broström-Gould modificatie de huidige gouden standaard (>80% goede uitkomsten op lange termijn). Deze anatomische reconstructie hecht het ATFL en versterkt dit met het retinaculum extensorum. Niet-anatomische reconstructies (peroneus brevis tenodese) zijn verlaten vanwege biomechanische overconstraining met subtalaire artrose als gevolg.",
-          lijst: ["Broström: directe hechting gerekte ATFL-stompuiteinden", "Broström-Gould: aanvullend retinaculum extensorum als versteviging", "Indicatie: gefaald conservatief traject ≥3 maanden met persisterende instabiliteit", "Contra-indicatie: ernstige hyperlaxiteit, revisiechirurgie, hoog BMI"]
-        },
-        {
-          kop: "Return-to-sport criteria na reconstructie",
-          tekst: "Return-to-sport (RTS) na Broström-Gould wordt bepaald door functionele én tijdsgebaseerde criteria. Tijdsduur alleen is onvoldoende — functionele criteria zijn beslissend.",
-          lijst: [
-            "Peroneuskracht ≥90% contralateraal (handheld dynamometer of isokinetisch)",
-            "Single-leg hop tests binnen 10% limb symmetry index",
-            "Y-balance test anterior reach ≥94% contralateraal",
-            "FAAM-sport ≥90%",
-            "Psychologische gereedheid (ACL-RSI ≥65)"
-          ]
-        }
-      ],
-      vragen: [
-        {
-          id: "v3-1",
-          tekst: "Wat is het mechanische voordeel van de Broström-Gould modificatie ten opzichte van de originele Broström-procedure?",
-          niveau: "verdiepend",
-          opties: [
-            { tekst: "De modificatie vervangt het ATFL door sterker donorweefsel", correct: false },
-            { tekst: "Het retinaculum extensorum versterkt de reconstructie en verbetert subtalairstabiliteit", correct: true },
-            { tekst: "De modificatie vermindert het risico op saphenusneuropathie", correct: false },
-            { tekst: "De Gould-modificatie maakt postoperatieve immobilisatie overbodig", correct: false }
-          ],
-          feedback_correct: "Juist. Door het retinaculum extensorum als tweede laag toe te voegen, wordt de reparatie verstevigd en verbetert de subtalairstabiliteit. Dit verklaart de superieure uitkomsten ten opzichte van de originele techniek.",
-          feedback_fout: "Niet correct. De Gould-modificatie gebruikt het retinaculum extensorum als verstevigingslaag over de primaire ATFL-reconstructie — geen donorvervangend weefsel.",
-          bron: "Gould N et al. (1980) — Operative treatment of subtalar and ankle instability."
-        },
-        {
-          id: "v3-2",
-          tekst: "Een patiënt is 4,5 maanden postoperatief na Broström-Gould. FAAM-sport = 88%, single-leg hop = 92% LSI, Y-balance anterior = 91% contralateraal, peroneuskracht = 88% contralateraal. Mag hij terugkeren naar competitievoetbal?",
-          niveau: "verdiepend",
-          opties: [
-            { tekst: "Ja — alle waarden zijn boven 85% en de tijdsperiode is voldoende", correct: false },
-            { tekst: "Nee — FAAM-sport, Y-balance en peroneuskracht voldoen niet aan de criteria", correct: true },
-            { tekst: "Ja — de tijdscriteria zijn het meest beslissend bij RTS", correct: false },
-            { tekst: "Alleen de chirurg bepaalt het RTS-moment", correct: false }
-          ],
-          feedback_correct: "Juist. Drie van de vier criteria zijn niet behaald: FAAM-sport 88% (norm ≥90%), Y-balance 91% (norm ≥94%), peroneuskracht 88% (norm ≥90%). Alleen de hop-test is voldoende. Verder revalideren is geïndiceerd.",
-          feedback_fout: "Niet correct. Drie criteria zijn onvoldoende: FAAM-sport (88% vs ≥90%), Y-balance (91% vs ≥94%), peroneuskracht (88% vs ≥90%). Tijdsduur alleen is geen voldoende basis voor RTS.",
-          bron: "Gribble PA et al. (2016) — Evidence review for the 2016 International Ankle Consortium Consensus Statement."
-        },
-        {
-          id: "v3-3",
-          tekst: "Wat is de primaire reden dat niet-anatomische bandreconstructies (peroneus brevis tenodese) zijn verlaten?",
-          niveau: "verdiepend",
-          opties: [
-            { tekst: "Verhoogd infectierisico door gebruik van donorweefsel", correct: false },
-            { tekst: "Biomechanische overconstraining met verlies van inversierange en subtalairmobiliteit", correct: true },
-            { tekst: "Technisch complexere operatietechniek dan Broström", correct: false },
-            { tekst: "Lagere patiënttevredenheid door grotere wond", correct: false }
-          ],
-          feedback_correct: "Correct. Niet-anatomische reconstructies constringen het gewricht te sterk: verlies van fysiologische inversie en subtalairmobiliteit, met subtalaire artrose op lange termijn als gevolg. Anatomische reconstructie herstelt de normale bandgeometrie.",
-          feedback_fout: "Niet correct. Het primaire bezwaar is biomechanisch: overconstraining leidt tot verlies van inversierange en subtalairmobiliteit met subtalaire artrose als langetermijngevolg.",
-          bron: "Ferkel RD et al. (1995) — Lateral ankle instability: surgical and non-surgical approaches."
-        }
-      ]
-    }
-  ]
-};
+const MODULES = [
+  {
+    id: "instabiele-enkel",
+    titel: "Instabiele enkel",
+    zone: "Enkel",
+    beschrijving: "Anatomie, diagnostiek en revalidatie bij chronische enkelbandinstabiliteit. Inclusief operatieve aspecten en return-to-sport criteria.",
+    blokken: 3,
+    vragen: 9,
+    url: "instabiele-enkel.html",
+    beschikbaar: true,
+    vereist_voor_specialisatie: true
+  }
+];
+
+const BINNENKORT = [
+  { zone: "Achtervoet", titel: "Achillespees pathologie", beschrijving: "Tendinopathie, ruptuur en revalidatie" },
+  { zone: "Achtervoet", titel: "Hielspoor & plantaire fasciitis", beschrijving: "Diagnostiek en conservatief beleid" },
+  { zone: "Middenvoet", titel: "Os naviculare & Lisfranc", beschrijving: "Letsel en belastbaarheidsopbouw" },
+  { zone: "Voorvoet", titel: "Hallux valgus & metatarsalgie", beschrijving: "Conservatief en pre-/postoperatief" },
+  { zone: "Enkel", titel: "Fundament benen", beschrijving: "Biomechanica, keten en klinisch redeneren" }
+];
 
 // ─────────────────────────────────────────────────────────────
 // DEMO THERAPEUTEN — vervang later door Supabase lookup
 // ─────────────────────────────────────────────────────────────
 const THERAPEUTEN = {
-  "DEMO":    { naam: "Demo Therapeut",     praktijk: "Enkel Voet Netwerk",     locatie: "Breda" },
-  "EVN-001": { naam: "Lisa van den Berg",  praktijk: "Fysiotherapie Centrum",  locatie: "Breda" },
-  "EVN-002": { naam: "Marco Smits",        praktijk: "Bewegingscentrum Zuid",  locatie: "Breda" }
+  "DEMO":    { naam: "Demo Therapeut",    praktijk: "Enkel Voet Netwerk",    locatie: "Breda", afgerond: [] },
+  "EVN-001": { naam: "Lisa van den Berg", praktijk: "Fysiotherapie Centrum", locatie: "Breda", afgerond: ["instabiele-enkel"] },
+  "EVN-002": { naam: "Marco Smits",       praktijk: "Bewegingscentrum Zuid", locatie: "Breda", afgerond: [] }
 };
 
-// ─────────────────────────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────────────────────────
 let huidigeTherapeut = null;
-let blokState = {};
-let openBlok = null;
-
-function initState() {
-  blokState = {};
-  CURSUS.blokken.forEach(blok => {
-    const vraagVolgorde = shuffleArr(blok.vragen.map((_, i) => i));
-    const optieVolgorde = {};
-    blok.vragen.forEach((v, vi) => {
-      optieVolgorde[vi] = shuffleArr(v.opties.map((_, oi) => oi));
-    });
-    blokState[blok.id] = {
-      antwoorden: {},
-      afgerond: false,
-      vraagVolgorde,
-      optieVolgorde
-    };
-  });
-  openBlok = CURSUS.blokken[0].id;
-}
-
-function shuffleArr(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
 
 // ─────────────────────────────────────────────────────────────
 // INLOGGEN / UITLOGGEN
@@ -483,294 +300,91 @@ function inloggen() {
     return;
   }
   huidigeTherapeut = { ...therapeut, code };
-  initState();
   document.getElementById('scherm-inlog').style.display = 'none';
-  document.getElementById('scherm-cursus').style.display = 'block';
+  document.getElementById('scherm-portaal').style.display = 'block';
   document.getElementById('header-naam').textContent = therapeut.naam;
   document.getElementById('header-praktijk').textContent = therapeut.praktijk + ' · ' + therapeut.locatie;
   document.getElementById('header-therapeut').classList.add('zichtbaar');
   document.getElementById('btn-uitloggen').classList.add('zichtbaar');
-  renderCursus();
+  renderPortaal();
 }
 
 function uitloggen() {
   huidigeTherapeut = null;
-  blokState = {};
-  document.getElementById('scherm-inlog').style.display = 'block';
-  document.getElementById('scherm-cursus').style.display = 'none';
+  document.getElementById('scherm-inlog').style.display = 'flex';
+  document.getElementById('scherm-portaal').style.display = 'none';
   document.getElementById('header-therapeut').classList.remove('zichtbaar');
   document.getElementById('btn-uitloggen').classList.remove('zichtbaar');
   document.getElementById('inp-code').value = '';
   document.getElementById('inlog-fout').classList.remove('zichtbaar');
-  document.getElementById('cert-banner').classList.remove('zichtbaar');
 }
 
 // ─────────────────────────────────────────────────────────────
 // RENDER
 // ─────────────────────────────────────────────────────────────
-function renderCursus() {
-  renderVoortgang();
-  renderBlokken();
-  checkAllesAfgerond();
-}
+function renderPortaal() {
+  document.getElementById('portaal-naam').textContent = huidigeTherapeut.naam;
+  document.getElementById('portaal-praktijk').textContent = huidigeTherapeut.praktijk + ' · ' + huidigeTherapeut.locatie;
 
-function renderVoortgang() {
-  const afgerond = CURSUS.blokken.filter(b => blokState[b.id]?.afgerond).length;
-  const totaal = CURSUS.blokken.length;
-  const pct = Math.round(afgerond / totaal * 100);
+  const afgerond = huidigeTherapeut.afgerond || [];
+  const vereist = MODULES.filter(m => m.vereist_voor_specialisatie);
+  const alleVereistAfgerond = vereist.every(m => afgerond.includes(m.id));
+
+  // Specialisatie banner
+  if (alleVereistAfgerond) {
+    document.getElementById('spec-banner').classList.add('zichtbaar');
+  }
+
+  // Voortgang
+  const aantalAfgerond = MODULES.filter(m => afgerond.includes(m.id)).length;
+  const totaal = MODULES.length;
+  const pct = totaal > 0 ? Math.round(aantalAfgerond / totaal * 100) : 0;
   document.getElementById('voortgang-fill').style.width = pct + '%';
-  document.getElementById('voortgang-tekst').textContent = afgerond + ' van ' + totaal + ' blokken afgerond';
+  document.getElementById('voortgang-tekst').textContent = aantalAfgerond + ' van ' + totaal + ' module' + (totaal !== 1 ? 's' : '') + ' afgerond';
   document.getElementById('voortgang-pct').textContent = pct + '%';
-}
 
-function renderBlokken() {
-  const container = document.getElementById('blokken-container');
-  container.innerHTML = '';
-  CURSUS.blokken.forEach((blok, idx) => {
-    const vorigeAfgerond = idx === 0 || blokState[CURSUS.blokken[idx - 1].id]?.afgerond;
-    const isLocked = !vorigeAfgerond;
-    const isOpen = openBlok === blok.id && !isLocked;
-    const state = blokState[blok.id];
-    container.appendChild(maakBlokEl(blok, state, isOpen, isLocked));
-  });
-}
+  // Modules
+  const grid = document.getElementById('modules-grid');
+  grid.innerHTML = '';
+  MODULES.forEach(module => {
+    const isAfgerond = afgerond.includes(module.id);
+    const kaart = document.createElement('a');
+    kaart.href = isAfgerond ? module.url : (module.beschikbaar ? module.url : '#');
+    kaart.className = 'module-kaart' + (isAfgerond ? ' geslaagd-kaart' : '') + (!module.beschikbaar ? ' vergrendeld' : '');
 
-function maakBlokEl(blok, state, isOpen, isLocked) {
-  const el = document.createElement('div');
-  el.className = 'blok';
-  el.id = 'blok-el-' + blok.id;
+    let statusKlasse = isAfgerond ? 'geslaagd' : module.beschikbaar ? 'beschikbaar' : 'vergrendeld';
+    let statusTekst = isAfgerond ? '✓ Afgerond' : module.beschikbaar ? 'Starten →' : 'Binnenkort';
 
-  const aantalVragen = blok.vragen.length;
-  const beantwoord = Object.keys(state.antwoorden).length;
-  const score = berekenScore(blok, state);
-
-  let numKlasse = (state.afgerond && state.geslaagd) ? 'klaar' : (state.afgerond && !state.geslaagd) ? 'gezakt' : isLocked ? 'vergrendeld' : 'actief';
-  let numIcon = (state.afgerond && state.geslaagd) ? '✓' : (state.afgerond && !state.geslaagd) ? '✗' : blok.nummer;
-  let statusTekst = (state.afgerond && state.geslaagd)
-    ? 'Geslaagd — ' + score + '/' + aantalVragen
-    : (state.afgerond && !state.geslaagd)
-      ? 'Niet geslaagd — ' + score + '/' + aantalVragen
-      : isLocked ? 'Vergrendeld'
-      : beantwoord + '/' + aantalVragen + ' beantwoord';
-
-  el.innerHTML =
-    '<div class="blok-header ' + (isLocked ? 'vergrendeld' : '') + '" onclick="toggleBlok(\'' + blok.id + '\', ' + isLocked + ')">' +
-      '<div class="blok-num ' + numKlasse + '">' + numIcon + '</div>' +
-      '<div class="blok-info">' +
-        '<div class="blok-titel">' + blok.titel + '</div>' +
-        '<div class="blok-sub">' + blok.theorie.length + ' theoriestukken · ' + aantalVragen + ' vragen</div>' +
+    kaart.innerHTML =
+      '<div class="module-zone">' + module.zone + '</div>' +
+      '<div class="module-titel">' + module.titel + '</div>' +
+      '<div class="module-beschrijving">' + module.beschrijving + '</div>' +
+      '<div class="module-meta">' +
+        '<span>' + module.blokken + ' blokken</span>' +
+        '<span>·</span>' +
+        '<span>' + module.vragen + ' vragen</span>' +
+        (module.vereist_voor_specialisatie ? '<span>·</span><span style="color:var(--gold)">Vereist voor specialisatie</span>' : '') +
       '</div>' +
-      '<div class="blok-status">' + statusTekst + '</div>' +
-    '</div>' +
-    '<div class="blok-body' + (isOpen ? ' open' : '') + '" id="body-' + blok.id + '">' +
-      renderBlokBody(blok, state) +
-    '</div>';
+      '<div class="module-status ' + statusKlasse + '">' +
+        '<span class="status-dot ' + statusKlasse + '"></span>' +
+        statusTekst +
+      '</div>';
 
-  return el;
-}
-
-function renderBlokBody(blok, state) {
-  let html = '';
-
-  blok.theorie.forEach(t => {
-    html += '<div class="theorie-blok">';
-    html += '<div class="theorie-kop">' + t.kop + '</div>';
-    html += '<div class="theorie-tekst">' + t.tekst + '</div>';
-    if (t.lijst) {
-      html += '<ul class="theorie-lijst">' + t.lijst.map(li => '<li>' + li + '</li>').join('') + '</ul>';
-    }
-    html += '</div>';
+    grid.appendChild(kaart);
   });
 
-  html += '<div class="vragen-label">Toetsvragen</div>';
-
-  const letters = ['A', 'B', 'C', 'D'];
-  state.vraagVolgorde.forEach((origIdx, displayIdx) => {
-    const vraag = blok.vragen[origIdx];
-    const antwoord = state.antwoorden[origIdx];
-    const beantwoord = antwoord !== undefined;
-    const optieVolgorde = state.optieVolgorde[origIdx];
-
-    html += '<div class="vraag-wrap">';
-    html += '<div class="vraag-meta">';
-    html += '<span class="niveau-badge ' + vraag.niveau + '">' + (vraag.niveau === 'verdiepend' ? 'Verdiepend' : 'Basis') + '</span>';
-    html += '<span class="vraag-num">Vraag ' + (displayIdx + 1) + ' van ' + blok.vragen.length + '</span>';
-    html += '</div>';
-    html += '<div class="vraag-tekst">' + vraag.tekst + '</div>';
-
-    optieVolgorde.forEach((origOptIdx, displayOptIdx) => {
-      const opt = vraag.opties[origOptIdx];
-      let klasse = 'optie';
-      if (beantwoord && !state.afgerond) {
-        // Geselecteerd maar nog niet afgerond: toon alleen selectie, geen correctheid
-        if (origOptIdx === antwoord) klasse += ' geselecteerd disabled';
-        else klasse += ' disabled';
-      } else if (beantwoord && state.afgerond) {
-        // Afgerond: toon correct/fout
-        klasse += ' disabled';
-        if (opt.correct) klasse += ' correct';
-        else if (origOptIdx === antwoord && !opt.correct) klasse += ' fout';
-      }
-      html += '<div class="' + klasse + '" onclick="kiesAntwoord(\'' + blok.id + '\',' + origIdx + ',' + origOptIdx + ')">';
-      html += '<span class="optie-letter">' + letters[displayOptIdx] + '</span>';
-      html += '<span>' + opt.tekst + '</span>';
-      html += '</div>';
-    });
-
-    if (beantwoord && state.afgerond) {
-      const isCorrect = vraag.opties[antwoord]?.correct;
-      html += '<div class="feedback ' + (isCorrect ? 'correct' : 'fout') + '">';
-      html += isCorrect ? vraag.feedback_correct : vraag.feedback_fout;
-      html += '</div>';
-      if (vraag.bron) {
-        html += '<div class="bron">Bron: ' + vraag.bron + '</div>';
-      }
-    }
-    html += '</div>';
+  // Binnenkort
+  const bGrid = document.getElementById('binnenkort-grid');
+  bGrid.innerHTML = '';
+  BINNENKORT.forEach(m => {
+    const el = document.createElement('div');
+    el.className = 'binnenkort-kaart';
+    el.innerHTML =
+      '<div class="binnenkort-zone">' + m.zone + '</div>' +
+      '<div class="binnenkort-titel">' + m.titel + '</div>' +
+      '<div class="binnenkort-tag">Binnenkort</div>';
+    bGrid.appendChild(el);
   });
-
-  const aantalVragen = blok.vragen.length;
-  const aantalBeantwoord = Object.keys(state.antwoorden).length;
-  const alleBeantwoord = aantalBeantwoord === aantalVragen;
-  const score = berekenScore(blok, state);
-
-  if (!state.afgerond) {
-    html += '<div class="blok-footer">';
-    html += '<div class="blok-score">' + aantalBeantwoord + ' van ' + aantalVragen + ' vragen ingevuld</div>';
-    html += '<button class="btn-afronden" onclick="rondBlokAf(\'' + blok.id + '\')" ' + (alleBeantwoord ? '' : 'disabled') + '>Blok afronden →</button>';
-    html += '</div>';
-  } else {
-    const pct = Math.round(score / aantalVragen * 100);
-    const geslaagd = pct >= 80;
-    html += '<div class="blok-resultaat ' + (geslaagd ? 'geslaagd' : 'gezakt') + '">';
-    html += '<div class="resultaat-score">' + (geslaagd ? '✓' : '✗') + ' Score: ' + score + '/' + aantalVragen + ' (' + pct + '%)</div>';
-    html += '<div class="resultaat-tekst">' + (geslaagd ? 'Geslaagd — minimaal 80% behaald.' : 'Niet geslaagd — minimaal 80% vereist. Probeer het blok opnieuw.') + '</div>';
-    if (!geslaagd) {
-      html += '<button class="btn-opnieuw" onclick="herlaadBlok(\'' + blok.id + '\')">Opnieuw proberen →</button>';
-    }
-    html += '</div>';
-  }
-
-  return html;
-}
-
-function berekenScore(blok, state) {
-  return blok.vragen.reduce((acc, v, vi) => {
-    const a = state.antwoorden[vi];
-    return acc + (a !== undefined && v.opties[a]?.correct ? 1 : 0);
-  }, 0);
-}
-
-// ─────────────────────────────────────────────────────────────
-// ACTIES
-// ─────────────────────────────────────────────────────────────
-function toggleBlok(blokId, isLocked) {
-  if (isLocked) return;
-  openBlok = openBlok === blokId ? null : blokId;
-  renderBlokken();
-}
-
-function kiesAntwoord(blokId, vraagIdx, optieIdx) {
-  const state = blokState[blokId];
-  if (state.afgerond) return;
-  if (state.antwoorden[vraagIdx] !== undefined) return;
-  state.antwoorden[vraagIdx] = optieIdx;
-  document.getElementById('body-' + blokId).innerHTML = renderBlokBody(
-    CURSUS.blokken.find(b => b.id === blokId), state
-  );
-  renderVoortgang();
-
-  // TODO: sla antwoord op in Supabase
-  // supabase.from('cursus_antwoorden').insert({
-  //   therapeut_code: huidigeTherapeut.code,
-  //   cursus_id: CURSUS.id,
-  //   blok_id: blokId,
-  //   vraag_id: CURSUS.blokken.find(b=>b.id===blokId).vragen[vraagIdx].id,
-  //   correct: CURSUS.blokken.find(b=>b.id===blokId).vragen[vraagIdx].opties[optieIdx].correct
-  // });
-}
-
-function rondBlokAf(blokId) {
-  const blok = CURSUS.blokken.find(b => b.id === blokId);
-  const state = blokState[blokId];
-  const score = berekenScore(blok, state);
-  const pct = Math.round(score / blok.vragen.length * 100);
-  const geslaagd = pct >= 80;
-
-  // Markeer als afgerond (voor weergave van score/feedback)
-  blokState[blokId].afgerond = true;
-  blokState[blokId].geslaagd = geslaagd;
-
-  if (geslaagd) {
-    // Ga door naar volgende blok
-    const idx = CURSUS.blokken.findIndex(b => b.id === blokId);
-    const volgende = CURSUS.blokken[idx + 1];
-    if (volgende) {
-      openBlok = volgende.id;
-      renderCursus();
-      // Scroll naar begin van volgend blok
-      setTimeout(() => {
-        const el = document.getElementById('blok-el-' + volgende.id);
-        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    } else {
-      renderCursus();
-    }
-  } else {
-    // Niet geslaagd: toon resultaat maar ga niet door
-    renderCursus();
-    setTimeout(() => {
-      const el = document.getElementById('blok-el-' + blokId);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  }
-
-  // TODO: sla afronding op in Supabase
-  // supabase.from('cursus_voortgang').insert({
-  //   therapeut_code: huidigeTherapeut.code,
-  //   cursus_id: CURSUS.id,
-  //   blok_id: blokId,
-  //   score: score,
-  //   geslaagd: geslaagd,
-  //   datum_afgerond: new Date().toISOString(),
-  //   afgerond: geslaagd
-  // });
-}
-
-function herlaadBlok(blokId) {
-  // Reset dit blok zodat therapeut opnieuw kan beginnen
-  const blok = CURSUS.blokken.find(b => b.id === blokId);
-  const vraagVolgorde = shuffleArr(blok.vragen.map((_, i) => i));
-  const optieVolgorde = {};
-  blok.vragen.forEach((v, vi) => {
-    optieVolgorde[vi] = shuffleArr(v.opties.map((_, oi) => oi));
-  });
-  blokState[blokId] = {
-    antwoorden: {},
-    afgerond: false,
-    geslaagd: false,
-    vraagVolgorde,
-    optieVolgorde
-  };
-  openBlok = blokId;
-  renderCursus();
-  setTimeout(() => {
-    const el = document.getElementById('blok-el-' + blokId);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
-}
-
-function checkAllesAfgerond() {
-  const alles = CURSUS.blokken.every(b => blokState[b.id]?.afgerond && blokState[b.id]?.geslaagd);
-  if (alles) {
-    document.getElementById('cert-tekst').textContent =
-      huidigeTherapeut.naam + ' heeft de module Instabiele enkel succesvol doorlopen. Dit wordt automatisch vastgelegd in het EVN-systeem.';
-    document.getElementById('cert-banner').classList.add('zichtbaar');
-
-    // TODO: markeer specialisatie in Supabase
-    // supabase.from('therapeuten').update({ specialisatie_enkel: true })
-    //   .eq('code', huidigeTherapeut.code);
-  }
 }
 </script>
 </body>
