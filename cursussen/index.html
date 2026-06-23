@@ -23,25 +23,15 @@
 
     /* HEADER */
     header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
-    .header-inner { max-width: 1400px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
     .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 40px; height: 40px; }
     .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
-    .logo-text span { display: block; font-weight: 300; font-size: 0.75rem; opacity: 0.7; }
     nav { display: flex; gap: 6px; }
-    nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.82rem; font-weight: 500; padding: 8px 10px; border-radius: 6px; transition: background 0.2s; white-space: nowrap; }
+    nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s; }
     nav a:hover { background: rgba(255,255,255,0.12); color: white; }
-    nav a.actief { background: rgba(255,255,255,0.12); color: white; }
     nav a.cta { background: var(--teal); color: white; margin-left: 8px; }
     nav a.cta:hover { background: #238a7e; }
-    .header-right { display: flex; align-items: center; gap: 12px; }
-    .therapeut-info { text-align: right; display: none; }
-    .therapeut-info.zichtbaar { display: block; }
-    .therapeut-naam { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.9); }
-    .therapeut-praktijk { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
-    .btn-uitloggen { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); border-radius: 6px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer; font-family: 'Inter', sans-serif; display: none; transition: background 0.2s; }
-    .btn-uitloggen.zichtbaar { display: block; }
-    .btn-uitloggen:hover { background: rgba(255,255,255,0.2); }
     @media (max-width: 700px) { nav { display: none; } }
 
     .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px 64px; }
@@ -157,25 +147,21 @@
 
 <header>
   <div class="header-inner">
-    <a href="../index.html" class="logo">
-      <img class="logo-icon" src="../EVN_Logo_transparant.png" alt="EVN Logo" />
+    <a href="index.html" class="logo">
+      <img class="logo-icon" src="EVN_Logo_transparant.png" alt="EVN Logo" />
       <div class="logo-text">Enkel Voet Netwerk</div>
     </a>
-    <nav>
-      <a href="../protocollen.html">Protocollen</a>
-      <a href="./" class="actief">Cursussen</a>
-      <a href="../index.html#locaties">Locaties</a>
-      <a href="../partners.html">Partners</a>
-      <a href="../therapeut-worden.html">Therapeut worden</a>
-      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
-    </nav>
-    <div class="header-right">
-      <div class="therapeut-info" id="header-therapeut">
-        <div class="therapeut-naam" id="header-naam"></div>
-        <div class="therapeut-praktijk" id="header-praktijk"></div>
-      </div>
-      <button class="btn-uitloggen" id="btn-uitloggen" onclick="uitloggen()">Uitloggen</button>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
     </div>
+    <nav id="main-nav">
+      <a href="protocollen.html">Protocollen</a>
+      <a href="cursussen/">Cursussen</a>
+      <a href="index.html#locaties">Locaties</a>
+      <a href="partners.html">Partners</a>
+      <a href="therapeut-worden.html">Therapeut worden</a>
+      <a href="locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
   </div>
 </header>
 
