@@ -77,6 +77,7 @@
     .blok-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; flex-shrink: 0; }
     .blok-num.actief { background: var(--blue-light); color: var(--blue); }
     .blok-num.klaar { background: var(--green-light); color: var(--green); }
+    .blok-num.gezakt { background: var(--red-light); color: var(--red); }
     .blok-num.vergrendeld { background: var(--grey-bg); color: var(--grey-border); border: 1px solid var(--grey-border); }
     .blok-info { flex: 1; }
     .blok-titel { font-size: 0.95rem; font-weight: 600; color: var(--navy); }
@@ -120,6 +121,19 @@
     .btn-afronden { background: var(--navy); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-family: 'Inter', sans-serif; font-size: 0.86rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
     .btn-afronden:hover { background: #2A4A73; }
     .btn-afronden:disabled { opacity: 0.35; cursor: default; }
+
+    /* RESULTAAT BLOK */
+    .blok-resultaat { margin-top: 20px; border-radius: 10px; padding: 16px 20px; }
+    .blok-resultaat.geslaagd { background: var(--green-light); border: 1px solid rgba(30,132,73,0.3); }
+    .blok-resultaat.gezakt { background: var(--red-light); border: 1px solid rgba(192,57,43,0.3); }
+    .resultaat-score { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .blok-resultaat.geslaagd .resultaat-score { color: var(--green); }
+    .blok-resultaat.gezakt .resultaat-score { color: var(--red); }
+    .resultaat-tekst { font-size: 0.84rem; margin-bottom: 12px; }
+    .blok-resultaat.geslaagd .resultaat-tekst { color: var(--green); }
+    .blok-resultaat.gezakt .resultaat-tekst { color: var(--red); }
+    .btn-opnieuw { background: var(--red); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-family: 'Inter', sans-serif; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-opnieuw:hover { background: #a93226; }
 
     /* CERTIFICAAT */
     #cert-banner { display: none; background: var(--green-light); border: 1px solid rgba(30,132,73,0.3); border-radius: 14px; padding: 28px 24px; text-align: center; margin-top: 20px; }
@@ -525,12 +539,14 @@ function maakBlokEl(blok, state, isOpen, isLocked) {
   const beantwoord = Object.keys(state.antwoorden).length;
   const score = berekenScore(blok, state);
 
-  let numKlasse = state.afgerond ? 'klaar' : isLocked ? 'vergrendeld' : 'actief';
-  let numIcon = state.afgerond ? '✓' : blok.nummer;
-  let statusTekst = state.afgerond
-    ? 'Afgerond — ' + score + '/' + aantalVragen
-    : isLocked ? 'Vergrendeld'
-    : beantwoord + '/' + aantalVragen + ' beantwoord';
+  let numKlasse = (state.afgerond && state.geslaagd) ? 'klaar' : (state.afgerond && !state.geslaagd) ? 'gezakt' : isLocked ? 'vergrendeld' : 'actief';
+  let numIcon = (state.afgerond && state.geslaagd) ? '✓' : (state.afgerond && !state.geslaagd) ? '✗' : blok.nummer;
+  let statusTekst = (state.afgerond && state.geslaagd)
+    ? 'Geslaagd — ' + score + '/' + aantalVragen
+    : (state.afgerond && !state.geslaagd)
+      ? 'Niet geslaagd — ' + score + '/' + aantalVragen
+      : isLocked ? 'Vergrendeld'
+      : beantwoord + '/' + aantalVragen + ' beantwoord';
 
   el.innerHTML =
     '<div class="blok-header ' + (isLocked ? 'vergrendeld' : '') + '" onclick="toggleBlok(\'' + blok.id + '\', ' + isLocked + ')">' +
@@ -580,7 +596,12 @@ function renderBlokBody(blok, state) {
     optieVolgorde.forEach((origOptIdx, displayOptIdx) => {
       const opt = vraag.opties[origOptIdx];
       let klasse = 'optie';
-      if (beantwoord) {
+      if (beantwoord && !state.afgerond) {
+        // Geselecteerd maar nog niet afgerond: toon alleen selectie, geen correctheid
+        if (origOptIdx === antwoord) klasse += ' geselecteerd disabled';
+        else klasse += ' disabled';
+      } else if (beantwoord && state.afgerond) {
+        // Afgerond: toon correct/fout
         klasse += ' disabled';
         if (opt.correct) klasse += ' correct';
         else if (origOptIdx === antwoord && !opt.correct) klasse += ' fout';
@@ -591,7 +612,7 @@ function renderBlokBody(blok, state) {
       html += '</div>';
     });
 
-    if (beantwoord) {
+    if (beantwoord && state.afgerond) {
       const isCorrect = vraag.opties[antwoord]?.correct;
       html += '<div class="feedback ' + (isCorrect ? 'correct' : 'fout') + '">';
       html += isCorrect ? vraag.feedback_correct : vraag.feedback_fout;
@@ -610,12 +631,18 @@ function renderBlokBody(blok, state) {
 
   if (!state.afgerond) {
     html += '<div class="blok-footer">';
-    html += '<div class="blok-score">' + (alleBeantwoord ? 'Score: ' + score + '/' + aantalVragen : aantalBeantwoord + ' van ' + aantalVragen + ' beantwoord') + '</div>';
+    html += '<div class="blok-score">' + aantalBeantwoord + ' van ' + aantalVragen + ' vragen ingevuld</div>';
     html += '<button class="btn-afronden" onclick="rondBlokAf(\'' + blok.id + '\')" ' + (alleBeantwoord ? '' : 'disabled') + '>Blok afronden →</button>';
     html += '</div>';
   } else {
-    html += '<div class="blok-footer">';
-    html += '<div class="blok-score klaar">✓ Afgerond — score: ' + score + '/' + aantalVragen + '</div>';
+    const pct = Math.round(score / aantalVragen * 100);
+    const geslaagd = pct >= 80;
+    html += '<div class="blok-resultaat ' + (geslaagd ? 'geslaagd' : 'gezakt') + '">';
+    html += '<div class="resultaat-score">' + (geslaagd ? '✓' : '✗') + ' Score: ' + score + '/' + aantalVragen + ' (' + pct + '%)</div>';
+    html += '<div class="resultaat-tekst">' + (geslaagd ? 'Geslaagd — minimaal 80% behaald.' : 'Niet geslaagd — minimaal 80% vereist. Probeer het blok opnieuw.') + '</div>';
+    if (!geslaagd) {
+      html += '<button class="btn-opnieuw" onclick="herlaadBlok(\'' + blok.id + '\')">Opnieuw proberen →</button>';
+    }
     html += '</div>';
   }
 
@@ -659,25 +686,77 @@ function kiesAntwoord(blokId, vraagIdx, optieIdx) {
 }
 
 function rondBlokAf(blokId) {
+  const blok = CURSUS.blokken.find(b => b.id === blokId);
+  const state = blokState[blokId];
+  const score = berekenScore(blok, state);
+  const pct = Math.round(score / blok.vragen.length * 100);
+  const geslaagd = pct >= 80;
+
+  // Markeer als afgerond (voor weergave van score/feedback)
   blokState[blokId].afgerond = true;
-  const idx = CURSUS.blokken.findIndex(b => b.id === blokId);
-  const volgende = CURSUS.blokken[idx + 1];
-  if (volgende) openBlok = volgende.id;
-  renderCursus();
+  blokState[blokId].geslaagd = geslaagd;
+
+  if (geslaagd) {
+    // Ga door naar volgende blok
+    const idx = CURSUS.blokken.findIndex(b => b.id === blokId);
+    const volgende = CURSUS.blokken[idx + 1];
+    if (volgende) {
+      openBlok = volgende.id;
+      renderCursus();
+      // Scroll naar begin van volgend blok
+      setTimeout(() => {
+        const el = document.getElementById('blok-el-' + volgende.id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    } else {
+      renderCursus();
+    }
+  } else {
+    // Niet geslaagd: toon resultaat maar ga niet door
+    renderCursus();
+    setTimeout(() => {
+      const el = document.getElementById('blok-el-' + blokId);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
 
   // TODO: sla afronding op in Supabase
   // supabase.from('cursus_voortgang').insert({
   //   therapeut_code: huidigeTherapeut.code,
   //   cursus_id: CURSUS.id,
   //   blok_id: blokId,
-  //   score: berekenScore(CURSUS.blokken.find(b=>b.id===blokId), blokState[blokId]),
+  //   score: score,
+  //   geslaagd: geslaagd,
   //   datum_afgerond: new Date().toISOString(),
-  //   afgerond: true
+  //   afgerond: geslaagd
   // });
 }
 
+function herlaadBlok(blokId) {
+  // Reset dit blok zodat therapeut opnieuw kan beginnen
+  const blok = CURSUS.blokken.find(b => b.id === blokId);
+  const vraagVolgorde = shuffleArr(blok.vragen.map((_, i) => i));
+  const optieVolgorde = {};
+  blok.vragen.forEach((v, vi) => {
+    optieVolgorde[vi] = shuffleArr(v.opties.map((_, oi) => oi));
+  });
+  blokState[blokId] = {
+    antwoorden: {},
+    afgerond: false,
+    geslaagd: false,
+    vraagVolgorde,
+    optieVolgorde
+  };
+  openBlok = blokId;
+  renderCursus();
+  setTimeout(() => {
+    const el = document.getElementById('blok-el-' + blokId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
 function checkAllesAfgerond() {
-  const alles = CURSUS.blokken.every(b => blokState[b.id]?.afgerond);
+  const alles = CURSUS.blokken.every(b => blokState[b.id]?.afgerond && blokState[b.id]?.geslaagd);
   if (alles) {
     document.getElementById('cert-tekst').textContent =
       huidigeTherapeut.naam + ' heeft de module Instabiele enkel succesvol doorlopen. Dit wordt automatisch vastgelegd in het EVN-systeem.';
