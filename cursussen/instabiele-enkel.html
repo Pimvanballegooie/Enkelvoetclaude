@@ -1,1 +1,693 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Instabiele enkel - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule instabiele enkel voor fysiotherapeuten. Gebaseerd op EVN-protocollen met anatomie, diagnostiek en operatieve aspecten." />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4;
+      --grey-bg: #F5F7FA; --grey-border: #DDE3EC;
+      --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF;
+      --green: #1E8449; --green-light: #EAF7F0;
+      --red: #C0392B; --red-light: #FDEDEC;
+      --blue-light: #EAF0FB; --blue: #1A5276;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; }
 
+    header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+    .header-inner { max-width: 860px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { width: 36px; height: 36px; }
+    .logo-text { color: var(--white); font-weight: 700; font-size: 1rem; line-height: 1.2; }
+    .logo-text span { display: block; font-weight: 300; font-size: 0.72rem; opacity: 0.7; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .therapeut-info { text-align: right; display: none; }
+    .therapeut-info.zichtbaar { display: block; }
+    .therapeut-naam { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.9); }
+    .therapeut-praktijk { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+    .btn-uitloggen { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); border-radius: 6px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer; font-family: 'Inter', sans-serif; display: none; }
+    .btn-uitloggen.zichtbaar { display: block; }
+    .btn-uitloggen:hover { background: rgba(255,255,255,0.2); }
+
+    .wrap { max-width: 720px; margin: 0 auto; padding: 32px 24px 64px; }
+
+    /* INLOGSCHERM */
+    #scherm-inlog { display: block; }
+    .inlog-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 16px; padding: 36px 32px; max-width: 420px; }
+    .inlog-tag { display: inline-block; background: var(--teal-light); color: var(--teal); font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .inlog-kaart h1 { font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .inlog-kaart p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .form-group input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--text); outline: none; text-transform: uppercase; letter-spacing: 0.05em; transition: border-color 0.2s; }
+    .form-group input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
+    .btn-primary { width: 100%; padding: 12px; background: var(--teal); color: white; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: #238a7e; }
+    .inlog-fout { background: var(--red-light); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 0.84rem; margin-bottom: 14px; display: none; }
+    .inlog-fout.zichtbaar { display: block; }
+    .demo-hint { background: var(--grey-bg); border-radius: 8px; padding: 10px 14px; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; line-height: 1.6; }
+    .demo-hint strong { color: var(--text); }
+
+    /* CURSUSSCHERM */
+    #scherm-cursus { display: none; }
+
+    .cursus-header { margin-bottom: 24px; }
+    .cursus-tag { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
+    .cursus-titel { font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .cursus-beschrijving { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    .voortgang-wrap { margin: 20px 0; }
+    .voortgang-balk-bg { background: var(--grey-border); border-radius: 99px; height: 7px; overflow: hidden; }
+    .voortgang-balk-fill { height: 7px; background: var(--teal); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+    .voortgang-labels { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; }
+
+    /* BLOKKEN */
+    .blok { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; overflow: hidden; margin-bottom: 12px; }
+    .blok-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; cursor: pointer; user-select: none; background: var(--white); transition: background 0.15s; }
+    .blok-header:hover { background: var(--grey-bg); }
+    .blok-header.vergrendeld { cursor: default; }
+    .blok-header.vergrendeld:hover { background: var(--white); }
+    .blok-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; flex-shrink: 0; }
+    .blok-num.actief { background: var(--blue-light); color: var(--blue); }
+    .blok-num.klaar { background: var(--green-light); color: var(--green); }
+    .blok-num.vergrendeld { background: var(--grey-bg); color: var(--grey-border); border: 1px solid var(--grey-border); }
+    .blok-info { flex: 1; }
+    .blok-titel { font-size: 0.95rem; font-weight: 600; color: var(--navy); }
+    .blok-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+    .blok-status { font-size: 0.75rem; color: var(--text-muted); }
+    .blok-body { display: none; padding: 20px 20px 16px; border-top: 1px solid var(--grey-border); }
+    .blok-body.open { display: block; }
+
+    /* THEORIE */
+    .theorie-blok { background: var(--grey-bg); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 14px 16px; margin-bottom: 16px; }
+    .theorie-kop { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .theorie-tekst { font-size: 0.86rem; color: var(--text-muted); line-height: 1.7; }
+    .theorie-lijst { margin-top: 10px; padding-left: 18px; font-size: 0.84rem; color: var(--text-muted); line-height: 1.7; }
+    .theorie-lijst li { margin-bottom: 3px; }
+
+    /* VRAGEN */
+    .vragen-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin: 20px 0 14px; padding-top: 16px; border-top: 1px solid var(--grey-border); }
+    .vraag-wrap { margin-bottom: 24px; }
+    .vraag-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .niveau-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+    .niveau-badge.basis { background: var(--green-light); color: var(--green); }
+    .niveau-badge.verdiepend { background: var(--blue-light); color: var(--blue); }
+    .vraag-num { font-size: 0.72rem; color: var(--text-muted); }
+    .vraag-tekst { font-size: 0.92rem; font-weight: 600; color: var(--navy); margin-bottom: 12px; line-height: 1.55; }
+    .optie { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1.5px solid var(--grey-border); border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.86rem; color: var(--text); transition: all 0.15s; line-height: 1.5; }
+    .optie:hover:not(.disabled) { border-color: var(--teal); background: var(--teal-light); }
+    .optie.geselecteerd { border-color: var(--teal); background: var(--teal-light); }
+    .optie.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+    .optie.fout { border-color: var(--red); background: var(--red-light); color: var(--red); }
+    .optie.disabled { cursor: default; pointer-events: none; }
+    .optie-letter { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .feedback { font-size: 0.82rem; padding: 10px 14px; border-radius: 8px; margin-top: 8px; line-height: 1.6; }
+    .feedback.correct { background: var(--green-light); color: var(--green); }
+    .feedback.fout { background: var(--red-light); color: var(--red); }
+    .bron { font-size: 0.72rem; color: var(--text-muted); margin-top: 6px; font-style: italic; }
+
+    /* BLOK FOOTER */
+    .blok-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--grey-border); margin-top: 8px; }
+    .blok-score { font-size: 0.82rem; color: var(--text-muted); }
+    .blok-score.klaar { color: var(--green); font-weight: 600; }
+    .btn-afronden { background: var(--navy); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-family: 'Inter', sans-serif; font-size: 0.86rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-afronden:hover { background: #2A4A73; }
+    .btn-afronden:disabled { opacity: 0.35; cursor: default; }
+
+    /* CERTIFICAAT */
+    #cert-banner { display: none; background: var(--green-light); border: 1px solid rgba(30,132,73,0.3); border-radius: 14px; padding: 28px 24px; text-align: center; margin-top: 20px; }
+    #cert-banner.zichtbaar { display: block; }
+    #cert-banner h2 { font-size: 1.2rem; font-weight: 700; color: var(--green); margin-bottom: 8px; }
+    #cert-banner p { font-size: 0.88rem; color: var(--green); margin-bottom: 16px; }
+    .btn-volgende { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
+    .btn-volgende:hover { background: #238a7e; }
+
+    footer { background: #0F2340; color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 0.78rem; margin-top: 48px; }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../EVN_Logo_transparant.png" alt="EVN Logo" />
+      <div class="logo-text">Enkel Voet Netwerk<span>Cursusportaal</span></div>
+    </a>
+    <div class="header-right">
+      <div class="therapeut-info" id="header-therapeut">
+        <div class="therapeut-naam" id="header-naam"></div>
+        <div class="therapeut-praktijk" id="header-praktijk"></div>
+      </div>
+      <button class="btn-uitloggen" id="btn-uitloggen" onclick="uitloggen()">Uitloggen</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- INLOGSCHERM -->
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">
+        Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- CURSUSSCHERM -->
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Enkel — Zone 1</span>
+      <h1 class="cursus-titel">Instabiele enkel</h1>
+      <p class="cursus-beschrijving">Gebaseerd op het EVN-protocol (complex niveau) met anatomie, diagnostiek, operatieve aspecten en revalidatiecriteria. Inclusief wetenschappelijke bronnen.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg">
+        <div class="voortgang-balk-fill" id="voortgang-fill"></div>
+      </div>
+      <div class="voortgang-labels">
+        <span id="voortgang-tekst">0 van 3 blokken afgerond</span>
+        <span id="voortgang-pct">0%</span>
+      </div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../cursussen/" class="btn-volgende">Terug naar cursusoverzicht →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// CURSUSDATA — pas hier de inhoud aan
+// ─────────────────────────────────────────────────────────────
+const CURSUS = {
+  id: "instabiele-enkel-v1",
+  titel: "Instabiele enkel",
+  zone: "Enkel",
+  blokken: [
+    {
+      id: "blok-1",
+      titel: "Anatomie & pathofysiologie",
+      nummer: 1,
+      theorie: [
+        {
+          kop: "Het laterale bandapparaat",
+          tekst: "Het laterale enkelbandapparaat bestaat uit drie ligamenten. Het ligamentum talofibulare anterius (ATFL) is de primaire stabilisator bij plantairflexie en het meest kwetsbaar. Het ligamentum calcaneofibulare (CFL) is actief bij dorsaalflexie en kruist twee gewrichten. Het ligamentum talofibulare posterius (PTFL) is het sterkste van de drie en wordt zelden beschadigd.",
+          lijst: ["ATFL: smalste band, meest kwetsbaar, primaire stabilisator bij plantairflexie", "CFL: kruist bovenste en onderste spronggewricht", "PTFL: sterkste laterale band, ruptuur alleen bij ernstig luxatietrauma"]
+        },
+        {
+          kop: "Mechanoreceptoren en proprioceptie",
+          tekst: "De enkelbanden bevatten vier typen mechanoreceptoren: Ruffini-lichaampjes (langzame adaptatie, standsverandering), Pacini-lichaampjes (snelle adaptatie, bewegingsdetectie), Golgi-peesorganen (spierspanning) en vrije zenuwuiteinden (pijn). Bij bandletsel raken deze receptoren beschadigd, wat leidt tot verminderde proprioceptie en vertraagde neuromusculaire respons — de primaire oorzaak van chronische functionele instabiliteit.",
+          lijst: null
+        }
+      ],
+      vragen: [
+        {
+          id: "v1-1",
+          tekst: "Welk mechanoreceptortype in het ATFL is primair verantwoordelijk voor het detecteren van plotselinge inversiebewegingen?",
+          niveau: "verdiepend",
+          opties: [
+            { tekst: "Ruffini-lichaampjes — langzame adaptatie, standsverandering", correct: false },
+            { tekst: "Pacini-lichaampjes — snelle adaptatie, bewegingsdetectie", correct: true },
+            { tekst: "Golgi-peesorganen — spierspanning en belasting", correct: false },
+            { tekst: "Vrije zenuwuiteinden — nociceptie", correct: false }
+          ],
+          feedback_correct: "Juist. Pacini-lichaampjes zijn snel-adapterende mechanoreceptoren ideaal voor het detecteren van snelle bewegingsveranderingen. Ze reageren op versnelling en vibratie.",
+          feedback_fout: "Niet correct. Pacini-lichaampjes zijn de snel-adapterende receptoren voor bewegingsdetectie. Ruffini-lichaampjes detecteren langzame standsveranderingen.",
+          bron: "Freeman MA et al. (1965) — The etiology and prevention of functional instability of the foot."
+        },
+        {
+          id: "v1-2",
+          tekst: "Bij welke enkelpositie is het ATFL het meest gespannen en daarmee het meest kwetsbaar voor ruptuur?",
+          niveau: "basis",
+          opties: [
+            { tekst: "Maximale dorsaalflexie met lichte eversie", correct: false },
+            { tekst: "Neutrale positie zonder rotatie", correct: false },
+            { tekst: "Plantairflexie met inversie", correct: true },
+            { tekst: "Dorsaalflexie met inversie", correct: false }
+          ],
+          feedback_correct: "Correct. In plantairflexie staat het ATFL maximaal gespannen. Gecombineerd met inversie is dit de klassieke verzwikbeweging met hoogste ruptuurrisico.",
+          feedback_fout: "Niet correct. Het ATFL is primaire stabilisator bij plantairflexie. In deze positie gecombineerd met inversie is de band het meest kwetsbaar.",
+          bron: null
+        },
+        {
+          id: "v1-3",
+          tekst: "Een patiënt heeft zes maanden geleden een ATFL-ruptuur doorgemaakt en klaagt over herhaaldelijk 'omknikken'. Bandlaxiteit is gering bij manueel onderzoek. Wat is de meest waarschijnlijke verklaring?",
+          niveau: "verdiepend",
+          opties: [
+            { tekst: "Niet volledig genezen bandletsel met structurele laxiteit", correct: false },
+            { tekst: "Functionele instabiliteit door beschadiging van mechanoreceptoren en verminderde proprioceptie", correct: true },
+            { tekst: "Peroneus longus zwakte als primaire oorzaak", correct: false },
+            { tekst: "Subtalaire instabiliteit als hoofddiagnose", correct: false }
+          ],
+          feedback_correct: "Juist. Dit is het klassieke beeld van functionele instabiliteit (CAI). Ondanks minimale bandlaxiteit is er proprioceptief tekort door beschadiging van mechanoreceptoren in het ATFL, wat leidt tot vertraagde peroneusactivatie.",
+          feedback_fout: "Niet correct. Bij gering bandlaxiteit met persisterende instabiliteit is functionele instabiliteit (proprioceptief tekort) de meest waarschijnlijke diagnose.",
+          bron: "Hertel J (2002) — Functional anatomy, pathomechanics, and pathophysiology of lateral ankle instability."
+        }
+      ]
+    },
+    {
+      id: "blok-2",
+      titel: "Diagnostiek & klinisch redeneren",
+      nummer: 2,
+      theorie: [
+        {
+          kop: "Ottawa Ankle Rules",
+          tekst: "De Ottawa Ankle Rules (OAR) bepalen wanneer röntgenonderzoek geïndiceerd is. Sensitiviteit ~98% voor fracturen. Indicatie bij pijn over de malleoluszones (distale 6 cm fibula of tibia posterieur) én onvermogen tot belasten, OF bij pijn over het os naviculare of de basis van het 5e middenvoetsbeentje.",
+          lijst: ["Zones A/B: distale 6 cm fibula of tibia posterieur", "Zone C: basis 5e middenvoetsbeentje", "Zone D: os naviculare", "Belasten: onvermogen tot 4 stappen = positief criterium"]
+        },
+        {
+          kop: "Klinische tests bij lateraal bandletsel",
+          tekst: "De anterieure schuifladetest (AST) test ATFL-integriteit door anterieure translatie van de talus. Positief bij >3mm asymmetrie ten opzichte van contralateraal. De talar tilt test beoordeelt het CFL. Beide tests zijn het meest betrouwbaar subacuut (3-5 dagen) — bij acuut trauma maskeert reflexmatige spierbescherming de bandlaxiteit.",
+          lijst: null
+        },
+        {
+          kop: "FAAM — patiënt-gerapporteerde uitkomstmaat",
+          tekst: "De Foot and Ankle Ability Measure (FAAM) is de gevalideerde uitkomstmaat bij enkelpathologie. Twee subschalen: ADL (21 items) en Sport (8 items). Minimaal klinisch relevant verschil (MCID): 8 punten ADL, 9 punten Sport. Gebruik bij intake en ontslag om behandeleffect objectief te meten.",
+          lijst: null
+        }
+      ],
+      vragen: [
+        {
+          id: "v2-1",
+          tekst: "Een 24-jarige voetballer verzwikt zijn enkel. Er is pijn mediaal anterieur over de tibia en hij kan 5 stappen lopen. Wat is de juiste interpretatie van de Ottawa Ankle Rules?",
+          niveau: "basis",
+          opties: [
+            { tekst: "Röntgenonderzoek is geïndiceerd — pijn mediaal over de tibia is een positief criterium", correct: false },
+            { tekst: "Röntgenonderzoek is niet geïndiceerd — pijn zit anterieur, niet posterieur, en hij kan belasten", correct: true },
+            { tekst: "Röntgenonderzoek is altijd geïndiceerd bij mediaal letsel", correct: false },
+            { tekst: "Alleen MRI is geschikt voor uitsluiting van botletsel", correct: false }
+          ],
+          feedback_correct: "Correct. De OAR vereisen pijn over de posterieure rand of top van de malleolus (distale 6 cm). Anterieure mediale pijn valt buiten deze zones. Hij kan bovendien belasten. Röntgen is niet geïndiceerd.",
+          feedback_fout: "Niet correct. De OAR zijn specifiek voor de posterieure rand van de malleolus. Anterieure pijn is geen positief criterium, en hij kan belasten.",
+          bron: "Stiell IG et al. (1992) — A study to develop clinical decision rules for the use of radiography in acute ankle injuries."
+        },
+        {
+          id: "v2-2",
+          tekst: "Waarom is de anterieure schuifladetest minder betrouwbaar direct na een acuut inversietrauma?",
+          niveau: "verdiepend",
+          opties: [
+            { tekst: "Zwelling belemmert de palpatie van de fibulapunt", correct: false },
+            { tekst: "Reflexmatige cocontractie van peroneusmusculatuur maskeert bandlaxiteit", correct: true },
+            { tekst: "De talus is te pijnlijk om anterieur te transleren", correct: false },
+            { tekst: "Acute haematoomvorming fixeert het gewricht mechanisch", correct: false }
+          ],
+          feedback_correct: "Juist. Direct na trauma activeert pijn reflexmatige musculaire cocontractie. Dit compressiemechanisme stabiliseert het gewricht actief en maskeert de passieve bandlaxiteit. Subacuut (dag 3-5) is de reflex verminderd.",
+          feedback_fout: "Niet correct. Het primaire probleem is reflexmatige musculaire cocontractie die bandlaxiteit maskeert. Dit is de reden voor subacuut herhalen van de test.",
+          bron: null
+        },
+        {
+          id: "v2-3",
+          tekst: "Een patiënt scoort 64/84 op de FAAM-ADL bij intake en 71/84 na 6 weken. Is er sprake van een klinisch relevant behandeleffect?",
+          niveau: "verdiepend",
+          opties: [
+            { tekst: "Ja — elke verbetering is klinisch relevant", correct: false },
+            { tekst: "Nee — de MCID van 8 punten is niet bereikt (verschil = 7 punten)", correct: true },
+            { tekst: "Ja — een verbetering van 7 punten overschrijdt de MCID van 5", correct: false },
+            { tekst: "De FAAM is niet geschikt voor het meten van behandeleffect", correct: false }
+          ],
+          feedback_correct: "Correct. De MCID voor FAAM-ADL is 8 punten. Een verschil van 7 punten valt hieronder — statistisch mogelijk significant, maar niet klinisch relevant. Dit onderscheid is essentieel in evidence-based practice.",
+          feedback_fout: "Niet correct. De MCID voor de FAAM-ADL is 8 punten. Het verschil van 7 punten is onvoldoende voor klinische relevantie.",
+          bron: "Martin RL et al. (2005) — Evidence of validity for the Foot and Ankle Ability Measure."
+        }
+      ]
+    },
+    {
+      id: "blok-3",
+      titel: "Operatieve aspecten & revalidatie",
+      nummer: 3,
+      theorie: [
+        {
+          kop: "Chirurgische reconstructie bij CAI",
+          tekst: "Bij therapieresistente CAI is de Broström-Gould modificatie de huidige gouden standaard (>80% goede uitkomsten op lange termijn). Deze anatomische reconstructie hecht het ATFL en versterkt dit met het retinaculum extensorum. Niet-anatomische reconstructies (peroneus brevis tenodese) zijn verlaten vanwege biomechanische overconstraining met subtalaire artrose als gevolg.",
+          lijst: ["Broström: directe hechting gerekte ATFL-stompuiteinden", "Broström-Gould: aanvullend retinaculum extensorum als versteviging", "Indicatie: gefaald conservatief traject ≥3 maanden met persisterende instabiliteit", "Contra-indicatie: ernstige hyperlaxiteit, revisiechirurgie, hoog BMI"]
+        },
+        {
+          kop: "Return-to-sport criteria na reconstructie",
+          tekst: "Return-to-sport (RTS) na Broström-Gould wordt bepaald door functionele én tijdsgebaseerde criteria. Tijdsduur alleen is onvoldoende — functionele criteria zijn beslissend.",
+          lijst: [
+            "Peroneuskracht ≥90% contralateraal (handheld dynamometer of isokinetisch)",
+            "Single-leg hop tests binnen 10% limb symmetry index",
+            "Y-balance test anterior reach ≥94% contralateraal",
+            "FAAM-sport ≥90%",
+            "Psychologische gereedheid (ACL-RSI ≥65)"
+          ]
+        }
+      ],
+      vragen: [
+        {
+          id: "v3-1",
+          tekst: "Wat is het mechanische voordeel van de Broström-Gould modificatie ten opzichte van de originele Broström-procedure?",
+          niveau: "verdiepend",
+          opties: [
+            { tekst: "De modificatie vervangt het ATFL door sterker donorweefsel", correct: false },
+            { tekst: "Het retinaculum extensorum versterkt de reconstructie en verbetert subtalairstabiliteit", correct: true },
+            { tekst: "De modificatie vermindert het risico op saphenusneuropathie", correct: false },
+            { tekst: "De Gould-modificatie maakt postoperatieve immobilisatie overbodig", correct: false }
+          ],
+          feedback_correct: "Juist. Door het retinaculum extensorum als tweede laag toe te voegen, wordt de reparatie verstevigd en verbetert de subtalairstabiliteit. Dit verklaart de superieure uitkomsten ten opzichte van de originele techniek.",
+          feedback_fout: "Niet correct. De Gould-modificatie gebruikt het retinaculum extensorum als verstevigingslaag over de primaire ATFL-reconstructie — geen donorvervangend weefsel.",
+          bron: "Gould N et al. (1980) — Operative treatment of subtalar and ankle instability."
+        },
+        {
+          id: "v3-2",
+          tekst: "Een patiënt is 4,5 maanden postoperatief na Broström-Gould. FAAM-sport = 88%, single-leg hop = 92% LSI, Y-balance anterior = 91% contralateraal, peroneuskracht = 88% contralateraal. Mag hij terugkeren naar competitievoetbal?",
+          niveau: "verdiepend",
+          opties: [
+            { tekst: "Ja — alle waarden zijn boven 85% en de tijdsperiode is voldoende", correct: false },
+            { tekst: "Nee — FAAM-sport, Y-balance en peroneuskracht voldoen niet aan de criteria", correct: true },
+            { tekst: "Ja — de tijdscriteria zijn het meest beslissend bij RTS", correct: false },
+            { tekst: "Alleen de chirurg bepaalt het RTS-moment", correct: false }
+          ],
+          feedback_correct: "Juist. Drie van de vier criteria zijn niet behaald: FAAM-sport 88% (norm ≥90%), Y-balance 91% (norm ≥94%), peroneuskracht 88% (norm ≥90%). Alleen de hop-test is voldoende. Verder revalideren is geïndiceerd.",
+          feedback_fout: "Niet correct. Drie criteria zijn onvoldoende: FAAM-sport (88% vs ≥90%), Y-balance (91% vs ≥94%), peroneuskracht (88% vs ≥90%). Tijdsduur alleen is geen voldoende basis voor RTS.",
+          bron: "Gribble PA et al. (2016) — Evidence review for the 2016 International Ankle Consortium Consensus Statement."
+        },
+        {
+          id: "v3-3",
+          tekst: "Wat is de primaire reden dat niet-anatomische bandreconstructies (peroneus brevis tenodese) zijn verlaten?",
+          niveau: "verdiepend",
+          opties: [
+            { tekst: "Verhoogd infectierisico door gebruik van donorweefsel", correct: false },
+            { tekst: "Biomechanische overconstraining met verlies van inversierange en subtalairmobiliteit", correct: true },
+            { tekst: "Technisch complexere operatietechniek dan Broström", correct: false },
+            { tekst: "Lagere patiënttevredenheid door grotere wond", correct: false }
+          ],
+          feedback_correct: "Correct. Niet-anatomische reconstructies constringen het gewricht te sterk: verlies van fysiologische inversie en subtalairmobiliteit, met subtalaire artrose op lange termijn als gevolg. Anatomische reconstructie herstelt de normale bandgeometrie.",
+          feedback_fout: "Niet correct. Het primaire bezwaar is biomechanisch: overconstraining leidt tot verlies van inversierange en subtalairmobiliteit met subtalaire artrose als langetermijngevolg.",
+          bron: "Ferkel RD et al. (1995) — Lateral ankle instability: surgical and non-surgical approaches."
+        }
+      ]
+    }
+  ]
+};
+
+// ─────────────────────────────────────────────────────────────
+// DEMO THERAPEUTEN — vervang later door Supabase lookup
+// ─────────────────────────────────────────────────────────────
+const THERAPEUTEN = {
+  "DEMO":    { naam: "Demo Therapeut",     praktijk: "Enkel Voet Netwerk",     locatie: "Breda" },
+  "EVN-001": { naam: "Lisa van den Berg",  praktijk: "Fysiotherapie Centrum",  locatie: "Breda" },
+  "EVN-002": { naam: "Marco Smits",        praktijk: "Bewegingscentrum Zuid",  locatie: "Breda" }
+};
+
+// ─────────────────────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────────────────────
+let huidigeTherapeut = null;
+let blokState = {};
+let openBlok = null;
+
+function initState() {
+  blokState = {};
+  CURSUS.blokken.forEach(blok => {
+    const vraagVolgorde = shuffleArr(blok.vragen.map((_, i) => i));
+    const optieVolgorde = {};
+    blok.vragen.forEach((v, vi) => {
+      optieVolgorde[vi] = shuffleArr(v.opties.map((_, oi) => oi));
+    });
+    blokState[blok.id] = {
+      antwoorden: {},
+      afgerond: false,
+      vraagVolgorde,
+      optieVolgorde
+    };
+  });
+  openBlok = CURSUS.blokken[0].id;
+}
+
+function shuffleArr(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ─────────────────────────────────────────────────────────────
+// INLOGGEN / UITLOGGEN
+// ─────────────────────────────────────────────────────────────
+function inloggen() {
+  const code = document.getElementById('inp-code').value.trim().toUpperCase();
+  const therapeut = THERAPEUTEN[code];
+  if (!therapeut) {
+    document.getElementById('inlog-fout').classList.add('zichtbaar');
+    return;
+  }
+  huidigeTherapeut = { ...therapeut, code };
+  initState();
+  document.getElementById('scherm-inlog').style.display = 'none';
+  document.getElementById('scherm-cursus').style.display = 'block';
+  document.getElementById('header-naam').textContent = therapeut.naam;
+  document.getElementById('header-praktijk').textContent = therapeut.praktijk + ' · ' + therapeut.locatie;
+  document.getElementById('header-therapeut').classList.add('zichtbaar');
+  document.getElementById('btn-uitloggen').classList.add('zichtbaar');
+  renderCursus();
+}
+
+function uitloggen() {
+  huidigeTherapeut = null;
+  blokState = {};
+  document.getElementById('scherm-inlog').style.display = 'block';
+  document.getElementById('scherm-cursus').style.display = 'none';
+  document.getElementById('header-therapeut').classList.remove('zichtbaar');
+  document.getElementById('btn-uitloggen').classList.remove('zichtbaar');
+  document.getElementById('inp-code').value = '';
+  document.getElementById('inlog-fout').classList.remove('zichtbaar');
+  document.getElementById('cert-banner').classList.remove('zichtbaar');
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────────
+function renderCursus() {
+  renderVoortgang();
+  renderBlokken();
+  checkAllesAfgerond();
+}
+
+function renderVoortgang() {
+  const afgerond = CURSUS.blokken.filter(b => blokState[b.id]?.afgerond).length;
+  const totaal = CURSUS.blokken.length;
+  const pct = Math.round(afgerond / totaal * 100);
+  document.getElementById('voortgang-fill').style.width = pct + '%';
+  document.getElementById('voortgang-tekst').textContent = afgerond + ' van ' + totaal + ' blokken afgerond';
+  document.getElementById('voortgang-pct').textContent = pct + '%';
+}
+
+function renderBlokken() {
+  const container = document.getElementById('blokken-container');
+  container.innerHTML = '';
+  CURSUS.blokken.forEach((blok, idx) => {
+    const vorigeAfgerond = idx === 0 || blokState[CURSUS.blokken[idx - 1].id]?.afgerond;
+    const isLocked = !vorigeAfgerond;
+    const isOpen = openBlok === blok.id && !isLocked;
+    const state = blokState[blok.id];
+    container.appendChild(maakBlokEl(blok, state, isOpen, isLocked));
+  });
+}
+
+function maakBlokEl(blok, state, isOpen, isLocked) {
+  const el = document.createElement('div');
+  el.className = 'blok';
+  el.id = 'blok-el-' + blok.id;
+
+  const aantalVragen = blok.vragen.length;
+  const beantwoord = Object.keys(state.antwoorden).length;
+  const score = berekenScore(blok, state);
+
+  let numKlasse = state.afgerond ? 'klaar' : isLocked ? 'vergrendeld' : 'actief';
+  let numIcon = state.afgerond ? '✓' : blok.nummer;
+  let statusTekst = state.afgerond
+    ? 'Afgerond — ' + score + '/' + aantalVragen
+    : isLocked ? 'Vergrendeld'
+    : beantwoord + '/' + aantalVragen + ' beantwoord';
+
+  el.innerHTML =
+    '<div class="blok-header ' + (isLocked ? 'vergrendeld' : '') + '" onclick="toggleBlok(\'' + blok.id + '\', ' + isLocked + ')">' +
+      '<div class="blok-num ' + numKlasse + '">' + numIcon + '</div>' +
+      '<div class="blok-info">' +
+        '<div class="blok-titel">' + blok.titel + '</div>' +
+        '<div class="blok-sub">' + blok.theorie.length + ' theoriestukken · ' + aantalVragen + ' vragen</div>' +
+      '</div>' +
+      '<div class="blok-status">' + statusTekst + '</div>' +
+    '</div>' +
+    '<div class="blok-body' + (isOpen ? ' open' : '') + '" id="body-' + blok.id + '">' +
+      renderBlokBody(blok, state) +
+    '</div>';
+
+  return el;
+}
+
+function renderBlokBody(blok, state) {
+  let html = '';
+
+  blok.theorie.forEach(t => {
+    html += '<div class="theorie-blok">';
+    html += '<div class="theorie-kop">' + t.kop + '</div>';
+    html += '<div class="theorie-tekst">' + t.tekst + '</div>';
+    if (t.lijst) {
+      html += '<ul class="theorie-lijst">' + t.lijst.map(li => '<li>' + li + '</li>').join('') + '</ul>';
+    }
+    html += '</div>';
+  });
+
+  html += '<div class="vragen-label">Toetsvragen</div>';
+
+  const letters = ['A', 'B', 'C', 'D'];
+  state.vraagVolgorde.forEach((origIdx, displayIdx) => {
+    const vraag = blok.vragen[origIdx];
+    const antwoord = state.antwoorden[origIdx];
+    const beantwoord = antwoord !== undefined;
+    const optieVolgorde = state.optieVolgorde[origIdx];
+
+    html += '<div class="vraag-wrap">';
+    html += '<div class="vraag-meta">';
+    html += '<span class="niveau-badge ' + vraag.niveau + '">' + (vraag.niveau === 'verdiepend' ? 'Verdiepend' : 'Basis') + '</span>';
+    html += '<span class="vraag-num">Vraag ' + (displayIdx + 1) + ' van ' + blok.vragen.length + '</span>';
+    html += '</div>';
+    html += '<div class="vraag-tekst">' + vraag.tekst + '</div>';
+
+    optieVolgorde.forEach((origOptIdx, displayOptIdx) => {
+      const opt = vraag.opties[origOptIdx];
+      let klasse = 'optie';
+      if (beantwoord) {
+        klasse += ' disabled';
+        if (opt.correct) klasse += ' correct';
+        else if (origOptIdx === antwoord && !opt.correct) klasse += ' fout';
+      }
+      html += '<div class="' + klasse + '" onclick="kiesAntwoord(\'' + blok.id + '\',' + origIdx + ',' + origOptIdx + ')">';
+      html += '<span class="optie-letter">' + letters[displayOptIdx] + '</span>';
+      html += '<span>' + opt.tekst + '</span>';
+      html += '</div>';
+    });
+
+    if (beantwoord) {
+      const isCorrect = vraag.opties[antwoord]?.correct;
+      html += '<div class="feedback ' + (isCorrect ? 'correct' : 'fout') + '">';
+      html += isCorrect ? vraag.feedback_correct : vraag.feedback_fout;
+      html += '</div>';
+      if (vraag.bron) {
+        html += '<div class="bron">Bron: ' + vraag.bron + '</div>';
+      }
+    }
+    html += '</div>';
+  });
+
+  const aantalVragen = blok.vragen.length;
+  const aantalBeantwoord = Object.keys(state.antwoorden).length;
+  const alleBeantwoord = aantalBeantwoord === aantalVragen;
+  const score = berekenScore(blok, state);
+
+  if (!state.afgerond) {
+    html += '<div class="blok-footer">';
+    html += '<div class="blok-score">' + (alleBeantwoord ? 'Score: ' + score + '/' + aantalVragen : aantalBeantwoord + ' van ' + aantalVragen + ' beantwoord') + '</div>';
+    html += '<button class="btn-afronden" onclick="rondBlokAf(\'' + blok.id + '\')" ' + (alleBeantwoord ? '' : 'disabled') + '>Blok afronden →</button>';
+    html += '</div>';
+  } else {
+    html += '<div class="blok-footer">';
+    html += '<div class="blok-score klaar">✓ Afgerond — score: ' + score + '/' + aantalVragen + '</div>';
+    html += '</div>';
+  }
+
+  return html;
+}
+
+function berekenScore(blok, state) {
+  return blok.vragen.reduce((acc, v, vi) => {
+    const a = state.antwoorden[vi];
+    return acc + (a !== undefined && v.opties[a]?.correct ? 1 : 0);
+  }, 0);
+}
+
+// ─────────────────────────────────────────────────────────────
+// ACTIES
+// ─────────────────────────────────────────────────────────────
+function toggleBlok(blokId, isLocked) {
+  if (isLocked) return;
+  openBlok = openBlok === blokId ? null : blokId;
+  renderBlokken();
+}
+
+function kiesAntwoord(blokId, vraagIdx, optieIdx) {
+  const state = blokState[blokId];
+  if (state.afgerond) return;
+  if (state.antwoorden[vraagIdx] !== undefined) return;
+  state.antwoorden[vraagIdx] = optieIdx;
+  document.getElementById('body-' + blokId).innerHTML = renderBlokBody(
+    CURSUS.blokken.find(b => b.id === blokId), state
+  );
+  renderVoortgang();
+
+  // TODO: sla antwoord op in Supabase
+  // supabase.from('cursus_antwoorden').insert({
+  //   therapeut_code: huidigeTherapeut.code,
+  //   cursus_id: CURSUS.id,
+  //   blok_id: blokId,
+  //   vraag_id: CURSUS.blokken.find(b=>b.id===blokId).vragen[vraagIdx].id,
+  //   correct: CURSUS.blokken.find(b=>b.id===blokId).vragen[vraagIdx].opties[optieIdx].correct
+  // });
+}
+
+function rondBlokAf(blokId) {
+  blokState[blokId].afgerond = true;
+  const idx = CURSUS.blokken.findIndex(b => b.id === blokId);
+  const volgende = CURSUS.blokken[idx + 1];
+  if (volgende) openBlok = volgende.id;
+  renderCursus();
+
+  // TODO: sla afronding op in Supabase
+  // supabase.from('cursus_voortgang').insert({
+  //   therapeut_code: huidigeTherapeut.code,
+  //   cursus_id: CURSUS.id,
+  //   blok_id: blokId,
+  //   score: berekenScore(CURSUS.blokken.find(b=>b.id===blokId), blokState[blokId]),
+  //   datum_afgerond: new Date().toISOString(),
+  //   afgerond: true
+  // });
+}
+
+function checkAllesAfgerond() {
+  const alles = CURSUS.blokken.every(b => blokState[b.id]?.afgerond);
+  if (alles) {
+    document.getElementById('cert-tekst').textContent =
+      huidigeTherapeut.naam + ' heeft de module Instabiele enkel succesvol doorlopen. Dit wordt automatisch vastgelegd in het EVN-systeem.';
+    document.getElementById('cert-banner').classList.add('zichtbaar');
+
+    // TODO: markeer specialisatie in Supabase
+    // supabase.from('therapeuten').update({ specialisatie_enkel: true })
+    //   .eq('code', huidigeTherapeut.code);
+  }
+}
+</script>
+</body>
+</html>
