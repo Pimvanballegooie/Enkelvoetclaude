@@ -23,7 +23,6 @@
     .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 40px; height: 40px; }
     .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
-    .logo-text span { display: block; font-weight: 300; font-size: 0.75rem; opacity: 0.7; letter-spacing: 0.04em; }
     nav { display: flex; gap: 6px; }
     nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s, color 0.2s; }
     nav a:hover { background: rgba(255,255,255,0.12); color: var(--white); }
@@ -141,15 +140,17 @@
   <div class="header-inner">
     <a href="index.html" class="logo">
       <img class="logo-icon" src="EVN_Logo_transparant.png" alt="EVN Logo" />
-      <div class="logo-text">Enkel Voet Netwerk<span>Breda e.o.</span></div>
+      <div class="logo-text">Enkel Voet Netwerk</div>
     </a>
-    <div class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
     <nav id="main-nav">
-      <a href="index.html#protocollen">Protocollen</a>
+      <a href="protocollen.html">Protocollen</a>
       <a href="cursussen/">Cursussen</a>
       <a href="index.html#locaties">Locaties</a>
       <a href="partners.html">Partners</a>
-      <a href="therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="therapeut-worden.html">Therapeut worden</a>
       <a href="locatie-worden.html" class="cta">Locatie worden</a>
     </nav>
   </div>
