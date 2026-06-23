@@ -1,1 +1,361 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursusportaal - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusportaal voor fysiotherapeuten aangesloten bij het Enkel Voet Netwerk." />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4;
+      --grey-bg: #F5F7FA; --grey-border: #DDE3EC;
+      --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF;
+      --green: #1E8449; --green-light: #EAF7F0;
+      --red: #C0392B; --red-light: #FDEDEC;
+      --blue-light: #EAF0FB; --blue: #1A5276;
+      --gold: #C9940A; --gold-light: #FEF9E7;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; min-height: 100vh; }
 
+    header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+    .header-inner { max-width: 1000px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { width: 36px; height: 36px; }
+    .logo-text { color: var(--white); font-weight: 700; font-size: 1rem; line-height: 1.2; }
+    .logo-text span { display: block; font-weight: 300; font-size: 0.72rem; opacity: 0.7; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .therapeut-info { text-align: right; display: none; }
+    .therapeut-info.zichtbaar { display: block; }
+    .therapeut-naam { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.9); }
+    .therapeut-praktijk { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+    .btn-uitloggen { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); border-radius: 6px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer; font-family: 'Inter', sans-serif; display: none; }
+    .btn-uitloggen.zichtbaar { display: block; }
+    .btn-uitloggen:hover { background: rgba(255,255,255,0.2); }
+
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 24px 64px; }
+
+    /* INLOGSCHERM */
+    #scherm-inlog { display: flex; align-items: flex-start; gap: 48px; flex-wrap: wrap; }
+    .inlog-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 16px; padding: 36px 32px; width: 380px; flex-shrink: 0; }
+    .inlog-tag { display: inline-block; background: var(--teal-light); color: var(--teal); font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .inlog-kaart h1 { font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .inlog-kaart p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .form-group input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--text); outline: none; text-transform: uppercase; letter-spacing: 0.05em; transition: border-color 0.2s; }
+    .form-group input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
+    .btn-primary { width: 100%; padding: 12px; background: var(--teal); color: white; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: #238a7e; }
+    .inlog-fout { background: var(--red-light); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 0.84rem; margin-bottom: 14px; display: none; }
+    .inlog-fout.zichtbaar { display: block; }
+    .demo-hint { background: var(--grey-bg); border-radius: 8px; padding: 10px 14px; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; line-height: 1.6; }
+    .demo-hint strong { color: var(--text); }
+
+    .inlog-uitleg { flex: 1; min-width: 240px; padding-top: 8px; }
+    .inlog-uitleg h2 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+    .uitleg-stap { display: flex; gap: 14px; margin-bottom: 20px; }
+    .uitleg-num { width: 28px; height: 28px; border-radius: 50%; background: var(--teal-light); color: var(--teal); font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .uitleg-tekst { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+    .uitleg-tekst strong { color: var(--navy); display: block; margin-bottom: 2px; font-size: 0.9rem; }
+
+    /* PORTAALSCHERM */
+    #scherm-portaal { display: none; }
+
+    .portaal-header { margin-bottom: 32px; }
+    .welkom-tekst { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 4px; }
+    .portaal-titel { font-size: 1.6rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .portaal-sub { font-size: 0.88rem; color: var(--text-muted); }
+
+    /* SPECIALISATIE BANNER */
+    .spec-banner { display: none; background: var(--gold-light); border: 1px solid rgba(201,148,10,0.3); border-radius: 12px; padding: 16px 20px; margin-bottom: 28px; display: flex; align-items: center; gap: 14px; }
+    .spec-banner.zichtbaar { display: flex; }
+    .spec-icon { font-size: 1.6rem; flex-shrink: 0; }
+    .spec-tekst strong { display: block; font-size: 0.95rem; color: var(--gold); font-weight: 700; margin-bottom: 2px; }
+    .spec-tekst span { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* VOORTGANG */
+    .voortgang-sectie { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 20px 24px; margin-bottom: 28px; }
+    .voortgang-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 12px; }
+    .voortgang-balk-bg { background: var(--grey-border); border-radius: 99px; height: 8px; overflow: hidden; margin-bottom: 8px; }
+    .voortgang-balk-fill { height: 8px; background: var(--teal); border-radius: 99px; transition: width 0.5s ease; }
+    .voortgang-info { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-muted); }
+
+    /* MODULE GRID */
+    .modules-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 14px; }
+    .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-bottom: 32px; }
+    .module-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 20px; text-decoration: none; color: inherit; display: block; transition: box-shadow 0.2s, transform 0.15s; position: relative; overflow: hidden; }
+    .module-kaart:hover:not(.vergrendeld):not(.niet-geslaagd-kaart) { box-shadow: 0 4px 20px rgba(27,58,92,0.10); transform: translateY(-2px); }
+    .module-kaart.vergrendeld { opacity: 0.55; cursor: default; pointer-events: none; }
+    .module-kaart.geslaagd-kaart { border-color: rgba(30,132,73,0.3); }
+    .module-kaart.niet-geslaagd-kaart { border-color: rgba(192,57,43,0.2); }
+    .module-zone { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); background: var(--teal-light); padding: 2px 8px; border-radius: 999px; display: inline-block; margin-bottom: 10px; }
+    .module-titel { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .module-beschrijving { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
+    .module-meta { display: flex; gap: 12px; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 14px; }
+    .module-status { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; padding-top: 12px; border-top: 1px solid var(--grey-border); }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .status-dot.beschikbaar { background: var(--teal); }
+    .status-dot.geslaagd { background: var(--green); }
+    .status-dot.niet-geslaagd { background: var(--red); }
+    .status-dot.vergrendeld { background: var(--grey-border); }
+    .module-status.beschikbaar { color: var(--teal); }
+    .module-status.geslaagd { color: var(--green); }
+    .module-status.niet-geslaagd { color: var(--red); }
+    .module-status.vergrendeld { color: var(--text-muted); }
+    .module-slot { position: absolute; top: 16px; right: 16px; font-size: 1rem; opacity: 0.4; }
+
+    /* BINNENKORT */
+    .binnenkort-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 14px; }
+    .binnenkort-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+    .binnenkort-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 12px; padding: 16px; opacity: 0.6; }
+    .binnenkort-zone { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .binnenkort-titel { font-size: 0.88rem; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .binnenkort-tag { font-size: 0.7rem; color: var(--text-muted); background: var(--grey-bg); padding: 2px 8px; border-radius: 999px; display: inline-block; }
+
+    footer { background: #0F2340; color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 0.78rem; }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+
+    @media (max-width: 640px) {
+      #scherm-inlog { flex-direction: column; }
+      .inlog-kaart { width: 100%; }
+      .modules-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../EVN_Logo_transparant.png" alt="EVN Logo" />
+      <div class="logo-text">Enkel Voet Netwerk<span>Cursusportaal</span></div>
+    </a>
+    <div class="header-right">
+      <div class="therapeut-info" id="header-therapeut">
+        <div class="therapeut-naam" id="header-naam"></div>
+        <div class="therapeut-praktijk" id="header-praktijk"></div>
+      </div>
+      <button class="btn-uitloggen" id="btn-uitloggen" onclick="uitloggen()">Uitloggen</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- INLOGSCHERM -->
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">
+        Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong>
+      </div>
+    </div>
+
+    <div class="inlog-uitleg">
+      <h2>Hoe werkt het cursusportaal?</h2>
+      <div class="uitleg-stap">
+        <div class="uitleg-num">1</div>
+        <div class="uitleg-tekst"><strong>Log in met uw persoonlijke code</strong>U ontvangt een unieke inlogcode van het EVN-beheer na aanmelding als therapeut.</div>
+      </div>
+      <div class="uitleg-stap">
+        <div class="uitleg-num">2</div>
+        <div class="uitleg-tekst"><strong>Volg de cursusmodules</strong>Elke module bestaat uit theorie en toetsvragen. Minimaal 80% correct om een blok af te ronden.</div>
+      </div>
+      <div class="uitleg-stap">
+        <div class="uitleg-num">3</div>
+        <div class="uitleg-tekst"><strong>Behaal uw specialisatie</strong>Na het afronden van alle vereiste modules wordt uw specialisatie automatisch zichtbaar op uw locatiepagina.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTAALSCHERM -->
+  <div id="scherm-portaal">
+
+    <div class="portaal-header">
+      <div class="welkom-tekst">Welkom terug,</div>
+      <div class="portaal-titel" id="portaal-naam"></div>
+      <div class="portaal-sub" id="portaal-praktijk"></div>
+    </div>
+
+    <div class="spec-banner" id="spec-banner">
+      <div class="spec-icon">🌟</div>
+      <div class="spec-tekst">
+        <strong>Gespecialiseerd in enkel & voet</strong>
+        <span>U heeft alle vereiste modules afgerond. Uw specialisatie is zichtbaar op uw locatiepagina.</span>
+      </div>
+    </div>
+
+    <div class="voortgang-sectie">
+      <div class="voortgang-label">Uw voortgang</div>
+      <div class="voortgang-balk-bg">
+        <div class="voortgang-balk-fill" id="voortgang-fill" style="width:0%"></div>
+      </div>
+      <div class="voortgang-info">
+        <span id="voortgang-tekst">0 van 4 modules afgerond</span>
+        <span id="voortgang-pct">0%</span>
+      </div>
+    </div>
+
+    <div class="modules-label">Beschikbare modules</div>
+    <div class="modules-grid" id="modules-grid"></div>
+
+    <div class="binnenkort-label">Binnenkort beschikbaar</div>
+    <div class="binnenkort-grid" id="binnenkort-grid"></div>
+
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// MODULES CONFIG — voeg hier nieuwe modules toe
+// ─────────────────────────────────────────────────────────────
+const MODULES = [
+  {
+    id: "instabiele-enkel",
+    titel: "Instabiele enkel",
+    zone: "Enkel",
+    beschrijving: "Anatomie, diagnostiek en revalidatie bij chronische enkelbandinstabiliteit. Inclusief operatieve aspecten en return-to-sport criteria.",
+    blokken: 3,
+    vragen: 9,
+    url: "instabiele-enkel.html",
+    beschikbaar: true,
+    vereist_voor_specialisatie: true
+  }
+];
+
+const BINNENKORT = [
+  { zone: "Achtervoet", titel: "Achillespees pathologie", beschrijving: "Tendinopathie, ruptuur en revalidatie" },
+  { zone: "Achtervoet", titel: "Hielspoor & plantaire fasciitis", beschrijving: "Diagnostiek en conservatief beleid" },
+  { zone: "Middenvoet", titel: "Os naviculare & Lisfranc", beschrijving: "Letsel en belastbaarheidsopbouw" },
+  { zone: "Voorvoet", titel: "Hallux valgus & metatarsalgie", beschrijving: "Conservatief en pre-/postoperatief" },
+  { zone: "Enkel", titel: "Fundament benen", beschrijving: "Biomechanica, keten en klinisch redeneren" }
+];
+
+// ─────────────────────────────────────────────────────────────
+// DEMO THERAPEUTEN — vervang later door Supabase lookup
+// ─────────────────────────────────────────────────────────────
+const THERAPEUTEN = {
+  "DEMO":    { naam: "Demo Therapeut",    praktijk: "Enkel Voet Netwerk",    locatie: "Breda", afgerond: [] },
+  "EVN-001": { naam: "Lisa van den Berg", praktijk: "Fysiotherapie Centrum", locatie: "Breda", afgerond: ["instabiele-enkel"] },
+  "EVN-002": { naam: "Marco Smits",       praktijk: "Bewegingscentrum Zuid", locatie: "Breda", afgerond: [] }
+};
+
+let huidigeTherapeut = null;
+
+// ─────────────────────────────────────────────────────────────
+// INLOGGEN / UITLOGGEN
+// ─────────────────────────────────────────────────────────────
+function inloggen() {
+  const code = document.getElementById('inp-code').value.trim().toUpperCase();
+  const therapeut = THERAPEUTEN[code];
+  if (!therapeut) {
+    document.getElementById('inlog-fout').classList.add('zichtbaar');
+    return;
+  }
+  huidigeTherapeut = { ...therapeut, code };
+  document.getElementById('scherm-inlog').style.display = 'none';
+  document.getElementById('scherm-portaal').style.display = 'block';
+  document.getElementById('header-naam').textContent = therapeut.naam;
+  document.getElementById('header-praktijk').textContent = therapeut.praktijk + ' · ' + therapeut.locatie;
+  document.getElementById('header-therapeut').classList.add('zichtbaar');
+  document.getElementById('btn-uitloggen').classList.add('zichtbaar');
+  renderPortaal();
+}
+
+function uitloggen() {
+  huidigeTherapeut = null;
+  document.getElementById('scherm-inlog').style.display = 'flex';
+  document.getElementById('scherm-portaal').style.display = 'none';
+  document.getElementById('header-therapeut').classList.remove('zichtbaar');
+  document.getElementById('btn-uitloggen').classList.remove('zichtbaar');
+  document.getElementById('inp-code').value = '';
+  document.getElementById('inlog-fout').classList.remove('zichtbaar');
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────────
+function renderPortaal() {
+  document.getElementById('portaal-naam').textContent = huidigeTherapeut.naam;
+  document.getElementById('portaal-praktijk').textContent = huidigeTherapeut.praktijk + ' · ' + huidigeTherapeut.locatie;
+
+  const afgerond = huidigeTherapeut.afgerond || [];
+  const vereist = MODULES.filter(m => m.vereist_voor_specialisatie);
+  const alleVereistAfgerond = vereist.every(m => afgerond.includes(m.id));
+
+  // Specialisatie banner
+  if (alleVereistAfgerond) {
+    document.getElementById('spec-banner').classList.add('zichtbaar');
+  }
+
+  // Voortgang
+  const aantalAfgerond = MODULES.filter(m => afgerond.includes(m.id)).length;
+  const totaal = MODULES.length;
+  const pct = totaal > 0 ? Math.round(aantalAfgerond / totaal * 100) : 0;
+  document.getElementById('voortgang-fill').style.width = pct + '%';
+  document.getElementById('voortgang-tekst').textContent = aantalAfgerond + ' van ' + totaal + ' module' + (totaal !== 1 ? 's' : '') + ' afgerond';
+  document.getElementById('voortgang-pct').textContent = pct + '%';
+
+  // Modules
+  const grid = document.getElementById('modules-grid');
+  grid.innerHTML = '';
+  MODULES.forEach(module => {
+    const isAfgerond = afgerond.includes(module.id);
+    const kaart = document.createElement('a');
+    kaart.href = isAfgerond ? module.url : (module.beschikbaar ? module.url : '#');
+    kaart.className = 'module-kaart' + (isAfgerond ? ' geslaagd-kaart' : '') + (!module.beschikbaar ? ' vergrendeld' : '');
+
+    let statusKlasse = isAfgerond ? 'geslaagd' : module.beschikbaar ? 'beschikbaar' : 'vergrendeld';
+    let statusTekst = isAfgerond ? '✓ Afgerond' : module.beschikbaar ? 'Starten →' : 'Binnenkort';
+
+    kaart.innerHTML =
+      '<div class="module-zone">' + module.zone + '</div>' +
+      '<div class="module-titel">' + module.titel + '</div>' +
+      '<div class="module-beschrijving">' + module.beschrijving + '</div>' +
+      '<div class="module-meta">' +
+        '<span>' + module.blokken + ' blokken</span>' +
+        '<span>·</span>' +
+        '<span>' + module.vragen + ' vragen</span>' +
+        (module.vereist_voor_specialisatie ? '<span>·</span><span style="color:var(--gold)">Vereist voor specialisatie</span>' : '') +
+      '</div>' +
+      '<div class="module-status ' + statusKlasse + '">' +
+        '<span class="status-dot ' + statusKlasse + '"></span>' +
+        statusTekst +
+      '</div>';
+
+    grid.appendChild(kaart);
+  });
+
+  // Binnenkort
+  const bGrid = document.getElementById('binnenkort-grid');
+  bGrid.innerHTML = '';
+  BINNENKORT.forEach(m => {
+    const el = document.createElement('div');
+    el.className = 'binnenkort-kaart';
+    el.innerHTML =
+      '<div class="binnenkort-zone">' + m.zone + '</div>' +
+      '<div class="binnenkort-titel">' + m.titel + '</div>' +
+      '<div class="binnenkort-tag">Binnenkort</div>';
+    bGrid.appendChild(el);
+  });
+}
+</script>
+</body>
+</html>
