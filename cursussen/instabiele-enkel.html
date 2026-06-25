@@ -155,9 +155,9 @@
     <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </div>
-    <nav id="main-nav">
+        <nav id="main-nav">
       <a href="../protocollen.html">Protocollen</a>
-      <a href="mijn-profiel.html">Mijn profiel</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
       <a href="../index.html#locaties">Locaties</a>
       <a href="../partners.html">Partners</a>
       <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
@@ -220,6 +220,9 @@
 </footer>
 
 <script>
+const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
+
 // ─────────────────────────────────────────────────────────────
 // CURSUSDATA — pas hier de inhoud aan
 // ─────────────────────────────────────────────────────────────
@@ -676,14 +679,19 @@ function kiesAntwoord(blokId, vraagIdx, optieIdx) {
   );
   renderVoortgang();
 
-  // TODO: sla antwoord op in Supabase
-  // supabase.from('cursus_antwoorden').insert({
-  //   therapeut_code: huidigeTherapeut.code,
-  //   cursus_id: CURSUS.id,
-  //   blok_id: blokId,
-  //   vraag_id: CURSUS.blokken.find(b=>b.id===blokId).vragen[vraagIdx].id,
-  //   correct: CURSUS.blokken.find(b=>b.id===blokId).vragen[vraagIdx].opties[optieIdx].correct
-  // });
+  // Sla antwoord op in Supabase
+  const blokData = CURSUS.blokken.find(b=>b.id===blokId);
+  fetch(`${SUPABASE_URL}/rest/v1/cursus_antwoorden`, {
+    method: 'POST',
+    headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+    body: JSON.stringify({
+      therapeut_code: huidigeTherapeut.code,
+      cursus_id: CURSUS.id,
+      blok_id: blokId,
+      vraag_id: blokData.vragen[vraagIdx].id,
+      correct: blokData.vragen[vraagIdx].opties[optieIdx].correct
+    })
+  }).catch(e => console.warn('Antwoord opslaan mislukt:', e));
 }
 
 function rondBlokAf(blokId) {
@@ -721,16 +729,19 @@ function rondBlokAf(blokId) {
     }, 100);
   }
 
-  // TODO: sla afronding op in Supabase
-  // supabase.from('cursus_voortgang').insert({
-  //   therapeut_code: huidigeTherapeut.code,
-  //   cursus_id: CURSUS.id,
-  //   blok_id: blokId,
-  //   score: score,
-  //   geslaagd: geslaagd,
-  //   datum_afgerond: new Date().toISOString(),
-  //   afgerond: geslaagd
-  // });
+  // Sla afronding op in Supabase
+  fetch(`${SUPABASE_URL}/rest/v1/cursus_voortgang`, {
+    method: 'POST',
+    headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+    body: JSON.stringify({
+      therapeut_code: huidigeTherapeut.code,
+      cursus_id: CURSUS.id,
+      blok_id: blokId,
+      score: score,
+      geslaagd: geslaagd,
+      datum_afgerond: new Date().toISOString()
+    })
+  }).catch(e => console.warn('Voortgang opslaan mislukt:', e));
 }
 
 function herlaadBlok(blokId) {
@@ -763,9 +774,12 @@ function checkAllesAfgerond() {
       huidigeTherapeut.naam + ' heeft de module Instabiele enkel succesvol doorlopen. Dit wordt automatisch vastgelegd in het EVN-systeem.';
     document.getElementById('cert-banner').classList.add('zichtbaar');
 
-    // TODO: markeer specialisatie in Supabase
-    // supabase.from('therapeuten').update({ specialisatie_enkel: true })
-    //   .eq('code', huidigeTherapeut.code);
+    // Markeer specialisatie in Supabase
+    fetch(`${SUPABASE_URL}/rest/v1/therapeuten?code=eq.${huidigeTherapeut.code}`, {
+      method: 'PATCH',
+      headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}`, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ specialisatie_enkel: true })
+    }).catch(e => console.warn('Specialisatie opslaan mislukt:', e));
   }
 }
 </script>
