@@ -396,6 +396,150 @@ const BINNENKORT = [
 let huidigeTherapeut = null;
 
 // ─────────────────────────────────────────────────────────────
+// VERWERK TOKEN UIT URL (na uitnodiging of wachtwoord reset)
+// ─────────────────────────────────────────────────────────────
+async function verwerkUrlToken() {
+  const hash = window.location.hash;
+  if (!hash) return;
+
+  const params = new URLSearchParams(hash.substring(1));
+  const accessToken = params.get('access_token');
+  const type = params.get('type');
+  const error = params.get('error');
+  const errorCode = params.get('error_code');
+
+  // Fout in URL
+  if (error || errorCode) {
+    console.warn('Auth fout in URL:', error, errorCode);
+    // Verwijder hash uit URL
+    history.replaceState(null, '', window.location.pathname);
+    return;
+  }
+
+  if (!accessToken) return;
+
+  // Verwijder token uit URL
+  history.replaceState(null, '', window.location.pathname);
+
+  if (type === 'invite' || type === 'recovery') {
+    // Toon wachtwoord instellen scherm
+    toonWachtwoordInstellen(accessToken, type);
+  } else if (type === 'signup' || type === 'magiclink') {
+    // Direct inloggen met token
+    await inloggenMetToken(accessToken);
+  }
+}
+
+function toonWachtwoordInstellen(token, type) {
+  const isReset = type === 'recovery';
+  document.getElementById('scherm-inlog').style.display = 'none';
+
+  // Maak tijdelijk scherm
+  const scherm = document.createElement('div');
+  scherm.id = 'scherm-wachtwoord-instellen';
+  scherm.style.cssText = 'max-width:420px;margin:0 auto;padding:40px 24px';
+  scherm.innerHTML = `
+    <div class="inlog-kaart">
+      <span class="inlog-tag">${isReset ? 'Wachtwoord resetten' : 'Welkom bij EVN'}</span>
+      <h1>${isReset ? 'Nieuw wachtwoord' : 'Wachtwoord instellen'}</h1>
+      <p>${isReset ? 'Stel uw nieuwe wachtwoord in.' : 'Stel uw wachtwoord in om toegang te krijgen tot uw profiel.'}</p>
+      <div class="form-group" style="margin-top:20px">
+        <label>Wachtwoord</label>
+        <input type="password" id="nieuw-pw" placeholder="Minimaal 8 tekens" />
+      </div>
+      <div class="form-group">
+        <label>Herhaal wachtwoord</label>
+        <input type="password" id="nieuw-pw-herhaal" placeholder="Herhaal wachtwoord" />
+      </div>
+      <div class="inlog-fout" id="pw-fout"></div>
+      <button class="btn-primary" onclick="wachtwoordInstellen('${token}')">Wachtwoord opslaan →</button>
+    </div>`;
+
+  document.querySelector('.wrap').appendChild(scherm);
+}
+
+async function wachtwoordInstellen(token) {
+  const pw = document.getElementById('nieuw-pw').value;
+  const herhaal = document.getElementById('nieuw-pw-herhaal').value;
+  const fout = document.getElementById('pw-fout');
+  fout.className = 'inlog-fout';
+
+  if (!pw || pw.length < 8) {
+    fout.textContent = 'Wachtwoord moet minimaal 8 tekens bevatten.';
+    fout.classList.add('zichtbaar'); return;
+  }
+  if (pw !== herhaal) {
+    fout.textContent = 'Wachtwoorden komen niet overeen.';
+    fout.classList.add('zichtbaar'); return;
+  }
+
+  try {
+    const resp = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      method: 'PUT',
+      headers: {
+        'apikey': ANON_KEY,
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ password: pw })
+    });
+
+    if (resp.ok) {
+      // Wachtwoord ingesteld — verwijder scherm en toon inlogscherm
+      document.getElementById('scherm-wachtwoord-instellen').remove();
+      document.getElementById('scherm-inlog').style.display = 'flex';
+      fout.textContent = '';
+      // Toon succesbericht op inlogscherm
+      const succes = document.createElement('div');
+      succes.className = 'melding success';
+      succes.style.cssText = 'margin-top:16px;display:block';
+      succes.textContent = '✓ Wachtwoord ingesteld! U kunt nu inloggen.';
+      document.querySelector('.inlog-kaart').appendChild(succes);
+    } else {
+      throw new Error();
+    }
+  } catch(e) {
+    fout.textContent = 'Opslaan mislukt. Probeer opnieuw.';
+    fout.classList.add('zichtbaar');
+  }
+}
+
+async function inloggenMetToken(token) {
+  try {
+    const resp = await fetch(
+      `${SUPABASE_URL}/rest/v1/therapeuten?actief=eq.true&select=*,therapeut_praktijken(praktijken(naam,stad,straat))`,
+      { headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${token}` } }
+    );
+    const data = await resp.json();
+    if (!data || data.length === 0) return;
+    // Gebruik eerste resultaat (gefilterd op auth user)
+    const t = data[0];
+    const praktijken = (t.therapeut_praktijken || []).map(tp => tp.praktijken).filter(Boolean);
+    const eerstePraktijk = praktijken[0];
+    huidigeTherapeut = {
+      code: t.code || t.email,
+      authToken: token,
+      naam: `${t.voornaam} ${t.achternaam}`,
+      voornaam: t.voornaam, achternaam: t.achternaam,
+      email: t.email || '', telefoon: t.telefoon || '',
+      foto_url: t.foto_url || '', bio: t.bio || '',
+      praktijk: eerstePraktijk?.naam || '—',
+      locatie: eerstePraktijk?.stad || '—',
+      afgerond: [], praktijken, db_id: t.id
+    };
+    document.getElementById('scherm-inlog').style.display = 'none';
+    document.getElementById('scherm-profiel').style.display = 'block';
+    document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
+    document.getElementById('header-therapeut').classList.add('zichtbaar');
+    document.getElementById('btn-uitloggen').classList.add('zichtbaar');
+    renderProfiel();
+  } catch(e) { console.error(e); }
+}
+
+// Start token verwerking bij laden pagina
+verwerkUrlToken();
+
+// ─────────────────────────────────────────────────────────────
 // INLOGGEN / UITLOGGEN
 // ─────────────────────────────────────────────────────────────
 function toonWachtwoordVergeten() {
