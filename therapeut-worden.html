@@ -12,7 +12,7 @@
       --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4;
       --grey-bg: #F5F7FA; --grey-border: #DDE3EC;
       --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF;
-      --radius: 10px; --shadow: 0 2px 16px rgba(27,58,92,0.08);
+      --red: #E74C3C; --red-light: #FDEDEC;
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text); background: var(--white); line-height: 1.6; }
@@ -22,11 +22,21 @@
     .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 40px; height: 40px; }
     .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
-    .logo-text span { display: block; font-weight: 300; font-size: 0.75rem; opacity: 0.7; }
     nav { display: flex; gap: 6px; }
     nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s; }
     nav a:hover { background: rgba(255,255,255,0.12); color: var(--white); }
     nav a.cta { background: var(--teal); color: var(--white); margin-left: 8px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+    @media (max-width: 700px) {
+      .hamburger { display: flex; }
+      nav { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--navy); flex-direction: column; padding: 12px 16px 20px; gap: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+      nav.open { display: flex; }
+      nav a { padding: 10px 16px; border-radius: 8px; }
+      nav a.cta { margin-left: 0; margin-top: 8px; text-align: center; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-section { padding: 20px; }
+    }
 
     .hero { background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%); color: var(--white); padding: 72px 24px 0; text-align: center; }
     .hero-inner { max-width: 640px; margin: 0 auto; padding-bottom: 72px; }
@@ -52,29 +62,30 @@
     .form-group label { display: block; font-size: 0.83rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
     .form-group label .req { color: var(--teal); margin-left: 2px; }
     .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text); background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
-    .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
     .form-group textarea { resize: vertical; min-height: 100px; }
 
     .foto-preview { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--grey-border); margin-top: 12px; display: none; }
     .foto-preview.zichtbaar { display: block; }
     .foto-placeholder { width: 100px; height: 100px; border-radius: 50%; background: var(--grey-bg); border: 3px solid var(--grey-border); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-top: 12px; }
 
-    .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; max-height: 300px; overflow-y: auto; padding: 4px; }
-    .spec-item { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1.5px solid var(--grey-border); border-radius: 8px; cursor: pointer; transition: all 0.15s; background: var(--white); }
-    .spec-item:hover { border-color: var(--teal); background: var(--teal-light); }
-    .spec-item.geselecteerd { border-color: var(--teal); background: var(--teal-light); }
-    .spec-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--teal); flex-shrink: 0; cursor: pointer; }
-    .spec-item span { font-size: 0.82rem; font-weight: 500; color: var(--navy); line-height: 1.3; }
-    .spec-categorie { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); margin-top: 16px; margin-bottom: 8px; }
-    .spec-categorie:first-child { margin-top: 0; }
+    /* PRAKTIJKCODE VERIFICATIE */
+    .code-stap { display: block; }
+    .code-stap.verborgen { display: none; }
+    .code-verified { background: #EAF7F0; border: 1.5px solid #1E8449; border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+    .code-verified span { font-size: 0.88rem; font-weight: 600; color: #1E8449; }
+    .code-fout { background: var(--red-light); border: 1.5px solid var(--red); border-radius: 8px; padding: 10px 14px; font-size: 0.85rem; color: var(--red); margin-top: 8px; display: none; }
+    .btn-verificeer { padding: 11px 20px; background: var(--navy); color: white; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
+    .btn-verificeer:hover { background: #2A4A73; }
+    .btn-verificeer:disabled { opacity: 0.5; cursor: not-allowed; }
 
     .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 24px; }
     .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--teal); margin-top: 2px; flex-shrink: 0; }
     .checkbox-group label { font-size: 0.85rem; color: var(--text-muted); cursor: pointer; }
 
-    .btn-submit { width: 100%; padding: 14px; background: var(--teal); color: var(--white); border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; }
-    .btn-submit:hover { background: #238a7e; transform: translateY(-1px); }
-    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-submit { width: 100%; padding: 14px; background: var(--teal); color: var(--white); border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-submit:hover { background: #238a7e; }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
     .form-success { display: none; text-align: center; padding: 40px 20px; }
     .form-success .success-icon { font-size: 3rem; margin-bottom: 16px; }
@@ -83,12 +94,6 @@
 
     footer { background: #0F2340; color: rgba(255,255,255,0.5); text-align: center; padding: 28px 24px; font-size: 0.82rem; }
     footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
-
-    @media (max-width: 700px) {
-      .form-row { grid-template-columns: 1fr; }
-      .form-section { padding: 20px; }
-      .spec-grid { grid-template-columns: 1fr; }
-    }
   </style>
 </head>
 <body>
@@ -99,8 +104,11 @@
       <img class="logo-icon" src="EVN_Logo_transparant.png" alt="EVN Logo" />
       <div class="logo-text">Enkel Voet Netwerk</div>
     </a>
-    <nav>
-      <a href="index.html#protocollen">Protocollen</a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="protocollen.html">Protocollen</a>
       <a href="mijn-profiel.html">Mijn profiel</a>
       <a href="index.html#locaties">Locaties</a>
       <a href="partners.html">Partners</a>
@@ -131,128 +139,109 @@
 
     <div class="form-wrap">
       <div id="form-content">
-<input type="text" name="website_url" id="website_url" style="display:none" tabindex="-1" autocomplete="off" />
-        <!-- Persoonsgegevens -->
+        <input type="text" name="website_url" id="website_url" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <!-- STAP 1: PRAKTIJKCODE VERIFICATIE -->
         <div class="form-section">
-          <div class="form-section-title">Persoonsgegevens</div>
-          <div class="form-row">
+          <div class="form-section-title">🔑 Verificatie praktijkcode</div>
+          <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:20px;line-height:1.6">
+            Om misbruik te voorkomen kun je alleen aanmelden als je een geldige praktijkcode hebt. Deze code ontvang je van de eigenaar of beheerder van jouw praktijklocatie.
+          </p>
+
+          <div class="code-stap" id="code-invoer-stap">
+            <div class="form-group" style="margin-bottom:12px">
+              <label>Praktijkcode <span class="req">*</span></label>
+              <div style="display:flex;gap:10px">
+                <input type="text" id="praktijk-code-input" placeholder="bijv. F19146"
+                  style="text-transform:uppercase;letter-spacing:0.1em;font-weight:600"
+                  oninput="this.value=this.value.toUpperCase()"
+                  onkeydown="if(event.key==='Enter') verificeerCode()" />
+                <button class="btn-verificeer" onclick="verificeerCode()" id="btn-verificeer">Controleer →</button>
+              </div>
+              <div class="code-fout" id="code-fout">Ongeldige code. Vraag de code op bij de beheerder van uw praktijk.</div>
+            </div>
+          </div>
+
+          <div class="code-verified verborgen" id="code-bevestigd">
+            <span style="font-size:1.2rem">✓</span>
+            <div>
+              <div style="font-size:0.88rem;font-weight:700;color:#1E8449" id="code-praktijk-naam"></div>
+              <div style="font-size:0.78rem;color:#1E8449">Praktijkcode geverifieerd — u kunt het formulier invullen</div>
+            </div>
+            <button onclick="resetCode()" style="margin-left:auto;background:none;border:none;color:#1E8449;cursor:pointer;font-size:0.78rem;text-decoration:underline">Wijzigen</button>
+          </div>
+        </div>
+
+        <!-- REST VAN HET FORMULIER — verborgen tot code geverifieerd -->
+        <div id="formulier-rest" class="verborgen">
+
+          <!-- Persoonsgegevens -->
+          <div class="form-section">
+            <div class="form-section-title">Persoonsgegevens</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Voornaam <span class="req">*</span></label>
+                <input type="text" id="voornaam" placeholder="Jan" />
+              </div>
+              <div class="form-group">
+                <label>Achternaam <span class="req">*</span></label>
+                <input type="text" id="achternaam" placeholder="Jansen" />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>E-mailadres <span class="req">*</span></label>
+                <input type="email" id="email" placeholder="jan@praktijk.nl" />
+              </div>
+              <div class="form-group">
+                <label>Telefoonnummer</label>
+                <input type="tel" id="telefoon" placeholder="06-00000000" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Foto -->
+          <div class="form-section">
+            <div class="form-section-title">Profielfoto</div>
             <div class="form-group">
-              <label>Voornaam <span class="req">*</span></label>
-              <input type="text" id="voornaam" placeholder="Jan" />
+              <label>URL van jouw foto</label>
+              <input type="url" id="foto-url" placeholder="https://www.jouwpraktijk.nl/foto.jpg" oninput="previewFoto(this.value)" />
+              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">Gebruik een foto van je praktijkwebsite of LinkedIn. Geen foto? Dan krijg je een standaard avatar.</p>
             </div>
+            <div class="foto-placeholder" id="foto-placeholder">👤</div>
+            <img class="foto-preview" id="foto-preview" alt="Profielfoto preview" />
+          </div>
+
+          <!-- Bio -->
+          <div class="form-section">
+            <div class="form-section-title">Over jou</div>
             <div class="form-group">
-              <label>Achternaam <span class="req">*</span></label>
-              <input type="text" id="achternaam" placeholder="Jansen" />
+              <label>Korte bio <span class="req">*</span></label>
+              <textarea id="bio" placeholder="Beschrijf jezelf in 2-3 zinnen." maxlength="400" oninput="telTekens(this)"></textarea>
+              <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px"><span id="tekens-teller">0</span>/400 tekens</p>
             </div>
           </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>E-mailadres <span class="req">*</span></label>
-              <input type="email" id="email" placeholder="jan@praktijk.nl" />
-            </div>
-            <div class="form-group">
-              <label>Telefoonnummer</label>
-              <input type="tel" id="telefoon" placeholder="06-00000000" />
-            </div>
+
+          <!-- Disciplines -->
+          <div class="form-section">
+            <div class="form-section-title">Jouw discipline(s) <span class="req">*</span></div>
+            <div id="discipline-checkboxes" style="display:flex;flex-direction:column;gap:8px;"></div>
           </div>
-        </div>
 
-        <!-- Foto -->
-        <div class="form-section">
-          <div class="form-section-title">Profielfoto</div>
-          <div class="form-group">
-            <label>URL van jouw foto</label>
-            <input type="url" id="foto-url" placeholder="https://www.jouwpraktijk.nl/foto.jpg" oninput="previewFoto(this.value)" />
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">Gebruik een foto van je praktijkwebsite of LinkedIn. Geen foto? Dan krijg je een standaard avatar.</p>
+          <!-- Akkoord -->
+          <div class="checkbox-group">
+            <input type="checkbox" id="akkoord" />
+            <label for="akkoord">Ik ga akkoord met de verwerking van mijn gegevens voor zichtbaarheid binnen het Enkel Voet Netwerk, zoals beschreven in onze <a href="privacy.html" style="color:var(--teal)">privacyverklaring</a>.</label>
           </div>
-          <div class="foto-placeholder" id="foto-placeholder">👤</div>
-          <img class="foto-preview" id="foto-preview" alt="Profielfoto preview" />
-        </div>
 
-        <!-- Bio -->
-        <div class="form-section">
-          <div class="form-section-title">Over jou</div>
-          <div class="form-group">
-            <label>Korte bio <span class="req">*</span></label>
-            <textarea id="bio" placeholder="Beschrijf jezelf in 2-3 zinnen. Wat is jouw specialiteit? Wat maakt jouw aanpak uniek?" maxlength="400" oninput="telTekens(this)"></textarea>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px"><span id="tekens-teller">0</span>/400 tekens</p>
-          </div>
+          <button class="btn-submit" onclick="verstuurFormulier()">Aanmelding versturen →</button>
         </div>
-
-        <!-- Praktijk -->
-        <div class="form-section">
-          <div class="form-section-title">Jouw praktijk</div>
-          <div class="form-group">
-            <label>Locatie(s) waar je werkt <span class="req">*</span></label>
-            <div style="position:relative;margin-top:4px;margin-bottom:8px">
-              <input type="text" id="praktijk-zoek" placeholder="🔍 Zoek op praktijknaam of plaats…"
-                oninput="filterPraktijken(this.value)"
-                style="width:100%;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;font-family:inherit;font-size:0.875rem;outline:none;transition:border-color 0.2s"
-                onfocus="this.style.borderColor='var(--teal)'"
-                onblur="this.style.borderColor='var(--grey-border)'" />
-            </div>
-            <div id="praktijk-checkboxes" style="display:flex;flex-direction:column;gap:8px;max-height:300px;overflow-y:auto;padding:2px">
-              <div style="color:var(--text-muted);font-size:0.85rem">Laden…</div>
-            </div>
-            <div id="praktijk-geen-resultaten" style="display:none;padding:12px;color:var(--text-muted);font-size:0.85rem;text-align:center">Geen locaties gevonden voor deze zoekopdracht.</div>
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px">Staat jouw praktijk er niet bij? Meld de praktijk eerst aan via <a href="locatie-worden.html" style="color:var(--teal)">locatie worden</a>.</p>
-          </div>
-        </div>
-
-        <!-- Disciplines -->
-        <div class="form-section">
-          <div class="form-section-title">Jouw discipline(s) <span class="req">*</span></div>
-          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:16px">Welke paramedische discipline(s) beoefen jij?</p>
-          <div id="discipline-checkboxes" style="display:flex;flex-direction:column;gap:8px;">
-          <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white)">
-            <input type="checkbox" name="discipline" value="Fysiotherapeut" style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;cursor:pointer" />
-            <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">Fysiotherapeut</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white)">
-            <input type="checkbox" name="discipline" value="Ergotherapeut" style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;cursor:pointer" />
-            <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">Ergotherapeut</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white)">
-            <input type="checkbox" name="discipline" value="Oefentherapeut" style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;cursor:pointer" />
-            <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">Oefentherapeut</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white)">
-            <input type="checkbox" name="discipline" value="Podotherapeut" style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;cursor:pointer" />
-            <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">Podotherapeut</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white)">
-            <input type="checkbox" name="discipline" value="Medisch pedicure" style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;cursor:pointer" />
-            <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">Medisch pedicure</span>
-          </label>
-          <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white)">
-            <input type="checkbox" name="discipline" value="Orthopedisch schoenmaker" style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;cursor:pointer" />
-            <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">Orthopedisch schoenmaker</span>
-          </label>
-          </div>
-        </div>
-
-        <!-- Specialisaties (alleen tonen als site-config specialisaties heeft) -->
-        <div class="form-section" id="specialisaties-sectie" style="display:none">
-          <div class="form-section-title">Specialisaties</div>
-          <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:16px">Vink aan voor welke aandoeningen en behandelingen jij gespecialiseerd bent.</p>
-          <div class="spec-grid" id="spec-grid">
-            <div style="color:var(--text-muted);font-size:0.85rem">Laden…</div>
-          </div>
-        </div>
-
-        <!-- Akkoord -->
-        <div class="checkbox-group">
-          <input type="checkbox" id="akkoord" />
-          <label for="akkoord">Ik ga akkoord met de verwerking van mijn gegevens voor zichtbaarheid binnen het Enkel Voet Netwerk, zoals beschreven in onze <a href="privacy.html" style="color:var(--teal)">privacyverklaring</a>.</label>
-        </div>
-
-        <button class="btn-submit" onclick="verstuurFormulier()">Aanmelding versturen →</button>
       </div>
 
       <div class="form-success" id="form-success">
         <div class="success-icon">✅</div>
         <h3>Aanmelding ontvangen!</h3>
-        <p>Bedankt voor je aanmelding. Na goedkeuring ben je zichtbaar op de site. We nemen binnen twee werkdagen contact met je op.</p>
+        <p>Bedankt voor je aanmelding bij <strong id="succes-praktijk"></strong>. Na goedkeuring ben je zichtbaar op de site. We nemen binnen twee werkdagen contact met je op.</p>
       </div>
     </div>
   </div>
@@ -265,20 +254,73 @@
 <script>
   const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
   const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
+  const HEADERS = { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}`, 'Content-Type': 'application/json' };
 
-  const HEADERS = {
-    'apikey': ANON_KEY,
-    'Authorization': `Bearer ${ANON_KEY}`,
-    'Content-Type': 'application/json'
-  };
+  const DISCIPLINES = ['Fysiotherapeut','Ergotherapeut','Oefentherapeut','Podotherapeut','Medisch pedicure','Orthopedisch schoenmaker'];
 
-  // Subcategorieën per hoofdcategorie voor enkelvoet
-  const ENKELVOET_SUBCATEGORIEEN = {
-    'Benen': ['Enkel en voet', 'Knie en onderbeen', 'Heup, lies en bovenbeen', 'Artroseprogrammas', 'Revalidatie na operatie', 'Voorbereiding op operatie', 'Sport, bewegen en overbelasting'],
-    'Behandelvormen': ['Manuele therapie', 'Sportfysiotherapie', 'Dry needling', 'Echografie', 'Shockwave', 'EPTE'],
-    'Chronische zorg': ['Reuma, artrose en botgezondheid', 'Chronische pijn'],
-  };
+  let geverifieerdePraktijk = null;
 
+  // ─── PRAKTIJKCODE VERIFICATIE ───
+  async function verificeerCode() {
+    const code = document.getElementById('praktijk-code-input').value.trim().toUpperCase();
+    const fout = document.getElementById('code-fout');
+    const btn = document.getElementById('btn-verificeer');
+    fout.style.display = 'none';
+    if (!code) return;
+
+    btn.textContent = 'Controleren…';
+    btn.disabled = true;
+
+    try {
+      const resp = await fetch(
+        `${SUPABASE_URL}/rest/v1/praktijken?praktijk_code=eq.${encodeURIComponent(code)}&actief=eq.true&select=id,naam,straat,stad`,
+        { headers: HEADERS }
+      );
+      const data = await resp.json();
+
+      if (!data || data.length === 0) {
+        fout.style.display = 'block';
+        btn.textContent = 'Controleer →';
+        btn.disabled = false;
+        return;
+      }
+
+      geverifieerdePraktijk = data[0];
+
+      // Toon bevestiging
+      document.getElementById('code-praktijk-naam').textContent =
+        `${geverifieerdePraktijk.naam} — ${geverifieerdePraktijk.straat}, ${geverifieerdePraktijk.stad}`;
+      document.getElementById('code-bevestigd').classList.remove('verborgen');
+      document.getElementById('code-invoer-stap').classList.add('verborgen');
+
+      // Toon rest formulier
+      document.getElementById('formulier-rest').classList.remove('verborgen');
+      vulDisciplineCheckboxes();
+
+      // Scroll naar formulier
+      setTimeout(() => {
+        document.getElementById('formulier-rest').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+
+    } catch(e) {
+      fout.textContent = 'Er ging iets mis. Probeer opnieuw.';
+      fout.style.display = 'block';
+      btn.textContent = 'Controleer →';
+      btn.disabled = false;
+    }
+  }
+
+  function resetCode() {
+    geverifieerdePraktijk = null;
+    document.getElementById('code-bevestigd').classList.add('verborgen');
+    document.getElementById('code-invoer-stap').classList.remove('verborgen');
+    document.getElementById('formulier-rest').classList.add('verborgen');
+    document.getElementById('praktijk-code-input').value = '';
+    document.getElementById('btn-verificeer').textContent = 'Controleer →';
+    document.getElementById('btn-verificeer').disabled = false;
+  }
+
+  // ─── HELPERS ───
   function telTekens(el) {
     document.getElementById('tekens-teller').textContent = el.value.length;
   }
@@ -286,28 +328,14 @@
   function previewFoto(url) {
     const preview = document.getElementById('foto-preview');
     const placeholder = document.getElementById('foto-placeholder');
-    if (!url) {
-      preview.classList.remove('zichtbaar');
-      placeholder.style.display = 'flex';
-      return;
-    }
+    if (!url) { preview.classList.remove('zichtbaar'); placeholder.style.display = 'flex'; return; }
     preview.src = url;
-    preview.onload = () => {
-      preview.classList.add('zichtbaar');
-      placeholder.style.display = 'none';
-    };
-    preview.onerror = () => {
-      preview.classList.remove('zichtbaar');
-      placeholder.style.display = 'flex';
-    };
+    preview.onload = () => { preview.classList.add('zichtbaar'); placeholder.style.display = 'none'; };
+    preview.onerror = () => { preview.classList.remove('zichtbaar'); placeholder.style.display = 'flex'; };
   }
-
-  // Disciplines direct beschikbaar (uit site-config)
-  DISCIPLINES = ['Fysiotherapeut','Ergotherapeut','Oefentherapeut','Podotherapeut','Medisch pedicure','Orthopedisch schoenmaker'];
 
   function vulDisciplineCheckboxes() {
     const container = document.getElementById('discipline-checkboxes');
-    if (!container) return;
     container.innerHTML = DISCIPLINES.map(d => `
       <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white);transition:all 0.15s"
         onmouseover="if(!this.querySelector('input').checked){this.style.borderColor='var(--teal)';this.style.background='var(--teal-light)'}"
@@ -319,136 +347,29 @@
       </label>`).join('');
   }
 
-  function laadDisciplines() {
-    // Probeer site-config.json te laden voor disciplines
-    fetch('site-config.json')
-      .then(r => r.json())
-      .then(config => {
-        if (config.disciplines && config.disciplines.length > 0) {
-          DISCIPLINES = config.disciplines;
-        }
-        vulDisciplineCheckboxes();
-      })
-      .catch(() => {
-        vulDisciplineCheckboxes();
-      });
-  }
-
   function toggleDisciplineStijl(checkbox) {
     const label = checkbox.closest('label');
-    if (checkbox.checked) {
-      label.style.borderColor = 'var(--teal)';
-      label.style.background = 'var(--teal-light)';
-    } else {
-      label.style.borderColor = 'var(--grey-border)';
-      label.style.background = 'var(--white)';
-    }
+    if (checkbox.checked) { label.style.borderColor = 'var(--teal)'; label.style.background = 'var(--teal-light)'; }
+    else { label.style.borderColor = 'var(--grey-border)'; label.style.background = 'var(--white)'; }
   }
 
-  // Laad actieve praktijken als checkboxes
-  async function laadPraktijken() {
-    const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?actief=eq.true&select=id,naam,straat,stad&order=naam`, { headers: HEADERS });
-    const praktijken = await resp.json();
-    const container = document.getElementById('praktijk-checkboxes');
-    if (praktijken.length === 0) {
-      container.innerHTML = '<div style="color:var(--text-muted);font-size:0.85rem">Geen praktijken gevonden.</div>';
-      return;
-    }
-    container.innerHTML = praktijken.map(p => `
-      <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white);transition:all 0.15s"
-        onmouseover="this.style.borderColor='var(--teal)';this.style.background='var(--teal-light)'"
-        onmouseout="if(!this.querySelector('input').checked){this.style.borderColor='var(--grey-border)';this.style.background='var(--white)'}">
-        <input type="checkbox" name="praktijk" value="${p.id}"
-          style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0;cursor:pointer"
-          onchange="togglePraktijkStijl(this)" />
-        <span style="font-size:0.875rem;font-weight:500;color:var(--navy)">${p.naam} — ${p.straat}, ${p.stad}</span>
-      </label>`).join('');
+  function valideerFotoUrl(url) {
+    if (!url) return '';
+    if (!url.startsWith('https://')) return '';
+    if (['.svg','.html','.js'].some(e => url.toLowerCase().endsWith(e))) return '';
+    return url;
   }
 
-  function normaliseer(tekst) {
-    return tekst.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-  }
-
-  function filterPraktijken(zoekterm) {
-    const items = document.querySelectorAll('#praktijk-checkboxes label');
-    const zoek = normaliseer(zoekterm);
-    let zichtbaar = 0;
-    items.forEach(item => {
-      const tekst = normaliseer(item.textContent);
-      const match = tekst.includes(zoek);
-      item.style.display = match ? '' : 'none';
-      if (match) zichtbaar++;
-    });
-    document.getElementById('praktijk-geen-resultaten').style.display = zichtbaar === 0 ? 'block' : 'none';
-  }
-
-  function togglePraktijkStijl(checkbox) {
-    const label = checkbox.closest('label');
-    if (checkbox.checked) {
-      label.style.borderColor = 'var(--teal)';
-      label.style.background = 'var(--teal-light)';
-    } else {
-      label.style.borderColor = 'var(--grey-border)';
-      label.style.background = 'var(--white)';
-    }
-  }
-
-  // Laad relevante subcategorieën (alleen als site specialisaties heeft)
-  async function laadSubcategorieen() {
-    // Voor enkelvoet.net: geen specialisaties
-    return;
-    const resp = await fetch(`${SUPABASE_URL}/rest/v1/subcategorieen?actief=eq.true&select=id,naam,categorieen(naam)&order=naam`, { headers: HEADERS });
-    const subs = await resp.json();
-
-    const grid = document.getElementById('spec-grid');
-    grid.innerHTML = '';
-
-    // Filter op relevante categorieën voor enkelvoet
-    const relevanteCategorieen = Object.keys(ENKELVOET_SUBCATEGORIEEN);
-    const relevanteNamen = Object.values(ENKELVOET_SUBCATEGORIEEN).flat();
-
-    // Groepeer op categorie
-    const perCategorie = {};
-    subs.forEach(s => {
-      const catNaam = s.categorieen?.naam || 'Overig';
-      if (!relevanteCategorieen.some(c => catNaam.includes(c))) return;
-      if (!relevanteNamen.includes(s.naam)) return;
-      if (!perCategorie[catNaam]) perCategorie[catNaam] = [];
-      perCategorie[catNaam].push(s);
-    });
-
-    Object.entries(perCategorie).forEach(([cat, items]) => {
-      grid.innerHTML += `<div class="spec-categorie" style="grid-column:1/-1">${cat}</div>`;
-      items.forEach(s => {
-        grid.innerHTML += `
-          <label class="spec-item" onclick="toggleSpec(this)">
-            <input type="checkbox" name="spec" value="${s.id}" />
-            <span>${s.naam}</span>
-          </label>`;
-      });
-    });
-  }
-
-  function toggleSpec(label) {
-    label.classList.toggle('geselecteerd', label.querySelector('input').checked);
-  }
-  
-function valideerFotoUrl(url) {
-  if (!url) return '';
-  if (!url.startsWith('https://')) return '';
-  if (url.toLowerCase().endsWith('.svg')) return '';
-  if (url.toLowerCase().endsWith('.html')) return '';
-  if (url.toLowerCase().endsWith('.js')) return '';
-  return url;
-}
-  
+  // ─── VERSTUUR FORMULIER ───
   async function verstuurFormulier() {
     if (document.getElementById('website_url').value !== '') return;
+    if (!geverifieerdePraktijk) { alert('Voer eerst een geldige praktijkcode in.'); return; }
+
     const voornaam = document.getElementById('voornaam').value.trim();
     const achternaam = document.getElementById('achternaam').value.trim();
     const email = document.getElementById('email').value.trim();
     const bio = document.getElementById('bio').value.trim();
-    // Validatie
+
     let geldig = true;
     [['voornaam', voornaam], ['achternaam', achternaam], ['email', email], ['bio', bio]].forEach(([id, val]) => {
       const el = document.getElementById(id);
@@ -456,25 +377,8 @@ function valideerFotoUrl(url) {
       else el.style.borderColor = '';
     });
 
-    // Valideer disciplines
-    const geselecteerdeDisciplines = [...document.querySelectorAll('input[name="discipline"]:checked')].map(cb => cb.value);
-    if (geselecteerdeDisciplines.length === 0) {
-      document.getElementById('discipline-checkboxes').style.outline = '2px solid #E74C3C';
-      document.getElementById('discipline-checkboxes').style.borderRadius = '8px';
-      geldig = false;
-    } else {
-      document.getElementById('discipline-checkboxes').style.outline = '';
-    }
-
-    const geselecteerdePraktijken = [...document.querySelectorAll('input[name="praktijk"]:checked')].map(cb => cb.value);
-    if (geselecteerdePraktijken.length === 0) {
-      document.getElementById('praktijk-checkboxes').style.outline = '2px solid #E74C3C';
-      document.getElementById('praktijk-checkboxes').style.borderRadius = '8px';
-      geldig = false;
-    } else {
-      document.getElementById('praktijk-checkboxes').style.outline = '';
-    }
-
+    const disciplines = [...document.querySelectorAll('input[name="discipline"]:checked')].map(cb => cb.value);
+    if (disciplines.length === 0) { alert('Selecteer minimaal één discipline.'); return; }
     if (!document.getElementById('akkoord').checked) { alert('Vink het akkoordvakje aan.'); return; }
     if (!geldig) { alert('Vul alle verplichte velden in.'); return; }
 
@@ -483,66 +387,38 @@ function valideerFotoUrl(url) {
     knop.disabled = true;
 
     try {
-      // 1. Sla therapeut op
       const therapeutResp = await fetch(`${SUPABASE_URL}/rest/v1/therapeuten`, {
         method: 'POST',
         headers: { ...HEADERS, 'Prefer': 'return=representation' },
         body: JSON.stringify({
-          voornaam,
-          achternaam,
-          email,
+          voornaam, achternaam, email,
           telefoon: document.getElementById('telefoon').value.trim(),
           foto_url: valideerFotoUrl(document.getElementById('foto-url').value.trim()),
-          bio,
-          disciplines: [...document.querySelectorAll('input[name="discipline"]:checked')].map(cb => cb.value),
-          actief: false
+          bio, disciplines, actief: false
         })
       });
 
       if (!therapeutResp.ok) throw new Error(await therapeutResp.text());
       const [therapeut] = await therapeutResp.json();
 
-      // 2. Sla praktijk koppelingen op
-      const geselecteerdePraktijken2 = [...document.querySelectorAll('input[name="praktijk"]:checked')].map(cb => cb.value);
-      if (geselecteerdePraktijken2.length > 0) {
-        await fetch(`${SUPABASE_URL}/rest/v1/therapeut_praktijken`, {
-          method: 'POST',
-          headers: HEADERS,
-          body: JSON.stringify(geselecteerdePraktijken2.map(pId => ({
-            therapeut_id: therapeut.id,
-            praktijk_id: parseInt(pId)
-          })))
-        });
-      }
+      // Koppel aan geverifieerde praktijk
+      await fetch(`${SUPABASE_URL}/rest/v1/therapeut_praktijken`, {
+        method: 'POST',
+        headers: HEADERS,
+        body: JSON.stringify([{ therapeut_id: therapeut.id, praktijk_id: geverifieerdePraktijk.id }])
+      });
 
-      // 3. Sla specialisaties op
-      const geselecteerd = [...document.querySelectorAll('input[name="spec"]:checked')].map(cb => cb.value);
-      if (geselecteerd.length > 0) {
-        await fetch(`${SUPABASE_URL}/rest/v1/therapeut_subcategorieen`, {
-          method: 'POST',
-          headers: HEADERS,
-          body: JSON.stringify(geselecteerd.map(subId => ({
-            therapeut_id: therapeut.id,
-            subcategorie_id: parseInt(subId)
-          })))
-        });
-      }
-
+      document.getElementById('succes-praktijk').textContent = geverifieerdePraktijk.naam;
       document.getElementById('form-content').style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
 
-    } catch (err) {
+    } catch(err) {
       console.error(err);
       alert('Er ging iets mis. Probeer het opnieuw.');
       knop.textContent = 'Aanmelding versturen →';
       knop.disabled = false;
     }
   }
-
-  // Init
-  laadDisciplines();
-  laadPraktijken();
-  laadSubcategorieen();
 </script>
 </body>
 </html>
