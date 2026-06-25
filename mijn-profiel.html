@@ -766,7 +766,7 @@ function toonSectie(naam, btn) {
 // ─────────────────────────────────────────────────────────────
 // RENDER
 // ─────────────────────────────────────────────────────────────
-function renderProfiel() {
+async function renderProfiel() {
   const t = huidigeTherapeut;
 
   // Hero
@@ -784,6 +784,20 @@ function renderProfiel() {
   document.getElementById('edit-foto').value = t.foto_url || '';
   document.getElementById('edit-bio').value = t.bio || '';
   document.getElementById('bio-teller').textContent = (t.bio || '').length;
+
+  // Haal verse voortgang op uit Supabase
+  try {
+    const voortgangResp = await fetch(
+      `${SUPABASE_URL}/rest/v1/cursus_voortgang?therapeut_code=eq.${encodeURIComponent(t.code)}&geslaagd=eq.true&select=cursus_id`,
+      { headers: HEADERS }
+    );
+    const voortgang = await voortgangResp.json();
+    huidigeTherapeut.afgerond = [...new Set((voortgang || []).map(v => v.cursus_id))];
+    // Update sessie
+    sessionStorage.setItem('evn_therapeut', JSON.stringify(huidigeTherapeut));
+  } catch(e) {
+    console.warn('Voortgang laden mislukt:', e);
+  }
 
   // Cursussen
   renderCursussen();
