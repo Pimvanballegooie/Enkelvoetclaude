@@ -187,15 +187,38 @@
   <div id="scherm-inlog">
     <div class="inlog-kaart">
       <span class="inlog-tag">Mijn profiel</span>
-      <h1>Inloggen</h1>
-      <p>Vul uw persoonlijke inlogcode in om uw profiel en cursusvoortgang te bekijken.</p>
-      <div class="form-group">
-        <label for="inp-code">Inlogcode</label>
-        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      <h1 id="inlog-titel">Inloggen</h1>
+      <p id="inlog-tekst">Log in met uw e-mailadres en wachtwoord.</p>
+
+      <!-- INLOGGEN -->
+      <div id="form-inloggen">
+        <div class="form-group">
+          <label for="inp-email">E-mailadres</label>
+          <input type="email" id="inp-email" placeholder="uw@email.nl" onkeydown="if(event.key==='Enter') inloggen()" />
+        </div>
+        <div class="form-group">
+          <label for="inp-wachtwoord">Wachtwoord</label>
+          <input type="password" id="inp-wachtwoord" placeholder="••••••••" onkeydown="if(event.key==='Enter') inloggen()" />
+        </div>
+        <div class="inlog-fout" id="inlog-fout"></div>
+        <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+        <div style="text-align:center;margin-top:14px">
+          <a href="#" onclick="toonWachtwoordVergeten()" style="font-size:0.82rem;color:var(--teal);text-decoration:none;font-weight:600">Wachtwoord vergeten?</a>
+        </div>
       </div>
-      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op via info@enkelvoet.net.</div>
-      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
-      
+
+      <!-- WACHTWOORD VERGETEN -->
+      <div id="form-vergeten" style="display:none">
+        <div class="form-group">
+          <label for="inp-reset-email">Uw e-mailadres</label>
+          <input type="email" id="inp-reset-email" placeholder="uw@email.nl" />
+        </div>
+        <div class="inlog-fout" id="reset-fout"></div>
+        <button class="btn-primary" onclick="wachtwoordReset()">Reset e-mail versturen →</button>
+        <div style="text-align:center;margin-top:14px">
+          <a href="#" onclick="toonInloggen()" style="font-size:0.82rem;color:var(--teal);text-decoration:none;font-weight:600">← Terug naar inloggen</a>
+        </div>
+      </div>
     </div>
     <div class="inlog-uitleg">
       <h2>Wat kunt u hier doen?</h2>
@@ -295,6 +318,20 @@
         <button class="btn-opslaan" onclick="wijzigingInsturen()">Wijziging insturen →</button>
         <div class="melding" id="melding-profiel"></div>
       </div>
+
+      <div class="kaart">
+        <div class="kaart-titel">Wachtwoord wijzigen</div>
+        <div class="form-group">
+          <label>Nieuw wachtwoord</label>
+          <input type="password" id="nieuw-wachtwoord" placeholder="Minimaal 8 tekens" />
+        </div>
+        <div class="form-group">
+          <label>Herhaal nieuw wachtwoord</label>
+          <input type="password" id="nieuw-wachtwoord-herhaal" placeholder="Herhaal wachtwoord" />
+        </div>
+        <button class="btn-opslaan" onclick="wachtwoordWijzigen()">Wachtwoord wijzigen →</button>
+        <div class="melding" id="melding-wachtwoord"></div>
+      </div>
     </div>
 
     <!-- LOCATIES SECTIE -->
@@ -361,20 +398,86 @@ let huidigeTherapeut = null;
 // ─────────────────────────────────────────────────────────────
 // INLOGGEN / UITLOGGEN
 // ─────────────────────────────────────────────────────────────
-async function inloggen() {
-  const code = document.getElementById('inp-code').value.trim();
-  const fout = document.getElementById('inlog-fout');
-  fout.classList.remove('zichtbaar');
+function toonWachtwoordVergeten() {
+  document.getElementById('form-inloggen').style.display = 'none';
+  document.getElementById('form-vergeten').style.display = 'block';
+  document.getElementById('inlog-titel').textContent = 'Wachtwoord vergeten';
+  document.getElementById('inlog-tekst').textContent = 'Vul uw e-mailadres in en u ontvangt een resetlink.';
+}
+
+function toonInloggen() {
+  document.getElementById('form-inloggen').style.display = 'block';
+  document.getElementById('form-vergeten').style.display = 'none';
+  document.getElementById('inlog-titel').textContent = 'Inloggen';
+  document.getElementById('inlog-tekst').textContent = 'Log in met uw e-mailadres en wachtwoord.';
+}
+
+async function wachtwoordReset() {
+  const email = document.getElementById('inp-reset-email').value.trim();
+  const fout = document.getElementById('reset-fout');
+  fout.className = 'inlog-fout';
+  if (!email) { fout.textContent = 'Vul uw e-mailadres in.'; fout.classList.add('zichtbaar'); return; }
 
   try {
-    // Haal therapeut op uit Supabase via code
+    const resp = await fetch(`${SUPABASE_URL}/auth/v1/recover`, {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, redirect_to: 'https://enkelvoet.net/mijn-profiel.html' })
+    });
+    if (resp.ok) {
+      fout.textContent = '✓ Resetlink verstuurd! Controleer uw e-mail.';
+      fout.style.background = 'var(--green-light)';
+      fout.style.color = 'var(--green)';
+      fout.style.border = '1px solid var(--green-border)';
+      fout.classList.add('zichtbaar');
+    } else {
+      throw new Error();
+    }
+  } catch(e) {
+    fout.textContent = 'Versturen mislukt. Controleer uw e-mailadres.';
+    fout.classList.add('zichtbaar');
+  }
+}
+
+async function inloggen() {
+  const email = document.getElementById('inp-email').value.trim();
+  const wachtwoord = document.getElementById('inp-wachtwoord').value;
+  const fout = document.getElementById('inlog-fout');
+  fout.className = 'inlog-fout';
+
+  if (!email || !wachtwoord) {
+    fout.textContent = 'Vul uw e-mailadres en wachtwoord in.';
+    fout.classList.add('zichtbaar');
+    return;
+  }
+
+  try {
+    // Inloggen via Supabase Auth
+    const authResp = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+      method: 'POST',
+      headers: { 'apikey': ANON_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password: wachtwoord })
+    });
+    const authData = await authResp.json();
+
+    if (!authResp.ok || !authData.access_token) {
+      fout.textContent = 'Ongeldig e-mailadres of wachtwoord.';
+      fout.classList.add('zichtbaar');
+      return;
+    }
+
+    const authToken = authData.access_token;
+    const authHeaders = { 'apikey': ANON_KEY, 'Authorization': `Bearer ${authToken}` };
+
+    // Haal therapeutprofiel op via e-mail
     const resp = await fetch(
-      `${SUPABASE_URL}/rest/v1/therapeuten?code=eq.${encodeURIComponent(code)}&actief=eq.true&select=*,therapeut_praktijken(praktijk_id,praktijken(naam,stad,straat))`,
-      { headers: HEADERS }
+      `${SUPABASE_URL}/rest/v1/therapeuten?email=eq.${encodeURIComponent(email)}&actief=eq.true&select=*,therapeut_praktijken(praktijken(naam,stad,straat))`,
+      { headers: authHeaders }
     );
     const data = await resp.json();
 
     if (!data || data.length === 0) {
+      fout.textContent = 'Geen actief therapeutprofiel gevonden voor dit e-mailadres.';
       fout.classList.add('zichtbaar');
       return;
     }
@@ -385,14 +488,15 @@ async function inloggen() {
 
     // Laad cursusvoortgang
     const voortgangResp = await fetch(
-      `${SUPABASE_URL}/rest/v1/cursus_voortgang?therapeut_code=eq.${encodeURIComponent(code)}&geslaagd=eq.true&select=cursus_id`,
-      { headers: HEADERS }
+      `${SUPABASE_URL}/rest/v1/cursus_voortgang?therapeut_code=eq.${encodeURIComponent(t.code || t.email)}&geslaagd=eq.true&select=cursus_id`,
+      { headers: authHeaders }
     );
     const voortgang = await voortgangResp.json();
     const afgerondeCursussen = [...new Set((voortgang || []).map(v => v.cursus_id))];
 
     huidigeTherapeut = {
-      code,
+      code: t.code || t.email,
+      authToken,
       naam: `${t.voornaam} ${t.achternaam}`,
       voornaam: t.voornaam,
       achternaam: t.achternaam,
@@ -403,8 +507,8 @@ async function inloggen() {
       praktijk: eerstePraktijk ? eerstePraktijk.naam : '—',
       locatie: eerstePraktijk ? eerstePraktijk.stad : '—',
       afgerond: afgerondeCursussen,
-      praktijk_ids: praktijken.map(p => p.id),
-      praktijken: praktijken
+      praktijken: praktijken,
+      db_id: t.id
     };
 
     document.getElementById('scherm-inlog').style.display = 'none';
@@ -588,6 +692,48 @@ async function locatieWijzigingInsturen() {
   } catch(e) {
     melding.className = 'melding fout';
     melding.textContent = 'Er ging iets mis. Probeer het opnieuw of mail naar info@enkelvoet.net.';
+  }
+}
+
+async function wachtwoordWijzigen() {
+  const nieuw = document.getElementById('nieuw-wachtwoord').value;
+  const herhaal = document.getElementById('nieuw-wachtwoord-herhaal').value;
+  const melding = document.getElementById('melding-wachtwoord');
+  melding.className = 'melding';
+
+  if (!nieuw || nieuw.length < 8) {
+    melding.className = 'melding fout';
+    melding.textContent = 'Wachtwoord moet minimaal 8 tekens bevatten.';
+    return;
+  }
+  if (nieuw !== herhaal) {
+    melding.className = 'melding fout';
+    melding.textContent = 'Wachtwoorden komen niet overeen.';
+    return;
+  }
+
+  try {
+    const resp = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+      method: 'PUT',
+      headers: {
+        'apikey': ANON_KEY,
+        'Authorization': `Bearer ${huidigeTherapeut.authToken}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ password: nieuw })
+    });
+
+    if (resp.ok) {
+      melding.className = 'melding success';
+      melding.textContent = '✓ Wachtwoord succesvol gewijzigd.';
+      document.getElementById('nieuw-wachtwoord').value = '';
+      document.getElementById('nieuw-wachtwoord-herhaal').value = '';
+    } else {
+      throw new Error();
+    }
+  } catch(e) {
+    melding.className = 'melding fout';
+    melding.textContent = 'Wijzigen mislukt. Probeer opnieuw of log opnieuw in.';
   }
 }
 </script>
