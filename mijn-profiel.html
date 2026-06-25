@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mijn profiel – Enkel Voet Netwerk</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4;
+      --grey-bg: #F5F7FA; --grey-border: #DDE3EC;
+      --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF;
+      --green: #1E8449; --green-light: #EAF7F0; --green-border: rgba(30,132,73,0.3);
+      --red: #C0392B; --red-light: #FDEDEC; --red-border: rgba(192,57,43,0.3);
+      --gold: #C9940A; --gold-light: #FEF9E7;
+      --blue-light: #EAF0FB; --blue: #1A5276;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); min-height: 100vh; }
+
+    /* HEADER */
+    header { background: var(--navy); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+    .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .logo-icon { width: 40px; height: 40px; }
+    .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
+    nav { display: flex; gap: 6px; }
+    nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s, color 0.2s; }
+    nav a:hover { background: rgba(255,255,255,0.12); color: var(--white); }
+    nav a.cta { background: var(--teal); color: var(--white); margin-left: 8px; }
+    nav a.cta:hover { background: #238a7e; }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .therapeut-info { text-align: right; display: none; }
+    .therapeut-info.zichtbaar { display: block; }
+    .therapeut-naam-header { font-size: 0.82rem; font-weight: 600; color: rgba(255,255,255,0.9); }
+    .btn-uitloggen { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); border-radius: 6px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer; font-family: 'Inter', sans-serif; display: none; transition: background 0.2s; }
+    .btn-uitloggen.zichtbaar { display: block; }
+    .btn-uitloggen:hover { background: rgba(255,255,255,0.2); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
+    @media (max-width: 700px) {
+      .hamburger { display: flex; }
+      nav { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--navy); flex-direction: column; padding: 12px 16px 20px; gap: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+      nav.open { display: flex; }
+      nav a { padding: 10px 16px; border-radius: 8px; }
+      nav a.cta { margin-left: 0; margin-top: 8px; text-align: center; }
+    }
+
+    .wrap { max-width: 860px; margin: 0 auto; padding: 40px 24px 64px; }
+
+    /* INLOGSCHERM */
+    #scherm-inlog { display: flex; gap: 48px; flex-wrap: wrap; align-items: flex-start; }
+    .inlog-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 16px; padding: 36px 32px; width: 380px; flex-shrink: 0; }
+    .inlog-tag { display: inline-block; background: var(--teal-light); color: var(--teal); font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .inlog-kaart h1 { font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .inlog-kaart p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+    .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text); outline: none; transition: border-color 0.2s; background: var(--white); }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
+    .form-group textarea { resize: vertical; min-height: 90px; }
+    .form-group input[readonly] { background: var(--grey-bg); color: var(--text-muted); cursor: default; }
+    .btn-primary { width: 100%; padding: 12px; background: var(--teal); color: white; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-primary:hover { background: #238a7e; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+    .inlog-fout { background: var(--red-light); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 0.84rem; margin-bottom: 14px; display: none; }
+    .inlog-fout.zichtbaar { display: block; }
+    .demo-hint { background: var(--grey-bg); border-radius: 8px; padding: 10px 14px; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+    .demo-hint strong { color: var(--text); }
+    .inlog-uitleg { flex: 1; min-width: 240px; padding-top: 8px; }
+    .inlog-uitleg h2 { font-size: 1.05rem; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
+    .uitleg-stap { display: flex; gap: 14px; margin-bottom: 18px; }
+    .uitleg-num { width: 28px; height: 28px; border-radius: 50%; background: var(--teal-light); color: var(--teal); font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+    .uitleg-tekst { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+    .uitleg-tekst strong { color: var(--navy); display: block; margin-bottom: 2px; }
+
+    /* PROFIELSCHERM */
+    #scherm-profiel { display: none; }
+
+    .profiel-hero { background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%); border-radius: 16px; padding: 28px 32px; margin-bottom: 28px; display: flex; align-items: center; gap: 24px; }
+    .profiel-foto { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.3); flex-shrink: 0; }
+    .profiel-avatar { width: 72px; height: 72px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; }
+    .profiel-tekst { flex: 1; }
+    .profiel-naam { font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .profiel-praktijk { font-size: 0.88rem; color: rgba(255,255,255,0.65); }
+    .profiel-status { display: inline-block; background: rgba(30,132,73,0.3); border: 1px solid rgba(30,132,73,0.5); color: #7FDED5; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-top: 8px; }
+
+    /* TABS */
+    .profiel-tabs { display: flex; gap: 4px; background: var(--white); border: 1px solid var(--grey-border); border-radius: 12px; padding: 6px; margin-bottom: 24px; }
+    .profiel-tab { flex: 1; padding: 10px; text-align: center; border-radius: 8px; font-size: 0.875rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s; border: none; background: none; font-family: 'Inter', sans-serif; }
+    .profiel-tab:hover { color: var(--navy); }
+    .profiel-tab.actief { background: var(--navy); color: var(--white); }
+
+    /* SECTIES */
+    .sectie { display: none; }
+    .sectie.actief { display: block; }
+
+    .kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; padding: 24px; margin-bottom: 16px; }
+    .kaart-titel { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--grey-border); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+    .btn-opslaan { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 11px 24px; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+    .btn-opslaan:hover { background: #238a7e; }
+    .btn-opslaan:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .melding { border-radius: 8px; padding: 12px 16px; font-size: 0.85rem; margin-top: 16px; display: none; }
+    .melding.success { background: var(--green-light); color: var(--green); border: 1px solid var(--green-border); display: block; }
+    .melding.fout { background: var(--red-light); color: var(--red); border: 1px solid var(--red-border); display: block; }
+    .melding.info { background: var(--blue-light); color: var(--blue); border: 1px solid rgba(26,82,118,0.2); display: block; }
+
+    /* LOCATIES */
+    .locatie-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; margin-bottom: 8px; }
+    .locatie-item.actief-loc { border-color: var(--teal); background: var(--teal-light); }
+    .locatie-naam { font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+    .locatie-adres { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+    .locatie-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: var(--teal-light); color: var(--teal); }
+    .locatie-nieuw { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--grey-border); }
+    .locatie-nieuw label { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
+    .praktijk-checkbox { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; cursor: pointer; background: var(--white); transition: all 0.15s; }
+    .praktijk-checkbox:hover { border-color: var(--teal); background: var(--teal-light); }
+    .praktijk-checkbox input { width: 16px; height: 16px; accent-color: var(--teal); flex-shrink: 0; }
+    .praktijk-checkbox span { font-size: 0.85rem; color: var(--navy); }
+
+    /* CURSUSSEN */
+    .cursus-tegel { border-radius: 12px; padding: 18px 20px; border: 2px solid var(--grey-border); background: var(--white); display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 10px; text-decoration: none; color: inherit; transition: box-shadow 0.2s; }
+    .cursus-tegel:hover:not(.vergrendeld) { box-shadow: 0 4px 16px rgba(27,58,92,0.1); }
+    .cursus-tegel.behaald { border-color: var(--green); background: var(--green-light); }
+    .cursus-tegel.niet-behaald { border-color: var(--red); background: var(--red-light); }
+    .cursus-tegel.binnenkort { opacity: 0.5; cursor: default; }
+    .cursus-info { flex: 1; }
+    .cursus-zone { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--teal); margin-bottom: 4px; }
+    .cursus-tegel.behaald .cursus-zone { color: var(--green); }
+    .cursus-tegel.niet-behaald .cursus-zone { color: var(--red); }
+    .cursus-naam { font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+    .cursus-tegel.behaald .cursus-naam { color: var(--green); }
+    .cursus-tegel.niet-behaald .cursus-naam { color: var(--red); }
+    .cursus-meta { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+    .cursus-icoon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .cursus-icoon.behaald { background: var(--green); color: white; }
+    .cursus-icoon.niet-behaald { background: var(--red); color: white; }
+    .cursus-icoon.beschikbaar { background: var(--teal-light); color: var(--teal); }
+    .cursus-icoon.binnenkort { background: var(--grey-bg); color: var(--text-muted); }
+
+    .spec-banner { background: var(--gold-light); border: 1px solid rgba(201,148,10,0.3); border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; display: none; }
+    .spec-banner.zichtbaar { display: flex; align-items: center; gap: 14px; }
+    .spec-banner-tekst strong { display: block; font-size: 0.95rem; color: var(--gold); font-weight: 700; }
+    .spec-banner-tekst span { font-size: 0.82rem; color: var(--text-muted); }
+
+    footer { background: #0F2340; color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 0.78rem; margin-top: 48px; }
+    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <img class="logo-icon" src="EVN_Logo_transparant.png" alt="EVN Logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+        <nav id="main-nav">
+      <a href="protocollen.html">Protocollen</a>
+      <a href="index.html#locaties">Locaties</a>
+      <a href="partners.html">Partners</a>
+      <a href="therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+    <div class="header-right">
+      <div class="therapeut-info" id="header-therapeut">
+        <div class="therapeut-naam-header" id="header-naam"></div>
+      </div>
+      <button class="btn-uitloggen" id="btn-uitloggen" onclick="uitloggen()">Uitloggen</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- INLOGSCHERM -->
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Mijn profiel</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in om uw profiel en cursusvoortgang te bekijken.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op via info@enkelvoet.net.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+    <div class="inlog-uitleg">
+      <h2>Wat kunt u hier doen?</h2>
+      <div class="uitleg-stap">
+        <div class="uitleg-num">1</div>
+        <div class="uitleg-tekst"><strong>Profiel bekijken en aanpassen</strong>Wijzig uw bio, foto of locaties. Wijzigingen worden ter goedkeuring ingediend bij het EVN-beheer.</div>
+      </div>
+      <div class="uitleg-stap">
+        <div class="uitleg-num">2</div>
+        <div class="uitleg-tekst"><strong>Cursusvoortgang inzien</strong>Bekijk welke modules u heeft behaald en ga direct verder met een module.</div>
+      </div>
+      <div class="uitleg-stap">
+        <div class="uitleg-num">3</div>
+        <div class="uitleg-tekst"><strong>Specialisatie behalen</strong>Na het afronden van alle vereiste modules is uw specialisatie zichtbaar op uw locatiepagina.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROFIELSCHERM -->
+  <div id="scherm-profiel">
+
+    <div class="profiel-hero">
+      <div id="hero-foto-wrap">
+        <div class="profiel-avatar" id="hero-avatar">👤</div>
+      </div>
+      <div class="profiel-tekst">
+        <div class="profiel-naam" id="hero-naam"></div>
+        <div class="profiel-praktijk" id="hero-praktijk"></div>
+        <div class="profiel-status">✓ Actief therapeut</div>
+      </div>
+    </div>
+
+    <div class="profiel-tabs">
+      <button class="profiel-tab actief" onclick="toonSectie('cursussen', this)">📚 Cursussen</button>
+      <button class="profiel-tab" onclick="toonSectie('profiel', this)">👤 Mijn profiel</button>
+      <button class="profiel-tab" onclick="toonSectie('locaties', this)">📍 Locaties</button>
+    </div>
+
+    <!-- CURSUSSEN SECTIE -->
+    <div class="sectie actief" id="sectie-cursussen">
+
+      <div class="spec-banner" id="spec-banner">
+        <div style="font-size:1.6rem">🌟</div>
+        <div class="spec-banner-tekst">
+          <strong>Gespecialiseerd in enkel & voet</strong>
+          <span>U heeft alle vereiste modules afgerond. Uw specialisatie is zichtbaar op uw locatiepagina.</span>
+        </div>
+      </div>
+
+      <div class="kaart">
+        <div class="kaart-titel">Beschikbare modules</div>
+        <div id="cursussen-grid"></div>
+      </div>
+
+      <div class="kaart">
+        <div class="kaart-titel">Binnenkort beschikbaar</div>
+        <div id="binnenkort-grid"></div>
+      </div>
+
+    </div>
+
+    <!-- PROFIEL SECTIE -->
+    <div class="sectie" id="sectie-profiel">
+      <div class="kaart">
+        <div class="kaart-titel">Persoonlijke gegevens</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Voornaam</label>
+            <input type="text" id="edit-voornaam" readonly />
+          </div>
+          <div class="form-group">
+            <label>Achternaam</label>
+            <input type="text" id="edit-achternaam" readonly />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-mailadres</label>
+          <input type="email" id="edit-email" readonly />
+        </div>
+        <div class="form-group">
+          <label>Telefoonnummer</label>
+          <input type="tel" id="edit-telefoon" placeholder="06-00000000" />
+        </div>
+      </div>
+
+      <div class="kaart">
+        <div class="kaart-titel">Profielfoto & bio</div>
+        <div class="form-group">
+          <label>URL van uw foto</label>
+          <input type="url" id="edit-foto" placeholder="https://www.uwpraktijk.nl/foto.jpg" />
+        </div>
+        <div class="form-group">
+          <label>Bio <span style="font-weight:400;color:var(--text-muted)">(max. 400 tekens)</span></label>
+          <textarea id="edit-bio" maxlength="400" oninput="document.getElementById('bio-teller').textContent=this.value.length" placeholder="Beschrijf uzelf in 2-3 zinnen..."></textarea>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px"><span id="bio-teller">0</span>/400 tekens</div>
+        </div>
+        <button class="btn-opslaan" onclick="wijzigingInsturen()">Wijziging insturen →</button>
+        <div class="melding" id="melding-profiel"></div>
+      </div>
+    </div>
+
+    <!-- LOCATIES SECTIE -->
+    <div class="sectie" id="sectie-locaties">
+      <div class="kaart">
+        <div class="kaart-titel">Huidige locaties</div>
+        <div id="locaties-huidig"></div>
+
+        <div class="locatie-nieuw">
+          <label>Locatie toevoegen of verwijderen</label>
+          <p style="font-size:0.82rem;color:var(--text-muted);margin-bottom:8px">Vink aan welke locaties u wilt toevoegen. Verwijderen doet u door uw verzoek toe te lichten.</p>
+          <div id="locaties-nieuw-grid" style="display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto;"></div>
+          <div class="form-group" style="margin-top:12px">
+            <label>Toelichting <span style="font-weight:400;color:var(--text-muted)">(optioneel)</span></label>
+            <textarea id="locatie-toelichting" placeholder="bijv. Ik werk vanaf 1 maart ook op de nieuwe locatie in Etten-Leur..." style="min-height:70px"></textarea>
+          </div>
+          <button class="btn-opslaan" onclick="locatieWijzigingInsturen()">Locatiewijziging insturen →</button>
+          <div class="melding" id="melding-locaties"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="faq.html">FAQ</a> &nbsp;·&nbsp; <a href="privacy.html">Privacyverklaring</a></p>
+</footer>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────────────────────
+const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
+const HEADERS = { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` };
+
+// ─────────────────────────────────────────────────────────────
+// MODULES CONFIG — gelijk aan cursussen/index.html
+// ─────────────────────────────────────────────────────────────
+const MODULES = [
+  {
+    id: "instabiele-enkel",
+    titel: "Instabiele enkel",
+    zone: "Enkel",
+    beschrijving: "Anatomie, diagnostiek en revalidatie bij chronische enkelbandinstabiliteit.",
+    blokken: 3,
+    vragen: 9,
+    url: "cursussen/instabiele-enkel.html",
+    vereist: true
+  }
+];
+
+const BINNENKORT = [
+  { zone: "Achtervoet", titel: "Achillespees pathologie" },
+  { zone: "Achtervoet", titel: "Hielspoor & plantaire fasciitis" },
+  { zone: "Middenvoet", titel: "Os naviculare & Lisfranc" },
+  { zone: "Voorvoet", titel: "Hallux valgus & metatarsalgie" },
+  { zone: "Fundament", titel: "Biomechanica van de keten" }
+];
+
+// ─────────────────────────────────────────────────────────────
+// DEMO THERAPEUTEN — later vervangen door Supabase
+// ─────────────────────────────────────────────────────────────
+const THERAPEUTEN = {
+  "DEMO":    { naam: "Demo Therapeut",    voornaam: "Demo",  achternaam: "Therapeut",  email: "demo@enkelvoet.net",  telefoon: "", foto_url: "", bio: "", praktijk: "Enkel Voet Netwerk", locatie: "Breda", afgerond: [], praktijk_ids: [] },
+  "EVN-001": { naam: "Lisa van den Berg", voornaam: "Lisa",  achternaam: "van den Berg", email: "lisa@fysiotherapiecentrum.nl", telefoon: "06-12345678", foto_url: "", bio: "Gespecialiseerd in enkelpathologie en sportrevalidatie.", praktijk: "Fysiotherapie Centrum", locatie: "Breda", afgerond: ["instabiele-enkel"], praktijk_ids: [1] },
+  "EVN-002": { naam: "Marco Smits",       voornaam: "Marco", achternaam: "Smits",       email: "marco@bewegingscentrum.nl", telefoon: "06-87654321", foto_url: "", bio: "Werkzaam in Breda met focus op loopanalyse en voetproblemen.", praktijk: "Bewegingscentrum Zuid", locatie: "Breda", afgerond: [], praktijk_ids: [1] }
+};
+
+// TODO: vervang bovenstaande door Supabase lookup:
+// const resp = await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?code=eq.${code}&select=*,therapeut_praktijken(praktijk_id,praktijken(naam,stad))`, { headers: HEADERS });
+
+let huidigeTherapeut = null;
+
+// ─────────────────────────────────────────────────────────────
+// INLOGGEN / UITLOGGEN
+// ─────────────────────────────────────────────────────────────
+function inloggen() {
+  const code = document.getElementById('inp-code').value.trim().toUpperCase();
+  const therapeut = THERAPEUTEN[code];
+  if (!therapeut) {
+    document.getElementById('inlog-fout').classList.add('zichtbaar');
+    return;
+  }
+  huidigeTherapeut = { ...therapeut, code };
+  document.getElementById('scherm-inlog').style.display = 'none';
+  document.getElementById('scherm-profiel').style.display = 'block';
+  document.getElementById('header-naam').textContent = therapeut.naam;
+  document.getElementById('header-therapeut').classList.add('zichtbaar');
+  document.getElementById('btn-uitloggen').classList.add('zichtbaar');
+  renderProfiel();
+}
+
+function uitloggen() {
+  huidigeTherapeut = null;
+  document.getElementById('scherm-inlog').style.display = 'flex';
+  document.getElementById('scherm-profiel').style.display = 'none';
+  document.getElementById('header-therapeut').classList.remove('zichtbaar');
+  document.getElementById('btn-uitloggen').classList.remove('zichtbaar');
+  document.getElementById('inp-code').value = '';
+  document.getElementById('inlog-fout').classList.remove('zichtbaar');
+}
+
+// ─────────────────────────────────────────────────────────────
+// TABS
+// ─────────────────────────────────────────────────────────────
+function toonSectie(naam, btn) {
+  document.querySelectorAll('.profiel-tab').forEach(t => t.classList.remove('actief'));
+  document.querySelectorAll('.sectie').forEach(s => s.classList.remove('actief'));
+  btn.classList.add('actief');
+  document.getElementById('sectie-' + naam).classList.add('actief');
+}
+
+// ─────────────────────────────────────────────────────────────
+// RENDER
+// ─────────────────────────────────────────────────────────────
+function renderProfiel() {
+  const t = huidigeTherapeut;
+
+  // Hero
+  document.getElementById('hero-naam').textContent = t.naam;
+  document.getElementById('hero-praktijk').textContent = t.praktijk + ' · ' + t.locatie;
+  if (t.foto_url) {
+    document.getElementById('hero-foto-wrap').innerHTML = `<img class="profiel-foto" src="${t.foto_url}" alt="${t.naam}" />`;
+  }
+
+  // Profiel velden
+  document.getElementById('edit-voornaam').value = t.voornaam;
+  document.getElementById('edit-achternaam').value = t.achternaam;
+  document.getElementById('edit-email').value = t.email;
+  document.getElementById('edit-telefoon').value = t.telefoon || '';
+  document.getElementById('edit-foto').value = t.foto_url || '';
+  document.getElementById('edit-bio').value = t.bio || '';
+  document.getElementById('bio-teller').textContent = (t.bio || '').length;
+
+  // Cursussen
+  renderCursussen();
+
+  // Locaties
+  renderLocaties();
+}
+
+function renderCursussen() {
+  const afgerond = huidigeTherapeut.afgerond || [];
+  const alleVereistAfgerond = MODULES.filter(m => m.vereist).every(m => afgerond.includes(m.id));
+
+  if (alleVereistAfgerond) {
+    document.getElementById('spec-banner').classList.add('zichtbaar');
+  }
+
+  const grid = document.getElementById('cursussen-grid');
+  grid.innerHTML = '';
+  MODULES.forEach(module => {
+    const isAfgerond = afgerond.includes(module.id);
+    const status = isAfgerond ? 'behaald' : 'beschikbaar';
+    const icoon = isAfgerond ? '✓' : '→';
+    const actie = isAfgerond ? 'Opnieuw bekijken' : 'Module starten';
+
+    const tegel = document.createElement('a');
+    tegel.href = module.url;
+    tegel.className = 'cursus-tegel ' + status;
+    tegel.innerHTML =
+      '<div class="cursus-info">' +
+        '<div class="cursus-zone">' + module.zone + (module.vereist ? ' · ⭐ Vereist voor specialisatie' : '') + '</div>' +
+        '<div class="cursus-naam">' + module.titel + '</div>' +
+        '<div class="cursus-meta">' + module.blokken + ' blokken · ' + module.vragen + ' vragen</div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;gap:10px">' +
+        '<span style="font-size:0.82rem;font-weight:700;color:' + (isAfgerond ? 'var(--green)' : 'var(--teal)') + '">' + actie + ' →</span>' +
+        '<div class="cursus-icoon ' + status + '">' + icoon + '</div>' +
+      '</div>';
+    grid.appendChild(tegel);
+  });
+
+  const bGrid = document.getElementById('binnenkort-grid');
+  bGrid.innerHTML = '';
+  BINNENKORT.forEach(m => {
+    const el = document.createElement('div');
+    el.className = 'cursus-tegel binnenkort';
+    el.innerHTML =
+      '<div class="cursus-info">' +
+        '<div class="cursus-zone">' + m.zone + '</div>' +
+        '<div class="cursus-naam">' + m.titel + '</div>' +
+      '</div>' +
+      '<div class="cursus-icoon binnenkort">⏳</div>';
+    bGrid.appendChild(el);
+  });
+}
+
+function renderLocaties() {
+  const huidig = document.getElementById('locaties-huidig');
+  huidig.innerHTML = `
+    <div class="locatie-item actief-loc">
+      <div>
+        <div class="locatie-naam">${huidigeTherapeut.praktijk}</div>
+        <div class="locatie-adres">${huidigeTherapeut.locatie}</div>
+      </div>
+      <span class="locatie-badge">Actief</span>
+    </div>`;
+
+  // TODO: laad beschikbare praktijken uit Supabase
+  // const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?actief=eq.true&select=id,naam,straat,stad`, { headers: HEADERS });
+  const nieuwGrid = document.getElementById('locaties-nieuw-grid');
+  nieuwGrid.innerHTML = `<div style="font-size:0.85rem;color:var(--text-muted);padding:8px 0">Beschikbare locaties worden geladen via Supabase zodra de koppeling actief is.</div>`;
+}
+
+// ─────────────────────────────────────────────────────────────
+// WIJZIGINGEN INSTUREN → beheer.html
+// ─────────────────────────────────────────────────────────────
+async function wijzigingInsturen() {
+  const melding = document.getElementById('melding-profiel');
+  melding.className = 'melding';
+
+  const wijziging = {
+    therapeut_code: huidigeTherapeut.code,
+    therapeut_naam: huidigeTherapeut.naam,
+    type: 'profiel_wijziging',
+    nieuw_telefoon: document.getElementById('edit-telefoon').value.trim(),
+    nieuw_foto_url: document.getElementById('edit-foto').value.trim(),
+    nieuw_bio: document.getElementById('edit-bio').value.trim(),
+    ingediend_op: new Date().toISOString()
+  };
+
+  try {
+    // TODO: sla op in Supabase tabel 'profiel_wijzigingen'
+    // await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen`, {
+    //   method: 'POST',
+    //   headers: { ...HEADERS, 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(wijziging)
+    // });
+
+    // Demo: toon succesbericht
+    melding.className = 'melding info';
+    melding.textContent = '✓ Uw wijziging is ingediend bij het EVN-beheer. Na goedkeuring wordt uw profiel bijgewerkt.';
+  } catch(e) {
+    melding.className = 'melding fout';
+    melding.textContent = 'Er ging iets mis. Probeer het opnieuw of mail naar info@enkelvoet.net.';
+  }
+}
+
+async function locatieWijzigingInsturen() {
+  const melding = document.getElementById('melding-locaties');
+  const toelichting = document.getElementById('locatie-toelichting').value.trim();
+
+  melding.className = 'melding info';
+  melding.textContent = '✓ Uw locatiewijziging is ingediend bij het EVN-beheer. Na goedkeuring wordt uw profiel bijgewerkt.';
+
+  // TODO: sla op in Supabase tabel 'profiel_wijzigingen'
+  // await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen`, {
+  //   method: 'POST',
+  //   headers: { ...HEADERS, 'Content-Type': 'application/json' },
+  //   body: JSON.stringify({
+  //     therapeut_code: huidigeTherapeut.code,
+  //     therapeut_naam: huidigeTherapeut.naam,
+  //     type: 'locatie_wijziging',
+  //     toelichting,
+  //     ingediend_op: new Date().toISOString()
+  //   })
+  // });
+}
+</script>
+</body>
+</html>
