@@ -309,7 +309,7 @@
           </div>
           ${t.bio ? `<div class="beschrijving">"${t.bio}"</div>` : ''}
           <div class="kaart-acties">
-            <button class="btn btn-goedkeuren" onclick="goedkeurenTherapeut(${t.id})">✓ Goedkeuren</button>
+            <button class="btn btn-goedkeuren" onclick="goedkeurenTherapeut(${t.id}, '${t.email}')">✓ Goedkeuren</button>
             <button class="btn btn-afwijzen" onclick="afwijzenTherapeut(${t.id})">✕ Afwijzen</button>
           </div>
         </div>`;
@@ -371,11 +371,40 @@
     setTimeout(() => { kaart.remove(); laadPraktijken(); }, 400);
   }
 
-  async function goedkeurenTherapeut(id) {
-    if (!confirm('Therapeut goedkeuren?')) return;
+  async function goedkeurenTherapeut(id, email) {
+    if (!confirm(`Therapeut goedkeuren en uitnodigingsmail sturen naar ${email}?`)) return;
     const kaart = document.getElementById(`kaart-t-${id}`);
     kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, { method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ actief: true }) });
+
+    // 1. Zet therapeut actief
+    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, {
+      method: 'PATCH', headers: getHeaders(),
+      body: JSON.stringify({ actief: true })
+    });
+
+    // 2. Stuur uitnodiging via Supabase Admin API
+    try {
+      const inviteResp = await fetch(`${SUPABASE_URL}/auth/v1/invite`, {
+        method: 'POST',
+        headers: {
+          'apikey': ANON_KEY,
+          'Authorization': `Bearer ${toegangsToken}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email,
+          redirect_to: 'https://enkelvoet.net/mijn-profiel.html'
+        })
+      });
+      if (inviteResp.ok) {
+        alert(`✓ Therapeut goedgekeurd. Uitnodigingsmail verstuurd naar ${email}.`);
+      } else {
+        alert(`Therapeut goedgekeurd, maar uitnodigingsmail mislukt. Stuur handmatig een uitnodiging via Supabase Authentication → Users → Invite.`);
+      }
+    } catch(e) {
+      alert('Therapeut goedgekeurd, maar uitnodigingsmail mislukt.');
+    }
+
     kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
     setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
   }
