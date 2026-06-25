@@ -72,7 +72,8 @@
     .blok-header.vergrendeld { cursor: default; }
     .blok-header.vergrendeld:hover { background: var(--white); }
     .blok-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; flex-shrink: 0; }
-    .blok-num.actief { background: var(--blue-light); color: var(--blue); }
+    --orange: #E67E22; --orange-light: #FEF0E6;
+    .blok-num.actief { background: var(--orange-light); color: var(--orange); }
     .blok-num.klaar { background: var(--green-light); color: var(--green); }
     .blok-num.gezakt { background: var(--red-light); color: var(--red); }
     .blok-num.vergrendeld { background: var(--grey-bg); color: var(--grey-border); border: 1px solid var(--grey-border); }
@@ -570,7 +571,7 @@ function maakBlokEl(blok, state, isOpen, isLocked) {
   const beantwoord = Object.keys(state.antwoorden).length;
   const score = berekenScore(blok, state);
 
-  let numKlasse = (state.afgerond && state.geslaagd) ? 'klaar' : (state.afgerond && !state.geslaagd) ? 'gezakt' : isLocked ? 'vergrendeld' : 'actief';
+  let numKlasse = (state.afgerond && state.geslaagd) ? 'klaar' : (state.afgerond && !state.geslaagd) ? 'gezakt' : isLocked ? 'vergrendeld' : 'actief'; // actief = oranje = nog niet gedaan
   let numIcon = (state.afgerond && state.geslaagd) ? '✓' : (state.afgerond && !state.geslaagd) ? '✗' : blok.nummer;
   let statusTekst = (state.afgerond && state.geslaagd)
     ? 'Geslaagd — ' + score + '/' + aantalVragen
@@ -738,7 +739,6 @@ function rondBlokAf(blokId) {
     if (volgende) {
       openBlok = volgende.id;
       renderCursus();
-      // Scroll naar begin van volgend blok
       setTimeout(() => {
         const el = document.getElementById('blok-el-' + volgende.id);
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -747,11 +747,21 @@ function rondBlokAf(blokId) {
       renderCursus();
     }
   } else {
-    // Niet geslaagd: toon resultaat maar ga niet door
+    // Niet geslaagd: markeer hele cursus als niet geslaagd
+    blokState[blokId].afgerond = true;
+    blokState[blokId].geslaagd = false;
     renderCursus();
+    // Toon cursus-herladen knop
+    const container = document.getElementById('blokken-container');
+    const resetDiv = document.createElement('div');
+    resetDiv.id = 'cursus-reset';
+    resetDiv.style.cssText = 'background:var(--red-light);border:1px solid var(--red-border);border-radius:12px;padding:20px 24px;margin-top:16px;text-align:center';
+    resetDiv.innerHTML = '<div style="font-size:1rem;font-weight:700;color:var(--red);margin-bottom:8px">✗ Cursus niet geslaagd</div>' +
+      '<div style="font-size:0.85rem;color:var(--red);margin-bottom:16px">U heeft niet alle blokken met minimaal 80% afgerond. U kunt de hele cursus opnieuw proberen.</div>' +
+      '<button onclick="herlaadCursus()" style="background:var(--red);color:white;border:none;border-radius:8px;padding:10px 22px;font-family:Inter,sans-serif;font-size:0.88rem;font-weight:700;cursor:pointer">Cursus opnieuw beginnen →</button>';
+    container.appendChild(resetDiv);
     setTimeout(() => {
-      const el = document.getElementById('blok-el-' + blokId);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      resetDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 100);
   }
 
@@ -768,6 +778,24 @@ function rondBlokAf(blokId) {
       datum_afgerond: new Date().toISOString()
     })
   }).catch(e => console.warn('Voortgang opslaan mislukt:', e));
+}
+
+function herlaadCursus() {
+  // Reset alle blokken en begin opnieuw
+  const resetEl = document.getElementById('cursus-reset');
+  if (resetEl) resetEl.remove();
+  CURSUS.blokken.forEach(blok => {
+    const vraagVolgorde = shuffleArr(blok.vragen.map((_, i) => i));
+    const optieVolgorde = {};
+    blok.vragen.forEach((v, vi) => {
+      optieVolgorde[vi] = shuffleArr(v.opties.map((_, oi) => oi));
+    });
+    blokState[blok.id] = { antwoorden: {}, afgerond: false, geslaagd: false, vraagVolgorde, optieVolgorde };
+  });
+  openBlok = CURSUS.blokken[0].id;
+  document.getElementById('cert-banner').classList.remove('zichtbaar');
+  renderCursus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function herlaadBlok(blokId) {
