@@ -476,21 +476,28 @@ function herstelSessie() {
   const opgeslagen = sessionStorage.getItem('evn_therapeut');
   if (!opgeslagen) return false;
   try {
-    huidigeTherapeut = JSON.parse(opgeslagen);
+    const data = JSON.parse(opgeslagen);
+    if (!data || !data.naam) return false;
+    huidigeTherapeut = data;
     initState();
     document.getElementById('scherm-inlog').style.display = 'none';
     document.getElementById('scherm-cursus').style.display = 'block';
     document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
-    document.getElementById('header-praktijk').textContent = huidigeTherapeut.praktijk + ' · ' + huidigeTherapeut.locatie;
+    const praktijkEl = document.getElementById('header-praktijk');
+    if (praktijkEl) praktijkEl.textContent = (huidigeTherapeut.praktijk || '') + ' · ' + (huidigeTherapeut.locatie || '');
     document.getElementById('header-therapeut').classList.add('zichtbaar');
     document.getElementById('btn-uitloggen').classList.add('zichtbaar');
-    renderCursus();
+    // Kleine vertraging zodat DOM klaar is
+    setTimeout(() => renderCursus(), 50);
     return true;
-  } catch(e) { return false; }
+  } catch(e) {
+    console.error('Sessie herstel mislukt:', e);
+    return false;
+  }
 }
 
-// Probeer sessie te herstellen bij laden
-document.addEventListener('DOMContentLoaded', () => herstelSessie());
+// Probeer sessie direct te herstellen
+herstelSessie();
 
 // ─────────────────────────────────────────────────────────────
 // INLOGGEN / UITLOGGEN
