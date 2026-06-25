@@ -694,5 +694,11 @@
   }
 
 </script>
+  <script>
+  // Stuur auth tokens door naar mijn-profiel.html
+  if (window.location.hash && window.location.hash.includes('access_token')) {
+    window.location.href = 'mijn-profiel.html' + window.location.hash;
+  }
+</script>
 </body>
 </html>
