@@ -734,7 +734,7 @@ async function inloggen() {
     document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
     document.getElementById('header-therapeut').classList.add('zichtbaar');
     document.getElementById('btn-uitloggen').classList.add('zichtbaar');
-    renderProfiel();
+    await renderProfiel();
 
   } catch(e) {
     console.error(e);
