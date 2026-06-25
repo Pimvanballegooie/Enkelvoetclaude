@@ -167,7 +167,6 @@
     </div>
         <nav id="main-nav">
       <a href="protocollen.html">Protocollen</a>
-      <a href="mijn-profiel.html">Mijn profiel</a>    
       <a href="index.html#locaties">Locaties</a>
       <a href="partners.html">Partners</a>
       <a href="therapeut-worden.html">Aanmelden als therapeut</a>
@@ -521,14 +520,12 @@ async function wijzigingInsturen() {
   };
 
   try {
-    // TODO: sla op in Supabase tabel 'profiel_wijzigingen'
-    // await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen`, {
-    //   method: 'POST',
-    //   headers: { ...HEADERS, 'Content-Type': 'application/json' },
-    //   body: JSON.stringify(wijziging)
-    // });
-
-    // Demo: toon succesbericht
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen`, {
+      method: 'POST',
+      headers: { ...HEADERS, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify(wijziging)
+    });
+    if (!resp.ok) throw new Error(await resp.text());
     melding.className = 'melding info';
     melding.textContent = '✓ Uw wijziging is ingediend bij het EVN-beheer. Na goedkeuring wordt uw profiel bijgewerkt.';
   } catch(e) {
@@ -541,21 +538,25 @@ async function locatieWijzigingInsturen() {
   const melding = document.getElementById('melding-locaties');
   const toelichting = document.getElementById('locatie-toelichting').value.trim();
 
-  melding.className = 'melding info';
-  melding.textContent = '✓ Uw locatiewijziging is ingediend bij het EVN-beheer. Na goedkeuring wordt uw profiel bijgewerkt.';
-
-  // TODO: sla op in Supabase tabel 'profiel_wijzigingen'
-  // await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen`, {
-  //   method: 'POST',
-  //   headers: { ...HEADERS, 'Content-Type': 'application/json' },
-  //   body: JSON.stringify({
-  //     therapeut_code: huidigeTherapeut.code,
-  //     therapeut_naam: huidigeTherapeut.naam,
-  //     type: 'locatie_wijziging',
-  //     toelichting,
-  //     ingediend_op: new Date().toISOString()
-  //   })
-  // });
+  try {
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen`, {
+      method: 'POST',
+      headers: { ...HEADERS, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        therapeut_code: huidigeTherapeut.code,
+        therapeut_naam: huidigeTherapeut.naam,
+        type: 'locatie_wijziging',
+        toelichting,
+        ingediend_op: new Date().toISOString()
+      })
+    });
+    if (!resp.ok) throw new Error(await resp.text());
+    melding.className = 'melding info';
+    melding.textContent = '✓ Uw locatiewijziging is ingediend bij het EVN-beheer. Na goedkeuring wordt uw profiel bijgewerkt.';
+  } catch(e) {
+    melding.className = 'melding fout';
+    melding.textContent = 'Er ging iets mis. Probeer het opnieuw of mail naar info@enkelvoet.net.';
+  }
 }
 </script>
 </body>
