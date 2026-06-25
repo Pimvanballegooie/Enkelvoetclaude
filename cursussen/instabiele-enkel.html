@@ -471,6 +471,27 @@ function shuffleArr(arr) {
   return a;
 }
 
+// Herstel sessie van mijn-profiel.html
+function herstelSessie() {
+  const opgeslagen = sessionStorage.getItem('evn_therapeut');
+  if (!opgeslagen) return false;
+  try {
+    huidigeTherapeut = JSON.parse(opgeslagen);
+    initState();
+    document.getElementById('scherm-inlog').style.display = 'none';
+    document.getElementById('scherm-cursus').style.display = 'block';
+    document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
+    document.getElementById('header-praktijk').textContent = huidigeTherapeut.praktijk + ' · ' + huidigeTherapeut.locatie;
+    document.getElementById('header-therapeut').classList.add('zichtbaar');
+    document.getElementById('btn-uitloggen').classList.add('zichtbaar');
+    renderCursus();
+    return true;
+  } catch(e) { return false; }
+}
+
+// Probeer sessie te herstellen bij laden
+document.addEventListener('DOMContentLoaded', () => herstelSessie());
+
 // ─────────────────────────────────────────────────────────────
 // INLOGGEN / UITLOGGEN
 // ─────────────────────────────────────────────────────────────
