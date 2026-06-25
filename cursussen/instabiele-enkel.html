@@ -480,14 +480,13 @@ function herstelSessie() {
     if (!data || !data.naam) return false;
     huidigeTherapeut = data;
     initState();
-    document.getElementById('scherm-inlog').style.display = 'none';
-    document.getElementById('scherm-cursus').style.display = 'block';
-    document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
-    const praktijkEl = document.getElementById('header-praktijk');
-    if (praktijkEl) praktijkEl.textContent = (huidigeTherapeut.praktijk || '') + ' · ' + (huidigeTherapeut.locatie || '');
-    document.getElementById('header-therapeut').classList.add('zichtbaar');
-    document.getElementById('btn-uitloggen').classList.add('zichtbaar');
-    // Kleine vertraging zodat DOM klaar is
+    const el = id => document.getElementById(id);
+    if (el('scherm-inlog')) el('scherm-inlog').style.display = 'none';
+    if (el('scherm-cursus')) el('scherm-cursus').style.display = 'block';
+    if (el('header-naam')) el('header-naam').textContent = huidigeTherapeut.naam;
+    if (el('header-praktijk')) el('header-praktijk').textContent = (huidigeTherapeut.praktijk || '') + ' · ' + (huidigeTherapeut.locatie || '');
+    if (el('header-therapeut')) el('header-therapeut').classList.add('zichtbaar');
+    if (el('btn-uitloggen')) el('btn-uitloggen').classList.add('zichtbaar');
     setTimeout(() => renderCursus(), 50);
     return true;
   } catch(e) {
