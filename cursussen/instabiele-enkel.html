@@ -827,6 +827,14 @@ function checkAllesAfgerond() {
     document.getElementById('cert-tekst').textContent =
       huidigeTherapeut.naam + ' heeft de module Instabiele enkel succesvol doorlopen. Dit wordt automatisch vastgelegd in het EVN-systeem.';
     document.getElementById('cert-banner').classList.add('zichtbaar');
+    // Update sessie met behaalde cursus
+    if (huidigeTherapeut) {
+      if (!huidigeTherapeut.afgerond) huidigeTherapeut.afgerond = [];
+      if (!huidigeTherapeut.afgerond.includes(CURSUS.id)) {
+        huidigeTherapeut.afgerond.push(CURSUS.id);
+        sessionStorage.setItem('evn_therapeut', JSON.stringify(huidigeTherapeut));
+      }
+    }
 
     // Markeer specialisatie in Supabase
     fetch(`${SUPABASE_URL}/rest/v1/therapeuten?code=eq.${huidigeTherapeut.code}`, {
