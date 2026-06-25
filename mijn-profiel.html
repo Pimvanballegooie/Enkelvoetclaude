@@ -93,6 +93,7 @@
     .profiel-tab { flex: 1; padding: 10px; text-align: center; border-radius: 8px; font-size: 0.875rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s; border: none; background: none; font-family: 'Inter', sans-serif; }
     .profiel-tab:hover { color: var(--navy); }
     .profiel-tab.actief { background: var(--navy); color: var(--white); }
+    .profiel-tab.verborgen { display: none; }
 
     /* SECTIES */
     .sectie { display: none; }
@@ -263,6 +264,7 @@
       <button class="profiel-tab actief" onclick="toonSectie('cursussen', this)">📚 Cursussen</button>
       <button class="profiel-tab" onclick="toonSectie('profiel', this)">👤 Mijn profiel</button>
       <button class="profiel-tab" onclick="toonSectie('locaties', this)">📍 Locaties</button>
+      <button class="profiel-tab verborgen" id="tab-praktijk" onclick="toonSectie('praktijk', this)">🏢 Mijn praktijk</button>
     </div>
 
     <!-- CURSUSSEN SECTIE -->
@@ -365,6 +367,63 @@
           <button class="btn-opslaan" onclick="locatieWijzigingInsturen()">Locatiewijziging insturen →</button>
           <div class="melding" id="melding-locaties"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- PRAKTIJK SECTIE -->
+    <div class="sectie" id="sectie-praktijk">
+      <div class="kaart">
+        <div class="kaart-titel">Praktijkgegevens</div>
+        <div class="form-group">
+          <label>Naam praktijk</label>
+          <input type="text" id="praktijk-naam" />
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Straat + huisnummer</label>
+            <input type="text" id="praktijk-straat" />
+          </div>
+          <div class="form-group">
+            <label>Stad</label>
+            <input type="text" id="praktijk-stad" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Telefoonnummer</label>
+            <input type="tel" id="praktijk-telefoon" />
+          </div>
+          <div class="form-group">
+            <label>E-mail praktijk</label>
+            <input type="email" id="praktijk-email" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Website</label>
+          <input type="url" id="praktijk-website" placeholder="https://www.uwpraktijk.nl" />
+        </div>
+        <div class="form-group">
+          <label>Beschrijving <span style="font-weight:400;color:var(--text-muted)">(max. 400 tekens)</span></label>
+          <textarea id="praktijk-beschrijving" maxlength="400" oninput="document.getElementById('praktijk-beschrijving-teller').textContent=this.value.length"></textarea>
+          <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px"><span id="praktijk-beschrijving-teller">0</span>/400 tekens</div>
+        </div>
+        <button class="btn-opslaan" onclick="praktijkWijzigingInsturen()">Wijziging insturen →</button>
+        <div class="melding" id="melding-praktijk"></div>
+      </div>
+
+      <div class="kaart">
+        <div class="kaart-titel">🔑 Praktijkcode</div>
+        <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;line-height:1.6">Deel deze code met therapeuten die bij uw praktijk werken.</p>
+        <div style="background:var(--grey-bg);border:2px solid var(--teal);border-radius:12px;padding:20px;text-align:center">
+          <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-muted);margin-bottom:8px">Praktijkcode</div>
+          <div style="font-size:2rem;font-weight:700;color:var(--navy);letter-spacing:0.2em;font-family:monospace" id="praktijk-code-display"></div>
+          <div style="font-size:0.78rem;color:var(--text-muted);margin-top:8px">Aanmelden als therapeut: <a href="therapeut-worden.html" style="color:var(--teal)">enkelvoet.net/therapeut-worden.html</a></div>
+        </div>
+      </div>
+
+      <div class="kaart">
+        <div class="kaart-titel">👤 Therapeuten bij uw praktijk</div>
+        <div id="praktijk-therapeuten-lijst"><div style="color:var(--text-muted);font-size:0.88rem">Laden...</div></div>
       </div>
     </div>
 
@@ -558,6 +617,18 @@ async function inloggenMetToken(token) {
       locatie: eerstePraktijk?.stad || '—',
       afgerond: [], praktijken, db_id: t.id
     };
+    // Check of deze gebruiker ook contactpersoon is van een praktijk
+    try {
+      const praktijkResp = await fetch(
+        `${SUPABASE_URL}/rest/v1/praktijken?contact_email=eq.${encodeURIComponent(email)}&actief=eq.true&select=*`,
+        { headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${authToken}` } }
+      );
+      const praktijkData = await praktijkResp.json();
+      if (praktijkData && praktijkData.length > 0) {
+        huidigeTherapeut.praktijkBeheer = praktijkData[0];
+      }
+    } catch(e) { console.warn('Praktijk check mislukt:', e); }
+
     // Sla sessie op in sessionStorage
     sessionStorage.setItem('evn_therapeut', JSON.stringify(huidigeTherapeut));
     sessionStorage.setItem('evn_token', authToken);
@@ -725,6 +796,18 @@ async function inloggen() {
       heeftCursustoegang
     };
 
+    // Check of deze gebruiker ook contactpersoon is van een praktijk
+    try {
+      const praktijkResp = await fetch(
+        `${SUPABASE_URL}/rest/v1/praktijken?contact_email=eq.${encodeURIComponent(email)}&actief=eq.true&select=*`,
+        { headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${authToken}` } }
+      );
+      const praktijkData = await praktijkResp.json();
+      if (praktijkData && praktijkData.length > 0) {
+        huidigeTherapeut.praktijkBeheer = praktijkData[0];
+      }
+    } catch(e) { console.warn('Praktijk check mislukt:', e); }
+
     // Sla sessie op in sessionStorage
     sessionStorage.setItem('evn_therapeut', JSON.stringify(huidigeTherapeut));
     sessionStorage.setItem('evn_token', authToken);
@@ -804,6 +887,12 @@ async function renderProfiel() {
 
   // Locaties
   renderLocaties();
+
+  // Praktijk tab — alleen tonen als contactpersoon
+  if (huidigeTherapeut.praktijkBeheer) {
+    document.getElementById('tab-praktijk').classList.remove('verborgen');
+    renderPraktijkSectie();
+  }
 }
 
 function renderCursussen() {
@@ -975,6 +1064,91 @@ async function locatieWijzigingInsturen() {
   } catch(e) {
     melding.className = 'melding fout';
     melding.textContent = 'Er ging iets mis. Probeer het opnieuw of mail naar info@enkelvoet.net.';
+  }
+}
+
+function renderPraktijkSectie() {
+  const p = huidigeTherapeut.praktijkBeheer;
+  document.getElementById('praktijk-naam').value = p.naam || '';
+  document.getElementById('praktijk-straat').value = p.straat || '';
+  document.getElementById('praktijk-stad').value = p.stad || '';
+  document.getElementById('praktijk-telefoon').value = p.telefoon || '';
+  document.getElementById('praktijk-email').value = p.email || '';
+  document.getElementById('praktijk-website').value = p.website || '';
+  document.getElementById('praktijk-beschrijving').value = p.beschrijving || '';
+  document.getElementById('praktijk-beschrijving-teller').textContent = (p.beschrijving || '').length;
+  document.getElementById('praktijk-code-display').textContent = p.praktijk_code || '—';
+  laadPraktijkTherapeutenSectie(p.id);
+}
+
+async function laadPraktijkTherapeutenSectie(praktijkId) {
+  const lijst = document.getElementById('praktijk-therapeuten-lijst');
+  try {
+    const kopResp = await fetch(
+      `${SUPABASE_URL}/rest/v1/therapeut_praktijken?praktijk_id=eq.${praktijkId}&select=therapeut_id`,
+      { headers: HEADERS }
+    );
+    const koppelingen = await kopResp.json();
+    if (!koppelingen || koppelingen.length === 0) {
+      lijst.innerHTML = '<div style="color:var(--text-muted);font-size:0.88rem">Nog geen therapeuten aangemeld.</div>';
+      return;
+    }
+    const ids = koppelingen.map(k => k.therapeut_id);
+    const filter = ids.map(id => `id.eq.${id}`).join(',');
+    const tResp = await fetch(
+      `${SUPABASE_URL}/rest/v1/therapeuten?or=(${filter})&actief=eq.true&select=voornaam,achternaam,foto_url,disciplines`,
+      { headers: HEADERS }
+    );
+    const therapeuten = await tResp.json();
+    lijst.innerHTML = therapeuten.map(t => {
+      const naam = `${t.voornaam} ${t.achternaam}`;
+      const fotoHtml = t.foto_url
+        ? `<img src="${t.foto_url}" alt="${naam}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--teal-light);flex-shrink:0" onerror="this.style.display='none'" />`
+        : `<div style="width:40px;height:40px;border-radius:50%;background:var(--teal-light);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0">👤</div>`;
+      return `
+        <div style="display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--grey-border);border-radius:10px;margin-bottom:8px;background:var(--white)">
+          ${fotoHtml}
+          <div>
+            <div style="font-size:0.9rem;font-weight:700;color:var(--navy)">${naam}</div>
+            <div style="font-size:0.78rem;color:var(--text-muted)">${(t.disciplines || []).join(', ')}</div>
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {
+    lijst.innerHTML = '<div style="color:var(--red);font-size:0.88rem">Kon therapeuten niet laden.</div>';
+  }
+}
+
+async function praktijkWijzigingInsturen() {
+  const melding = document.getElementById('melding-praktijk');
+  melding.className = 'melding';
+  const p = huidigeTherapeut.praktijkBeheer;
+  try {
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen`, {
+      method: 'POST',
+      headers: { ...HEADERS, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({
+        therapeut_code: `PRAKTIJK-${p.id}`,
+        therapeut_naam: p.naam,
+        type: 'praktijk_wijziging',
+        toelichting: [
+          `Naam: ${document.getElementById('praktijk-naam').value.trim()}`,
+          `Straat: ${document.getElementById('praktijk-straat').value.trim()}`,
+          `Stad: ${document.getElementById('praktijk-stad').value.trim()}`,
+          `Tel: ${document.getElementById('praktijk-telefoon').value.trim()}`,
+          `Email: ${document.getElementById('praktijk-email').value.trim()}`,
+          `Website: ${document.getElementById('praktijk-website').value.trim()}`,
+          `Beschrijving: ${document.getElementById('praktijk-beschrijving').value.trim()}`
+        ].join(' | '),
+        ingediend_op: new Date().toISOString()
+      })
+    });
+    if (!resp.ok) throw new Error();
+    melding.className = 'melding info';
+    melding.textContent = '✓ Wijziging ingediend bij het EVN-beheer. Na goedkeuring worden uw gegevens bijgewerkt.';
+  } catch(e) {
+    melding.className = 'melding fout';
+    melding.textContent = 'Er ging iets mis. Probeer opnieuw of mail naar info@enkelvoet.net.';
   }
 }
 
