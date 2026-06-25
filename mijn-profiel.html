@@ -362,7 +362,7 @@ let huidigeTherapeut = null;
 // INLOGGEN / UITLOGGEN
 // ─────────────────────────────────────────────────────────────
 async function inloggen() {
-  const code = document.getElementById('inp-code').value.trim().toUpperCase();
+  const code = document.getElementById('inp-code').value.trim();
   const fout = document.getElementById('inlog-fout');
   fout.classList.remove('zichtbaar');
 
