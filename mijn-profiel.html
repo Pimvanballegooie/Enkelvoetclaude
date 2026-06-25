@@ -558,6 +558,10 @@ async function inloggenMetToken(token) {
       locatie: eerstePraktijk?.stad || '—',
       afgerond: [], praktijken, db_id: t.id
     };
+    // Sla sessie op in sessionStorage
+    sessionStorage.setItem('evn_therapeut', JSON.stringify(huidigeTherapeut));
+    sessionStorage.setItem('evn_token', authToken);
+
     document.getElementById('scherm-inlog').style.display = 'none';
     document.getElementById('scherm-profiel').style.display = 'block';
     document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
@@ -567,8 +571,34 @@ async function inloggenMetToken(token) {
   } catch(e) { console.error(e); }
 }
 
-// Start token verwerking bij laden pagina
-verwerkUrlToken();
+// Herstel sessie uit sessionStorage
+function herstelSessie() {
+  const opgeslagen = sessionStorage.getItem('evn_therapeut');
+  if (!opgeslagen) return false;
+  try {
+    huidigeTherapeut = JSON.parse(opgeslagen);
+    document.getElementById('scherm-inlog').style.display = 'none';
+    document.getElementById('scherm-profiel').style.display = 'block';
+    document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
+    document.getElementById('header-therapeut').classList.add('zichtbaar');
+    document.getElementById('btn-uitloggen').classList.add('zichtbaar');
+    renderProfiel();
+    return true;
+  } catch(e) { return false; }
+}
+
+// Wis sessie bij uitloggen
+const _origUitloggen = uitloggen;
+uitloggen = function() {
+  sessionStorage.removeItem('evn_therapeut');
+  sessionStorage.removeItem('evn_token');
+  _origUitloggen();
+}
+
+// Start: herstel sessie of verwerk URL token
+if (!herstelSessie()) {
+  verwerkUrlToken();
+}
 
 // ─────────────────────────────────────────────────────────────
 // INLOGGEN / UITLOGGEN
@@ -663,6 +693,12 @@ async function inloggen() {
     const eerstePraktijk = praktijken[0];
 
     // Laad cursusvoortgang
+    // Bepaal hoogste tier van alle locaties
+    const tiers = praktijken.map(p => p.tier || 'basis');
+    const tierRang = { 'basis': 0, 'plus': 1, 'partner': 2 };
+    const hoogsteTier = tiers.reduce((best, t) => tierRang[t] > tierRang[best] ? t : best, 'basis');
+    const heeftCursustoegang = hoogsteTier === 'plus' || hoogsteTier === 'partner';
+
     const voortgangResp = await fetch(
       `${SUPABASE_URL}/rest/v1/cursus_voortgang?therapeut_code=eq.${encodeURIComponent(t.code || t.email)}&geslaagd=eq.true&select=cursus_id`,
       { headers: authHeaders }
@@ -684,8 +720,14 @@ async function inloggen() {
       locatie: eerstePraktijk ? eerstePraktijk.stad : '—',
       afgerond: afgerondeCursussen,
       praktijken: praktijken,
-      db_id: t.id
+      db_id: t.id,
+      tier: hoogsteTier,
+      heeftCursustoegang
     };
+
+    // Sla sessie op in sessionStorage
+    sessionStorage.setItem('evn_therapeut', JSON.stringify(huidigeTherapeut));
+    sessionStorage.setItem('evn_token', authToken);
 
     document.getElementById('scherm-inlog').style.display = 'none';
     document.getElementById('scherm-profiel').style.display = 'block';
@@ -753,6 +795,24 @@ function renderProfiel() {
 function renderCursussen() {
   const afgerond = huidigeTherapeut.afgerond || [];
   const alleVereistAfgerond = MODULES.filter(m => m.vereist).every(m => afgerond.includes(m.id));
+
+  // Pakketcheck — Basis heeft geen cursustoegang
+  if (!huidigeTherapeut.heeftCursustoegang) {
+    document.getElementById('cursussen-grid').innerHTML = '';
+    document.getElementById('binnenkort-grid').innerHTML = '';
+    document.querySelector('#sectie-cursussen .kaart').innerHTML = `
+      <div style="text-align:center;padding:32px 20px">
+        <div style="font-size:2.5rem;margin-bottom:16px">🔒</div>
+        <div style="font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:8px">Cursussen beschikbaar vanaf het Plus pakket</div>
+        <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:20px;line-height:1.6">
+          Uw locatie heeft momenteel het Basis pakket. Upgrade naar Plus of Partner voor toegang tot alle cursusmodules en specialisaties.
+        </div>
+        <a href="locatie-worden.html" style="display:inline-block;background:var(--teal);color:white;padding:11px 24px;border-radius:8px;font-weight:700;font-size:0.88rem;text-decoration:none">
+          Bekijk pakketten →
+        </a>
+      </div>`;
+    return;
+  }
 
   if (alleVereistAfgerond) {
     document.getElementById('spec-banner').classList.add('zichtbaar');
