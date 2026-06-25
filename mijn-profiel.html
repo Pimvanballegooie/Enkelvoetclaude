@@ -195,7 +195,7 @@
       </div>
       <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op via info@enkelvoet.net.</div>
       <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
-      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+      
     </div>
     <div class="inlog-uitleg">
       <h2>Wat kunt u hier doen?</h2>
@@ -356,37 +356,69 @@ const BINNENKORT = [
   { zone: "Fundament", titel: "Biomechanica van de keten" }
 ];
 
-// ─────────────────────────────────────────────────────────────
-// DEMO THERAPEUTEN — later vervangen door Supabase
-// ─────────────────────────────────────────────────────────────
-const THERAPEUTEN = {
-  "DEMO":    { naam: "Demo Therapeut",    voornaam: "Demo",  achternaam: "Therapeut",  email: "demo@enkelvoet.net",  telefoon: "", foto_url: "", bio: "", praktijk: "Enkel Voet Netwerk", locatie: "Breda", afgerond: [], praktijk_ids: [] },
-  "EVN-001": { naam: "Lisa van den Berg", voornaam: "Lisa",  achternaam: "van den Berg", email: "lisa@fysiotherapiecentrum.nl", telefoon: "06-12345678", foto_url: "", bio: "Gespecialiseerd in enkelpathologie en sportrevalidatie.", praktijk: "Fysiotherapie Centrum", locatie: "Breda", afgerond: ["instabiele-enkel"], praktijk_ids: [1] },
-  "EVN-002": { naam: "Marco Smits",       voornaam: "Marco", achternaam: "Smits",       email: "marco@bewegingscentrum.nl", telefoon: "06-87654321", foto_url: "", bio: "Werkzaam in Breda met focus op loopanalyse en voetproblemen.", praktijk: "Bewegingscentrum Zuid", locatie: "Breda", afgerond: [], praktijk_ids: [1] }
-};
-
-// TODO: vervang bovenstaande door Supabase lookup:
-// const resp = await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?code=eq.${code}&select=*,therapeut_praktijken(praktijk_id,praktijken(naam,stad))`, { headers: HEADERS });
-
 let huidigeTherapeut = null;
 
 // ─────────────────────────────────────────────────────────────
 // INLOGGEN / UITLOGGEN
 // ─────────────────────────────────────────────────────────────
-function inloggen() {
+async function inloggen() {
   const code = document.getElementById('inp-code').value.trim().toUpperCase();
-  const therapeut = THERAPEUTEN[code];
-  if (!therapeut) {
-    document.getElementById('inlog-fout').classList.add('zichtbaar');
-    return;
+  const fout = document.getElementById('inlog-fout');
+  fout.classList.remove('zichtbaar');
+
+  try {
+    // Haal therapeut op uit Supabase via code
+    const resp = await fetch(
+      `${SUPABASE_URL}/rest/v1/therapeuten?code=eq.${encodeURIComponent(code)}&actief=eq.true&select=*,therapeut_praktijken(praktijk_id,praktijken(naam,stad,straat))`,
+      { headers: HEADERS }
+    );
+    const data = await resp.json();
+
+    if (!data || data.length === 0) {
+      fout.classList.add('zichtbaar');
+      return;
+    }
+
+    const t = data[0];
+    const praktijken = (t.therapeut_praktijken || []).map(tp => tp.praktijken).filter(Boolean);
+    const eerstePraktijk = praktijken[0];
+
+    // Laad cursusvoortgang
+    const voortgangResp = await fetch(
+      `${SUPABASE_URL}/rest/v1/cursus_voortgang?therapeut_code=eq.${encodeURIComponent(code)}&geslaagd=eq.true&select=cursus_id`,
+      { headers: HEADERS }
+    );
+    const voortgang = await voortgangResp.json();
+    const afgerondeCursussen = [...new Set((voortgang || []).map(v => v.cursus_id))];
+
+    huidigeTherapeut = {
+      code,
+      naam: `${t.voornaam} ${t.achternaam}`,
+      voornaam: t.voornaam,
+      achternaam: t.achternaam,
+      email: t.email || '',
+      telefoon: t.telefoon || '',
+      foto_url: t.foto_url || '',
+      bio: t.bio || '',
+      praktijk: eerstePraktijk ? eerstePraktijk.naam : '—',
+      locatie: eerstePraktijk ? eerstePraktijk.stad : '—',
+      afgerond: afgerondeCursussen,
+      praktijk_ids: praktijken.map(p => p.id),
+      praktijken: praktijken
+    };
+
+    document.getElementById('scherm-inlog').style.display = 'none';
+    document.getElementById('scherm-profiel').style.display = 'block';
+    document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
+    document.getElementById('header-therapeut').classList.add('zichtbaar');
+    document.getElementById('btn-uitloggen').classList.add('zichtbaar');
+    renderProfiel();
+
+  } catch(e) {
+    console.error(e);
+    fout.textContent = 'Er ging iets mis. Probeer het opnieuw.';
+    fout.classList.add('zichtbaar');
   }
-  huidigeTherapeut = { ...therapeut, code };
-  document.getElementById('scherm-inlog').style.display = 'none';
-  document.getElementById('scherm-profiel').style.display = 'block';
-  document.getElementById('header-naam').textContent = therapeut.naam;
-  document.getElementById('header-therapeut').classList.add('zichtbaar');
-  document.getElementById('btn-uitloggen').classList.add('zichtbaar');
-  renderProfiel();
 }
 
 function uitloggen() {
