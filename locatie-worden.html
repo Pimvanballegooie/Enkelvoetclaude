@@ -145,7 +145,7 @@
     <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </div>
-    <nav id="main-nav">
+        <nav id="main-nav">
       <a href="protocollen.html">Protocollen</a>
       <a href="mijn-profiel.html">Mijn profiel</a>
       <a href="index.html#locaties">Locaties</a>
@@ -285,8 +285,17 @@
             <div class="form-group"><label>Achternaam <span class="req">*</span></label><input type="text" id="achternaam" placeholder="Jansen" /></div>
           </div>
           <div class="form-row">
-            <div class="form-group"><label>E-mailadres <span class="req">*</span></label><input type="email" id="email" placeholder="info@praktijk.nl" /></div>
             <div class="form-group"><label>Telefoonnummer</label><input type="tel" id="telefoon" placeholder="076-0000000" /></div>
+          </div>
+          <div class="form-group">
+            <label>E-mailadres beheerder <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="pim@praktijk.nl" />
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">📧 <strong>Privé</strong> — Dit adres gebruikt u om in te loggen op <em>Mijn profiel</em> en uw praktijkpagina te beheren. Niet zichtbaar voor patiënten.</p>
+          </div>
+          <div class="form-group">
+            <label>E-mailadres voor patiënten</label>
+            <input type="email" id="email-publiek" placeholder="info@praktijk.nl" />
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">🌐 <strong>Zichtbaar op de site</strong> — Dit adres wordt getoond op uw locatiepagina zodat patiënten contact kunnen opnemen. Mag hetzelfde zijn als uw beheerderadres.</p>
           </div>
         </div>
 
@@ -352,7 +361,7 @@
 </section>
 
 <footer>
-  <p>© 2025 Enkel Voet Netwerk &nbsp;·&nbsp; <a href="index.html">Terug naar home</a> &nbsp;·&nbsp; <a href="faq.html">FAQ</a> &nbsp;·&nbsp; <a href="privacy.html">Privacyverklaring</a></p>
+  <p>2025 Enkel Voet Netwerk Breda e.o. &nbsp;&middot;&nbsp; <a href="index.html">Terug naar home</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacyverklaring</a></p>
 </footer>
 
 <script>
@@ -416,7 +425,7 @@
       '<div class="form-group"><label>Website</label><input type="url" id="website-' + nr + '" placeholder="https://www.jouwpraktijk.nl" /></div>' +
       '<div class="form-row">' +
         '<div class="form-group"><label>Telefoonnummer locatie</label><input type="tel" id="tel-locatie-' + nr + '" placeholder="076-0000000" /></div>' +
-        '<div class="form-group"><label>E-mail locatie</label><input type="email" id="email-locatie-' + nr + '" placeholder="info@praktijk.nl" /></div>' +
+        '<div class="form-group"><label>E-mail locatie (zichtbaar voor patiënten)</label><input type="email" id="email-locatie-' + nr + '" placeholder="info@praktijk.nl" /></div>' +
       '</div>' +
       '<div class="disciplines-info">De disciplines van uw locatie worden automatisch bepaald op basis van de therapeuten die zich aanmelden bij deze praktijk.</div>';
     container.appendChild(blok);
@@ -500,7 +509,7 @@
           postcode: '',
           stad: '',
           telefoon: document.getElementById('tel-locatie-' + nr).value.trim(),
-          email: document.getElementById('email-locatie-' + nr).value.trim(),
+          email: document.getElementById('email-publiek').value.trim() || document.getElementById('email').value.trim(),
           website: fixUrl(document.getElementById('website-' + nr).value || ''),
           aangemeld_via: 'enkelvoet.net',
           tier: geselecteerdeTier,
