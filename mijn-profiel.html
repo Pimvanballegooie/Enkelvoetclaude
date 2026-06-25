@@ -617,15 +617,16 @@ async function inloggenMetToken(token) {
       locatie: eerstePraktijk?.stad || '—',
       afgerond: [], praktijken, db_id: t.id
     };
-    // Check of deze gebruiker ook contactpersoon is van een praktijk
+    // Check of deze gebruiker ook contactpersoon is van een of meerdere praktijken
     try {
       const praktijkResp = await fetch(
-        `${SUPABASE_URL}/rest/v1/praktijken?contact_email=eq.${encodeURIComponent(email)}&actief=eq.true&select=*`,
+        `${SUPABASE_URL}/rest/v1/praktijken?contact_email=eq.${encodeURIComponent(email)}&actief=eq.true&select=*&order=naam`,
         { headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${authToken}` } }
       );
       const praktijkData = await praktijkResp.json();
       if (praktijkData && praktijkData.length > 0) {
-        huidigeTherapeut.praktijkBeheer = praktijkData[0];
+        huidigeTherapeut.praktijkBeheer = praktijkData[0]; // actieve praktijk
+        huidigeTherapeut.allePraktijken = praktijkData;    // alle praktijken
       }
     } catch(e) { console.warn('Praktijk check mislukt:', e); }
 
@@ -796,15 +797,16 @@ async function inloggen() {
       heeftCursustoegang
     };
 
-    // Check of deze gebruiker ook contactpersoon is van een praktijk
+    // Check of deze gebruiker ook contactpersoon is van een of meerdere praktijken
     try {
       const praktijkResp = await fetch(
-        `${SUPABASE_URL}/rest/v1/praktijken?contact_email=eq.${encodeURIComponent(email)}&actief=eq.true&select=*`,
+        `${SUPABASE_URL}/rest/v1/praktijken?contact_email=eq.${encodeURIComponent(email)}&actief=eq.true&select=*&order=naam`,
         { headers: { 'apikey': ANON_KEY, 'Authorization': `Bearer ${authToken}` } }
       );
       const praktijkData = await praktijkResp.json();
       if (praktijkData && praktijkData.length > 0) {
-        huidigeTherapeut.praktijkBeheer = praktijkData[0];
+        huidigeTherapeut.praktijkBeheer = praktijkData[0]; // actieve praktijk
+        huidigeTherapeut.allePraktijken = praktijkData;    // alle praktijken
       }
     } catch(e) { console.warn('Praktijk check mislukt:', e); }
 
@@ -1068,7 +1070,64 @@ async function locatieWijzigingInsturen() {
 }
 
 function renderPraktijkSectie() {
-  const p = huidigeTherapeut.praktijkBeheer;
+  const allePraktijken = huidigeTherapeut.allePraktijken || [];
+
+  // Toon locatieselector als er meerdere praktijken zijn
+  const bestaandSelector = document.getElementById('locatie-selector-wrap');
+  if (bestaandSelector) bestaandSelector.remove();
+
+  if (allePraktijken.length > 1) {
+    const selectorWrap = document.createElement('div');
+    selectorWrap.id = 'locatie-selector-wrap';
+    selectorWrap.className = 'kaart';
+    selectorWrap.style.marginBottom = '16px';
+    selectorWrap.innerHTML = `
+      <div class="kaart-titel">Selecteer locatie</div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        ${allePraktijken.map((p, i) => `
+          <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid var(--grey-border);border-radius:8px;cursor:pointer;background:var(--white);transition:all 0.15s"
+            onclick="selecteerPraktijkLocatie(${p.id})" id="selector-${p.id}">
+            <input type="radio" name="praktijk-keuze" value="${p.id}" ${i === 0 ? 'checked' : ''} style="accent-color:var(--teal);width:16px;height:16px;flex-shrink:0" />
+            <div>
+              <div style="font-size:0.9rem;font-weight:700;color:var(--navy)">${p.naam}</div>
+              <div style="font-size:0.78rem;color:var(--text-muted)">${p.straat}, ${p.stad} · <span style="font-family:monospace;font-weight:700;color:var(--teal)">${p.praktijk_code || '—'}</span></div>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px">Pakket: <strong>${p.tier || 'basis'}</strong></div>
+            </div>
+          </label>`).join('')}
+      </div>
+      <div style="margin-top:16px;padding:12px 14px;background:var(--grey-bg);border-radius:8px;font-size:0.82rem;color:var(--text-muted)">
+        <strong style="color:var(--navy)">Totale maandelijkse kosten:</strong>
+        ${berekenTotaalKosten(allePraktijken)}
+      </div>`;
+    document.getElementById('sectie-praktijk').insertBefore(selectorWrap, document.getElementById('sectie-praktijk').firstChild);
+  }
+
+  vulPraktijkVelden(huidigeTherapeut.praktijkBeheer);
+}
+
+function berekenTotaalKosten(praktijken) {
+  const prijzen = { basis: 5, plus: 10, partner: 50 };
+  const totaal = praktijken.reduce((sum, p) => sum + (prijzen[p.tier] || 5), 0);
+  const regels = Object.entries(
+    praktijken.reduce((acc, p) => {
+      const tier = p.tier || 'basis';
+      acc[tier] = (acc[tier] || 0) + 1;
+      return acc;
+    }, {})
+  ).map(([tier, aantal]) => `${aantal}× ${tier} (€${prijzen[tier]}/mnd)`).join(' + ');
+  return `${regels} = <strong style="color:var(--navy)">€${totaal}/maand</strong>`;
+}
+
+function selecteerPraktijkLocatie(praktijkId) {
+  const allePraktijken = huidigeTherapeut.allePraktijken || [];
+  const gekozen = allePraktijken.find(p => p.id === praktijkId);
+  if (!gekozen) return;
+  huidigeTherapeut.praktijkBeheer = gekozen;
+  sessionStorage.setItem('evn_therapeut', JSON.stringify(huidigeTherapeut));
+  vulPraktijkVelden(gekozen);
+}
+
+function vulPraktijkVelden(p) {
   document.getElementById('praktijk-naam').value = p.naam || '';
   document.getElementById('praktijk-straat').value = p.straat || '';
   document.getElementById('praktijk-stad').value = p.stad || '';
