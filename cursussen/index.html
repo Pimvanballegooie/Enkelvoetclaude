@@ -154,9 +154,9 @@
     <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
       <span></span><span></span><span></span>
     </div>
-    <nav id="main-nav">
+        <nav id="main-nav">
       <a href="../protocollen.html">Protocollen</a>
-      <a href="mijn-profiel.html">Mijn profiel</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
       <a href="../index.html#locaties">Locaties</a>
       <a href="../partners.html">Partners</a>
       <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
@@ -179,7 +179,7 @@
       </div>
       <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
       <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
-      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+      
     </div>
     <div class="inlog-uitleg">
       <h2>Hoe werkt het cursusportaal?</h2>
@@ -271,35 +271,58 @@ const BINNENKORT = [
   { zone: "Fundament", titel: "Biomechanica van de keten", beschrijving: "Looppatroon, compensaties en belastbaarheid", blokken: 4, vragen: 12 }
 ];
 
-// ─────────────────────────────────────────────────────────────
-// DEMO THERAPEUTEN — later vervangen door Supabase
-// ─────────────────────────────────────────────────────────────
-const THERAPEUTEN = {
-  "DEMO":    { naam: "Demo Therapeut",    praktijk: "Enkel Voet Netwerk",    locatie: "Breda",  afgerond: [] },
-  "EVN-001": { naam: "Lisa van den Berg", praktijk: "Fysiotherapie Centrum", locatie: "Breda",  afgerond: ["instabiele-enkel"] },
-  "EVN-002": { naam: "Marco Smits",       praktijk: "Bewegingscentrum Zuid", locatie: "Breda",  afgerond: [] }
-};
+const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
+const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
+const HEADERS = { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` };
 
 let huidigeTherapeut = null;
 
 // ─────────────────────────────────────────────────────────────
 // INLOGGEN / UITLOGGEN
 // ─────────────────────────────────────────────────────────────
-function inloggen() {
+async function inloggen() {
   const code = document.getElementById('inp-code').value.trim().toUpperCase();
-  const therapeut = THERAPEUTEN[code];
-  if (!therapeut) {
-    document.getElementById('inlog-fout').classList.add('zichtbaar');
-    return;
+  const fout = document.getElementById('inlog-fout');
+  fout.classList.remove('zichtbaar');
+
+  try {
+    const resp = await fetch(
+      `${SUPABASE_URL}/rest/v1/therapeuten?code=eq.${encodeURIComponent(code)}&actief=eq.true&select=*,therapeut_praktijken(praktijken(naam,stad))`,
+      { headers: HEADERS }
+    );
+    const data = await resp.json();
+    if (!data || data.length === 0) { fout.classList.add('zichtbaar'); return; }
+
+    const t = data[0];
+    const eerstePraktijk = t.therapeut_praktijken?.[0]?.praktijken;
+
+    const voortgangResp = await fetch(
+      `${SUPABASE_URL}/rest/v1/cursus_voortgang?therapeut_code=eq.${encodeURIComponent(code)}&geslaagd=eq.true&select=cursus_id`,
+      { headers: HEADERS }
+    );
+    const voortgang = await voortgangResp.json();
+    const afgerond = [...new Set((voortgang || []).map(v => v.cursus_id))];
+
+    huidigeTherapeut = {
+      code,
+      naam: `${t.voornaam} ${t.achternaam}`,
+      praktijk: eerstePraktijk?.naam || '—',
+      locatie: eerstePraktijk?.stad || '—',
+      afgerond
+    };
+
+    document.getElementById('scherm-inlog').style.display = 'none';
+    document.getElementById('scherm-portaal').style.display = 'block';
+    document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
+    document.getElementById('header-praktijk').textContent = huidigeTherapeut.praktijk + ' · ' + huidigeTherapeut.locatie;
+    document.getElementById('header-therapeut').classList.add('zichtbaar');
+    document.getElementById('btn-uitloggen').classList.add('zichtbaar');
+    renderPortaal();
+
+  } catch(e) {
+    fout.textContent = 'Er ging iets mis. Probeer het opnieuw.';
+    fout.classList.add('zichtbaar');
   }
-  huidigeTherapeut = { ...therapeut, code };
-  document.getElementById('scherm-inlog').style.display = 'none';
-  document.getElementById('scherm-portaal').style.display = 'block';
-  document.getElementById('header-naam').textContent = therapeut.naam;
-  document.getElementById('header-praktijk').textContent = therapeut.praktijk + ' · ' + therapeut.locatie;
-  document.getElementById('header-therapeut').classList.add('zichtbaar');
-  document.getElementById('btn-uitloggen').classList.add('zichtbaar');
-  renderPortaal();
 }
 
 function uitloggen() {
