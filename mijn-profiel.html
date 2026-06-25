@@ -621,21 +621,54 @@ function renderCursussen() {
   });
 }
 
-function renderLocaties() {
+async function renderLocaties() {
+  // Toon huidige locaties
   const huidig = document.getElementById('locaties-huidig');
-  huidig.innerHTML = `
-    <div class="locatie-item actief-loc">
-      <div>
-        <div class="locatie-naam">${huidigeTherapeut.praktijk}</div>
-        <div class="locatie-adres">${huidigeTherapeut.locatie}</div>
-      </div>
-      <span class="locatie-badge">Actief</span>
-    </div>`;
+  const huidigeIds = new Set((huidigeTherapeut.praktijken || []).map(p => p.id));
 
-  // TODO: laad beschikbare praktijken uit Supabase
-  // const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?actief=eq.true&select=id,naam,straat,stad`, { headers: HEADERS });
+  if (huidigeTherapeut.praktijken && huidigeTherapeut.praktijken.length > 0) {
+    huidig.innerHTML = huidigeTherapeut.praktijken.map(p => `
+      <div class="locatie-item actief-loc">
+        <div>
+          <div class="locatie-naam">${p.naam}</div>
+          <div class="locatie-adres">${p.straat || ''}, ${p.stad || ''}</div>
+        </div>
+        <span class="locatie-badge">Actief</span>
+      </div>`).join('');
+  } else {
+    huidig.innerHTML = `<div class="locatie-item"><div><div class="locatie-naam">${huidigeTherapeut.praktijk}</div><div class="locatie-adres">${huidigeTherapeut.locatie}</div></div><span class="locatie-badge">Actief</span></div>`;
+  }
+
+  // Laad alle beschikbare praktijken uit Supabase
   const nieuwGrid = document.getElementById('locaties-nieuw-grid');
-  nieuwGrid.innerHTML = `<div style="font-size:0.85rem;color:var(--text-muted);padding:8px 0">Beschikbare locaties worden geladen via Supabase zodra de koppeling actief is.</div>`;
+  nieuwGrid.innerHTML = '<div style="font-size:0.85rem;color:var(--text-muted)">Laden...</div>';
+
+  try {
+    const resp = await fetch(
+      `${SUPABASE_URL}/rest/v1/praktijken?actief=eq.true&select=id,naam,straat,stad&order=naam`,
+      { headers: HEADERS }
+    );
+    const praktijken = await resp.json();
+
+    // Toon alle praktijken als checkboxes, huidige al aangevinkt
+    nieuwGrid.innerHTML = praktijken.map(p => {
+      const isHuidig = huidigeIds.has(p.id);
+      return `
+        <label class="praktijk-checkbox" style="${isHuidig ? 'border-color:var(--teal);background:var(--teal-light)' : ''}">
+          <input type="checkbox" name="locatie-keuze" value="${p.id}"
+            ${isHuidig ? 'checked disabled' : ''}
+            style="width:16px;height:16px;accent-color:var(--teal);flex-shrink:0" />
+          <span style="font-size:0.85rem;color:var(--navy)">
+            <strong>${p.naam}</strong>
+            <span style="color:var(--text-muted);font-size:0.78rem;margin-left:6px">${p.straat || ''}, ${p.stad || ''}</span>
+            ${isHuidig ? '<span style="color:var(--teal);font-size:0.72rem;font-weight:700;margin-left:6px">● Huidig</span>' : ''}
+          </span>
+        </label>`;
+    }).join('');
+
+  } catch(e) {
+    nieuwGrid.innerHTML = '<div style="font-size:0.85rem;color:var(--red)">Kon locaties niet laden. Probeer opnieuw.</div>';
+  }
 }
 
 // ─────────────────────────────────────────────────────────────
