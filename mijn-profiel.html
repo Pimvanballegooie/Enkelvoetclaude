@@ -150,6 +150,11 @@
     .spec-banner-tekst strong { display: block; font-size: 0.95rem; color: var(--gold); font-weight: 700; }
     .spec-banner-tekst span { font-size: 0.82rem; color: var(--text-muted); }
 
+    .wachtwoord-wrap { position: relative; }
+    .wachtwoord-wrap input { padding-right: 44px; }
+    .oogje { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; font-size: 1.1rem; color: var(--text-muted); padding: 4px; line-height: 1; }
+    .oogje:hover { color: var(--navy); }
+
     footer { background: #0F2340; color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 0.78rem; margin-top: 48px; }
     footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
   </style>
@@ -198,7 +203,10 @@
         </div>
         <div class="form-group">
           <label for="inp-wachtwoord">Wachtwoord</label>
-          <input type="password" id="inp-wachtwoord" placeholder="••••••••" onkeydown="if(event.key==='Enter') inloggen()" />
+          <div class="wachtwoord-wrap">
+            <input type="password" id="inp-wachtwoord" placeholder="••••••••" onkeydown="if(event.key==='Enter') inloggen()" />
+            <button type="button" class="oogje" onclick="toggleZichtbaar('inp-wachtwoord', this)" tabindex="-1">👁</button>
+          </div>
         </div>
         <div class="inlog-fout" id="inlog-fout"></div>
         <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
@@ -323,11 +331,17 @@
         <div class="kaart-titel">Wachtwoord wijzigen</div>
         <div class="form-group">
           <label>Nieuw wachtwoord</label>
-          <input type="password" id="nieuw-wachtwoord" placeholder="Minimaal 8 tekens" />
+          <div class="wachtwoord-wrap">
+            <input type="password" id="nieuw-wachtwoord" placeholder="Minimaal 8 tekens" />
+            <button type="button" class="oogje" onclick="toggleZichtbaar('nieuw-wachtwoord', this)" tabindex="-1">👁</button>
+          </div>
         </div>
         <div class="form-group">
           <label>Herhaal nieuw wachtwoord</label>
-          <input type="password" id="nieuw-wachtwoord-herhaal" placeholder="Herhaal wachtwoord" />
+          <div class="wachtwoord-wrap">
+            <input type="password" id="nieuw-wachtwoord-herhaal" placeholder="Herhaal wachtwoord" />
+            <button type="button" class="oogje" onclick="toggleZichtbaar('nieuw-wachtwoord-herhaal', this)" tabindex="-1">👁</button>
+          </div>
         </div>
         <button class="btn-opslaan" onclick="wachtwoordWijzigen()">Wachtwoord wijzigen →</button>
         <div class="melding" id="melding-wachtwoord"></div>
@@ -398,6 +412,17 @@ let huidigeTherapeut = null;
 // ─────────────────────────────────────────────────────────────
 // VERWERK TOKEN UIT URL (na uitnodiging of wachtwoord reset)
 // ─────────────────────────────────────────────────────────────
+function toggleZichtbaar(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁';
+  }
+}
+
 async function verwerkUrlToken() {
   const hash = window.location.hash;
   if (!hash) return;
@@ -445,11 +470,17 @@ function toonWachtwoordInstellen(token, type) {
       <p>${isReset ? 'Stel uw nieuwe wachtwoord in.' : 'Stel uw wachtwoord in om toegang te krijgen tot uw profiel.'}</p>
       <div class="form-group" style="margin-top:20px">
         <label>Wachtwoord</label>
-        <input type="password" id="nieuw-pw" placeholder="Minimaal 8 tekens" />
+        <div class="wachtwoord-wrap">
+          <input type="password" id="nieuw-pw" placeholder="Minimaal 8 tekens" />
+          <button type="button" class="oogje" onclick="toggleZichtbaar('nieuw-pw', this)" tabindex="-1">👁</button>
+        </div>
       </div>
       <div class="form-group">
         <label>Herhaal wachtwoord</label>
-        <input type="password" id="nieuw-pw-herhaal" placeholder="Herhaal wachtwoord" />
+        <div class="wachtwoord-wrap">
+          <input type="password" id="nieuw-pw-herhaal" placeholder="Herhaal wachtwoord" />
+          <button type="button" class="oogje" onclick="toggleZichtbaar('nieuw-pw-herhaal', this)" tabindex="-1">👁</button>
+        </div>
       </div>
       <div class="inlog-fout" id="pw-fout"></div>
       <button class="btn-primary" onclick="wachtwoordInstellen('${token}')">Wachtwoord opslaan →</button>
@@ -567,6 +598,7 @@ async function wachtwoordReset() {
       method: 'POST',
       headers: { 'apikey': ANON_KEY, 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, redirect_to: 'https://enkelvoet.net/mijn-profiel.html' })
+      // Let op: redirect URL moet exact overeenkomen met Supabase Redirect URLs instelling
     });
     if (resp.ok) {
       fout.textContent = '✓ Resetlink verstuurd! Controleer uw e-mail.';
