@@ -628,9 +628,8 @@ function renderBlokBody(blok, state) {
       const opt = vraag.opties[origOptIdx];
       let klasse = 'optie';
       if (beantwoord && !state.afgerond) {
-        // Geselecteerd maar nog niet afgerond: toon alleen selectie, geen correctheid
-        if (origOptIdx === antwoord) klasse += ' geselecteerd disabled';
-        else klasse += ' disabled';
+        // Geselecteerd maar nog niet afgerond: toon selectie, blijft klikbaar
+        if (origOptIdx === antwoord) klasse += ' geselecteerd';
       } else if (beantwoord && state.afgerond) {
         // Afgerond: toon correct/fout
         klasse += ' disabled';
@@ -699,7 +698,7 @@ function toggleBlok(blokId, isLocked) {
 function kiesAntwoord(blokId, vraagIdx, optieIdx) {
   const state = blokState[blokId];
   if (state.afgerond) return;
-  if (state.antwoorden[vraagIdx] !== undefined) return;
+  // Antwoord mag altijd gewijzigd worden zolang blok niet afgerond is
   state.antwoorden[vraagIdx] = optieIdx;
   document.getElementById('body-' + blokId).innerHTML = renderBlokBody(
     CURSUS.blokken.find(b => b.id === blokId), state
