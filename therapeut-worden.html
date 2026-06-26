@@ -378,6 +378,9 @@
     return url;
   }
 
+  // Vul disciplines alvast in bij laden
+  document.addEventListener('DOMContentLoaded', vulDisciplineCheckboxes);
+
   // ─── VERSTUUR FORMULIER ───
   async function verstuurFormulier() {
     if (document.getElementById('website_url').value !== '') return;
