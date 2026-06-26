@@ -154,6 +154,7 @@
 <script>
   const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
   const RESEND_API_KEY = 're_4R1WMSAN_BoCLu5oUFf7XkECZhyxEpS3s';
+  const INVITE_FUNCTION_URL = 'https://islujznszevdynguhjdc.supabase.co/functions/v1/smart-worker';
   const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
   let toegangsToken = null;
 
@@ -480,14 +481,13 @@
       body: JSON.stringify({ actief: true })
     });
 
-    // 2. Stuur uitnodiging via Supabase Admin API
+    // 2. Stuur uitnodiging via Edge Function
     try {
-      const inviteResp = await fetch(`${SUPABASE_URL}/auth/v1/invite`, {
+      const inviteResp = await fetch(INVITE_FUNCTION_URL, {
         method: 'POST',
         headers: {
-          'apikey': ANON_KEY,
-          'Authorization': `Bearer ${toegangsToken}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${toegangsToken}`
         },
         body: JSON.stringify({
           email,
@@ -497,10 +497,11 @@
       if (inviteResp.ok) {
         alert(`✓ Therapeut goedgekeurd. Uitnodigingsmail verstuurd naar ${email}.`);
       } else {
-        alert(`Therapeut goedgekeurd, maar uitnodigingsmail mislukt. Stuur handmatig een uitnodiging via Supabase Authentication → Users → Invite.`);
+        const err = await inviteResp.json();
+        alert(`Therapeut goedgekeurd, maar uitnodigingsmail mislukt: ${err.error || 'onbekende fout'}`);
       }
     } catch(e) {
-      alert('Therapeut goedgekeurd, maar uitnodigingsmail mislukt.');
+      alert(`Therapeut goedgekeurd, maar uitnodigingsmail mislukt: ${e.message}`);
     }
 
     kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
