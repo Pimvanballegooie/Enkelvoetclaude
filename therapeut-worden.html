@@ -143,36 +143,30 @@
 
         <!-- STAP 1: PRAKTIJKCODE VERIFICATIE -->
         <div class="form-section">
-          <div class="form-section-title">🔑 Verificatie praktijkcode</div>
+          <div class="form-section-title">🔑 Verificatie praktijkcode(s)</div>
           <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:20px;line-height:1.6">
-            Om misbruik te voorkomen kun je alleen aanmelden als je een geldige praktijkcode hebt. Deze code ontvang je van de eigenaar of beheerder van jouw praktijklocatie.
+            Voeg alle praktijklocaties toe waar je werkt. Elke locatie heeft een eigen code die je ontvangt van de praktijkbeheerder.
           </p>
 
-          <div class="code-stap" id="code-invoer-stap">
-            <div class="form-group" style="margin-bottom:12px">
-              <label>Praktijkcode <span class="req">*</span></label>
-              <div style="display:flex;gap:10px">
-                <input type="text" id="praktijk-code-input" placeholder="bijv. F19146"
-                  style="text-transform:uppercase;letter-spacing:0.1em;font-weight:600"
-                  oninput="this.value=this.value.toUpperCase()"
-                  onkeydown="if(event.key==='Enter') verificeerCode()" />
-                <button class="btn-verificeer" onclick="verificeerCode()" id="btn-verificeer">Controleer →</button>
-              </div>
-              <div class="code-fout" id="code-fout">Ongeldige code. Vraag de code op bij de beheerder van uw praktijk.</div>
-            </div>
-          </div>
+          <!-- Toegevoegde locaties -->
+          <div id="toegevoegde-locaties" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px"></div>
 
-          <div class="code-verified verborgen" id="code-bevestigd">
-            <span style="font-size:1.2rem">✓</span>
-            <div>
-              <div style="font-size:0.88rem;font-weight:700;color:#1E8449" id="code-praktijk-naam"></div>
-              <div style="font-size:0.78rem;color:#1E8449">Praktijkcode geverifieerd — u kunt het formulier invullen</div>
+          <!-- Code invoer -->
+          <div class="form-group" style="margin-bottom:12px">
+            <label id="code-label">Praktijkcode <span class="req">*</span></label>
+            <div style="display:flex;gap:10px">
+              <input type="text" id="praktijk-code-input" placeholder="bijv. F19146"
+                style="text-transform:uppercase;letter-spacing:0.1em;font-weight:600"
+                oninput="this.value=this.value.toUpperCase()"
+                onkeydown="if(event.key==='Enter') verificeerCode()" />
+              <button class="btn-verificeer" onclick="verificeerCode()" id="btn-verificeer">Toevoegen →</button>
             </div>
-            <button onclick="resetCode()" style="margin-left:auto;background:none;border:none;color:#1E8449;cursor:pointer;font-size:0.78rem;text-decoration:underline">Wijzigen</button>
+            <div class="code-fout" id="code-fout">Ongeldige code. Vraag de code op bij de beheerder van uw praktijk.</div>
+            <div class="code-fout" id="code-dubbel" style="background:#FEF9E7;border-color:#C9940A;color:#7a5800">Deze locatie is al toegevoegd.</div>
           </div>
         </div>
 
-        <!-- REST VAN HET FORMULIER — verborgen tot code geverifieerd -->
+        <!-- REST VAN HET FORMULIER — verborgen tot minimaal 1 code geverifieerd -->
         <div id="formulier-rest" class="verborgen">
 
           <!-- Persoonsgegevens -->
@@ -258,66 +252,90 @@
 
   const DISCIPLINES = ['Fysiotherapeut','Ergotherapeut','Oefentherapeut','Podotherapeut','Medisch pedicure','Orthopedisch schoenmaker'];
 
-  let geverifieerdePraktijk = null;
+  let geverifieerdePraktijken = []; // meerdere locaties
 
   // ─── PRAKTIJKCODE VERIFICATIE ───
   async function verificeerCode() {
     const code = document.getElementById('praktijk-code-input').value.trim().toUpperCase();
     const fout = document.getElementById('code-fout');
+    const dubbel = document.getElementById('code-dubbel');
     const btn = document.getElementById('btn-verificeer');
     fout.style.display = 'none';
+    dubbel.style.display = 'none';
     if (!code) return;
+
+    // Check op dubbele code
+    if (geverifieerdePraktijken.some(p => p.praktijk_code === code)) {
+      dubbel.style.display = 'block';
+      return;
+    }
 
     btn.textContent = 'Controleren…';
     btn.disabled = true;
 
     try {
       const resp = await fetch(
-        `${SUPABASE_URL}/rest/v1/praktijken?praktijk_code=eq.${encodeURIComponent(code)}&actief=eq.true&select=id,naam,straat,stad`,
+        `${SUPABASE_URL}/rest/v1/praktijken?praktijk_code=eq.${encodeURIComponent(code)}&actief=eq.true&select=id,naam,straat,stad,praktijk_code`,
         { headers: HEADERS }
       );
       const data = await resp.json();
 
       if (!data || data.length === 0) {
         fout.style.display = 'block';
-        btn.textContent = 'Controleer →';
+        btn.textContent = 'Toevoegen →';
         btn.disabled = false;
         return;
       }
 
-      geverifieerdePraktijk = data[0];
+      const praktijk = data[0];
+      geverifieerdePraktijken.push(praktijk);
+      document.getElementById('praktijk-code-input').value = '';
+      btn.textContent = 'Toevoegen →';
+      btn.disabled = false;
 
-      // Toon bevestiging
-      document.getElementById('code-praktijk-naam').textContent =
-        `${geverifieerdePraktijk.naam} — ${geverifieerdePraktijk.straat}, ${geverifieerdePraktijk.stad}`;
-      document.getElementById('code-bevestigd').classList.remove('verborgen');
-      document.getElementById('code-invoer-stap').classList.add('verborgen');
+      renderToegevoemdePraktijken();
 
-      // Toon rest formulier
-      document.getElementById('formulier-rest').classList.remove('verborgen');
-      vulDisciplineCheckboxes();
-
-      // Scroll naar formulier
-      setTimeout(() => {
-        document.getElementById('formulier-rest').scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
+      // Toon formulier als nog niet zichtbaar
+      if (document.getElementById('formulier-rest').classList.contains('verborgen')) {
+        document.getElementById('formulier-rest').classList.remove('verborgen');
+        document.getElementById('code-label').textContent = 'Nog een praktijkcode toevoegen';
+        vulDisciplineCheckboxes();
+        setTimeout(() => {
+          document.getElementById('formulier-rest').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 200);
+      }
 
     } catch(e) {
       fout.textContent = 'Er ging iets mis. Probeer opnieuw.';
       fout.style.display = 'block';
-      btn.textContent = 'Controleer →';
+      btn.textContent = 'Toevoegen →';
       btn.disabled = false;
     }
   }
 
-  function resetCode() {
-    geverifieerdePraktijk = null;
-    document.getElementById('code-bevestigd').classList.add('verborgen');
-    document.getElementById('code-invoer-stap').classList.remove('verborgen');
-    document.getElementById('formulier-rest').classList.add('verborgen');
-    document.getElementById('praktijk-code-input').value = '';
-    document.getElementById('btn-verificeer').textContent = 'Controleer →';
-    document.getElementById('btn-verificeer').disabled = false;
+  function renderToegevoemdePraktijken() {
+    const container = document.getElementById('toegevoegde-locaties');
+    container.innerHTML = geverifieerdePraktijken.map((p, i) => `
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#EAF7F0;border:1.5px solid #1E8449;border-radius:8px">
+        <span style="font-size:1.1rem">✓</span>
+        <div style="flex:1">
+          <div style="font-size:0.88rem;font-weight:700;color:#1E8449">${p.naam}</div>
+          <div style="font-size:0.78rem;color:#1E8449">${p.straat}, ${p.stad} · Code: ${p.praktijk_code}</div>
+        </div>
+        <button onclick="verwijderPraktijk(${i})"
+          style="background:none;border:none;color:#1E8449;cursor:pointer;font-size:0.78rem;text-decoration:underline;white-space:nowrap">
+          Verwijderen
+        </button>
+      </div>`).join('');
+  }
+
+  function verwijderPraktijk(index) {
+    geverifieerdePraktijken.splice(index, 1);
+    renderToegevoemdePraktijken();
+    if (geverifieerdePraktijken.length === 0) {
+      document.getElementById('formulier-rest').classList.add('verborgen');
+      document.getElementById('code-label').innerHTML = 'Praktijkcode <span class="req">*</span>';
+    }
   }
 
   // ─── HELPERS ───
@@ -363,7 +381,7 @@
   // ─── VERSTUUR FORMULIER ───
   async function verstuurFormulier() {
     if (document.getElementById('website_url').value !== '') return;
-    if (!geverifieerdePraktijk) { alert('Voer eerst een geldige praktijkcode in.'); return; }
+    if (geverifieerdePraktijken.length === 0) { alert('Voeg minimaal één praktijkcode toe.'); return; }
 
     const voornaam = document.getElementById('voornaam').value.trim();
     const achternaam = document.getElementById('achternaam').value.trim();
@@ -401,14 +419,14 @@
       if (!therapeutResp.ok) throw new Error(await therapeutResp.text());
       const [therapeut] = await therapeutResp.json();
 
-      // Koppel aan geverifieerde praktijk
+      // Koppel aan alle geverifieerde praktijken
       await fetch(`${SUPABASE_URL}/rest/v1/therapeut_praktijken`, {
         method: 'POST',
         headers: HEADERS,
-        body: JSON.stringify([{ therapeut_id: therapeut.id, praktijk_id: geverifieerdePraktijk.id }])
+        body: JSON.stringify(geverifieerdePraktijken.map(p => ({ therapeut_id: therapeut.id, praktijk_id: p.id })))
       });
 
-      document.getElementById('succes-praktijk').textContent = geverifieerdePraktijk.naam;
+      document.getElementById('succes-praktijk').textContent = geverifieerdePraktijken.map(p => p.naam).join(', ');
       document.getElementById('form-content').style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
 
