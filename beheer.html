@@ -227,7 +227,7 @@
             <thead>
               <tr style="background:var(--grey-bg)">
                 <th style="text-align:left;padding:12px 16px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted)">Praktijk</th>
-                <th style="text-align:left;padding:12px 16px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted)">Stad</th>
+                <th style="text-align:left;padding:12px 16px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted)">Adres</th>
                 <th style="text-align:left;padding:12px 16px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted)">Pakket</th>
                 <th style="text-align:left;padding:12px 16px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted)">Praktijkcode</th>
                 <th style="text-align:left;padding:12px 16px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-muted)">Contactpersoon</th>
@@ -237,7 +237,7 @@
               ${actief.map((p, i) => `
                 <tr style="border-top:1px solid var(--grey-border);${i % 2 === 1 ? 'background:var(--grey-bg)' : ''}">
                   <td style="padding:12px 16px;font-size:0.875rem;font-weight:600;color:var(--navy)">${p.naam}</td>
-                  <td style="padding:12px 16px;font-size:0.875rem;color:var(--text-muted)">${p.stad || '—'}</td>
+                  <td style="padding:12px 16px;font-size:0.875rem;color:var(--text-muted)">${p.straat || '—'}, ${p.stad || '—'}</td>
                   <td style="padding:12px 16px"><span class="kaart-tier tier-${p.tier || 'basis'}">${p.tier || 'basis'}</span></td>
                   <td style="padding:12px 16px;font-family:monospace;font-weight:700;color:var(--teal);font-size:0.95rem;letter-spacing:0.1em">${p.praktijk_code || '—'}</td>
                   <td style="padding:12px 16px;font-size:0.82rem;color:var(--text-muted)">${p.contact_voornaam || ''} ${p.contact_achternaam || ''}<br><span style="font-size:0.75rem">${p.contact_email || ''}</span></td>
