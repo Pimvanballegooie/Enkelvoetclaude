@@ -144,7 +144,6 @@ def maak_niveau_label(niveau):
     return labels.get(niveau, niveau.capitalize())
 
 def maak_cta_blok():
-    """Genereer een vast CTA-blok onderaan elke protocolpagina"""
     return '''
 <div class="cta-blok">
   <div class="cta-sectie cta-afspraak">
@@ -173,7 +172,6 @@ def maak_cta_blok():
 </style>'''
 
 def extraheer_fysioefeningen_urls(body_schoon):
-    """Haal alle fysioefeningen.nl URLs op uit de opgeschoonde body"""
     return re.findall(
         r'href="(https?://(?:www\.)?fysioefeningen\.nl/[^"]+)"',
         body_schoon
@@ -191,7 +189,6 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
 
     cta_blok = maak_cta_blok()
 
-    # Haal fysioefeningen.nl URLs op voor structured data
     fysio_urls = extraheer_fysioefeningen_urls(body_schoon)
     if fysio_urls:
         fysio_links = ',\n    '.join([f'"relatedLink": "{u}"' for u in fysio_urls])
@@ -211,9 +208,37 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
   <meta property="og:title" content="{titel}" />
   <meta property="og:description" content="{description}" />
   <meta property="og:type" content="article" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+    @font-face {{
+      font-family: 'Inter';
+      src: url('../fonts/inter-v20-latin-300.woff2') format('woff2');
+      font-weight: 300;
+      font-display: swap;
+    }}
+    @font-face {{
+      font-family: 'Inter';
+      src: url('../fonts/inter-v20-latin-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }}
+    @font-face {{
+      font-family: 'Inter';
+      src: url('../fonts/inter-v20-latin-500.woff2') format('woff2');
+      font-weight: 500;
+      font-display: swap;
+    }}
+    @font-face {{
+      font-family: 'Inter';
+      src: url('../fonts/inter-v20-latin-600.woff2') format('woff2');
+      font-weight: 600;
+      font-display: swap;
+    }}
+    @font-face {{
+      font-family: 'Inter';
+      src: url('../fonts/inter-v20-latin-700.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }}
     *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
     :root {{ --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4; --grey-bg: #F5F7FA; --grey-border: #DDE3EC; --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF; }}
     body {{ font-family: "Inter", sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; }}
@@ -222,7 +247,6 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
     .logo {{ display: flex; align-items: center; gap: 12px; text-decoration: none; }}
     .logo-icon {{ width: 40px; height: 40px; }}
     .logo-text {{ color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }}
-    .logo-text span {{ display: block; font-weight: 300; font-size: 0.75rem; opacity: 0.7; }}
     nav {{ display: flex; gap: 6px; }}
     nav a {{ color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s; }}
     nav a:hover {{ background: rgba(255,255,255,0.12); color: var(--white); }}
@@ -273,7 +297,7 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
   <div class="header-inner">
     <a href="../index.html" class="logo">
       <img class="logo-icon" src="../EVN_Logo_transparant.png" alt="EVN Logo" />
-      <div class="logo-text">Enkel Voet Netwerk<span>Breda e.o.</span></div>
+      <div class="logo-text">Enkel Voet Netwerk</div>
     </a>
     <nav>
       <a href="../protocollen.html">Protocollen</a>
@@ -311,7 +335,7 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
 </div>
 
 <footer>
-  <p>&copy; 2025 Enkel Voet Netwerk Breda e.o. &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
 </footer>
 </body>
 </html>'''
@@ -446,11 +470,39 @@ html_pagina = '''<!DOCTYPE html>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Alle behandelprotocollen enkel & voet - Enkel Voet Netwerk Breda</title>
+  <title>Alle behandelprotocollen enkel & voet - Enkel Voet Netwerk</title>
   <meta name="description" content="Overzicht van alle behandelprotocollen voor enkel en voet aandoeningen. Enkelverzwikking, achillespees, slijtage, hielspoor en meer. Fysiotherapie Breda." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+    @font-face {
+      font-family: 'Inter';
+      src: url('fonts/inter-v20-latin-300.woff2') format('woff2');
+      font-weight: 300;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Inter';
+      src: url('fonts/inter-v20-latin-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Inter';
+      src: url('fonts/inter-v20-latin-500.woff2') format('woff2');
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Inter';
+      src: url('fonts/inter-v20-latin-600.woff2') format('woff2');
+      font-weight: 600;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Inter';
+      src: url('fonts/inter-v20-latin-700.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root { --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4; --grey-bg: #F5F7FA; --grey-border: #DDE3EC; --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF; }
     html { scroll-behavior: smooth; }
@@ -460,7 +512,6 @@ html_pagina = '''<!DOCTYPE html>
     .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 40px; height: 40px; }
     .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
-    .logo-text span { display: block; font-weight: 300; font-size: 0.75rem; opacity: 0.7; }
     nav { display: flex; gap: 6px; }
     nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s; }
     nav a:hover { background: rgba(255,255,255,0.12); color: var(--white); }
@@ -532,7 +583,7 @@ html_pagina = '''<!DOCTYPE html>
   <div class="header-inner">
     <a href="index.html" class="logo">
       <img class="logo-icon" src="EVN_Logo_transparant.png" alt="EVN Logo" />
-      <div class="logo-text">Enkel Voet Netwerk<span>Breda e.o.</span></div>
+      <div class="logo-text">Enkel Voet Netwerk</div>
     </a>
     <nav>
       <a href="protocollen.html">Protocollen</a>
@@ -574,7 +625,7 @@ html_pagina = '''<!DOCTYPE html>
   </div>
 </div>
 <footer>
-  <p>2025 Enkel Voet Netwerk Breda e.o. &nbsp;·&nbsp; <a href="index.html">Terug naar home</a></p>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="index.html">Terug naar home</a></p>
 </footer>
 <script>
   let actieveZone = "alle";
