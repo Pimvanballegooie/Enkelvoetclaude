@@ -3,46 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Locatie worden - Enkel Voet Netwerk Breda e.o.</title>
-  
+  <title>Locatie worden – Enkel Voet Netwerk</title>
+  <meta name="description" content="Word onderdeel van het Enkel Voet Netwerk. Meld uw praktijk aan en word gevonden door patiënten met enkel- en voetklachten." />
   <style>
-    @font-face {
-  font-family: 'Inter';
-  src: url('fonts/inter-v20-latin-300.woff2') format('woff2');
-  font-weight: 300;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Inter';
-  src: url('fonts/inter-v20-latin-regular.woff2') format('woff2');
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Inter';
-  src: url('fonts/inter-v20-latin-500.woff2') format('woff2');
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Inter';
-  src: url('fonts/inter-v20-latin-600.woff2') format('woff2');
-  font-weight: 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Inter';
-  src: url('fonts/inter-v20-latin-700.woff2') format('woff2');
-  font-weight: 700;
-  font-display: swap;
-}
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-v20-latin-300.woff2') format('woff2'); font-weight: 300; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-v20-latin-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-v20-latin-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-v20-latin-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'Inter'; src: url('fonts/inter-v20-latin-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4;
+      --navy: #1B3A5C; --navy-dark: #0F2340;
+      --teal: #2A9D8F; --teal-light: #E8F5F4;
       --grey-bg: #F5F7FA; --grey-border: #DDE3EC;
       --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF;
       --gold: #C9940A; --gold-light: #FEF9E7;
-      --radius: 10px; --shadow: 0 2px 16px rgba(27,58,92,0.08);
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text); background: var(--white); line-height: 1.6; }
@@ -51,116 +27,61 @@
     .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
     .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 40px; height: 40px; }
-    .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
-    nav { display: flex; gap: 6px; }
-    nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s, color 0.2s; }
+    .logo-text { color: var(--white); font-weight: 700; font-size: 1.05rem; }
+    nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: all 0.2s; }
     nav a:hover { background: rgba(255,255,255,0.12); color: var(--white); }
     nav a.cta { background: var(--teal); color: var(--white); margin-left: 8px; }
     nav a.cta:hover { background: #238a7e; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; }
 
-    .hero { background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%); color: var(--white); padding: 72px 24px 0; text-align: center; position: relative; }
-    .hero-inner { max-width: 640px; margin: 0 auto; position: relative; padding-bottom: 72px; }
-    .hero-wave { display: block; width: 100%; height: 60px; }
-    .hero-badge { display: inline-block; background: rgba(42,157,143,0.25); border: 1px solid rgba(42,157,143,0.5); color: #7FDED5; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 14px; border-radius: 999px; margin-bottom: 20px; }
-    .hero h1 { font-size: clamp(1.8rem, 4.5vw, 2.6rem); font-weight: 700; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.02em; }
+    /* HERO */
+    .hero { background: linear-gradient(135deg, var(--navy) 0%, #2A4A73 100%); color: var(--white); padding: 72px 24px 64px; text-align: center; }
+    .hero-badge { display: inline-block; background: rgba(42,157,143,0.25); border: 1px solid rgba(42,157,143,0.5); color: #7FDED5; font-size: 0.75rem; font-weight: 700; padding: 5px 14px; border-radius: 999px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .hero h1 { font-size: clamp(1.8rem,4vw,2.6rem); font-weight: 700; margin-bottom: 14px; letter-spacing: -0.02em; }
     .hero h1 em { font-style: normal; color: #7FDED5; }
-    .hero p { font-size: 1rem; opacity: 0.85; max-width: 520px; margin: 0 auto; line-height: 1.7; }
+    .hero p { opacity: 0.85; max-width: 560px; margin: 0 auto; font-size: 1rem; line-height: 1.7; }
 
-    /* Kwaliteitsbanner */
-    .kwaliteit-banner { background: var(--teal-light); border-bottom: 2px solid rgba(42,157,143,0.2); padding: 20px 24px; text-align: center; }
-    .kwaliteit-banner-inner { max-width: 800px; margin: 0 auto; }
-    .kwaliteit-banner p { font-size: 0.95rem; color: var(--navy); font-weight: 500; }
-    .kwaliteit-banner strong { color: var(--teal); }
+    /* CONTENT */
+    .content { max-width: 860px; margin: 0 auto; padding: 56px 24px 80px; }
 
-    section { padding: 64px 24px; }
-    .section-inner { max-width: 1100px; margin: 0 auto; }
-    .section-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 10px; }
-    .section-header { margin-bottom: 40px; }
-    .section-header h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--navy); letter-spacing: -0.02em; }
-    .section-header p { margin-top: 10px; color: var(--text-muted); max-width: 560px; font-size: 0.95rem; }
+    /* NETWERK UITLEG */
+    .netwerk-uitleg { background: var(--teal-light); border: 1px solid rgba(42,157,143,0.3); border-radius: 16px; padding: 28px 32px; margin-bottom: 48px; display: flex; gap: 20px; align-items: flex-start; }
+    .netwerk-uitleg .icon { font-size: 2.5rem; flex-shrink: 0; }
+    .netwerk-uitleg h2 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+    .netwerk-uitleg p { font-size: 0.88rem; color: #1a6b62; line-height: 1.7; }
+    .netwerk-links { display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+    .netwerk-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 700; color: var(--teal); background: var(--white); border: 1.5px solid var(--teal); border-radius: 8px; padding: 6px 14px; text-decoration: none; transition: all 0.2s; }
+    .netwerk-link:hover { background: var(--teal); color: var(--white); }
 
-    .tiers { background: var(--grey-bg); }
-    .tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-    .tier-card { background: var(--white); border: 2px solid var(--grey-border); border-radius: 16px; padding: 28px 24px; cursor: pointer; transition: all 0.2s; position: relative; }
-    .tier-card:hover { border-color: var(--teal); box-shadow: var(--shadow); transform: translateY(-2px); }
-    .tier-card.geselecteerd { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.15); }
-    .tier-card.geselecteerd.partner { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(201,148,10,0.15); }
-    .tier-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 14px; text-transform: uppercase; letter-spacing: 0.06em; }
-    .tier-badge.basis   { background: var(--teal-light); color: var(--teal); }
-    .tier-badge.plus    { background: #EAF0FB; color: #1A5276; }
-    .tier-badge.partner { background: var(--gold-light); color: var(--gold); }
-    .tier-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-    .prijs-blok { margin: 12px 0 4px; display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; }
-    .prijs-huidig { font-size: 1.8rem; font-weight: 700; color: var(--navy); }
-    .prijs-huidig.partner-prijs { color: var(--gold); }
-    .prijs-unit { font-size: 0.82rem; color: var(--text-muted); }
-    .prijs-normaal { font-size: 0.78rem; color: var(--text-muted); text-decoration: line-through; }
-    .prijs-actie { font-size: 0.72rem; font-weight: 700; background: #FEF3C7; color: #92400E; padding: 2px 8px; border-radius: 999px; }
-    .prijs-extra { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; }
-    .tier-features { list-style: none; margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
-    .tier-features li { font-size: 0.875rem; color: var(--text-muted); display: flex; align-items: flex-start; gap: 8px; }
-    .tier-features li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-    .tier-features li.nee { color: #BCC5D3; }
-    .tier-features li.nee::before { content: '-'; color: #BCC5D3; }
-    .tier-features li.highlight { color: var(--navy); font-weight: 600; }
-    .tier-features li.highlight::before { content: '✓'; color: var(--teal); }
-    .tier-card.partner .tier-features li::before { color: var(--gold); }
-    .tier-card.partner .tier-features li.highlight::before { color: var(--gold); }
-    .tier-check { position: absolute; top: 16px; right: 16px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--grey-border); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-    .tier-card.geselecteerd .tier-check { background: var(--teal); border-color: var(--teal); color: var(--white); font-size: 0.7rem; }
-    .tier-card.geselecteerd.partner .tier-check { background: var(--gold); border-color: var(--gold); }
-    .partner-label { background: linear-gradient(135deg, var(--gold), #E8A800); color: var(--white); font-size: 0.65rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); white-space: nowrap; letter-spacing: 0.05em; }
-    .kwaliteit-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 700; color: var(--teal); background: var(--teal-light); border: 1px solid rgba(42,157,143,0.3); border-radius: 999px; padding: 3px 10px; margin-top: 14px; }
-    .tier-card.partner .kwaliteit-tag { color: var(--gold); background: var(--gold-light); border-color: rgba(201,148,10,0.3); }
+    /* STAPPEN */
+    .stappen-titel { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 24px; }
+    .stappen { display: flex; flex-direction: column; gap: 0; margin-bottom: 48px; }
+    .stap { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--grey-border); align-items: flex-start; }
+    .stap:last-child { border-bottom: none; }
+    .stap-nr { width: 44px; height: 44px; border-radius: 50%; background: var(--navy); color: var(--white); font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .stap-nr.actief { background: var(--teal); }
+    .stap-body h3 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .stap-body p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+    .stap-body .tip { background: var(--grey-bg); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 0.82rem; color: var(--text-muted); margin-top: 10px; }
 
-    .formulier { background: var(--white); }
-    .form-wrap { max-width: 720px; }
-    .form-section { background: var(--grey-bg); border: 1px solid var(--grey-border); border-radius: 16px; padding: 32px; margin-bottom: 24px; }
-    .form-section-title { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--grey-border); }
-    .locatie-blok { background: var(--grey-bg); border: 1px solid var(--grey-border); border-radius: 16px; padding: 32px; margin-bottom: 16px; }
-    .locatie-blok-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--grey-border); }
-    .locatie-blok-title { font-size: 1rem; font-weight: 700; color: var(--navy); }
-    .btn-verwijder { background: none; border: 1px solid var(--grey-border); border-radius: 6px; padding: 4px 10px; font-size: 0.78rem; color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
-    .btn-verwijder:hover { border-color: #E74C3C; color: #E74C3C; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .form-group { margin-bottom: 20px; }
-    .form-group:last-child { margin-bottom: 0; }
-    .form-group label { display: block; font-size: 0.83rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
-    .form-group label .req { color: var(--teal); margin-left: 2px; }
-    .form-group input, .form-group textarea { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.9rem; color: var(--text); background: var(--white); transition: border-color 0.2s, box-shadow 0.2s; outline: none; }
-    .form-group input:focus, .form-group textarea:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
-    .form-group textarea { resize: vertical; min-height: 90px; }
-    .beschrijving-sectie { display: none; }
-    .beschrijving-sectie.zichtbaar { display: block; }
-    .btn-toevoegen { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border: 2px dashed var(--grey-border); border-radius: 12px; background: none; color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 600; cursor: pointer; width: 100%; justify-content: center; transition: all 0.2s; margin-bottom: 24px; }
-    .btn-toevoegen:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
-    .checkbox-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 24px; }
-    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--teal); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
-    .checkbox-group label { font-size: 0.85rem; color: var(--text-muted); cursor: pointer; }
-    .btn-submit { width: 100%; padding: 14px; background: var(--teal); color: var(--white); border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.15s; }
-    .btn-submit:hover { background: #238a7e; transform: translateY(-1px); }
-    .form-success { display: none; text-align: center; padding: 40px 20px; }
-    .form-success .success-icon { font-size: 3rem; margin-bottom: 16px; }
-    .form-success h3 { font-size: 1.3rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-    .form-success p { color: var(--text-muted); font-size: 0.9rem; }
-    .disciplines-info { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; background: var(--teal-light); border: 1px solid rgba(42,157,143,0.3); border-radius: 8px; font-size: 0.83rem; color: #1a6b62; margin-top: 4px; }
+    /* CTA BLOK */
+    .cta-blok { background: linear-gradient(135deg, var(--teal) 0%, #238a7e 100%); border-radius: 20px; padding: 48px 40px; text-align: center; color: var(--white); }
+    .cta-blok h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 12px; }
+    .cta-blok p { opacity: 0.9; font-size: 0.95rem; margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+    .btn-aanmelden { display: inline-block; background: var(--white); color: var(--teal); padding: 14px 36px; border-radius: 10px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+    .btn-aanmelden:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .cta-sub { margin-top: 16px; font-size: 0.82rem; opacity: 0.75; }
+    .cta-sub a { color: rgba(255,255,255,0.9); }
 
-    footer { background: #0F2340; color: rgba(255,255,255,0.5); text-align: center; padding: 28px 24px; font-size: 0.82rem; }
+    /* VOORDELEN */
+    .voordelen { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 48px; }
+    .voordeel { background: var(--grey-bg); border: 1px solid var(--grey-border); border-radius: 12px; padding: 20px; }
+    .voordeel .icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .voordeel h3 { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .voordeel p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; }
+
+    footer { background: var(--navy-dark); color: rgba(255,255,255,0.5); text-align: center; padding: 28px 24px; font-size: 0.82rem; }
     footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
-    footer a:hover { color: var(--white); }
-
-    @media (max-width: 700px) {
-      .hamburger { display: flex; }
-      nav { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--navy); flex-direction: column; padding: 12px 16px 20px; gap: 4px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
-      nav.open { display: flex; }
-      nav a { padding: 10px 16px; border-radius: 8px; }
-      nav a.cta { margin-left: 0; margin-top: 8px; text-align: center; }
-      .form-row { grid-template-columns: 1fr; }
-      .form-section, .locatie-blok { padding: 20px; }
-      .tier-grid { grid-template-columns: 1fr; }
-    }
+    @media (max-width: 600px) { .netwerk-uitleg { flex-direction: column; } .cta-blok { padding: 32px 20px; } }
   </style>
 </head>
 <body>
@@ -171,400 +92,116 @@
       <img class="logo-icon" src="EVN_Logo_transparant.png" alt="EVN Logo" />
       <div class="logo-text">Enkel Voet Netwerk</div>
     </a>
-    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </div>
-        <nav id="main-nav">
+    <nav>
       <a href="protocollen.html">Protocollen</a>
       <a href="mijn-profiel.html">Mijn profiel</a>
-      <a href="index.html#locaties">Locaties</a>
-      <a href="partners.html">Partners</a>
-      <a href="therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="therapeut-worden.html">Therapeut worden</a>
       <a href="locatie-worden.html" class="cta">Locatie worden</a>
     </nav>
   </div>
 </header>
 
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-badge">Netwerk uitbreiden</div>
-    <h1>Word onderdeel van het<br><em>Enkel Voet Netwerk</em></h1>
-    <p>Kies het pakket dat bij uw praktijk past en meld u aan via het formulier onderaan deze pagina.</p>
-  </div>
-  <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#F5F7FA"/>
-  </svg>
-</section>
-
-<div class="kwaliteit-banner">
-  <div class="kwaliteit-banner-inner">
-    <p>Aansluiting bij het Enkel Voet Netwerk is gebaseerd op <strong>kwaliteit en bewezen werkwijze</strong> — niet op betalen voor een hogere positie. Elke aangesloten praktijk bevestigt te werken volgens de EVN-behandelprotocollen.</p>
-  </div>
+<div class="hero">
+  <div class="hero-badge">Voor praktijkhouders & beheerders</div>
+  <h1>Word onderdeel van het<br><em>Enkel Voet Netwerk</em></h1>
+  <p>Uw praktijk zichtbaar voor patiënten met enkel- en voetklachten — via enkelvoet.net én vindjefysio.net. Aanmelden duurt minder dan 5 minuten.</p>
 </div>
 
-<!-- TIERS -->
-<section class="tiers">
-  <div class="section-inner">
-    <div class="section-header">
-      <div class="section-eyebrow">Pakketten</div>
-      <h2>Kies uw aansluiting</h2>
-      <p>Zichtbaarheid wordt bepaald door kwaliteit. Hogere pakketten bieden meer mogelijkheden voor professionele ontwikkeling van uw therapeuten.</p>
-    </div>
-    <div class="tier-grid">
+<div class="content">
 
-      <!-- BASIS -->
-      <div class="tier-card" id="tier-basis" onclick="selecteerTier('basis')">
-        <div class="tier-check" id="check-basis"></div>
-        <div class="tier-badge basis">Basis</div>
-        <h3>Zichtbaar in het netwerk</h3>
-        <div class="prijs-blok">
-          <span class="prijs-huidig">€5</span>
-          <span class="prijs-unit">/ locatie / maand</span>
-        </div>
-        <p class="prijs-extra">€3/maand per extra locatie</p>
-        <p style="font-size:0.875rem;color:var(--text-muted)">Uw praktijk is zichtbaar op de locatiekaart en in de praktijkenlijst. U bevestigt te werken volgens de EVN-behandelprotocollen.</p>
-        <ul class="tier-features">
-          <li>Vermelding op de interactieve kaart</li>
-          <li>Naam, adres en contactgegevens</li>
-          <li>Disciplines automatisch via therapeuten</li>
-          <li class="highlight">Bevestiging: werkt volgens EVN-protocollen</li>
-          <li class="nee">Beschrijving onder uw kaart</li>
-          <li class="nee">Toegang tot online cursussen</li>
-          <li class="nee">Vermelding op de partnerpagina</li>
-        </ul>
-        <div class="kwaliteit-tag">🏅 EVN-protocol gecertificeerd</div>
-      </div>
-
-      <!-- PLUS -->
-      <div class="tier-card" id="tier-plus" onclick="selecteerTier('plus')">
-        <div class="tier-check" id="check-plus"></div>
-        <div class="tier-badge plus">Plus</div>
-        <h3>Specialisatie aantonen</h3>
-        <div class="prijs-blok">
-          <span class="prijs-huidig">€10</span>
-          <span class="prijs-unit">/ locatie / maand</span>
-          <span class="prijs-normaal">€20</span>
-          <span class="prijs-actie">Tijdelijk €10 korting</span>
-        </div>
-        <p class="prijs-extra">€10/maand per extra locatie (normaal €20)</p>
-        <p style="font-size:0.875rem;color:var(--text-muted)">Alles van Basis, plus de mogelijkheid om specialisme aan te tonen via EVN-cursussen. Tot 5 therapeuten per locatie.</p>
-        <ul class="tier-features">
-          <li>Vermelding op de interactieve kaart</li>
-          <li>Naam, adres en contactgegevens</li>
-          <li>Disciplines automatisch via therapeuten</li>
-          <li class="highlight">Bevestiging: werkt volgens EVN-protocollen</li>
-          <li>Beschrijving onder uw kaart</li>
-          <li class="highlight">Tot 5 therapeuten toegang tot online cursussen</li>
-          <li class="highlight">Toont specialisme aan via EVN-cursussen</li>
-          <li class="nee">Vermelding op de partnerpagina</li>
-        </ul>
-        <div class="kwaliteit-tag">🎓 EVN-gecertificeerde therapeuten</div>
-      </div>
-
-      <!-- PARTNER -->
-      <div class="tier-card partner" id="tier-partner" onclick="selecteerTier('partner')">
-        <div class="partner-label">Meest compleet</div>
-        <div class="tier-check" id="check-partner"></div>
-        <div class="tier-badge partner">Partner</div>
-        <h3>Volledig partnerschap</h3>
-        <div class="prijs-blok">
-          <span class="prijs-huidig partner-prijs">€50</span>
-          <span class="prijs-unit">/ locatie / maand</span>
-        </div>
-        <p class="prijs-extra">€25/maand per extra locatie</p>
-        <p style="font-size:0.875rem;color:var(--text-muted)">De meest complete aansluiting. Alle therapeuten op de locatie kunnen deelnemen aan EVN-cursussen en specialisme aantonen.</p>
-        <ul class="tier-features">
-          <li>Vermelding op de interactieve kaart</li>
-          <li>Naam, adres en contactgegevens</li>
-          <li>Disciplines automatisch via therapeuten</li>
-          <li class="highlight">Bevestiging: werkt volgens EVN-protocollen</li>
-          <li>Beschrijving onder uw kaart</li>
-          <li class="highlight">Onbeperkt therapeuten toegang tot online cursussen</li>
-          <li class="highlight">Toont specialisme aan via EVN-cursussen</li>
-          <li class="highlight">Vermelding op de exclusieve partnerpagina</li>
-          <li class="highlight">Logo + profiel op de partnerpagina</li>
-        </ul>
-        <div class="kwaliteit-tag">🌟 EVN-partner met volledig specialisme</div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- FORMULIER -->
-<section class="formulier" id="aanmelden">
-  <div class="section-inner">
-    <div class="section-header">
-      <div class="section-eyebrow">Aanmelden</div>
-      <h2>Meld uw praktijk aan</h2>
-      <p>Vul het formulier in en we nemen spoedig contact met u op.</p>
-    </div>
-    <div class="form-wrap">
-      <div id="form-content">
-        <input type="text" name="website_url" id="website_url" style="display:none" tabindex="-1" autocomplete="off" />
-        <div class="form-section" id="pakket-sectie" style="border-color: var(--teal);">
-          <div class="form-section-title">Gekozen pakket</div>
-          <p id="pakket-weergave" style="color:var(--text-muted);font-size:0.9rem;">Selecteer hierboven een pakket om verder te gaan.</p>
-        </div>
-
-        <div class="form-section">
-          <div class="form-section-title">Uw contactgegevens</div>
-          <div class="form-row">
-            <div class="form-group"><label>Voornaam <span class="req">*</span></label><input type="text" id="voornaam" placeholder="Jan" /></div>
-            <div class="form-group"><label>Achternaam <span class="req">*</span></label><input type="text" id="achternaam" placeholder="Jansen" /></div>
-          </div>
-          <div class="form-row">
-            <div class="form-group"><label>Telefoonnummer</label><input type="tel" id="telefoon" placeholder="076-0000000" /></div>
-          </div>
-          <div class="form-group">
-            <label>E-mailadres beheerder <span class="req">*</span></label>
-            <input type="email" id="email" placeholder="pim@praktijk.nl" />
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">📧 <strong>Privé</strong> — Dit adres gebruikt u om in te loggen op <em>Mijn profiel</em> en uw praktijkpagina te beheren. Niet zichtbaar voor patiënten.</p>
-          </div>
-          <div class="form-group">
-            <label>E-mailadres voor patiënten</label>
-            <input type="email" id="email-publiek" placeholder="info@praktijk.nl" />
-            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">🌐 <strong>Zichtbaar op de site</strong> — Dit adres wordt getoond op uw locatiepagina zodat patiënten contact kunnen opnemen. Mag hetzelfde zijn als uw beheerderadres.</p>
-          </div>
-        </div>
-
-        <div id="locaties-container"></div>
-
-        <button type="button" class="btn-toevoegen" onclick="voegLocatieToe()">+ Nog een locatie toevoegen</button>
-
-        <div class="form-section beschrijving-sectie" id="beschrijving-sectie">
-          <div class="form-section-title">Beschrijving van uw praktijk</div>
-          <div class="form-group">
-            <label>Korte beschrijving <span class="req">*</span></label>
-            <textarea id="beschrijving" placeholder="Beschrijf uw praktijk in 2-3 zinnen." style="min-height:120px;" maxlength="500" oninput="telTekens(this)"></textarea>
-            <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px"><span id="tekens-teller">0</span>/500 tekens</p>
-          </div>
-          <div id="hoofdlocatie-sectie" style="display:none">
-            <div style="background:var(--gold-light);border:1px solid var(--gold);border-radius:8px;padding:14px 16px;margin-bottom:20px;font-size:0.85rem;color:#7a5800">
-              Als partner wordt u weergegeven als één praktijk op de partnerpagina.
-            </div>
-            <div class="form-group"><label>Hoofdadres voor partnerpagina <span class="req">*</span></label><input type="text" id="partner-adres" placeholder="Industriekade 10, 4815 HD Breda" /></div>
-            <div class="form-row">
-              <div class="form-group"><label>Telefoon voor partnerpagina</label><input type="tel" id="partner-telefoon" placeholder="076-0000000" /></div>
-              <div class="form-group"><label>E-mail voor partnerpagina</label><input type="email" id="partner-email" placeholder="info@praktijk.nl" /></div>
-            </div>
-            <div class="form-group">
-              <label>Website URL logo</label>
-              <input type="url" id="logo-url" placeholder="https://www.uwpraktijk.nl/logo.png" />
-              <p style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">Vul de URL in van uw logo (PNG of SVG).</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <div class="form-section-title">Bevestiging werkwijze</div>
-          <div class="checkbox-group">
-            <input type="checkbox" id="protocol-akkoord" />
-            <label for="protocol-akkoord">Ik bevestig dat onze praktijk werkt volgens de behandelprotocollen van het Enkel Voet Netwerk en deze als leidraad gebruikt bij de behandeling van enkel- en voetklachten.</label>
-          </div>
-        </div>
-
-        <div class="form-section">
-          <div class="form-section-title">Overige informatie</div>
-          <div class="form-group">
-            <label>Toelichting</label>
-            <textarea id="toelichting" placeholder="Heeft u vragen of wilt u iets toelichten?"></textarea>
-          </div>
-        </div>
-
-        <div class="checkbox-group">
-          <input type="checkbox" id="akkoord" />
-          <label for="akkoord">Ik ga akkoord met de verwerking van mijn gegevens voor zichtbaarheid binnen het Enkel Voet Netwerk, zoals beschreven in onze <a href="privacy.html" style="color:var(--teal)">privacyverklaring</a>.</label>
-        </div>
-
-        <button class="btn-submit" onclick="verstuurFormulier()">Aanmelding versturen</button>
-      </div>
-
-      <div class="form-success" id="form-success">
-        <div class="success-icon">✅</div>
-        <h3>Aanmelding ontvangen!</h3>
-        <p>Bedankt voor uw aanmelding. We nemen binnen twee werkdagen contact met u op.</p>
+  <!-- NETWERK UITLEG -->
+  <div class="netwerk-uitleg">
+    <div class="icon">🌐</div>
+    <div>
+      <h2>Eén aanmelding, zichtbaar op meerdere platforms</h2>
+      <p>Het Enkel Voet Netwerk maakt deel uit van het bredere <strong>VindJeFysio Netwerk</strong>. Als u zich aanmeldt via deze pagina, wordt uw praktijk automatisch zichtbaar op <strong>enkelvoet.net</strong> (voor patiënten met specifieke enkel- en voetklachten) én op <strong>vindjefysio.net</strong> (het overkoepelende zoekplatform voor alle fysiotherapiespecialisaties).</p>
+      <div class="netwerk-links">
+        <a class="netwerk-link" href="https://vindjefysio.net" target="_blank">🔗 vindjefysio.net</a>
+        <a class="netwerk-link" href="https://enkelvoet.net">🦶 enkelvoet.net</a>
       </div>
     </div>
   </div>
-</section>
+
+  <!-- VOORDELEN -->
+  <div class="stappen-titel">Wat levert het u op?</div>
+  <div class="voordelen">
+    <div class="voordeel">
+      <div class="icon">🗺️</div>
+      <h3>Zichtbaar op de kaart</h3>
+      <p>Patiënten vinden uw locatie direct via de interactieve kaart op enkelvot.net en vindjefysio.net.</p>
+    </div>
+    <div class="voordeel">
+      <div class="icon">🎓</div>
+      <h3>Specialisme aantonen</h3>
+      <p>Uw therapeuten kunnen via het cursusplatform specialisme aantonen en een badge verdienen.</p>
+    </div>
+    <div class="voordeel">
+      <div class="icon">🔍</div>
+      <h3>Gevonden op klacht</h3>
+      <p>Patiënten zoeken op "enkelverzwikking" of "hielspoor" en vinden direct uw praktijk.</p>
+    </div>
+    <div class="voordeel">
+      <div class="icon">📋</div>
+      <h3>Behandelprotocollen</h3>
+      <p>Toegang tot wetenschappelijk onderbouwde protocollen en cursusmateriaal voor uw team.</p>
+    </div>
+  </div>
+
+  <!-- STAPPEN -->
+  <div class="stappen-titel">Hoe werkt aanmelden?</div>
+  <div class="stappen">
+    <div class="stap">
+      <div class="stap-nr actief">1</div>
+      <div class="stap-body">
+        <h3>Meld uw praktijk aan via VindJeFysio</h3>
+        <p>U wordt doorgestuurd naar het centrale aanmeldformulier op vindjefysio.net. Het formulier is al ingesteld voor het Enkel Voet Netwerk. Vul uw praktijkgegevens, locatie(s) en gewenste pakket in.</p>
+        <div class="tip">💡 U kunt meerdere locaties in één aanmelding opgeven.</div>
+      </div>
+    </div>
+    <div class="stap">
+      <div class="stap-nr">2</div>
+      <div class="stap-body">
+        <h3>Wij beoordelen uw aanmelding</h3>
+        <p>Binnen twee werkdagen beoordelen wij uw aanmelding. We controleren of uw praktijk werkt volgens de EVN-behandelprotocollen. U ontvangt een bevestiging per e-mail.</p>
+      </div>
+    </div>
+    <div class="stap">
+      <div class="stap-nr">3</div>
+      <div class="stap-body">
+        <h3>U ontvangt uw praktijkcode</h3>
+        <p>Na goedkeuring ontvangt u een unieke <strong>praktijkcode</strong>. Deze code deelt u met de therapeuten die bij uw praktijk werken, zodat zij zich kunnen aanmelden via het therapeutenformulier.</p>
+        <div class="tip">🔑 Bewaar uw praktijkcode goed. Elke nieuwe therapeut heeft deze code nodig om zich aan uw locatie te koppelen.</div>
+      </div>
+    </div>
+    <div class="stap">
+      <div class="stap-nr">4</div>
+      <div class="stap-body">
+        <h3>Therapeuten melden zich aan</h3>
+        <p>Uw collega's melden zich aan via <a href="therapeut-worden.html" style="color:var(--teal);font-weight:600">enkelvoet.net/therapeut-worden.html</a> met de praktijkcode. Na goedkeuring zijn zij zichtbaar op de kaart gekoppeld aan uw locatie.</p>
+      </div>
+    </div>
+    <div class="stap">
+      <div class="stap-nr">5</div>
+      <div class="stap-body">
+        <h3>Uw praktijk is zichtbaar</h3>
+        <p>Uw locatie verschijnt op de interactieve kaart op enkelvoet.net én vindjefysio.net. Patiënten kunnen u vinden op klacht, locatie en specialisatie. Via <a href="mijn-profiel.html" style="color:var(--teal);font-weight:600">Mijn profiel</a> beheert u uw praktijkgegevens.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-blok">
+    <h2>Klaar om aan te melden?</h2>
+    <p>Klik op de knop om door te gaan naar het aanmeldformulier. Het Enkel Voet Netwerk is al voor u ingesteld.</p>
+    <a class="btn-aanmelden" href="https://vindjefysio.net/aanmelden.html?via=enkelvoet.net">Praktijk aanmelden →</a>
+    <p class="cta-sub">U wordt doorgestuurd naar <a href="https://vindjefysio.net/aanmelden.html?via=enkelvoet.net">vindjefysio.net/aanmelden.html</a></p>
+  </div>
+
+</div>
 
 <footer>
-  <p>2025 Enkel Voet Netwerk Breda e.o. &nbsp;&middot;&nbsp; <a href="index.html">Terug naar home</a> &nbsp;&middot;&nbsp; <a href="privacy.html">Privacyverklaring</a></p>
+  <p>© 2025 Enkel Voet Netwerk · <a href="index.html">Home</a> · <a href="privacy.html">Privacyverklaring</a> · <a href="mailto:info@enkelvoet.net">info@enkelvoet.net</a></p>
 </footer>
 
-<script>
-  const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
-
-  let locatieCount = 0;
-  let geselecteerdeTier = '';
-
-  function fixUrl(url) {
-    url = url.trim();
-    if (!url) return '';
-    if (!url.startsWith('http://') && !url.startsWith('https://')) url = 'https://' + url;
-    url = url.replace('http://', 'https://');
-    return url;
-  }
-
-  function telTekens(el) {
-    document.getElementById('tekens-teller').textContent = el.value.length;
-  }
-
-  function selecteerTier(tier) {
-    geselecteerdeTier = tier;
-    ['basis','plus','partner'].forEach(t => {
-      document.getElementById('tier-' + t).classList.remove('geselecteerd');
-      document.getElementById('check-' + t).textContent = '';
-    });
-    document.getElementById('tier-' + tier).classList.add('geselecteerd');
-    document.getElementById('check-' + tier).textContent = '✓';
-    const namen = {
-      basis: '🏅 Basis - Zichtbaar in het netwerk (€5/maand)',
-      plus: '🎓 Plus - Specialisatie aantonen (€10/maand tijdelijk)',
-      partner: '🌟 Partner - Volledig partnerschap (€50/maand)'
-    };
-    document.getElementById('pakket-weergave').innerHTML = '<strong style="color:var(--navy)">' + namen[tier] + '</strong>';
-    const beschSectie = document.getElementById('beschrijving-sectie');
-    const hoofdlocatieSectie = document.getElementById('hoofdlocatie-sectie');
-    if (tier === 'plus' || tier === 'partner') {
-      beschSectie.classList.add('zichtbaar');
-      hoofdlocatieSectie.style.display = tier === 'partner' ? 'block' : 'none';
-    } else {
-      beschSectie.classList.remove('zichtbaar');
-      hoofdlocatieSectie.style.display = 'none';
-    }
-  }
-
-  function voegLocatieToe() {
-    locatieCount++;
-    const nr = locatieCount;
-    const container = document.getElementById('locaties-container');
-    const blok = document.createElement('div');
-    blok.className = 'locatie-blok';
-    blok.id = 'locatie-' + nr;
-    blok.innerHTML =
-      '<div class="locatie-blok-header">' +
-        '<div class="locatie-blok-title">Locatie ' + nr + '</div>' +
-        (nr > 1 ? '<button type="button" class="btn-verwijder" onclick="verwijderLocatie(' + nr + ')">Verwijderen</button>' : '') +
-      '</div>' +
-      '<div class="form-group"><label>Naam praktijk <span class="req">*</span></label><input type="text" id="praktijk-' + nr + '" placeholder="Fysiotherapie De Voet" /></div>' +
-      '<div class="form-group"><label>Adres <span class="req">*</span></label><input type="text" id="adres-' + nr + '" placeholder="Straat 1, 4800 AB Breda" /></div>' +
-      '<div class="form-group"><label>Website</label><input type="url" id="website-' + nr + '" placeholder="https://www.jouwpraktijk.nl" /></div>' +
-      '<div class="form-row">' +
-        '<div class="form-group"><label>Telefoonnummer locatie</label><input type="tel" id="tel-locatie-' + nr + '" placeholder="076-0000000" /></div>' +
-        '<div class="form-group"><label>E-mail locatie (zichtbaar voor patiënten)</label><input type="email" id="email-locatie-' + nr + '" placeholder="info@praktijk.nl" /></div>' +
-      '</div>' +
-      '<div class="disciplines-info">De disciplines van uw locatie worden automatisch bepaald op basis van de therapeuten die zich aanmelden bij deze praktijk.</div>';
-    container.appendChild(blok);
-    hernummerLocaties();
-  }
-
-  function verwijderLocatie(nr) {
-    document.getElementById('locatie-' + nr).remove();
-    hernummerLocaties();
-  }
-
-  function hernummerLocaties() {
-    document.querySelectorAll('.locatie-blok').forEach(function(blok, i) {
-      blok.querySelector('.locatie-blok-title').textContent = 'Locatie ' + (i + 1);
-    });
-  }
-
-  function toggleNav() {
-    document.getElementById('main-nav').classList.toggle('open');
-  }
-
-  async function schrijfNaarSupabase(tabel, data) {
-    const resp = await fetch(SUPABASE_URL + '/rest/v1/' + tabel, {
-      method: 'POST',
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY,
-        'Content-Type': 'application/json',
-        'Prefer': 'return=representation'
-      },
-      body: JSON.stringify(data)
-    });
-    if (!resp.ok) {
-      const err = await resp.text();
-      throw new Error('Supabase fout (' + tabel + '): ' + err);
-    }
-    return await resp.json();
-  }
-
-  async function verstuurFormulier() {
-    if (document.getElementById('website_url').value !== '') return;
-    if (!geselecteerdeTier) { alert('Selecteer eerst een pakket.'); return; }
-    if (!document.getElementById('protocol-akkoord').checked) { alert('Bevestig dat u werkt volgens de EVN-behandelprotocollen.'); return; }
-
-    const verplicht = ['voornaam','achternaam','email'];
-    let geldig = true;
-    verplicht.forEach(function(id) {
-      const el = document.getElementById(id);
-      if (!el.value.trim()) { el.style.borderColor = '#E74C3C'; geldig = false; }
-      else { el.style.borderColor = ''; }
-    });
-
-    const blokken = document.querySelectorAll('.locatie-blok');
-    if (blokken.length === 0) { alert('Voeg minimaal een locatie toe.'); return; }
-
-    blokken.forEach(function(blok) {
-      const nr = blok.id.replace('locatie-','');
-      const praktijk = document.getElementById('praktijk-' + nr);
-      const adres = document.getElementById('adres-' + nr);
-      if (!praktijk.value.trim()) { praktijk.style.borderColor = '#E74C3C'; geldig = false; } else { praktijk.style.borderColor = ''; }
-      if (!adres.value.trim()) { adres.style.borderColor = '#E74C3C'; geldig = false; } else { adres.style.borderColor = ''; }
-    });
-
-    if ((geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner') && !document.getElementById('beschrijving').value.trim()) {
-      document.getElementById('beschrijving').style.borderColor = '#E74C3C'; geldig = false;
-    }
-
-    if (!document.getElementById('akkoord').checked) { alert('Vink het akkoordvakje aan.'); return; }
-    if (!geldig) { alert('Vul alle verplichte velden in.'); return; }
-
-    const knop = document.querySelector('.btn-submit');
-    knop.textContent = 'Versturen...';
-    knop.disabled = true;
-
-    try {
-      for (const blok of blokken) {
-        const nr = blok.id.replace('locatie-','');
-        const praktijkData = {
-          naam: document.getElementById('praktijk-' + nr).value.trim(),
-          straat: document.getElementById('adres-' + nr).value.trim(),
-          postcode: '',
-          stad: '',
-          telefoon: document.getElementById('tel-locatie-' + nr).value.trim(),
-          email: document.getElementById('email-publiek').value.trim() || document.getElementById('email').value.trim(),
-          website: fixUrl(document.getElementById('website-' + nr).value || ''),
-          aangemeld_via: 'enkelvoet.net',
-          tier: geselecteerdeTier,
-          beschrijving: (geselecteerdeTier === 'plus' || geselecteerdeTier === 'partner') ? document.getElementById('beschrijving').value.trim() : '',
-          logo_url: geselecteerdeTier === 'partner' ? fixUrl(document.getElementById('logo-url').value || '') : '',
-          disciplines: [],
-          contact_voornaam: document.getElementById('voornaam').value.trim(),
-          contact_achternaam: document.getElementById('achternaam').value.trim(),
-          contact_email: document.getElementById('email').value.trim(),
-          contact_telefoon: document.getElementById('telefoon').value.trim(),
-          toelichting: document.getElementById('toelichting').value.trim(),
-          actief: false
-        };
-        await schrijfNaarSupabase('praktijken', praktijkData);
-      }
-      document.getElementById('form-content').style.display = 'none';
-      document.getElementById('form-success').style.display = 'block';
-    } catch (err) {
-      console.error(err);
-      alert('Er ging iets mis bij het versturen. Probeer het opnieuw.');
-      knop.textContent = 'Aanmelding versturen';
-      knop.disabled = false;
-    }
-  }
-
-  voegLocatieToe();
-</script>
 </body>
 </html>
