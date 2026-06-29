@@ -84,8 +84,11 @@
     .therapeut-info { flex: 1; }
 
     /* SUBCATEGORIE BEHEER */
-    .subcat-beheer { background: var(--grey-bg); border-radius: 10px; padding: 16px; margin: 16px 0; }
-    .subcat-beheer-titel { font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .subcat-toggle { background: none; border: 1.5px solid var(--grey-border); border-radius: 8px; padding: 8px 16px; font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
+    .subcat-toggle:hover { border-color: var(--teal); color: var(--teal); }
+    .subcat-toggle.open { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
+    .subcat-beheer { background: var(--grey-bg); border-radius: 10px; padding: 16px; margin-top: 12px; display: none; }
+    .subcat-beheer.open { display: block; }
     .subcat-groep { margin-bottom: 14px; }
     .subcat-groep-naam { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
     .subcat-checkboxen { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -415,8 +418,10 @@
               <span class="datum">${new Date(t.aangemeld_op).toLocaleDateString('nl-NL', {day:'numeric', month:'long', year:'numeric'})}</span>
             </div>
             ${t.bio ? `<div class="beschrijving">"${t.bio}"</div>` : ''}
-            <div class="subcat-beheer">
-              <div class="subcat-beheer-titel">🏷 Specialisaties / subcategorieën</div>
+            <button class="subcat-toggle" id="subcat-toggle-${t.id}" onclick="toggleSubcatBeheer(${t.id})">
+              🏷 Specialisaties bewerken <span id="subcat-count-${t.id}">(${huidigeSubcats.length})</span> ▼
+            </button>
+            <div class="subcat-beheer" id="subcat-beheer-${t.id}">
               ${subcatHTML}
               <div class="subcat-opslaan-melding" id="subcat-melding-${t.id}">✓ Opgeslagen</div>
             </div>
@@ -456,6 +461,14 @@
           </div>
         </div>`;
     }).join('');
+  }
+
+  function toggleSubcatBeheer(id) {
+    const beheer = document.getElementById(`subcat-beheer-${id}`);
+    const toggle = document.getElementById(`subcat-toggle-${id}`);
+    const open = beheer.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    toggle.innerHTML = toggle.innerHTML.replace(open ? '▼' : '▲', open ? '▲' : '▼');
   }
 
   async function toggleSubcatCheck(therapeutId, subcatId, checkbox) {
