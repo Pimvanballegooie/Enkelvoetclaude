@@ -63,16 +63,12 @@
     .info-item { font-size: 0.85rem; }
     .info-label { color: var(--text-muted); font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
     .info-waarde { color: var(--text); }
-    .disciplines { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
-    .disc-tag { background: var(--teal-light); color: var(--teal); font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
     .kaart-acties { display: flex; gap: 12px; padding-top: 16px; border-top: 1px solid var(--grey-border); flex-wrap: wrap; }
     .btn { padding: 10px 20px; border-radius: 8px; border: none; font-family: 'Inter', sans-serif; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
     .btn-goedkeuren { background: var(--green); color: white; }
     .btn-goedkeuren:hover { background: #219A52; }
     .btn-afwijzen { background: none; border: 1.5px solid var(--red); color: var(--red); }
     .btn-afwijzen:hover { background: var(--red); color: white; }
-    .btn-subcat { background: var(--teal); color: white; font-size: 0.82rem; padding: 8px 16px; }
-    .btn-subcat:hover { background: #238a7e; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .leeg { text-align: center; padding: 48px; color: var(--text-muted); }
     .leeg .icon { font-size: 3rem; margin-bottom: 12px; }
@@ -82,8 +78,6 @@
     .therapeut-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--teal-light); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; flex-shrink: 0; }
     .therapeut-header { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
     .therapeut-info { flex: 1; }
-
-    /* SUBCATEGORIE BEHEER */
     .subcat-toggle { background: none; border: 1.5px solid var(--grey-border); border-radius: 8px; padding: 8px 16px; font-family: 'Inter', sans-serif; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 8px; }
     .subcat-toggle:hover { border-color: var(--teal); color: var(--teal); }
     .subcat-toggle.open { border-color: var(--teal); color: var(--teal); background: var(--teal-light); }
@@ -171,86 +165,69 @@
 </div>
 
 <script>
+  // ✅ Veilig: alleen publieke sleutels hier, nooit Resend API key
   const SUPABASE_URL = 'https://islujznszevdynguhjdc.supabase.co';
-  const RESEND_API_KEY = 're_4R1WMSAN_BoCLu5oUFf7XkECZhyxEpS3s';
-  const INVITE_FUNCTION_URL = 'https://islujznszevdynguhjdc.supabase.co/functions/v1/smart-worker';
   const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlzbHVqem5zemV2ZHluZ3VoamRjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2NDYzMDAsImV4cCI6MjA5NzIyMjMwMH0.wh3RXZRKfpfArr3YBYu8ktE7xv1inwDD72Vq3LJl3QQ';
+  // Alle e-mails (praktijk én therapeut) gaan via de server-side Edge Function
+  const WORKER_URL = 'https://islujznszevdynguhjdc.supabase.co/functions/v1/smart-worker';
+
   let toegangsToken = null;
 
-  // Alle subcategorieën gegroepeerd per hoofdcategorie
   const SUBCATEGORIEEN = [
-    {
-      naam: 'Kansrijk opgroeien', subcats: [
+    { naam: 'Kansrijk opgroeien', subcats: [
         {id:1,naam:'Motorische ontwikkeling'},{id:2,naam:'Schrijven en fijne motoriek'},
         {id:3,naam:'Sport, groei en blessures'},{id:4,naam:'Houding en wervelkolom'},
         {id:5,naam:'Ademhaling'},{id:6,naam:'Zuigeling en jong kind'},
         {id:7,naam:'Sensorische prikkelverwerking'},{id:8,naam:'Revalidatie en operatie'},
         {id:9,naam:'Complexe ontwikkeling'},{id:10,naam:'Manuele therapie bij kinderen'}
-      ]
-    },
-    {
-      naam: 'Gezond oud worden', subcats: [
+    ]},
+    { naam: 'Gezond oud worden', subcats: [
         {id:11,naam:'Kwetsbaarheid en mobiliteit'},{id:12,naam:'Valpreventie en balans'},
         {id:13,naam:'Dementie en bewegen'},{id:14,naam:'Herstel na ziekenhuisopname'},
         {id:15,naam:'Voorbereiding op operatie'},{id:16,naam:'Revalidatie na operatie'},
         {id:17,naam:'Sport, bewegen en overbelasting'},{id:18,naam:'Ouderen met levenslange beperking'}
-      ]
-    },
-    {
-      naam: 'Neurologie', subcats: [
+    ]},
+    { naam: 'Neurologie', subcats: [
         {id:19,naam:'CVA en NAH'},{id:20,naam:'Parkinson'},
         {id:21,naam:'MS'},{id:22,naam:'Neuromusculaire aandoeningen'},
         {id:23,naam:'Duizeligheid en evenwicht'}
-      ]
-    },
-    {
-      naam: 'Mentale gezondheid', subcats: [
+    ]},
+    { naam: 'Mentale gezondheid', subcats: [
         {id:24,naam:'Psychosomatische klachten'},{id:25,naam:'Ademhaling en hyperventilatie'},
         {id:26,naam:'Functionele neurologische stoornis'}
-      ]
-    },
-    {
-      naam: 'Chronische zorg', subcats: [
+    ]},
+    { naam: 'Chronische zorg', subcats: [
         {id:27,naam:'Longklachten'},{id:28,naam:'Etalagebenen'},
         {id:29,naam:'Hartrevalidatie'},{id:30,naam:'Oncologische revalidatie'},
         {id:31,naam:'Chronische pijn'},{id:32,naam:'Chronische vermoeidheid'},
         {id:33,naam:'Diabetes en bewegen'},{id:34,naam:'Reuma, artrose en botgezondheid'},
         {id:35,naam:'Voorbereiding op operatie'}
-      ]
-    },
-    {
-      naam: 'Rug, nek en bekken', subcats: [
+    ]},
+    { naam: 'Rug, nek en bekken', subcats: [
         {id:36,naam:'Lage rugklachten'},{id:37,naam:'Nekklachten'},
         {id:38,naam:'Bekkenklachten'},{id:39,naam:'Houding en scoliose'},
         {id:40,naam:'Revalidatie na operatie'},{id:41,naam:'Sport, bewegen en overbelasting'},
         {id:42,naam:'Voorbereiding op operatie'}
-      ]
-    },
-    {
-      naam: 'Benen', subcats: [
+    ]},
+    { naam: 'Benen', subcats: [
         {id:43,naam:'Heup, lies en bovenbeen'},{id:44,naam:'Knie en onderbeen'},
         {id:45,naam:'Enkel en voet'},{id:46,naam:'Artroseprogramma\'s'},
         {id:47,naam:'Revalidatie na operatie'},{id:48,naam:'Voorbereiding op operatie'},
         {id:49,naam:'Sport, bewegen en overbelasting'}
-      ]
-    },
-    {
-      naam: 'Armen', subcats: [
+    ]},
+    { naam: 'Armen', subcats: [
         {id:50,naam:'Schouder en bovenarm'},{id:51,naam:'Elleboog en onderarm'},
         {id:52,naam:'Pols en hand'},{id:53,naam:'Revalidatie na operatie'},
         {id:54,naam:'Voorbereiding op operatie'},{id:55,naam:'Sport, bewegen en overbelasting'}
-      ]
-    },
-    {
-      naam: 'Behandelvormen', subcats: [
+    ]},
+    { naam: 'Behandelvormen', subcats: [
         {id:56,naam:'Manuele therapie'},{id:57,naam:'Sportfysiotherapie'},
         {id:58,naam:'Dry needling'},{id:59,naam:'Echografie'},
         {id:60,naam:'Shockwave'},{id:61,naam:'Oedeem en lymfe'},
         {id:62,naam:'Kaakfysiotherapie'},{id:63,naam:'Leefstijl en beweegprogramma\'s'},
         {id:64,naam:'Groepsprogramma\'s'},{id:65,naam:'EPTE'},
         {id:66,naam:'Bekkenfysiotherapie en MAPLe'}
-      ]
-    }
+    ]}
   ];
 
   async function inloggen() {
@@ -285,8 +262,14 @@
     document.getElementById('login-wachtwoord').value = '';
   }
 
-  function getHeaders() {
-    return { 'apikey': ANON_KEY, 'Authorization': `Bearer ${toegangsToken}`, 'Content-Type': 'application/json', 'Prefer': 'return=representation' };
+  function getHeaders(extra = {}) {
+    return {
+      'apikey': ANON_KEY,
+      'Authorization': `Bearer ${toegangsToken}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=representation',
+      ...extra
+    };
   }
 
   function toonTab(naam) {
@@ -366,8 +349,74 @@
       </div>`).join('');
   }
 
+  async function goedkeurenPraktijk(id) {
+    if (!confirm('Praktijk goedkeuren en bevestigingsmail sturen?')) return;
+    const kaart = document.getElementById(`kaart-p-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+
+    // Haal praktijkdata op
+    const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}&select=*`, { headers: getHeaders() });
+    const [praktijk] = await resp.json();
+
+    // Zet actief op true
+    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, {
+      method: 'PATCH',
+      headers: getHeaders(),
+      body: JSON.stringify({ actief: true })
+    });
+
+    // ✅ Stuur mail via server-side Edge Function (nooit direct via Resend vanuit browser)
+    const ontvangerEmail = praktijk.contact_email || praktijk.email;
+    const ontvangerNaam = praktijk.contact_voornaam
+      ? `${praktijk.contact_voornaam} ${praktijk.contact_achternaam || ''}`.trim()
+      : praktijk.naam;
+
+    if (ontvangerEmail) {
+      try {
+        const mailResp = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${toegangsToken}`
+          },
+          body: JSON.stringify({
+            action: 'praktijk_goedkeuring',
+            email: ontvangerEmail,
+            naam: ontvangerNaam,
+            praktijk_naam: praktijk.naam,
+            praktijk_code: praktijk.praktijk_code,
+            aangemeld_via: praktijk.aangemeld_via || 'enkelvoet.net'
+          })
+        });
+        if (mailResp.ok) {
+          alert(`✓ Praktijk goedgekeurd. Bevestigingsmail verstuurd naar ${ontvangerEmail}.`);
+        } else {
+          const err = await mailResp.text();
+          console.error('Mail fout:', err);
+          alert(`Praktijk goedgekeurd, maar mail mislukt. Praktijkcode: ${praktijk.praktijk_code}`);
+        }
+      } catch(e) {
+        console.error(e);
+        alert(`Praktijk goedgekeurd, maar mail mislukt. Praktijkcode: ${praktijk.praktijk_code}`);
+      }
+    } else {
+      alert(`✓ Praktijk goedgekeurd. Praktijkcode: ${praktijk.praktijk_code}`);
+    }
+
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadPraktijken(); }, 400);
+  }
+
+  async function afwijzenPraktijk(id) {
+    if (!confirm('Praktijk afwijzen en verwijderen?')) return;
+    const kaart = document.getElementById(`kaart-p-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadPraktijken(); }, 400);
+  }
+
   async function laadTherapeutenBeheer() {
-    // Haal therapeuten en hun huidige subcategorie koppelingen op
     const [tResp, scResp] = await Promise.all([
       fetch(`${SUPABASE_URL}/rest/v1/therapeuten?select=*&order=aangemeld_op.desc`, { headers: getHeaders() }),
       fetch(`${SUPABASE_URL}/rest/v1/therapeut_subcategorieen?select=therapeut_id,subcategorie_id`, { headers: getHeaders() })
@@ -383,7 +432,6 @@
     document.getElementById('badge-t-aantal').textContent = wachtend.length;
     document.getElementById('badge-therapeuten').textContent = wachtend.length;
 
-    // Render actieve therapeuten MET subcategorie beheer
     const actiefLijst = document.getElementById('therapeuten-actief-lijst');
     if (actief.length === 0) {
       actiefLijst.innerHTML = `<div class="leeg"><div class="icon">👤</div><div>Geen actieve therapeuten</div></div>`;
@@ -394,7 +442,6 @@
         const fotoHtml = t.foto_url
           ? `<img class="therapeut-foto" src="${t.foto_url}" alt="${naam}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="therapeut-avatar" style="display:none">👤</div>`
           : `<div class="therapeut-avatar">👤</div>`;
-
         const subcatHTML = SUBCATEGORIEEN.map(groep => `
           <div class="subcat-groep">
             <div class="subcat-groep-naam">${groep.naam}</div>
@@ -406,7 +453,6 @@
                 </label>`).join('')}
             </div>
           </div>`).join('');
-
         return `
           <div class="kaart" id="kaart-ta-${t.id}" style="border-left:3px solid var(--green)">
             <div class="therapeut-header">
@@ -433,7 +479,6 @@
       }).join('');
     }
 
-    // Wachtende therapeuten
     const lijst = document.getElementById('therapeuten-lijst');
     if (wachtend.length === 0) {
       lijst.innerHTML = `<div class="leeg"><div class="icon">✅</div><div>Geen therapeuten wachtend op goedkeuring</div></div>`;
@@ -474,7 +519,6 @@
   async function toggleSubcatCheck(therapeutId, subcatId, checkbox) {
     const label = document.getElementById(`sc-label-${therapeutId}-${subcatId}`);
     if (checkbox.checked) {
-      // Toevoegen
       await fetch(`${SUPABASE_URL}/rest/v1/therapeut_subcategorieen`, {
         method: 'POST',
         headers: { ...getHeaders(), 'Prefer': 'return=minimal' },
@@ -483,18 +527,75 @@
       label.classList.add('aangevinkt');
       label.innerHTML = `<input type="checkbox" checked onchange="toggleSubcatCheck(${therapeutId}, ${subcatId}, this)" /> ✓ ${label.textContent.replace('✓ ', '').trim()}`;
     } else {
-      // Verwijderen
       await fetch(`${SUPABASE_URL}/rest/v1/therapeut_subcategorieen?therapeut_id=eq.${therapeutId}&subcategorie_id=eq.${subcatId}`, {
-        method: 'DELETE',
-        headers: getHeaders()
+        method: 'DELETE', headers: getHeaders()
       });
       label.classList.remove('aangevinkt');
       label.innerHTML = `<input type="checkbox" onchange="toggleSubcatCheck(${therapeutId}, ${subcatId}, this)" /> ${label.textContent.replace('✓ ', '').trim()}`;
     }
-    // Toon bevestiging
     const melding = document.getElementById(`subcat-melding-${therapeutId}`);
     melding.style.display = 'block';
     setTimeout(() => { melding.style.display = 'none'; }, 2000);
+  }
+
+  async function goedkeurenTherapeut(id, email) {
+    if (!confirm(`Therapeut goedkeuren en uitnodigingsmail sturen naar ${email}?`)) return;
+    const kaart = document.getElementById(`kaart-t-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, {
+      method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ actief: true })
+    });
+    // Standaard enkel & voet subcategorieën
+    const defaultSubcats = [45, 47, 48, 49];
+    for (const scId of defaultSubcats) {
+      await fetch(`${SUPABASE_URL}/rest/v1/therapeut_subcategorieen`, {
+        method: 'POST', headers: { ...getHeaders(), 'Prefer': 'return=minimal' },
+        body: JSON.stringify({ therapeut_id: id, subcategorie_id: scId, niveau: 'basis' })
+      }).catch(() => {});
+    }
+    try {
+      const inviteResp = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${toegangsToken}` },
+        body: JSON.stringify({ email, redirect_to: 'https://enkelvoet.net/mijn-profiel.html' })
+      });
+      alert(inviteResp.ok
+        ? `✓ Therapeut goedgekeurd. Uitnodigingsmail verstuurd naar ${email}.`
+        : `Therapeut goedgekeurd, maar mail mislukt.`);
+    } catch(e) {
+      alert(`Therapeut goedgekeurd, maar mail mislukt.`);
+    }
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
+  }
+
+  async function afwijzenTherapeut(id) {
+    if (!confirm('Therapeut afwijzen en verwijderen?')) return;
+    const kaart = document.getElementById(`kaart-t-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
+  }
+
+  async function deactiverenTherapeut(id) {
+    if (!confirm('Therapeut deactiveren?')) return;
+    const kaart = document.getElementById(`kaart-ta-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, {
+      method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ actief: false })
+    });
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
+  }
+
+  async function verwijderenTherapeut(id) {
+    if (!confirm('Therapeut permanent verwijderen?')) return;
+    const kaart = document.getElementById(`kaart-ta-${id}`);
+    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
+    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
+    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
+    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
   }
 
   async function laadProfielWijzigingen() {
@@ -525,107 +626,12 @@
       </div>`).join('');
   }
 
-  async function goedkeurenPraktijk(id) {
-    if (!confirm('Praktijk goedkeuren en bevestigingsmail sturen?')) return;
-    const kaart = document.getElementById(`kaart-p-${id}`);
-    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    const resp = await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}&select=*`, { headers: getHeaders() });
-    const [praktijk] = await resp.json();
-    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, { method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ actief: true }) });
-    if (praktijk.contact_email || praktijk.email) {
-      const ontvangerEmail = praktijk.contact_email || praktijk.email;
-      const ontvangerNaam = praktijk.contact_voornaam ? `${praktijk.contact_voornaam} ${praktijk.contact_achternaam || ''}` : praktijk.naam;
-      try {
-        await fetch('https://api.resend.com/emails', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${RESEND_API_KEY}` },
-          body: JSON.stringify({
-            from: 'Enkel Voet Netwerk <info@enkelvoet.net>',
-            to: [ontvangerEmail],
-            subject: 'Welkom bij het Enkel Voet Netwerk – uw praktijkcode',
-            html: `<div style="font-family:Inter,Arial,sans-serif;max-width:560px;margin:0 auto;padding:32px 24px">
-              <h1 style="color:#1B3A5C">Welkom bij het Enkel Voet Netwerk!</h1>
-              <p style="color:#6B7A99">Beste ${ontvangerNaam}, uw praktijk <strong>${praktijk.naam}</strong> is goedgekeurd.</p>
-              <div style="background:#F5F7FA;border:2px solid #2A9D8F;border-radius:12px;padding:20px;text-align:center;margin:24px 0">
-                <div style="font-size:0.78rem;color:#6B7A99;margin-bottom:8px">PRAKTIJKCODE</div>
-                <div style="font-size:2rem;font-weight:700;color:#1B3A5C;font-family:monospace">${praktijk.praktijk_code}</div>
-              </div>
-              <p style="color:#6B7A99;font-size:0.85rem">Therapeuten aanmelden via: <a href="https://enkelvoet.net/therapeut-worden.html" style="color:#2A9D8F">enkelvoet.net/therapeut-worden.html</a></p>
-            </div>`
-          })
-        });
-        alert(`✓ Praktijk goedgekeurd. Mail verstuurd naar ${ontvangerEmail}.`);
-      } catch(e) { alert(`Praktijk goedgekeurd. Praktijkcode: ${praktijk.praktijk_code}`); }
-    }
-    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadPraktijken(); }, 400);
-  }
-
-  async function afwijzenPraktijk(id) {
-    if (!confirm('Praktijk afwijzen en verwijderen?')) return;
-    const kaart = document.getElementById(`kaart-p-${id}`);
-    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
-    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadPraktijken(); }, 400);
-  }
-
-  async function goedkeurenTherapeut(id, email) {
-    if (!confirm(`Therapeut goedkeuren en uitnodigingsmail sturen naar ${email}?`)) return;
-    const kaart = document.getElementById(`kaart-t-${id}`);
-    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, { method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ actief: true }) });
-    // Automatisch koppelen aan enkel & voet subcategorieën
-    const defaultSubcats = [45, 47, 48, 49];
-    for (const scId of defaultSubcats) {
-      await fetch(`${SUPABASE_URL}/rest/v1/therapeut_subcategorieen`, {
-        method: 'POST', headers: { ...getHeaders(), 'Prefer': 'return=minimal' },
-        body: JSON.stringify({ therapeut_id: id, subcategorie_id: scId, niveau: 'basis' })
-      }).catch(() => {});
-    }
-    try {
-      const inviteResp = await fetch(INVITE_FUNCTION_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${toegangsToken}` },
-        body: JSON.stringify({ email, redirect_to: 'https://enkelvoet.net/mijn-profiel.html' })
-      });
-      alert(inviteResp.ok ? `✓ Therapeut goedgekeurd. Uitnodigingsmail verstuurd naar ${email}.` : `Therapeut goedgekeurd, maar mail mislukt.`);
-    } catch(e) { alert(`Therapeut goedgekeurd, maar mail mislukt.`); }
-    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
-  }
-
-  async function afwijzenTherapeut(id) {
-    if (!confirm('Therapeut afwijzen en verwijderen?')) return;
-    const kaart = document.getElementById(`kaart-t-${id}`);
-    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
-    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
-  }
-
-  async function deactiverenTherapeut(id) {
-    if (!confirm('Therapeut deactiveren?')) return;
-    const kaart = document.getElementById(`kaart-ta-${id}`);
-    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, { method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ actief: false }) });
-    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
-  }
-
-  async function verwijderenTherapeut(id) {
-    if (!confirm('Therapeut permanent verwijderen?')) return;
-    const kaart = document.getElementById(`kaart-ta-${id}`);
-    kaart.querySelectorAll('.btn').forEach(b => b.disabled = true);
-    await fetch(`${SUPABASE_URL}/rest/v1/therapeuten?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
-    kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
-    setTimeout(() => { kaart.remove(); laadTherapeutenBeheer(); }, 400);
-  }
-
   async function verwerkenWijziging(id) {
     if (!confirm('Wijziging markeren als verwerkt?')) return;
     const kaart = document.getElementById(`kaart-w-${id}`);
-    await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen?id=eq.${id}`, { method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ verwerkt: true }) });
+    await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen?id=eq.${id}`, {
+      method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ verwerkt: true })
+    });
     kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
     setTimeout(() => { kaart.remove(); laadProfielWijzigingen(); }, 400);
   }
@@ -633,7 +639,9 @@
   async function afwijzenWijziging(id) {
     if (!confirm('Wijziging afwijzen?')) return;
     const kaart = document.getElementById(`kaart-w-${id}`);
-    await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen?id=eq.${id}`, { method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ verwerkt: true }) });
+    await fetch(`${SUPABASE_URL}/rest/v1/profiel_wijzigingen?id=eq.${id}`, {
+      method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ verwerkt: true })
+    });
     kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
     setTimeout(() => { kaart.remove(); laadProfielWijzigingen(); }, 400);
   }
