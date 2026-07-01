@@ -76,8 +76,8 @@
     "beschrijving": "Monné Zorg & Beweging is een toonaangevende zorgpraktijk met meerdere locaties in Breda en Oosterhout. Bij ons staat u altijd centraal — met een persoonlijke aanpak, een breed zorgaanbod en een ervaren team van fysiotherapeuten, ergotherapeuten en fitnessbegeleiders. Dankzij onze nauwe samenwerking met huisartsen, het ziekenhuis en andere zorgpartners in de regio bieden wij complete begeleiding die écht bij u past.",
     "logo_url": "https://monne-zorgenbeweging.nl/wp-content/uploads/2020/07/Monne_Logo_2020_Wit-1024x385.png",
     "therapeuten": [],
-    "lat": 51.5686373,
-    "lng": 4.7893167
+    "lat": 51.5687028,
+    "lng": 4.7893111
   },
   {
     "id": 11,
@@ -117,5 +117,22 @@
     "therapeuten": [],
     "lat": 51.6514559,
     "lng": 4.8385176
+  },
+  {
+    "id": 13,
+    "naam": "Bloemsaat, Fysio in beweging",
+    "adres": "Collegeweg 2c, 4942VD, Raamsdonksveer",
+    "postcode": "4942VD",
+    "website": "https://www.bloemsaatfysio.nl",
+    "telefoon": "0162516358",
+    "email": "jasper@bloemsaatfysio.nl",
+    "disciplines": [],
+    "therapeut_disciplines": [],
+    "tier": "basis",
+    "beschrijving": "",
+    "logo_url": "",
+    "therapeuten": [],
+    "lat": 51.7037551,
+    "lng": 4.8728507
   }
 ]
