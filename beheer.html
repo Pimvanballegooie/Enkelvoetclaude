@@ -168,36 +168,28 @@ const DISCIPLINES_LIJST = [
   'Sportfysiotherapeut','Bekkenfysiotherapeut'
 ];
 
-const SUBCATEGORIEEN = [
-  { naam: 'Kansrijk opgroeien', subcats: [
-    {id:1,naam:'Motorische ontwikkeling'},{id:2,naam:'Schrijven en fijne motoriek'},
-    {id:3,naam:'Sport, groei en blessures'},{id:4,naam:'Houding en wervelkolom'},
-    {id:5,naam:'Ademhaling'},{id:6,naam:'Zuigeling en jong kind'},
-    {id:7,naam:'Sensorische prikkelverwerking'},{id:8,naam:'Revalidatie en operatie'},
-    {id:9,naam:'Complexe ontwikkeling'},{id:10,naam:'Manuele therapie bij kinderen'}
-  ]},
-  { naam: 'Gezond oud worden', subcats: [
-    {id:11,naam:'Kwetsbaarheid en mobiliteit'},{id:12,naam:'Valpreventie en balans'},
-    {id:13,naam:'Dementie en bewegen'},{id:14,naam:'Herstel na ziekenhuisopname'},
-    {id:15,naam:'Voorbereiding op operatie'},{id:16,naam:'Revalidatie na operatie'},
-    {id:17,naam:'Sport, bewegen en overbelasting'},{id:18,naam:'Ouderen met levenslange beperking'}
-  ]},
-  { naam: 'Neurologie', subcats: [
-    {id:19,naam:'CVA en NAH'},{id:20,naam:'Parkinson'},{id:21,naam:'MS'},
-    {id:22,naam:'Neuromusculaire aandoeningen'},{id:23,naam:'Duizeligheid en evenwicht'}
-  ]},
-  { naam: 'Benen', subcats: [
-    {id:43,naam:'Heup, lies en bovenbeen'},{id:44,naam:'Knie en onderbeen'},
-    {id:45,naam:'Enkel en voet'},{id:46,naam:'Artroseprogrammas'},
-    {id:47,naam:'Revalidatie na operatie'},{id:48,naam:'Voorbereiding op operatie'},
-    {id:49,naam:'Sport, bewegen en overbelasting'}
-  ]},
-  { naam: 'Behandelvormen', subcats: [
-    {id:56,naam:'Manuele therapie'},{id:57,naam:'Sportfysiotherapie'},
-    {id:58,naam:'Dry needling'},{id:59,naam:'Echografie'},
-    {id:60,naam:'Shockwave'},{id:66,naam:'Bekkenfysiotherapie en MAPLe'}
-  ]}
-];
+// SUBCATEGORIEEN wordt dynamisch geladen uit Supabase (categorieen + subcategorieen tabellen)
+let SUBCATEGORIEEN = [];
+
+async function laadSubcategorieen() {
+  try {
+    const [catResp, subResp] = await Promise.all([
+      fetch(`${SUPABASE_URL}/rest/v1/categorieen?select=id,naam&order=id`, { headers: getHeaders() }),
+      fetch(`${SUPABASE_URL}/rest/v1/subcategorieen?select=id,naam,categorie_id&order=id`, { headers: getHeaders() })
+    ]);
+    const categorieen = await catResp.json();
+    const subcategorieen = await subResp.json();
+
+    if (Array.isArray(categorieen) && Array.isArray(subcategorieen)) {
+      SUBCATEGORIEEN = categorieen.map(cat => ({
+        naam: cat.naam,
+        subcats: subcategorieen.filter(s => s.categorie_id === cat.id).map(s => ({ id: s.id, naam: s.naam }))
+      })).filter(g => g.subcats.length > 0);
+    }
+  } catch(e) {
+    console.error('Kon categorieën niet laden:', e);
+  }
+}
 
 // Lokale cache disciplines per therapeut
 const discCache = {};
@@ -245,6 +237,7 @@ function toonTab(naam) {
 }
 
 async function laadAlles() {
+  await laadSubcategorieen();
   await laadPraktijken();
   await laadTherapeutenBeheer();
   await laadProfielWijzigingen();
