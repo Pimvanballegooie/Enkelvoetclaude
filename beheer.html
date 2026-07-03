@@ -331,7 +331,20 @@ async function goedkeurenPraktijk(id) {
   kaart.style.opacity = '0'; kaart.style.transition = 'opacity 0.3s';
   setTimeout(() => { kaart.remove(); laadPraktijken(); }, 400);
 }
+async function deactiverenPraktijk(id) {
+  if (!confirm('Praktijk deactiveren? De praktijk verdwijnt van de sites, maar blijft in de database (inclusief praktijkcode en gekoppelde therapeuten).')) return;
+  await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, { method: 'PATCH', headers: getHeaders(), body: JSON.stringify({ actief: false }) });
+  laadPraktijken();
+}
 
+async function verwijderenPraktijkDefinitief(id, naam) {
+  if (!confirm(`Praktijk "${naam}" PERMANENT verwijderen?\n\nDit verwijdert ook de koppelingen met therapeuten (de therapeuten zelf blijven bestaan). Dit kan niet ongedaan gemaakt worden.`)) return;
+  // Eerst koppelingen met therapeuten opruimen
+  await fetch(`${SUPABASE_URL}/rest/v1/therapeut_praktijken?praktijk_id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
+  // Dan de praktijk zelf
+  await fetch(`${SUPABASE_URL}/rest/v1/praktijken?id=eq.${id}`, { method: 'DELETE', headers: getHeaders() });
+  laadPraktijken();
+}
 async function afwijzenPraktijk(id) {
   if (!confirm('Praktijk afwijzen en verwijderen?')) return;
   const kaart = document.getElementById(`kaart-p-${id}`);
