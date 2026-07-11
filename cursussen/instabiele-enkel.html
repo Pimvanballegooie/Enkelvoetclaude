@@ -40,7 +40,8 @@
 }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --navy: #1B3A5C; --teal: #2A9D8F; --teal-light: #E8F5F4;
+      --navy: #1B3A4F; --navy-dark: #10232F; --teal: #2AA88F; --teal-light: #E6F5F1; --teal-dark: #1E8571;
+      --blauw: #2E7DB8; --accent: #F5921E;
       --grey-bg: #F5F7FA; --grey-border: #DDE3EC;
       --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF;
       --green: #1E8449; --green-light: #EAF7F0;
@@ -56,7 +57,7 @@
     nav a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s; }
     nav a:hover { background: rgba(255,255,255,0.12); color: white; }
     nav a.cta { background: var(--teal); color: white; margin-left: 8px; }
-    nav a.cta:hover { background: #238a7e; }
+    nav a.cta:hover { background: #1E8571; }
     @media (max-width: 700px) { nav { display: none; } }
     .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
     .logo-icon { width: 40px; height: 40px; }
@@ -73,9 +74,9 @@
     .form-group { margin-bottom: 16px; }
     .form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
     .form-group input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--text); outline: none; text-transform: uppercase; letter-spacing: 0.05em; transition: border-color 0.2s; }
-    .form-group input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,157,143,0.12); }
+    .form-group input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,168,143,0.12); }
     .btn-primary { width: 100%; padding: 12px; background: var(--teal); color: white; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-    .btn-primary:hover { background: #238a7e; }
+    .btn-primary:hover { background: #1E8571; }
     .inlog-fout { background: var(--red-light); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 0.84rem; margin-bottom: 14px; display: none; }
     .inlog-fout.zichtbaar { display: block; }
     .demo-hint { background: var(--grey-bg); border-radius: 8px; padding: 10px 14px; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; line-height: 1.6; }
@@ -146,7 +147,7 @@
     .blok-score { font-size: 0.82rem; color: var(--text-muted); }
     .blok-score.klaar { color: var(--green); font-weight: 600; }
     .btn-afronden { background: var(--navy); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-family: 'Inter', sans-serif; font-size: 0.86rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
-    .btn-afronden:hover { background: #2A4A73; }
+    .btn-afronden:hover { background: var(--blauw); }
     .btn-afronden:disabled { opacity: 0.35; cursor: default; }
 
     /* RESULTAAT BLOK */
@@ -168,9 +169,9 @@
     #cert-banner h2 { font-size: 1.2rem; font-weight: 700; color: var(--green); margin-bottom: 8px; }
     #cert-banner p { font-size: 0.88rem; color: var(--green); margin-bottom: 16px; }
     .btn-volgende { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
-    .btn-volgende:hover { background: #238a7e; }
+    .btn-volgende:hover { background: #1E8571; }
 
-    footer { background: #0F2340; color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 0.78rem; margin-top: 48px; }
+    footer { background: #10232F; color: rgba(255,255,255,0.4); text-align: center; padding: 24px; font-size: 0.78rem; margin-top: 48px; }
     footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
   </style>
 </head>
