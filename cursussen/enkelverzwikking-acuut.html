@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Enkelverzwikking (acuut) - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule enkelverzwikking (acuut) voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Enkel</span>
+      <h1 class="cursus-titel">Enkelverzwikking (acuut)</h1>
+      <p class="cursus-beschrijving">Acuut lateraal enkelbandletsel: mechanisme, gradering, acute diagnostiek en functionele behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "enkelverzwikking-acuut-v1",
+  "titel": "Enkelverzwikking (acuut)",
+  "zone": "Enkel",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Mechanisme en gradering",
+          "tekst": "De klassieke enkelverzwikking ontstaat door een inversietrauma, vaak in combinatie met plantairflexie, waarbij het laterale bandcomplex (met name het ATFL) wordt overrekt of scheurt. Letsels worden ingedeeld naar ernst.",
+          "lijst": [
+            "Graad I: overrekking zonder macroscopische scheur, minimale functiebeperking",
+            "Graad II: partiële ruptuur, matige zwelling en functiebeperking",
+            "Graad III: volledige ruptuur, uitgesproken instabiliteit, zwelling en functiebeperking"
+          ]
+        },
+        {
+          "kop": "Betrokken structuren",
+          "tekst": "Het ATFL is als eerste en meest kwetsbare band betrokken bij een inversietrauma; bij ernstiger letsel kan ook het CFL meescheuren. Het PTFL raakt zelden beschadigd, behalve bij hoogenergetische luxatietrauma's.",
+          "lijst": null
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is het klassieke ontstaansmechanisme van een laterale enkelverzwikking?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Eversie gecombineerd met dorsaalflexie",
+              "correct": false
+            },
+            {
+              "tekst": "Inversie, vaak gecombineerd met plantairflexie",
+              "correct": true
+            },
+            {
+              "tekst": "Axiale compressie zonder rotatie",
+              "correct": false
+            },
+            {
+              "tekst": "Passieve dorsaalflexie in rust",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Inversie, vaak in combinatie met plantairflexie, is het klassieke mechanisme voor een lateraal enkelbandletsel.",
+          "feedback_fout": "Niet correct. Eversieletsel betreft het mediale (deltoïd) bandcomplex, niet het laterale bandcomplex.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke gradering hoort bij een partiële ruptuur met matige zwelling en functiebeperking?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Graad I",
+              "correct": false
+            },
+            {
+              "tekst": "Graad II",
+              "correct": true
+            },
+            {
+              "tekst": "Graad III",
+              "correct": false
+            },
+            {
+              "tekst": "Graad IV (bestaat niet in de standaardclassificatie)",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Graad II betreft een partiële ruptuur met matige zwelling en functiebeperking, tussen graad I (overrekking) en graad III (volledige ruptuur) in.",
+          "feedback_fout": "Niet correct. Graad I is overrekking zonder macroscopische scheur; graad III is een volledige ruptuur.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Welke band is als eerste betrokken bij een klassiek inversietrauma?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Het ligamentum talofibulare anterius (ATFL)",
+              "correct": true
+            },
+            {
+              "tekst": "Het ligamentum deltoideum",
+              "correct": false
+            },
+            {
+              "tekst": "Het ligamentum talofibulare posterius (PTFL)",
+              "correct": false
+            },
+            {
+              "tekst": "Het ligamentum plantare longum",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het ATFL is de smalste en meest kwetsbare band, en als eerste betrokken bij een inversietrauma.",
+          "feedback_fout": "Niet correct. Het deltoïd ligament betreft de mediale zijde; het PTFL is het sterkst en zelden beschadigd.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Acute diagnostiek",
+          "tekst": "De Ottawa Ankle Rules bepalen wanneer röntgenonderzoek geïndiceerd is: bij pijn over de malleoluszones met onvermogen tot belasten, of bij pijn over het os naviculare of de basis van het vijfde middenvoetsbeentje.",
+          "lijst": null
+        },
+        {
+          "kop": "Beperkingen van acuut klinisch onderzoek",
+          "tekst": "Directe klinische stabiliteitstests (zoals de anterieure schuifladetest) zijn in de acute fase minder betrouwbaar door reflexmatige spierbescherming en zwelling; deze worden idealiter subacuut (3-5 dagen) herhaald.",
+          "lijst": [
+            "Ottawa Ankle Rules: sensitiviteit ~98% voor uitsluiten van fracturen",
+            "Acute zwelling en pijn kunnen palpatie en stabiliteitstests bemoeilijken",
+            "Reflexmatige spierbescherming maskeert bandlaxiteit in de acute fase"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarvoor worden de Ottawa Ankle Rules primair gebruikt?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Om te bepalen of fysiotherapie geïndiceerd is",
+              "correct": false
+            },
+            {
+              "tekst": "Om te bepalen of röntgenonderzoek nodig is ter uitsluiting van een fractuur",
+              "correct": true
+            },
+            {
+              "tekst": "Om de kans op chronische instabiliteit te voorspellen",
+              "correct": false
+            },
+            {
+              "tekst": "Om de mate van zwelling te meten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De Ottawa Ankle Rules zijn ontwikkeld om te bepalen wanneer röntgenonderzoek geïndiceerd is bij een acuut enkeltrauma.",
+          "feedback_fout": "Niet correct. De OAR zijn specifiek gericht op de indicatie voor röntgenonderzoek, niet op fysiotherapie-indicatie of prognose.",
+          "bron": "Stiell IG et al. (1992) — A study to develop clinical decision rules for the use of radiography in acute ankle injuries."
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waarom is de anterieure schuifladetest in de acute fase na trauma minder betrouwbaar?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de test alleen bij chronische instabiliteit uitgevoerd kan worden",
+              "correct": false
+            },
+            {
+              "tekst": "Doordat reflexmatige spierbescherming en zwelling de bandlaxiteit maskeren",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat de test technisch onmogelijk uit te voeren is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat er geen relatie is tussen deze test en bandletsel",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Reflexmatige spierbescherming en acute zwelling maskeren de bandlaxiteit; subacuut (dag 3-5) is de test betrouwbaarder.",
+          "feedback_fout": "Niet correct. De test is wel degelijk relevant, maar in de acute fase minder betrouwbaar door spierbescherming en zwelling.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Een patiënt heeft na een inversietrauma drukpijn over het os naviculare en kan niet belasten. Wat is de juiste actie volgens de Ottawa Ankle Rules?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Röntgenonderzoek is niet nodig",
+              "correct": false
+            },
+            {
+              "tekst": "Röntgenonderzoek is geïndiceerd",
+              "correct": true
+            },
+            {
+              "tekst": "Direct doorverwijzen voor een operatie",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen een MRI is toegestaan, röntgen is overbodig",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Pijn over het os naviculare in combinatie met onvermogen tot belasten is een positief criterium volgens de Ottawa Ankle Rules; röntgenonderzoek is geïndiceerd.",
+          "feedback_fout": "Niet correct. Dit is precies een van de situaties waarin de OAR röntgenonderzoek aanbevelen.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Functionele behandeling in de acute fase",
+          "tekst": "De hedendaagse aanpak van acuut lateraal enkelbandletsel is functioneel: vroege, gecontroleerde mobilisatie heeft de voorkeur boven langdurige immobilisatie, mits ondersteund door bijvoorbeeld tape of brace. Dit principe wordt vaak samengevat met het acroniem PEACE & LOVE (bescherming, elevatie, vermijden van ontstekingsremmers/ijs in overmaat, compressie, educatie; vervolgens belasting, optimisme, bewegen, training).",
+          "lijst": null
+        },
+        {
+          "kop": "Gefaseerde revalidatie",
+          "tekst": "Na de acute fase volgt een gestructureerde opbouw van mobiliteit, kracht en propriocepsis om het risico op recidief en chronische instabiliteit te minimaliseren.",
+          "lijst": [
+            "Acute fase: bescherming, zwellingsbeheersing, vroege functionele mobilisatie",
+            "Subacute fase: herstel van mobiliteit en kracht, propriocepsistraining",
+            "Late fase: sportspecifieke belasting en return-to-sport-criteria"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is de hedendaagse voorkeursaanpak bij een acuut lateraal enkelbandletsel?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Langdurige volledige immobilisatie in gips voor alle graden",
+              "correct": false
+            },
+            {
+              "tekst": "Vroege, gecontroleerde functionele mobilisatie, eventueel ondersteund door tape of brace",
+              "correct": true
+            },
+            {
+              "tekst": "Direct chirurgisch ingrijpen bij elk letsel",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige rust zonder enige vorm van belasting gedurende 3 maanden",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Functionele behandeling met vroege, gecontroleerde mobilisatie heeft de voorkeur boven langdurige immobilisatie.",
+          "feedback_fout": "Niet correct. Langdurige immobilisatie en directe chirurgie zijn niet de standaardaanpak bij een acuut enkelbandletsel.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waar staat het acroniem PEACE & LOVE voor bij de behandeling van acuut enkelletsel?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Een richtlijn voor uitsluitend chirurgische behandeling",
+              "correct": false
+            },
+            {
+              "tekst": "Een raamwerk dat begint met bescherming/educatie en overgaat naar belasting, optimisme, bewegen en training",
+              "correct": true
+            },
+            {
+              "tekst": "Een test om bandinstabiliteit te meten",
+              "correct": false
+            },
+            {
+              "tekst": "Een classificatiesysteem voor fractuurernst",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. PEACE & LOVE beschrijft de vroege fase (bescherming, elevatie, vermijden van te agressieve ontstekingsremming, compressie, educatie) gevolgd door de latere fase (belasting, optimisme, bewegen, training).",
+          "feedback_fout": "Niet correct. Het is geen test of classificatiesysteem, maar een gefaseerd behandelraamwerk.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom is propriocepsistraining een essentieel onderdeel van de revalidatie na een acute enkelverzwikking?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat het geen enkele invloed heeft op recidiefrisico",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat bandletsel de mechanoreceptoren beschadigt, wat het risico op recidief en chronische instabiliteit verhoogt zonder gerichte training",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat propriocepsistraining de enige benodigde interventie is, los van kracht en mobiliteit",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat het uitsluitend cosmetisch van waarde is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Schade aan mechanoreceptoren door het bandletsel verhoogt het risico op recidief en chronische functionele instabiliteit; gerichte propriocepsistraining helpt dit risico te verminderen.",
+          "feedback_fout": "Niet correct. Propriocepsistraining heeft juist een belangrijke rol in het verminderen van het recidiefrisico.",
+          "bron": "Hertel J (2002) — Functional anatomy, pathomechanics, and pathophysiology of lateral ankle instability."
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

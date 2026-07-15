@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Slijtage enkel - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule slijtage enkel (artrose bovenste spronggewricht) voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Enkel</span>
+      <h1 class="cursus-titel">Slijtage enkel</h1>
+      <p class="cursus-beschrijving">Gebaseerd op het EVN-protocol (complex niveau): pathofysiologie, biomechanische factoren, stepped-care-behandeling en operatieve overwegingen bij artrose van het bovenste spronggewricht.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  id: "slijtage-enkel-v1",
+  titel: "Slijtage enkel",
+  zone: "Enkel",
+  blokken: [
+    {
+      id: "blok-1", titel: "Anatomie & pathofysiologie", nummer: 1,
+      theorie: [
+        { kop: "Kraakbeendegeneratie bij enkelartrose", tekst: "Artrose van het bovenste spronggewricht wordt gekenmerkt door progressief verlies van hyalien kraakbeen, veranderingen in het subchondrale bot en secundaire ontstekingsprocessen van het synovium. In tegenstelling tot heup- en knieartrose, die vaker primair/degeneratief van aard zijn, is enkelartrose relatief zeldzaam en ontstaat in de meerderheid van de gevallen posttraumatisch, bijvoorbeeld na enkelfracturen of herhaald inversieletsel.", lijst: null },
+        { kop: "Biomechanische en functionele factoren", tekst: "Bij enkelartrose spelen meerdere factoren tegelijk een rol in het klachtenbeeld, die gezamenlijk een multidimensionele analyse noodzakelijk maken voor een effectief behandelplan.", lijst: ["Beperkte dorsaalflexie en plantairflexie", "Verstoorde afwikkeling tijdens stand- en afzetfase van het lopen", "Verminderde kracht van peronei, tibialis posterior en kuitmusculatuur", "Afgenomen propriocepsis en neuromusculaire controle", "Toegenomen gewrichtsbelasting bij overgewicht", "Inadequaat schoeisel met onvoldoende demping of afwikkeling"] }
+      ],
+      vragen: [
+        { id: "v1-1", tekst: "Wat onderscheidt enkelartrose het meest van heup- en knieartrose wat betreft ontstaanswijze?", niveau: "basis",
+          opties: [ { tekst: "Enkelartrose is bijna altijd primair/idiopathisch van aard", correct: false }, { tekst: "Enkelartrose ontstaat in de meerderheid van de gevallen posttraumatisch, na fracturen of herhaald letsel", correct: true }, { tekst: "Enkelartrose komt vaker voor dan knieartrose", correct: false }, { tekst: "Enkelartrose is uitsluitend leeftijdsgerelateerd", correct: false } ],
+          feedback_correct: "Juist. In tegenstelling tot heup- en knieartrose, die vaker primair/degeneratief zijn, is enkelartrose relatief zeldzaam en ontstaat overwegend posttraumatisch.", feedback_fout: "Niet correct. Enkelartrose is relatief zeldzaam vergeleken met heup/knie en ontstaat overwegend posttraumatisch, bijvoorbeeld na enkelfracturen of herhaalde verzwikkingen.", bron: null },
+        { id: "v1-2", tekst: "Welke spiergroepen zijn het meest relevant om te trainen bij de conservatieve aanpak van enkelartrose, gezien hun rol in stabiliteit en afwikkeling?", niveau: "basis",
+          opties: [ { tekst: "Hamstrings en quadriceps", correct: false }, { tekst: "Peronei, tibialis posterior en kuitmusculatuur", correct: true }, { tekst: "Buikspieren en lage rugmusculatuur", correct: false }, { tekst: "Heupabductoren", correct: false } ],
+          feedback_correct: "Correct. Deze spiergroepen dragen direct bij aan enkelstabiliteit, afwikkeling tijdens het lopen en het verminderen van overmatige gewrichtsbelasting.", feedback_fout: "Niet correct. De peronei, tibialis posterior en kuitmusculatuur zijn het meest relevant voor stabiliteit en afwikkeling van de enkel.", bron: null },
+        { id: "v1-3", tekst: "Waarom is een multidimensionele analyse essentieel bij de behandeling van enkelartrose?", niveau: "verdiepend",
+          opties: [ { tekst: "Omdat medicatie altijd eerst geprobeerd moet worden", correct: false }, { tekst: "Omdat meerdere factoren zoals mobiliteit, spierkracht, propriocepsis, gewicht en schoeisel gezamenlijk het klachtenbeeld bepalen", correct: true }, { tekst: "Omdat enkelartrose altijd chirurgisch behandeld moet worden", correct: false }, { tekst: "Omdat er maar één oorzaak per patiënt bestaat", correct: false } ],
+          feedback_correct: "Juist. Enkelartrose kent een multifactorieel klachtenbeeld — gewrichtsmobiliteit, spierkracht, propriocepsis, gewicht en schoeisel spelen allemaal een rol.", feedback_fout: "Niet correct. Het klachtenbeeld bij enkelartrose is multifactorieel; een effectief behandelplan vereist analyse van meerdere factoren tegelijk.", bron: null }
+      ]
+    },
+    {
+      id: "blok-2", titel: "Diagnostiek & klinisch redeneren", nummer: 2,
+      theorie: [
+        { kop: "Stepped care als leidend principe", tekst: "Binnen de artrosezorg wordt gewerkt volgens het stepped-care-principe: de behandeling start met de minst invasieve interventies, met focus op actieve therapie en leefstijloptimalisatie. Een vroege verwijzing naar de orthopedisch chirurg zonder voorafgaand conservatief traject wordt ontraden, aangezien een groot deel van de patiënten functioneel verbetert met niet-operatieve behandeling.", lijst: null },
+        { kop: "Klinische analyse en voorlichting", tekst: "De intake omvat een uitgebreide functionele analyse en gerichte patiëntenvoorlichting, met als doel zelfmanagement te bevorderen.", lijst: ["Klachtenpatroon en belastbaarheid", "Beweeglijkheid en stabiliteit van de enkel", "Loop- en bewegingspatronen", "Voorlichting: het niet-lineaire verband tussen pijn en structurele schade", "Voorlichting: het belang van bewegen binnen pijngrenzen (graded activity)"] }
+      ],
+      vragen: [
+        { id: "v2-1", tekst: "Een patiënt met vermoede enkelartrose wordt door de huisarts direct doorverwezen naar de orthopedisch chirurg, zonder eerst fysiotherapie te proberen. Is dit in lijn met de huidige zorgvisie?", niveau: "basis",
+          opties: [ { tekst: "Ja, chirurgie is altijd de eerste stap bij artrose", correct: false }, { tekst: "Nee, stepped care schrijft voor dat eerst conservatieve, minst invasieve behandeling wordt ingezet", correct: true }, { tekst: "Ja, mits de patiënt ouder is dan 60 jaar", correct: false }, { tekst: "Dit hangt volledig af van de verzekering van de patiënt", correct: false } ],
+          feedback_correct: "Correct. Vroege verwijzing zonder voorafgaand conservatief traject wordt ontraden; een groot deel van de patiënten verbetert functioneel met niet-operatieve behandeling.", feedback_fout: "Niet correct. Stepped care vereist dat conservatieve behandeling eerst wordt geprobeerd.", bron: "Internationale richtlijnen voor artrosezorg (stepped-care-principe)" },
+        { id: "v2-2", tekst: "Wat is een centraal element van de voorlichting die aan patiënten met enkelartrose wordt gegeven?", niveau: "verdiepend",
+          opties: [ { tekst: "Dat pijn altijd gelijk staat aan structurele schade", correct: false }, { tekst: "Dat het verband tussen pijn en schade niet lineair is en bewegen binnen pijngrenzen belangrijk blijft", correct: true }, { tekst: "Dat rust de enige juiste aanpak is", correct: false }, { tekst: "Dat de klachten na verloop van tijd vanzelf verdwijnen", correct: false } ],
+          feedback_correct: "Juist. Een kernonderdeel van de voorlichting is dat pijn niet altijd gelijk staat aan schade, en dat bewegen binnen pijngrenzen bijdraagt aan functieherstel.", feedback_fout: "Niet correct. Het niet-lineaire verband tussen pijn en schade, en het belang van bewegen binnen pijngrenzen, staan centraal in de voorlichting.", bron: null },
+        { id: "v2-3", tekst: "Welke onderdelen horen bij een uitgebreide intake bij enkelartrose?", niveau: "basis",
+          opties: [ { tekst: "Alleen röntgenbeoordeling", correct: false }, { tekst: "Klachtenpatroon en belastbaarheid, beweeglijkheid/stabiliteit van de enkel, en loop-/bewegingspatronen", correct: true }, { tekst: "Uitsluitend een vragenlijst over pijnscore", correct: false }, { tekst: "Een MRI-scan als standaardonderdeel", correct: false } ],
+          feedback_correct: "Correct. De intake omvat klachtenpatroon en belastbaarheid, beweeglijkheid en stabiliteit van de enkel, en analyse van loop- en bewegingspatronen.", feedback_fout: "Niet correct. Beeldvorming is geen standaardonderdeel van de intake; de nadruk ligt op klinisch functioneel onderzoek.", bron: null }
+      ]
+    },
+    {
+      id: "blok-3", titel: "Behandelstappen & revalidatie", nummer: 3,
+      theorie: [
+        { kop: "De drie stappen van behandeling", tekst: "Stap 1 richt zich op conservatieve behandeling: oefentherapie voor mobiliteit, kracht en balans, plus leefstijl- en schoeiseladvies. Stap 2 optimaliseert deze aanpak met medicatie of injectietherapie bij onvoldoende effect. Stap 3 overweegt operatieve behandeling (artrodese of enkelprothese) pas wanneer stap 1 en 2 onvoldoende resultaat geven.", lijst: null },
+        { kop: "Schoeisel en hulpmiddelen", tekst: "Schoeiselinterventies zijn gericht op het optimaliseren van de afwikkeling en het reduceren van gewrichtsbelasting.", lijst: ["Analyse van schoenstabiliteit, demping en rocker-profiel", "Overweging van een heellift bij beperkte enkelmobiliteit", "Samenwerking met podotherapeut of orthopedisch schoenmaker bij aanhoudende klachten"] }
+      ],
+      vragen: [
+        { id: "v3-1", tekst: "Een patiënt met enkelartrose heeft baat bij een heellift in de schoen. Waarom kan dit helpen?", niveau: "basis",
+          opties: [ { tekst: "Het verhoogt de mobiliteit van het bovenste spronggewricht volledig", correct: false }, { tekst: "Het vergemakkelijkt de afwikkeling en kan klachten verminderen bij beperkte enkelmobiliteit", correct: true }, { tekst: "Het versterkt de kuitspieren", correct: false }, { tekst: "Het voorkomt artrose-progressie volledig", correct: false } ],
+          feedback_correct: "Correct. Een heellift kan de afwikkeling tijdens het lopen vergemakkelijken en klachten verminderen wanneer de enkelmobiliteit beperkt is.", feedback_fout: "Niet correct. Een heellift werkt via het vergemakkelijken van de afwikkeling, niet door mobiliteit te herstellen of artrose te stoppen.", bron: null },
+        { id: "v3-2", tekst: "Wanneer wordt een operatieve behandeling (bijvoorbeeld artrodese of enkelprothese) bij enkelartrose overwogen?", niveau: "basis",
+          opties: [ { tekst: "Direct bij het stellen van de diagnose", correct: false }, { tekst: "Pas wanneer conservatieve behandeling onvoldoende effect heeft en er sprake is van aanhoudende pijn en functionele beperkingen", correct: true }, { tekst: "Alleen bij patiënten onder de 40 jaar", correct: false }, { tekst: "Zodra er lichte stijfheid wordt gerapporteerd", correct: false } ],
+          feedback_correct: "Juist. Operatieve opties komen pas in beeld na een adequaat doorlopen conservatief traject, wanneer pijn en functionele beperkingen aanhouden.", feedback_fout: "Niet correct. Chirurgie is de laatste stap in het stepped-care-traject, niet de eerste.", bron: null },
+        { id: "v3-3", tekst: "Wat is het verschil in doel tussen stap 2 (opschalen) en stap 3 (operatieve behandeling) in de behandeling van enkelartrose?", niveau: "verdiepend",
+          opties: [ { tekst: "Er is geen verschil, beide zijn identiek", correct: false }, { tekst: "Stap 2 optimaliseert de conservatieve behandeling (bijv. medicatie, injectie), stap 3 overweegt chirurgische opties bij falen van stap 1 en 2", correct: true }, { tekst: "Stap 2 is uitsluitend gericht op chirurgie", correct: false }, { tekst: "Stap 3 wordt altijd overgeslagen", correct: false } ],
+          feedback_correct: "Correct. Stap 2 richt zich op het optimaliseren van conservatieve zorg, terwijl stap 3 chirurgische opties overweegt wanneer stap 1 en 2 onvoldoende resultaat geven.", feedback_fout: "Niet correct. Stap 2 blijft binnen de conservatieve zorg, stap 3 is de overgang naar operatieve overweging.", bron: null }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

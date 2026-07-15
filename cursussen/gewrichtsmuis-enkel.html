@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Gewrichtsmuis enkel - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule gewrichtsmuis enkel voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Enkel</span>
+      <h1 class="cursus-titel">Gewrichtsmuis enkel</h1>
+      <p class="cursus-beschrijving">Losse lichamen (loose bodies) in het enkelgewricht: ontstaan, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "gewrichtsmuis-enkel-v1",
+  "titel": "Gewrichtsmuis enkel",
+  "zone": "Enkel",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Wat is een gewrichtsmuis?",
+          "tekst": "Een gewrichtsmuis (loose body) is een los, vrij bewegend fragment van bot en/of kraakbeen in het gewricht. Het kan ontstaan als afgebroken fragment bij een osteochondraal defect, na een fractuur, of secundair aan artrose (osteofytfragmentatie).",
+          "lijst": null
+        },
+        {
+          "kop": "Gevolgen voor het gewricht",
+          "tekst": "Een gewrichtsmuis kan vrij door het gewricht bewegen en zich soms tussen de gewrichtsvlakken nestelen, wat leidt tot mechanische klachten en versnelde secundaire kraakbeenschade door herhaalde impact.",
+          "lijst": [
+            "Kan ontstaan uit een osteochondraal defect, fractuurfragment, of artrose-gerelateerde osteofytfragmentatie",
+            "Vrij bewegend in het gewricht, kan wisselend klachten geven",
+            "Herhaalde impact van het fragment kan secundaire kraakbeenschade versnellen"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is een gewrichtsmuis?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een ontstoken slijmbeurs",
+              "correct": false
+            },
+            {
+              "tekst": "Een los, vrij bewegend fragment van bot en/of kraakbeen in het gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "Een verkorte pees",
+              "correct": false
+            },
+            {
+              "tekst": "Een gescheurde band",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een gewrichtsmuis is een los fragment van bot en/of kraakbeen dat vrij in het gewricht beweegt.",
+          "feedback_fout": "Niet correct. Het betreft specifiek een los bot-/kraakbeenfragment, geen peesletsel of bursitis.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke aandoening kan een oorzaak zijn van een gewrichtsmuis in de enkel?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een osteochondraal defect met afgebroken fragment",
+              "correct": true
+            },
+            {
+              "tekst": "Een verkoudheid",
+              "correct": false
+            },
+            {
+              "tekst": "Chronisch gebrek aan beweging zonder trauma",
+              "correct": false
+            },
+            {
+              "tekst": "Een allergische reactie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een osteochondraal defect kan een fragment afstoten dat vervolgens als gewrichtsmuis vrij in het gewricht beweegt.",
+          "feedback_fout": "Niet correct. Een gewrichtsmuis ontstaat door mechanisch/structureel letsel, niet door de genoemde oorzaken.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom kan een onbehandelde gewrichtsmuis op termijn extra schade veroorzaken?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Doordat herhaalde impact van het fragment secundaire kraakbeenschade kan versnellen",
+              "correct": true
+            },
+            {
+              "tekst": "Doordat het fragment altijd vanzelf oplost zonder gevolgen",
+              "correct": false
+            },
+            {
+              "tekst": "Doordat het fragment het gewricht juist stabieler maakt",
+              "correct": false
+            },
+            {
+              "tekst": "Doordat het fragment geen enkele invloed heeft op het kraakbeen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Herhaalde mechanische impact van het losse fragment kan bijdragen aan versnelde secundaire kraakbeenschade.",
+          "feedback_fout": "Niet correct. Een gewrichtsmuis lost niet vanzelf op en kan juist bijdragen aan verdere kraakbeenschade.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Kenmerkend zijn wisselende, soms plotselinge mechanische klachten: een gevoel van blokkering, 'op slot schieten' van het gewricht, of onvoorspelbare zwelling na belasting. Klachten kunnen positieafhankelijk zijn, afhankelijk van waar het fragment zich op dat moment bevindt.",
+          "lijst": null
+        },
+        {
+          "kop": "Beeldvorming",
+          "tekst": "Röntgenonderzoek kan verkalkte fragmenten tonen; MRI of CT is behulpzaam bij niet-verkalkte (zuiver kraakbeen) fragmenten en voor het lokaliseren van de oorspronkelijke donorplek (bijvoorbeeld een osteochondraal defect).",
+          "lijst": [
+            "Wisselende, soms plotselinge blokkeringsklachten ('op slot schieten')",
+            "Klachten kunnen positieafhankelijk zijn",
+            "Röntgen: toont verkalkte/benige fragmenten",
+            "MRI/CT: geschikt voor kraakbeenfragmenten en lokalisatie van de donorplek"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Welk klachtenpatroon past het meest bij een gewrichtsmuis in de enkel?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Constante, gelijkmatige pijn die nooit varieert",
+              "correct": false
+            },
+            {
+              "tekst": "Wisselende, soms plotselinge mechanische klachten zoals blokkering",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend nachtelijke rugpijn",
+              "correct": false
+            },
+            {
+              "tekst": "Pijn die alleen bij koud weer optreedt",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Wisselende, positieafhankelijke mechanische klachten zoals blokkering zijn kenmerkend voor een vrij bewegend fragment.",
+          "feedback_fout": "Niet correct. Het klachtenpatroon is juist wisselend en mechanisch van aard, niet constant.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke beeldvormende techniek is het meest geschikt bij verdenking op een niet-verkalkt (zuiver kraakbeen) fragment?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Röntgenfoto alleen",
+              "correct": false
+            },
+            {
+              "tekst": "MRI of CT",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend lichamelijk onderzoek",
+              "correct": false
+            },
+            {
+              "tekst": "Botdichtheidsmeting",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Niet-verkalkte kraakbeenfragmenten zijn op een gewone röntgenfoto vaak niet zichtbaar; MRI of CT is dan geschikter.",
+          "feedback_fout": "Niet correct. Röntgen toont vooral verkalkte/benige fragmenten; voor zuiver kraakbeen is MRI/CT beter geschikt.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarom is het van belang de oorspronkelijke donorplek van een gewrichtsmuis te lokaliseren?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om te beoordelen of er een onderliggend defect (bijv. osteochondraal) is dat ook behandeling behoeft",
+              "correct": true
+            },
+            {
+              "tekst": "Dit heeft geen enkel klinisch nut",
+              "correct": false
+            },
+            {
+              "tekst": "Om uitsluitend cosmetische redenen",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat de donorplek altijd vanzelf geneest zonder verder onderzoek",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het lokaliseren van de donorplek helpt te beoordelen of er een onderliggend defect is dat, naast verwijdering van het losse fragment, ook zelf behandeling behoeft.",
+          "feedback_fout": "Niet correct. Lokalisatie van de donorplek is klinisch relevant voor de volledige behandelplanning.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve aanpak",
+          "tekst": "Bij milde, weinig frequente mechanische klachten kan gestart worden met activiteitaanpassing en gerichte oefentherapie om de belasting op het gewricht te optimaliseren. Dit is echter beperkt effectief zolang het fragment aanwezig blijft.",
+          "lijst": null
+        },
+        {
+          "kop": "Operatieve behandeling",
+          "tekst": "Bij aanhoudende mechanische klachten (blokkering, slotklachten) is arthroscopische verwijdering van het losse fragment doorgaans de aangewezen behandeling, vaak gecombineerd met behandeling van de onderliggende donorplek indien aanwezig.",
+          "lijst": [
+            "Indicatie: aanhoudende mechanische klachten zoals blokkering",
+            "Arthroscopische verwijdering van het losse fragment",
+            "Gelijktijdige behandeling van de donorplek (bijv. microfracturing) indien relevant"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is de meest aangewezen behandeling bij aanhoudende mechanische blokkeringsklachten door een gewrichtsmuis?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Uitsluitend rekoefeningen zonder verdere interventie",
+              "correct": false
+            },
+            {
+              "tekst": "Arthroscopische verwijdering van het losse fragment",
+              "correct": true
+            },
+            {
+              "tekst": "Langdurige volledige immobilisatie in gips",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen pijnstilling zonder verdere behandeling",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij aanhoudende mechanische klachten is arthroscopische verwijdering van het fragment de aangewezen behandeling.",
+          "feedback_fout": "Niet correct. Conservatieve maatregelen alleen lossen het mechanische probleem van een los fragment niet op.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom wordt tijdens de verwijdering van een gewrichtsmuis vaak ook de donorplek behandeld?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om herhaling (opnieuw ontstaan van fragmenten) te helpen voorkomen en de onderliggende schade aan te pakken",
+              "correct": true
+            },
+            {
+              "tekst": "Dit gebeurt nooit in de praktijk",
+              "correct": false
+            },
+            {
+              "tekst": "Om puur esthetische redenen",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat de donorplek geen relatie heeft met het ontstane fragment",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het behandelen van de onderliggende donorplek (bijvoorbeeld met microfracturing) helpt herhaling te voorkomen en pakt de onderliggende schade aan.",
+          "feedback_fout": "Niet correct. De donorplek staat wel degelijk in relatie tot het fragment en wordt daarom vaak meebehandeld.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Is conservatieve behandeling (zonder verwijdering) een structurele oplossing bij een gewrichtsmuis met blokkeringsklachten?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Ja, altijd, mits voldoende gerekt wordt",
+              "correct": false
+            },
+            {
+              "tekst": "Nee, zolang het losse fragment aanwezig blijft, blijft het mechanische probleem in principe bestaan",
+              "correct": true
+            },
+            {
+              "tekst": "Ja, mits medicatie wordt gebruikt",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is nooit relevant voor de behandelkeuze",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Conservatieve behandeling kan klachten mogelijk tijdelijk verminderen, maar lost het mechanische probleem van het losse fragment niet structureel op.",
+          "feedback_fout": "Niet correct. Zolang het fragment aanwezig is, blijft het risico op mechanische klachten bestaan.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

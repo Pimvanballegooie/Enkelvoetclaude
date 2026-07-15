@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Kraakbeenletsel van de enkel - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule kraakbeenletsel van de enkel voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Enkel</span>
+      <h1 class="cursus-titel">Kraakbeenletsel van de enkel</h1>
+      <p class="cursus-beschrijving">Osteochondraal letsel van de talus: pathofysiologie, diagnostiek en stapsgewijze behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "kraakbeenletsel-enkel-v1",
+  "titel": "Kraakbeenletsel van de enkel",
+  "zone": "Enkel",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Osteochondraal defect van de talus",
+          "tekst": "Een osteochondraal defect (OCD) van de talus betreft schade aan zowel het gewrichtskraakbeen als het onderliggende subchondrale bot. Het ontstaat meestal posttraumatisch, vaak na een (of meerdere) enkelverzwikkingen, waarbij de talusdome tegen de tibia of fibula wordt gecomprimeerd.",
+          "lijst": null
+        },
+        {
+          "kop": "Lokalisatie",
+          "tekst": "OCD's komen zowel mediaal als lateraal op de talusdome voor, met verschillende ontstaanswijzen.",
+          "lijst": [
+            "Laterale letsels: vaak door een enkel, hoog-energetisch inversietrauma (shear-mechanisme)",
+            "Mediale letsels: vaak door herhaalde, lager-energetische compressiebelasting",
+            "Kraakbeen heeft een beperkt zelfherstellend vermogen door de avasculaire aard"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat wordt bedoeld met een osteochondraal defect van de talus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Uitsluitend schade aan het gewrichtskapsel",
+              "correct": false
+            },
+            {
+              "tekst": "Schade aan zowel het gewrichtskraakbeen als het onderliggende subchondrale bot",
+              "correct": true
+            },
+            {
+              "tekst": "Een peesscheur van de tibialis posterior",
+              "correct": false
+            },
+            {
+              "tekst": "Een ontsteking van de slijmbeurs",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een OCD betreft schade aan zowel kraakbeen als het onderliggende subchondrale bot.",
+          "feedback_fout": "Niet correct. Het gaat specifiek om gecombineerde schade aan kraakbeen én subchondraal bot.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat is een typisch ontstaansmechanisme voor een lateraal talusletsel?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een enkel, hoog-energetisch inversietrauma met een shear-mechanisme",
+              "correct": true
+            },
+            {
+              "tekst": "Langdurige inactiviteit",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend leeftijdsgebonden slijtage zonder trauma",
+              "correct": false
+            },
+            {
+              "tekst": "Een virale infectie van het gewricht",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Laterale letsels ontstaan vaak door een enkel hoog-energetisch trauma met een schuifbelasting (shear) op de talusdome.",
+          "feedback_fout": "Niet correct. Laterale OCD's zijn doorgaans trauma-gerelateerd, met een shear-mechanisme bij inversieletsel.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom herstelt kraakbeenschade bij een OCD vaak slecht spontaan?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat kraakbeen een zeer hoge doorbloeding heeft",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat kraakbeen avasculair is en daardoor een beperkt zelfherstellend vermogen heeft",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat kraakbeen zenuwvezels bevat die genezing belemmeren",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat kraakbeen na trauma altijd volledig regenereert",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Kraakbeen is avasculair (heeft geen eigen bloedvoorziening), wat het zelfherstellend vermogen sterk beperkt.",
+          "feedback_fout": "Niet correct. Kraakbeen heeft juist geen eigen bloedvoorziening, wat genezing bemoeilijkt.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Kenmerkend is diepe, matig te lokaliseren enkelpijn die aanhoudt of terugkeert na een doorgemaakt trauma, ondanks adequate revalidatie van bijvoorbeeld een bandletsel. Soms is er sprake van mechanische klachten zoals blokkering of 'slotklachten' bij een los fragment.",
+          "lijst": null
+        },
+        {
+          "kop": "Beeldvorming",
+          "tekst": "MRI is de gouden standaard voor het in kaart brengen van een OCD, met goede beoordeling van zowel kraakbeen als subchondraal bot (botoedeem, cystevorming, stabiliteit van het fragment).",
+          "lijst": [
+            "Aanhoudende diepe pijn na trauma, ondanks herstel van bijkomend letsel (bijv. bandletsel)",
+            "Mogelijk mechanische klachten (blokkering) bij een instabiel fragment",
+            "MRI: beoordeling van kraakbeen, subchondraal bot en fragmentstabiliteit",
+            "Röntgen kan grotere defecten tonen, maar is minder sensitief dan MRI"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Een patiënt heeft 4 maanden na een enkelverzwikking nog steeds diepe, matig lokaliseerbare pijn ondanks goed hersteld bandletsel. Waar moet u aan denken?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Een nieuwe, ongerelateerde aandoening die niets met het trauma te maken heeft",
+              "correct": false
+            },
+            {
+              "tekst": "Mogelijk een osteochondraal defect van de talus dat over het hoofd is gezien",
+              "correct": true
+            },
+            {
+              "tekst": "Dit is altijd psychogene pijn",
+              "correct": false
+            },
+            {
+              "tekst": "Dit wijst per definitie op een nieuwe bandruptuur",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Aanhoudende diepe pijn na een trauma, ondanks herstel van het bandapparaat, is een klassieke aanwijzing voor een gemist osteochondraal defect.",
+          "feedback_fout": "Niet correct. Bij aanhoudende diepe pijn na trauma moet actief gedacht worden aan een osteochondraal defect.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke beeldvormende techniek is de gouden standaard voor diagnostiek van een osteochondraal defect?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Röntgenfoto alleen",
+              "correct": false
+            },
+            {
+              "tekst": "MRI",
+              "correct": true
+            },
+            {
+              "tekst": "Echografie",
+              "correct": false
+            },
+            {
+              "tekst": "Botdichtheidsmeting",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. MRI biedt de beste beoordeling van kraakbeen, subchondraal bot en fragmentstabiliteit.",
+          "feedback_fout": "Niet correct. Röntgen kan grotere defecten tonen maar is minder sensitief; MRI is de gouden standaard.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Wat kan wijzen op een instabiel osteochondraal fragment?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Mechanische klachten zoals blokkering of 'slotklachten'",
+              "correct": true
+            },
+            {
+              "tekst": "Pijn die uitsluitend 's ochtends aanwezig is",
+              "correct": false
+            },
+            {
+              "tekst": "Volledig pijnvrij functioneren",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend huidverkleuring rond de enkel",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Mechanische klachten zoals blokkering of slotklachten kunnen wijzen op een los of instabiel fragment.",
+          "feedback_fout": "Niet correct. Mechanische klachten zoals blokkering zijn de aanwijzing voor fragmentinstabiliteit, niet de andere genoemde symptomen.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit tijdelijke ontlasting van het gewricht, gevolgd door geleidelijke, gecontroleerde belastingopbouw en gerichte oefentherapie. Vooral bij kleinere, stabiele defecten bij jongere patiënten heeft conservatieve behandeling een redelijke kans van slagen.",
+          "lijst": null
+        },
+        {
+          "kop": "Operatieve opties",
+          "tekst": "Bij falen van conservatieve behandeling, grotere defecten, of instabiele fragmenten komen chirurgische technieken in beeld, met de keuze afhankelijk van defectgrootte en -locatie.",
+          "lijst": [
+            "Microfracturing: stimuleren van fibrocartilagineuze vulling bij kleinere defecten",
+            "OATS (osteochondrale autograft transplantatie): bij grotere defecten",
+            "Verwijdering van instabiele/losse fragmenten bij mechanische klachten"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Bij welk type osteochondraal defect heeft conservatieve behandeling relatief de beste kans van slagen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Grote, instabiele defecten bij oudere patiënten",
+              "correct": false
+            },
+            {
+              "tekst": "Kleinere, stabiele defecten, vooral bij jongere patiënten",
+              "correct": true
+            },
+            {
+              "tekst": "Elk defect, ongeacht grootte of stabiliteit",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend defecten met mechanische blokkeringsklachten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Kleinere, stabiele defecten bij jongere patiënten hebben de beste kans op succesvolle conservatieve behandeling.",
+          "feedback_fout": "Niet correct. Grote of instabiele defecten en defecten met mechanische klachten reageren doorgaans minder goed op conservatieve behandeling.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wat is het doel van microfracturing bij een osteochondraal defect?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Het volledig vervangen van het kraakbeen door een prothese",
+              "correct": false
+            },
+            {
+              "tekst": "Het stimuleren van fibrocartilagineuze vulling van het defect via bloeding uit het subchondrale bot",
+              "correct": true
+            },
+            {
+              "tekst": "Het verstevigen van het enkelbandapparaat",
+              "correct": false
+            },
+            {
+              "tekst": "Het verwijderen van het gehele talusbot",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Microfracturing perforeert het subchondrale bot om een bloedstolsel en uiteindelijk fibrocartilagineus littekenweefsel te laten vormen dat het defect opvult.",
+          "feedback_fout": "Niet correct. Microfracturing stimuleert vulling met fibrocartilagineus weefsel, het is geen prothese of bandtechniek.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wanneer wordt OATS (osteochondrale autograft transplantatie) overwogen boven microfracturing?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij grotere osteochondrale defecten waar microfracturing onvoldoende volume kan herstellen",
+              "correct": true
+            },
+            {
+              "tekst": "Altijd als eerste keus, ongeacht defectgrootte",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, OATS wordt niet meer toegepast",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen bij defecten kleiner dan 2 mm",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij grotere defecten waar microfracturing onvoldoende volume kan herstellen, biedt OATS met echt osteochondraal weefsel een betere optie.",
+          "feedback_fout": "Niet correct. OATS wordt juist gereserveerd voor grotere defecten, niet als standaard eerste keus.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

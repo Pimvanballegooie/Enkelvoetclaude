@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Achterste enkel inklemming - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule achterste enkel inklemming voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Enkel</span>
+      <h1 class="cursus-titel">Achterste enkel inklemming</h1>
+      <p class="cursus-beschrijving">Posterieur enkelimpingement (os trigonum-syndroom): anatomie, diagnostiek en stapsgewijze behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "achterste-enkel-inklemming-v1",
+  "titel": "Achterste enkel inklemming",
+  "zone": "Enkel",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Os trigonum en posterieur impingement",
+          "tekst": "Achterste (posterieure) enkelinklemming ontstaat wanneer bot- of weke-delen-structuren aan de achterzijde van de talus bekneld raken tijdens maximale plantairflexie. Een veelvoorkomende oorzaak is een os trigonum: een accessoir botje aan de posterolaterale talus, aanwezig bij circa 10% van de bevolking, dat symptomatisch kan worden bij herhaalde geforceerde plantairflexie.",
+          "lijst": null
+        },
+        {
+          "kop": "Betrokken structuren",
+          "tekst": "Naast het os trigonum kan ook de flexor hallucis longus (FHL)-pees betrokken zijn, die vlak langs de posterieure talus loopt. Bij ballet (spitzen) en voetbal (geforceerd schieten) is de kans op posterieur impingement verhoogd door herhaalde maximale plantairflexie.",
+          "lijst": [
+            "Os trigonum: accessoir botje posterolateraal van de talus",
+            "Flexor hallucis longus-pees: loopt vlak posterieur langs de talus, kan meebetrokken raken",
+            "Risicogroepen: balletdansers ('spitzen'), voetballers (schieten)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is een os trigonum?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een acute fractuur van de talus",
+              "correct": false
+            },
+            {
+              "tekst": "Een accessoir botje aan de posterolaterale zijde van de talus",
+              "correct": true
+            },
+            {
+              "tekst": "Een peesverkalking van de achillespees",
+              "correct": false
+            },
+            {
+              "tekst": "Een vorm van artrose van het bovenste spronggewricht",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het os trigonum is een accessoir botje dat bij circa 10% van de bevolking voorkomt en symptomatisch kan worden bij herhaalde plantairflexie.",
+          "feedback_fout": "Niet correct. Het os trigonum is een aangeboren accessoir botje, geen fractuur of peesverkalking.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke pees loopt vlak langs de posterieure talus en kan betrokken raken bij posterieur impingement?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Tibialis anterior",
+              "correct": false
+            },
+            {
+              "tekst": "Flexor hallucis longus",
+              "correct": true
+            },
+            {
+              "tekst": "Peroneus brevis",
+              "correct": false
+            },
+            {
+              "tekst": "Extensor digitorum longus",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Juist. De flexor hallucis longus-pees loopt vlak posterieur langs de talus en kan meebetrokken raken bij impingementklachten.",
+          "feedback_fout": "Niet correct. Het is de flexor hallucis longus die anatomisch vlak langs de posterieure talus loopt.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom lopen balletdansers een verhoogd risico op posterieur enkelimpingement?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Door herhaalde maximale plantairflexie bij het 'spitzen'",
+              "correct": true
+            },
+            {
+              "tekst": "Door herhaalde maximale dorsaalflexie",
+              "correct": false
+            },
+            {
+              "tekst": "Door langdurige immobilisatie van de enkel",
+              "correct": false
+            },
+            {
+              "tekst": "Door overmatige inversiebelasting",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het 'en pointe' staan vereist maximale plantairflexie, wat de posterieure structuren herhaaldelijk belast.",
+          "feedback_fout": "Niet correct. Posterieur impingement wordt geprovoceerd door plantairflexie, niet dorsaalflexie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld en provocatietest",
+          "tekst": "Kenmerkend is diepe posterieure enkelpijn bij geforceerde plantairflexie, bijvoorbeeld bij het op de tenen staan of traplopen naar beneden. De posterieure impingementtest (passieve geforceerde plantairflexie) reproduceert de klachten.",
+          "lijst": null
+        },
+        {
+          "kop": "Differentiaaldiagnose",
+          "tekst": "Belangrijk is onderscheid met flexor hallucis longus-tendinopathie (pijn bij actieve flexie van de grote teen tegen weerstand) en met achillespeesklachten. Beeldvorming (röntgen voor het os trigonum, MRI bij verdenking op weke-delen-betrokkenheid) ondersteunt de diagnose.",
+          "lijst": [
+            "Posterieure impingementtest: passieve maximale plantairflexie reproduceert de pijn",
+            "FHL-tendinopathie: pijn bij weerstand tegen grote teen-flexie",
+            "Röntgen: zichtbaarheid os trigonum",
+            "MRI: beoordeling weke-delen-betrokkenheid"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Welke beweging reproduceert typisch de klachten bij posterieur enkelimpingement?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Passieve maximale dorsaalflexie",
+              "correct": false
+            },
+            {
+              "tekst": "Passieve geforceerde plantairflexie",
+              "correct": true
+            },
+            {
+              "tekst": "Actieve eversie tegen weerstand",
+              "correct": false
+            },
+            {
+              "tekst": "Passieve inversie in neutrale stand",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De posterieure impingementtest bestaat uit passieve, geforceerde plantairflexie, die de posterieure structuren beklemt en de klachten reproduceert.",
+          "feedback_fout": "Niet correct. Dorsaalflexie is juist kenmerkend voor het anterieure impingementsyndroom; posterieur impingement wordt geprovoceerd door plantairflexie.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Hoe onderscheidt u klinisch een FHL-tendinopathie van een zuiver os trigonum-impingement?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "FHL-tendinopathie geeft pijn bij weerstand tegen actieve flexie van de grote teen, wat bij zuiver botimpingement niet het geval is",
+              "correct": true
+            },
+            {
+              "tekst": "Er is geen enkel klinisch onderscheid mogelijk",
+              "correct": false
+            },
+            {
+              "tekst": "FHL-tendinopathie geeft alleen pijn bij dorsaalflexie",
+              "correct": false
+            },
+            {
+              "tekst": "Os trigonum-impingement geeft nooit posterieure pijn",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Pijn bij weerstand tegen actieve flexie van de grote teen wijst op betrokkenheid van de FHL-pees, naast het mechanische impingement.",
+          "feedback_fout": "Niet correct. Er is wel degelijk klinisch onderscheid te maken via specifieke weerstandstesten voor de FHL-pees.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Welke beeldvormende techniek toont het os trigonum het meest direct?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Röntgenfoto",
+              "correct": true
+            },
+            {
+              "tekst": "Echografie van de kuit",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend klinisch onderzoek zonder beeldvorming",
+              "correct": false
+            },
+            {
+              "tekst": "Botdichtheidsmeting (DEXA)",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een röntgenfoto toont het os trigonum als benige structuur goed aan.",
+          "feedback_fout": "Niet correct. Röntgenonderzoek is de meest directe manier om het os trigonum in beeld te brengen.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit relatieve rust bij acute irritatie, mobiliteitsoefeningen buiten de pijnlijke eindrange, en het tijdelijk aanpassen van activiteiten met maximale plantairflexie (bijvoorbeeld aangepast trainen bij balletdansers). Stap 2 overweegt een echogeleide corticosteroïdinjectie bij aanhoudende klachten.",
+          "lijst": null
+        },
+        {
+          "kop": "Operatieve overweging",
+          "tekst": "Bij persisterende, functiebeperkende klachten ondanks conservatieve behandeling kan arthroscopische verwijdering van het os trigonum worden overwogen.",
+          "lijst": [
+            "Indicatie: aanhoudende klachten na adequaat conservatief traject, vooral bij sporters met hoge functionele eisen",
+            "Arthroscopische of open verwijdering van het os trigonum",
+            "Beoordeling en zo nodig behandeling van de FHL-pees tijdens dezelfde ingreep"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passende eerste-stap-behandeling bij posterieur enkelimpingement?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Direct arthroscopisch verwijderen van het os trigonum",
+              "correct": false
+            },
+            {
+              "tekst": "Relatieve rust, mobiliteitsoefeningen buiten de pijnlijke eindrange en activiteitaanpassing",
+              "correct": true
+            },
+            {
+              "tekst": "Volledige immobilisatie gedurende 3 maanden",
+              "correct": false
+            },
+            {
+              "tekst": "Direct injecteren met corticosteroïden",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De behandeling start conservatief, met relatieve rust en aangepaste belasting binnen pijngrenzen.",
+          "feedback_fout": "Niet correct. Chirurgie en injecties zijn latere stappen in het traject.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Bij welke groep patiënten wordt chirurgische verwijdering van het os trigonum relatief vaker overwogen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Uitsluitend bij niet-sportende ouderen",
+              "correct": false
+            },
+            {
+              "tekst": "Bij sporters met hoge functionele eisen (bijv. balletdansers) en aanhoudende klachten ondanks conservatieve behandeling",
+              "correct": true
+            },
+            {
+              "tekst": "Bij iedereen met een toevallig op röntgen gevonden os trigonum, ongeacht klachten",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen bij kinderen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie wordt overwogen bij functiebeperkende, aanhoudende klachten, vooral bij sporters met hoge functionele eisen zoals balletdansers.",
+          "feedback_fout": "Niet correct. Een toevallig gevonden, asymptomatisch os trigonum is geen indicatie voor chirurgie.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom wordt de FHL-pees vaak meebeoordeeld tijdens een operatieve behandeling van het os trigonum?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de FHL-pees anatomisch vlak langs de posterieure talus loopt en meebetrokken kan zijn bij de klachten",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat de FHL-pees nooit een rol speelt bij posterieur impingement",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit puur cosmetische redenen heeft",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat het os trigonum altijd in de FHL-pees is ingebed",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Door de nauwe anatomische relatie kan de FHL-pees meebetrokken zijn en wordt deze daarom vaak meebeoordeeld en zo nodig behandeld.",
+          "feedback_fout": "Niet correct. De FHL-pees kan wel degelijk meebetrokken zijn gezien de anatomische ligging vlak langs de talus.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

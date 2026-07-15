@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Re-insertie buitenste enkelpees - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule re-insertie buitenste enkelpees voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Enkel</span>
+      <h1 class="cursus-titel">Re-insertie buitenste enkelpees</h1>
+      <p class="cursus-beschrijving">Revalidatie na chirurgische re-insertie van het laterale bandcomplex: fasering, belastingsopbouw en return-to-sport-criteria.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "re-insertie-buitenste-enkelpees-v1",
+  "titel": "Re-insertie buitenste enkelpees",
+  "zone": "Enkel",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Indicatie & chirurgische techniek",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Indicatie voor re-insertie",
+          "tekst": "Een re-insertie van het laterale bandcomplex (vaak het ATFL, al dan niet met peesversteviging) wordt overwogen bij therapieresistente chronische enkelinstabiliteit, wanneer een langdurig, adequaat doorlopen conservatief traject onvoldoende functioneel herstel heeft opgeleverd.",
+          "lijst": null
+        },
+        {
+          "kop": "Chirurgische principes",
+          "tekst": "Bij een anatomische reconstructie (Broström-achtige techniek) worden de gerekte bandstompen direct gehecht en teruggeplaatst (re-insertie) op hun anatomische aanhechting, eventueel verstevigd met omliggend weke-delen-weefsel.",
+          "lijst": [
+            "Directe hechting en re-insertie van de gerekte bandstompen op de anatomische aanhechtingsplaats",
+            "Eventuele versteviging met retinaculum of periost",
+            "Doel: herstel van mechanische stabiliteit met behoud van fysiologische beweeglijkheid"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wanneer wordt een chirurgische re-insertie van het laterale bandcomplex overwogen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Direct na een eerste enkelverzwikking",
+              "correct": false
+            },
+            {
+              "tekst": "Bij therapieresistente chronische instabiliteit na een adequaat doorlopen conservatief traject",
+              "correct": true
+            },
+            {
+              "tekst": "Bij elke lichte enkelklacht, ongeacht duur",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen preventief, zonder klachten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie is gereserveerd voor persisterende, functiebeperkende instabiliteit na falen van conservatieve behandeling.",
+          "feedback_fout": "Niet correct. Een re-insertie is een laatste-stap-behandeling, niet de eerste keus na een eerste verzwikking.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat houdt een anatomische re-insertie van het laterale bandcomplex in?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Het volledig verwijderen van de band zonder vervanging",
+              "correct": false
+            },
+            {
+              "tekst": "Het direct hechten en terugplaatsen van de gerekte bandstompen op de anatomische aanhechting",
+              "correct": true
+            },
+            {
+              "tekst": "Het vastzetten van het gehele enkelgewricht",
+              "correct": false
+            },
+            {
+              "tekst": "Het plaatsen van een kunstgewricht",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij re-insertie worden de bandstompen gehecht en teruggeplaatst op hun oorspronkelijke anatomische locatie.",
+          "feedback_fout": "Niet correct. Het gaat om herstel van de band op de anatomische plaats, niet om verwijdering of artrodese.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Wat is het belangrijkste doel van een anatomische reconstructietechniek ten opzichte van niet-anatomische technieken?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Herstel van mechanische stabiliteit met behoud van fysiologische beweeglijkheid van het gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "Het gewricht zo star mogelijk maken",
+              "correct": false
+            },
+            {
+              "tekst": "Het volledig laten verdwijnen van elke beweeglijkheid in de enkel",
+              "correct": false
+            },
+            {
+              "tekst": "Het vervangen van kraakbeen door donorweefsel",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Anatomische technieken streven naar herstel van stabiliteit zonder de fysiologische beweeglijkheid onnodig te beperken, in tegenstelling tot oudere niet-anatomische technieken.",
+          "feedback_fout": "Niet correct. Het doel is functioneel herstel met behoud van beweeglijkheid, niet maximale verstijving.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Postoperatieve fasering",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Vroege postoperatieve fase",
+          "tekst": "De eerste weken na de operatie staat bescherming van de reconstructie centraal: (gedeeltelijke) immobilisatie, zwellingsbeheersing en voorzichtige mobilisatie van aangrenzende gewrichten (tenen, knie) om stijfheid elders te voorkomen.",
+          "lijst": null
+        },
+        {
+          "kop": "Opbouw van belasting en functie",
+          "tekst": "Na de initiële beschermingsfase wordt geleidelijk opgebouwd naar volledige belasting, met aandacht voor mobiliteit, kracht en propriocepsis, in lijn met de weefselgenezingstermijnen van de gereconstrueerde band.",
+          "lijst": [
+            "Fase 1 (0-2 weken): bescherming, zwellingsbeheersing, beperkte belasting",
+            "Fase 2 (2-6 weken): geleidelijke belastingopbouw, mobiliteitsherstel",
+            "Fase 3 (6-12 weken): kracht- en propriocepsistraining, functionele oefeningen"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat staat centraal in de eerste twee weken na een re-insertie van het laterale bandcomplex?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Maximale sportbelasting",
+              "correct": false
+            },
+            {
+              "tekst": "Bescherming van de reconstructie, zwellingsbeheersing en voorzichtige mobilisatie van aangrenzende gewrichten",
+              "correct": true
+            },
+            {
+              "tekst": "Volledig ongelimiteerd belasten vanaf dag 1",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend passieve rek van het laterale bandcomplex",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De vroege fase is gericht op bescherming van de reconstructie en het voorkomen van secundaire stijfheid elders.",
+          "feedback_fout": "Niet correct. Vroege maximale belasting kan de reconstructie juist schaden; bescherming staat centraal.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waarom wordt in de vroege fase ook aandacht besteed aan mobilisatie van tenen en knie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om secundaire stijfheid in aangrenzende gewrichten door de (gedeeltelijke) immobilisatie te voorkomen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat dit de enkel zelf sneller laat genezen",
+              "correct": false
+            },
+            {
+              "tekst": "Dit heeft geen functioneel doel",
+              "correct": false
+            },
+            {
+              "tekst": "Om de operatiewond sneller te laten sluiten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Gerichte mobilisatie van aangrenzende gewrichten voorkomt secundaire stijfheid die kan ontstaan door de tijdelijke immobilisatie van de enkel.",
+          "feedback_fout": "Niet correct. Het doel is het voorkomen van stijfheid elders, niet het versnellen van de enkelgenezing zelf.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarop is de opbouw van belasting in fase 2 en 3 primair gebaseerd?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Uitsluitend op de wensen van de patiënt, ongeacht weefselgenezing",
+              "correct": false
+            },
+            {
+              "tekst": "Op de weefselgenezingstermijnen van de gereconstrueerde band, met geleidelijke opbouw van mobiliteit, kracht en propriocepsis",
+              "correct": true
+            },
+            {
+              "tekst": "Op een vast schema zonder individuele aanpassing",
+              "correct": false
+            },
+            {
+              "tekst": "Op de kalenderleeftijd van de patiënt",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De opbouw volgt de biologische genezingstermijnen van het gereconstrueerde weefsel, met geleidelijke progressie in mobiliteit, kracht en propriocepsis.",
+          "feedback_fout": "Niet correct. De opbouw is gebaseerd op weefselgenezing, niet uitsluitend op patiëntwens of een star schema.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Return-to-sport & functionele criteria",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Belang van functionele criteria",
+          "tekst": "Terugkeer naar sport (return to sport, RTS) na een re-insertie wordt niet alleen bepaald door de verstreken tijd sinds de operatie, maar vooral door het behalen van functionele criteria die aantonen dat de enkel voldoende belastbaar en stabiel is.",
+          "lijst": null
+        },
+        {
+          "kop": "Veelgebruikte functionele criteria",
+          "tekst": "Een combinatie van kracht-, balans- en sprongtesten wordt gebruikt om de belastbaarheid objectief te beoordelen voordat wordt teruggekeerd naar sportspecifieke belasting.",
+          "lijst": [
+            "Peroneuskracht vergelijkbaar met de niet-geopereerde zijde",
+            "Single-leg hoptests binnen een aanvaardbare limb symmetry index",
+            "Balanstesten (bijv. Y-balance test) vergelijkbaar met contralateraal",
+            "Patiënt-gerapporteerde uitkomstmaten (bijv. FAAM-sport) boven een vastgestelde drempelwaarde"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Waarom is tijdsduur alleen onvoldoende als criterium voor return to sport na een re-insertie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat individuele genezing en functioneel herstel kunnen variëren, en functionele testen het daadwerkelijke belastbaarheidsniveau tonen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat tijdsduur totaal geen rol speelt in revalidatie",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat alle patiënten precies even snel herstellen",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat functionele testen nooit betrouwbaar zijn",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Herstel varieert per patiënt; functionele criteria geven een directere indicatie van daadwerkelijke belastbaarheid dan tijdsduur alleen.",
+          "feedback_fout": "Niet correct. Tijdsduur is een grove indicator; functionele testen zijn nodig om het werkelijke herstel te beoordelen.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Welke test wordt gebruikt om de dynamische balans te beoordelen voorafgaand aan return to sport?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De Ottawa Ankle Rules",
+              "correct": false
+            },
+            {
+              "tekst": "De Y-balance test",
+              "correct": true
+            },
+            {
+              "tekst": "De Thompson-test",
+              "correct": false
+            },
+            {
+              "tekst": "De Lachman-test",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De Y-balance test wordt gebruikt om dynamische balans te beoordelen ten opzichte van de contralaterale zijde.",
+          "feedback_fout": "Niet correct. De Ottawa Ankle Rules zijn bedoeld voor fractuurscreening, de Thompson- en Lachman-test betreffen andere structuren.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat wordt bedoeld met de 'limb symmetry index' bij een hoptest?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "De verhouding tussen de prestatie van het geopereerde been en het niet-geopereerde been",
+              "correct": true
+            },
+            {
+              "tekst": "De lengte van het geopereerde been in centimeters",
+              "correct": false
+            },
+            {
+              "tekst": "Het aantal weken sinds de operatie",
+              "correct": false
+            },
+            {
+              "tekst": "De hoeveelheid zwelling rond de enkel",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De limb symmetry index vergelijkt de prestatie (bijv. sprongafstand) tussen het geopereerde en het niet-geopereerde been, als maat voor functioneel herstel.",
+          "feedback_fout": "Niet correct. Het betreft een prestatievergelijking tussen beide benen, geen tijds- of zwellingsmaat.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Voorste enkel inklemming - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule voorste enkel inklemming voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Enkel</span>
+      <h1 class="cursus-titel">Voorste enkel inklemming</h1>
+      <p class="cursus-beschrijving">Anterieur enkelimpingement: botvorming, weke-delen inklemming, diagnostiek en stapsgewijze behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "voorste-enkel-inklemming-v1",
+  "titel": "Voorste enkel inklemming",
+  "zone": "Enkel",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Anterieur impingement",
+          "tekst": "Voorste (anterieure) enkelinklemming ontstaat door botvorming (osteofyten aan de voorrand van tibia en/of talushals) of door verdikt weke-delen weefsel dat bekneld raakt tijdens dorsaalflexie. Het komt vaak voor bij sporters met herhaalde maximale dorsaalflexiebelasting, zoals voetballers en dansers.",
+          "lijst": null
+        },
+        {
+          "kop": "Ontstaansmechanisme",
+          "tekst": "Herhaalde microtraumata aan het anterieure kapsel, vaak na eerdere inversietrauma's, leiden tot reactieve botnieuwvorming (tractie-osteofyten). Deze osteofyten botsen tijdens dorsaalflexie tegen elkaar aan, wat leidt tot mechanische inklemming en secundaire synovitis.",
+          "lijst": [
+            "Tractie-osteofyten tibia-voorrand en talushals",
+            "Kapselverdikking en synovitis door herhaalde microtraumata",
+            "Vaak voorafgegaan door (multipele) inversietrauma's"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is het primaire mechanisme achter botvorming bij anterieur enkelimpingement?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Reactieve tractie-osteofytvorming door herhaalde microtraumata aan het anterieure kapsel",
+              "correct": true
+            },
+            {
+              "tekst": "Een acute fractuur van de talus",
+              "correct": false
+            },
+            {
+              "tekst": "Aangeboren botafwijking",
+              "correct": false
+            },
+            {
+              "tekst": "Degeneratie van het kraakbeen zonder trauma",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Herhaalde microtraumata leiden tot reactieve tractie-osteofytvorming aan tibia en talushals.",
+          "feedback_fout": "Niet correct. Het gaat om reactieve botnieuwvorming door herhaalde microtraumata, niet om een acute fractuur of aangeboren afwijking.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Bij welke sporten komt anterieur enkelimpingement relatief vaak voor?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Zwemmen en fietsen",
+              "correct": false
+            },
+            {
+              "tekst": "Voetbal en dans, door herhaalde maximale dorsaalflexiebelasting",
+              "correct": true
+            },
+            {
+              "tekst": "Golf en tennis",
+              "correct": false
+            },
+            {
+              "tekst": "Enkel bij niet-sportende ouderen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Juist. Herhaalde maximale dorsaalflexie, zoals bij voetballen en dansen, is een belangrijke risicofactor.",
+          "feedback_fout": "Niet correct. Voetbal en dans belasten de enkel juist herhaaldelijk in maximale dorsaalflexie.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom speelt een voorgeschiedenis van inversietrauma vaak een rol bij het ontstaan van anterieur impingement?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Inversietrauma's veroorzaken direct een botbreuk",
+              "correct": false
+            },
+            {
+              "tekst": "Herhaalde microtraumata en kapselirritatie na eerdere trauma's kunnen leiden tot reactieve osteofytvorming en synovitis",
+              "correct": true
+            },
+            {
+              "tekst": "Inversietrauma heeft geen relatie met impingement",
+              "correct": false
+            },
+            {
+              "tekst": "Het verhoogt uitsluitend het risico op artrose op lange termijn, niet op impingement",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Kapselirritatie en microtraumata na eerdere inversieletsels kunnen leiden tot reactieve botnieuwvorming en impingementklachten.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een relatie: eerdere inversietrauma's kunnen via kapselirritatie bijdragen aan osteofytvorming.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Patiënten rapporteren typisch anterieure enkelpijn bij maximale dorsaalflexie, bijvoorbeeld bij hurken, traplopen of het uitvoeren van een voetbalschot. Drukpijn is vaak aanwijsbaar over de anterieure gewrichtsspleet.",
+          "lijst": null
+        },
+        {
+          "kop": "Differentiatie bot versus weke delen",
+          "tekst": "Klinisch is het onderscheid tussen botimpingement en weke-delen-impingement lastig te maken; beeldvorming (röntgen voor osteofyten, MRI voor weke-delen-verdikking en synovitis) is behulpzaam bij de differentiatie en behandelplanning.",
+          "lijst": [
+            "Pijn bij maximale dorsaalflexie (bijv. hurktest)",
+            "Drukpijn anterieure gewrichtsspleet",
+            "Röntgen: beoordeling osteofyten",
+            "MRI: beoordeling weke-delen-verdikking en synovitis"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Welke provocerende test past het beste bij anterieur enkelimpingement?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Maximale dorsaalflexie, bijvoorbeeld tijdens een hurktest",
+              "correct": true
+            },
+            {
+              "tekst": "Maximale plantairflexie",
+              "correct": false
+            },
+            {
+              "tekst": "Passieve inversie in rust",
+              "correct": false
+            },
+            {
+              "tekst": "Weerstand tegen eversie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Maximale dorsaalflexie provoceert de klachten doordat de anterieure structuren dan bekneld raken.",
+          "feedback_fout": "Niet correct. Anterieur impingement wordt geprovoceerd door dorsaalflexie, niet plantairflexie.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke beeldvormende techniek is het meest geschikt om weke-delen-verdikking en synovitis te beoordelen bij verdenking op impingement?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Röntgenfoto",
+              "correct": false
+            },
+            {
+              "tekst": "MRI",
+              "correct": true
+            },
+            {
+              "tekst": "Echografie van de achillespees",
+              "correct": false
+            },
+            {
+              "tekst": "Botscan als eerste keus",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Juist. MRI is het meest geschikt voor beoordeling van weke-delen-verdikking en synovitis; röntgen is vooral geschikt voor osteofyten.",
+          "feedback_fout": "Niet correct. Röntgen toont vooral botafwijkingen; voor weke-delen-beoordeling is MRI de aangewezen techniek.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarom is het klinisch onderscheid tussen bot- en weke-delen-impingement lastig te maken zonder beeldvorming?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat beide vormen identieke provocatiepatronen en pijnlokalisatie geven",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat weke-delen-impingement nooit pijn geeft",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat botimpingement alleen 's nachts pijn geeft",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat het onderscheid klinisch irrelevant is voor de behandeling",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Beide vormen geven vergelijkbare pijnlokalisatie en provocatie bij dorsaalflexie, waardoor beeldvorming nodig is voor differentiatie en gerichte behandelplanning.",
+          "feedback_fout": "Niet correct. Het onderscheid is klinisch lastig te maken omdat beide vormen een vergelijkbaar provocatiepatroon geven.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve stappen",
+          "tekst": "Stap 1 richt zich op mobiliteitsoefeningen binnen pijngrenzen, ontstekingsremmende maatregelen bij acute irritatie en tijdelijke aanpassing van sportactiviteiten die maximale dorsaalflexie vereisen. Stap 2 overweegt een corticosteroïdinjectie bij aanhoudende synovitis.",
+          "lijst": null
+        },
+        {
+          "kop": "Operatieve overweging",
+          "tekst": "Bij persisterende klachten ondanks adequaat conservatief beleid kan arthroscopische verwijdering van de osteofyten en/of het verdikte weke-delen-weefsel worden overwogen (stap 3).",
+          "lijst": [
+            "Indicatie: aanhoudende functiebeperkende klachten na conservatief traject",
+            "Arthroscopische cheilectomie (verwijderen osteofyten)",
+            "Debridement van verdikt synoviaal weefsel indien aanwezig"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is de eerste stap in de behandeling van anterieur enkelimpingement?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Directe arthroscopische verwijdering van osteofyten",
+              "correct": false
+            },
+            {
+              "tekst": "Mobiliteitsoefeningen binnen pijngrenzen en activiteitaanpassing",
+              "correct": true
+            },
+            {
+              "tekst": "Langdurige volledige immobilisatie",
+              "correct": false
+            },
+            {
+              "tekst": "Corticosteroïdinjectie als eerste keus",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De behandeling start conservatief met mobiliteitsoefeningen en het tijdelijk aanpassen van belastende activiteiten.",
+          "feedback_fout": "Niet correct. Chirurgie en injecties zijn latere stappen; eerste keus is conservatieve, actieve behandeling.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wanneer wordt arthroscopische verwijdering van osteofyten overwogen bij anterieur impingement?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Direct bij het stellen van de diagnose",
+              "correct": false
+            },
+            {
+              "tekst": "Bij aanhoudende functiebeperkende klachten na een adequaat doorlopen conservatief traject",
+              "correct": true
+            },
+            {
+              "tekst": "Alleen bij topsporters, ongeacht klachtenduur",
+              "correct": false
+            },
+            {
+              "tekst": "Zodra er lichte pijn bij dorsaalflexie is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Juist. Chirurgie is gereserveerd voor persisterende klachten na conservatieve behandeling.",
+          "feedback_fout": "Niet correct. Eerst wordt een conservatief traject doorlopen; chirurgie is de laatste stap.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat omvat een arthroscopische behandeling bij anterieur impingement doorgaans?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Uitsluitend het vastzetten van het gewricht (artrodese)",
+              "correct": false
+            },
+            {
+              "tekst": "Cheilectomie van osteofyten en eventueel debridement van verdikt synoviaal weefsel",
+              "correct": true
+            },
+            {
+              "tekst": "Het plaatsen van een volledige enkelprothese",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend peesverlenging",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De ingreep bestaat doorgaans uit het verwijderen van osteofyten (cheilectomie) en zo nodig debridement van ontstoken synoviaal weefsel.",
+          "feedback_fout": "Niet correct. Artrodese en prothesiologie zijn behandelopties bij artrose, niet de standaardaanpak bij impingement.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

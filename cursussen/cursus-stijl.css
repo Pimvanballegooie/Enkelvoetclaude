@@ -1,0 +1,148 @@
+@font-face { font-family: 'Inter'; src: url('../fonts/inter-v20-latin-300.woff2') format('woff2'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('../fonts/inter-v20-latin-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('../fonts/inter-v20-latin-500.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('../fonts/inter-v20-latin-600.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Inter'; src: url('../fonts/inter-v20-latin-700.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #1B3A4F; --navy-dark: #10232F; --teal: #2AA88F; --teal-light: #E6F5F1; --teal-dark: #1E8571;
+  --blauw: #2E7DB8; --accent: #F5921E; --orange: #E67E22; --orange-light: #FEF0E6;
+  --grey-bg: #F5F7FA; --grey-border: #DDE3EC;
+  --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF;
+  --green: #1E8449; --green-light: #EAF7F0;
+  --red: #C0392B; --red-light: #FDEDEC;
+  --blue-light: #EAF0FB; --blue: #1A5276;
+}
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; }
+
+header { background: var(--white); border-bottom: 1px solid var(--grey-border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.header-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+nav { display: flex; gap: 6px; }
+nav a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.2s; }
+nav a:hover { background: var(--grey-bg); color: var(--navy); }
+nav a.cta { background: var(--teal); color: white; margin-left: 8px; }
+nav a.cta:hover { background: #1E8571; }
+@media (max-width: 700px) { nav { display: none; } }
+.logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.logo-icon { width: 40px; height: 40px; }
+.logo-text { color: var(--navy); font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
+
+.wrap { max-width: 720px; margin: 0 auto; padding: 32px 24px 64px; }
+
+/* INLOGSCHERM */
+#scherm-inlog { display: block; }
+.inlog-kaart { background: var(--white); border: 1px solid var(--grey-border); border-radius: 16px; padding: 36px 32px; max-width: 420px; }
+.inlog-tag { display: inline-block; background: var(--teal-light); color: var(--teal); font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+.inlog-kaart h1 { font-size: 1.4rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+.inlog-kaart p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px; line-height: 1.6; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 0.82rem; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+.form-group input { width: 100%; padding: 11px 14px; border: 1.5px solid var(--grey-border); border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--text); outline: none; text-transform: uppercase; letter-spacing: 0.05em; transition: border-color 0.2s; }
+.form-group input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(42,168,143,0.12); }
+.btn-primary { width: 100%; padding: 12px; background: var(--teal); color: white; border: none; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.btn-primary:hover { background: #1E8571; }
+.inlog-fout { background: var(--red-light); color: var(--red); border-radius: 8px; padding: 10px 14px; font-size: 0.84rem; margin-bottom: 14px; display: none; }
+.inlog-fout.zichtbaar { display: block; }
+.demo-hint { background: var(--grey-bg); border-radius: 8px; padding: 10px 14px; font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; line-height: 1.6; }
+.demo-hint strong { color: var(--text); }
+
+/* CURSUSSCHERM */
+#scherm-cursus { display: none; }
+
+.cursus-header { margin-bottom: 24px; }
+.cursus-tag { display: inline-block; background: var(--blue-light); color: var(--blue); font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
+.cursus-titel { font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.cursus-beschrijving { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+.voortgang-wrap { margin: 20px 0; }
+.voortgang-balk-bg { background: var(--grey-border); border-radius: 99px; height: 7px; overflow: hidden; }
+.voortgang-balk-fill { height: 7px; background: var(--teal); border-radius: 99px; transition: width 0.4s ease; width: 0%; }
+.voortgang-labels { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-top: 6px; }
+
+/* BLOKKEN */
+.blok { background: var(--white); border: 1px solid var(--grey-border); border-radius: 14px; overflow: hidden; margin-bottom: 12px; }
+.blok-header { display: flex; align-items: center; gap: 12px; padding: 14px 18px; cursor: pointer; user-select: none; background: var(--white); transition: background 0.15s; }
+.blok-header:hover { background: var(--grey-bg); }
+.blok-header.vergrendeld { cursor: default; }
+.blok-header.vergrendeld:hover { background: var(--white); }
+.blok-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 700; flex-shrink: 0; }
+.blok-num.actief { background: var(--orange-light); color: var(--orange); }
+.blok-num.klaar { background: var(--green-light); color: var(--green); }
+.blok-num.gezakt { background: var(--red-light); color: var(--red); }
+.blok-num.vergrendeld { background: var(--grey-bg); color: var(--grey-border); border: 1px solid var(--grey-border); }
+.blok-info { flex: 1; }
+.blok-titel { font-size: 0.95rem; font-weight: 600; color: var(--navy); }
+.blok-sub { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+.blok-status { font-size: 0.75rem; color: var(--text-muted); }
+.blok-body { display: none; padding: 20px 20px 16px; border-top: 1px solid var(--grey-border); }
+.blok-body.open { display: block; }
+
+/* THEORIE */
+.theorie-blok { background: var(--grey-bg); border-left: 3px solid var(--teal); border-radius: 0 8px 8px 0; padding: 14px 16px; margin-bottom: 16px; }
+.theorie-kop { font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.theorie-tekst { font-size: 0.86rem; color: var(--text-muted); line-height: 1.7; }
+.theorie-lijst { margin-top: 10px; padding-left: 18px; font-size: 0.84rem; color: var(--text-muted); line-height: 1.7; }
+.theorie-lijst li { margin-bottom: 3px; }
+
+/* VRAGEN */
+.vragen-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin: 20px 0 14px; padding-top: 16px; border-top: 1px solid var(--grey-border); }
+.vraag-wrap { margin-bottom: 24px; }
+.vraag-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.niveau-badge { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.niveau-badge.basis { background: var(--green-light); color: var(--green); }
+.niveau-badge.verdiepend { background: var(--blue-light); color: var(--blue); }
+.vraag-num { font-size: 0.72rem; color: var(--text-muted); }
+.vraag-tekst { font-size: 0.92rem; font-weight: 600; color: var(--navy); margin-bottom: 12px; line-height: 1.55; }
+.optie { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border: 1.5px solid var(--grey-border); border-radius: 8px; margin-bottom: 6px; cursor: pointer; font-size: 0.86rem; color: var(--text); transition: all 0.15s; line-height: 1.5; }
+.optie:hover:not(.disabled) { border-color: var(--teal); background: var(--teal-light); }
+.optie.geselecteerd { border-color: var(--teal); background: var(--teal-light); }
+.optie.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+.optie.fout { border-color: var(--red); background: var(--red-light); color: var(--red); }
+.optie.disabled { cursor: default; pointer-events: none; }
+.optie-letter { width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.feedback { font-size: 0.82rem; padding: 10px 14px; border-radius: 8px; margin-top: 8px; line-height: 1.6; }
+.feedback.correct { background: var(--green-light); color: var(--green); }
+.feedback.fout { background: var(--red-light); color: var(--red); }
+.bron { font-size: 0.72rem; color: var(--text-muted); margin-top: 6px; font-style: italic; }
+
+/* BLOK FOOTER */
+.blok-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 1px solid var(--grey-border); margin-top: 8px; }
+.blok-score { font-size: 0.82rem; color: var(--text-muted); }
+.blok-score.klaar { color: var(--green); font-weight: 600; }
+.btn-afronden { background: var(--navy); color: white; border: none; border-radius: 8px; padding: 9px 18px; font-family: 'Inter', sans-serif; font-size: 0.86rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.btn-afronden:hover { background: var(--blauw); }
+.btn-afronden:disabled { opacity: 0.35; cursor: default; }
+
+/* RESULTAAT BLOK */
+.blok-resultaat { margin-top: 20px; border-radius: 10px; padding: 16px 20px; }
+.blok-resultaat.geslaagd { background: var(--green-light); border: 1px solid rgba(30,132,73,0.3); }
+.blok-resultaat.gezakt { background: var(--red-light); border: 1px solid rgba(192,57,43,0.3); }
+.resultaat-score { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.blok-resultaat.geslaagd .resultaat-score { color: var(--green); }
+.blok-resultaat.gezakt .resultaat-score { color: var(--red); }
+.resultaat-tekst { font-size: 0.84rem; margin-bottom: 12px; }
+.blok-resultaat.geslaagd .resultaat-tekst { color: var(--green); }
+.blok-resultaat.gezakt .resultaat-tekst { color: var(--red); }
+.btn-opnieuw { background: var(--red); color: white; border: none; border-radius: 8px; padding: 8px 16px; font-family: 'Inter', sans-serif; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.btn-opnieuw:hover { background: #a93226; }
+
+/* CERTIFICAAT */
+#cert-banner { display: none; background: var(--green-light); border: 1px solid rgba(30,132,73,0.3); border-radius: 14px; padding: 28px 24px; text-align: center; margin-top: 20px; }
+#cert-banner.zichtbaar { display: block; }
+#cert-banner h2 { font-size: 1.2rem; font-weight: 700; color: var(--green); margin-bottom: 8px; }
+#cert-banner p { font-size: 0.88rem; color: var(--green); margin-bottom: 16px; }
+.btn-volgende { background: var(--teal); color: white; border: none; border-radius: 8px; padding: 10px 22px; font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-block; }
+.btn-volgende:hover { background: #1E8571; }
+
+/* HAMBURGER (mobiel) */
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+.hamburger span { display: block; width: 22px; height: 2px; background: var(--navy); border-radius: 2px; }
+@media (max-width: 700px) {
+  .hamburger { display: flex; }
+  nav#main-nav { display: none; position: absolute; top: 68px; left: 0; right: 0; background: var(--white); flex-direction: column; align-items: stretch; padding: 12px 16px 20px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); border-top: 1px solid var(--grey-border); }
+  nav#main-nav.open { display: flex; }
+}
+
+footer { background: var(--grey-bg); border-top: 1px solid var(--grey-border); color: var(--text-muted); text-align: center; padding: 24px; font-size: 0.78rem; margin-top: 48px; }
+footer a { color: var(--teal-dark); text-decoration: none; }
