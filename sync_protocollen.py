@@ -400,7 +400,7 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam,
     </a>
     <nav>
       <a href="../protocollen.html">Protocollen</a>
-      <a href="../cursussen/">Cursussen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
       <a href="../index.html#locaties">Locaties</a>
       <a href="../partners.html">Partners</a>
     </nav>
@@ -689,7 +689,7 @@ html_pagina = '''<!DOCTYPE html>
     </a>
     <nav>
       <a href="protocollen.html">Protocollen</a>
-      <a href="cursussen/">Cursussen</a>
+      <a href="mijn-profiel.html">Mijn profiel</a>
       <a href="index.html#locaties">Locaties</a>
       <a href="partners.html">Partners</a>
       <a href="therapeut-worden.html">Aanmelden als therapeut</a>
