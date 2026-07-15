@@ -87,7 +87,9 @@ def opschonen_html(body):
             'font-size:0.8rem;font-weight:600;text-decoration:none;">📹 ' + naam + '</a>'
         )
     body = re.sub(r'\[VIDEO:\s*([^|\]]+)\|\s*(https?://[^\]]+)\]', maak_video_knop, body)
-    body = re.sub(r'https?://(?:www\.)?fysioefeningen\.nl/[^\s<>"\']+', '', body)
+    # Alleen losse, niet-gelinkte fysioefeningen.nl-tekst opruimen — niet de href
+    # die maak_knop_van_link/maak_video_knop hierboven net heeft aangemaakt.
+    body = re.sub(r'(?<!href=")https?://(?:www\.)?fysioefeningen\.nl/[^\s<>"\']+', '', body)
 
     return body.strip()
 
