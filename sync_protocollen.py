@@ -339,7 +339,7 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam,
       font-display: swap;
     }}
     *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
-    :root {{ --navy: #1B3A4F; --teal: #2AA88F; --teal-light: #E6F5F1; --grey-bg: #F5F7FA; --grey-border: #DDE3EC; --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF; }}
+    :root {{ --navy: #1B3A4F; --teal: #2AA88F; --teal-light: #E6F5F1; --blauw: #2E7DB8; --grey-bg: #F5F7FA; --grey-border: #DDE3EC; --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF; }}
     body {{ font-family: "Inter", sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; }}
     header {{ background: var(--white); border-bottom: 1px solid var(--grey-border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }}
     .header-inner {{ max-width: 1200px; margin: 0 auto; padding: 0 clamp(1rem, 4vw, 3rem); display: flex; align-items: center; justify-content: space-between; height: 68px; }}
@@ -395,7 +395,7 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam,
 <header>
   <div class="header-inner">
     <a href="../index.html" class="logo">
-      <img class="logo-icon" src="../EVN_Logo_transparant.png" alt="EVN Logo" />
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
       <div class="logo-text">Enkel Voet Netwerk</div>
     </a>
     <nav>
@@ -608,7 +608,7 @@ html_pagina = '''<!DOCTYPE html>
       font-display: swap;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --navy: #1B3A4F; --teal: #2AA88F; --teal-light: #E6F5F1; --grey-bg: #F5F7FA; --grey-border: #DDE3EC; --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF; }
+    :root { --navy: #1B3A4F; --teal: #2AA88F; --teal-light: #E6F5F1; --blauw: #2E7DB8; --grey-bg: #F5F7FA; --grey-border: #DDE3EC; --text: #1A1A2E; --text-muted: #6B7A99; --white: #FFFFFF; }
     html { scroll-behavior: smooth; }
     body { font-family: "Inter", sans-serif; font-size: 16px; color: var(--text); background: var(--grey-bg); line-height: 1.6; }
     header { background: var(--white); border-bottom: 1px solid var(--grey-border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
@@ -684,7 +684,7 @@ html_pagina = '''<!DOCTYPE html>
 <header>
   <div class="header-inner">
     <a href="index.html" class="logo">
-      <img class="logo-icon" src="EVN_Logo_transparant.png" alt="EVN Logo" />
+      <img class="logo-icon" src="beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
       <div class="logo-text">Enkel Voet Netwerk</div>
     </a>
     <nav>
