@@ -81,6 +81,15 @@
     footer { background: var(--grey-bg); border-top: 1px solid var(--grey-border); color: var(--text-muted); text-align: center; padding: 28px 24px; font-size: 0.82rem; }
     footer a { color: var(--teal-dark); text-decoration: none; }
     @media (max-width: 700px) { nav { display: none; } }
+    .voorleesbalk { display: flex; align-items: center; gap: 14px; background: var(--white); border: 1.5px solid var(--grey-border); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; flex-wrap: wrap; }
+    .voorlees-btn { display: flex; align-items: center; gap: 8px; background: var(--teal); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 0.86rem; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+    .voorlees-btn:hover { background: #1E8571; }
+    .voorlees-btn.bezig { background: var(--navy); }
+    .voorlees-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .voorlees-snelheid { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--text-muted); }
+    .voorlees-snelheid select { border: 1px solid var(--grey-border); border-radius: 6px; padding: 4px 8px; font-family: inherit; font-size: 0.78rem; color: var(--navy); background: white; }
+    .voorlees-status { font-size: 0.78rem; color: var(--text-muted); margin-left: auto; }
+    .voorlees-niet-beschikbaar { display: none; font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 20px; }
   </style>
   <script type="application/ld+json">
   {
@@ -121,8 +130,7 @@
   <h1>Slijtage achtervoet</h1>
   <div class="niveau-badges">
     <span class="niveau-badge actief">📗 Makkelijk</span>
-    <a href="slijtage-achtervoet-gemiddeld.html" class="niveau-badge link">📘 Gemiddeld</a>
-<a href="slijtage-achtervoet-complex.html" class="niveau-badge link">📕 Complex</a>
+    <a href="slijtage-achtervoet-complex.html" class="niveau-badge link">📕 Complex</a>
 
   </div>
 </div>
@@ -132,7 +140,23 @@
     ⚠️ Dit protocol is algemene informatie voor zorgverleners en patiënten. Het vervangt geen persoonlijk advies van een arts of fysiotherapeut.
   </div>
   <a href="../protocollen.html" class="terug-link">&#8592; Terug naar alle protocollen</a>
-  <div class="content">
+  <div class="voorleesbalk" id="voorleesbalk">
+  <button class="voorlees-btn" id="voorlees-btn" onclick="voorlezenWisselen()">
+    <svg viewBox="0 0 24 24" fill="currentColor" id="voorlees-icoon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+    <span id="voorlees-label">Lees dit artikel voor</span>
+  </button>
+  <div class="voorlees-snelheid">
+    Snelheid:
+    <select id="voorlees-snelheid" onchange="snelheidAanpassen()">
+      <option value="0.8">Langzaam</option>
+      <option value="1" selected>Normaal</option>
+      <option value="1.2">Snel</option>
+    </select>
+  </div>
+  <div class="voorlees-status" id="voorlees-status"></div>
+</div>
+<p class="voorlees-niet-beschikbaar" id="voorlees-niet-beschikbaar">Voorlezen wordt niet ondersteund in deze browser.</p>
+  <div class="content" id="artikel-tekst">
     <h1>Behandelprotocol</h1><h2>Slijtage achtervoet</h2><p>(Artrose voetwortel)</p><h3>Complex / verdiepend leesbaar</h3><hr><h2>Introductie: slijtage van de achtervoet</h2><p>Artrose van de achtervoet betreft degeneratieve veranderingen van de gewrichten in de voetwortel, met name het subtalaire gewricht, het talonaviculaire gewricht&nbsp;en/of het calcaneocubo&iuml;de gewricht. Deze gewrichten zijn essentieel voor adaptatie aan ondergrond, schokabsorptie en rotatie tussen onderbeen en voet.</p><p>Artrose in dit gebied leidt tot pijn, stijfheid en functieverlies en heeft vaak grote invloed op het looppatroon en de belastbaarheid.</p><p>Belangrijke uitgangspunten binnen dit protocol:</p><ul><li>artrose is een structureel, progressief proces;</li><li>pijn en functieverlies worden mede bepaald door belasting, niet alleen door beeldvorming;</li><li>behandeling richt zich op functie, belastbaarheid en kwaliteit van leven, niet op herstel van kraakbeen.</li></ul><hr><h2>Terminologie en begripsafbakening</h2><h3>Definitie</h3><p>Artrose van de achtervoet: degeneratieve aandoening van &eacute;&eacute;n of meerdere voetwortelgewrichten, gekenmerkt door kraakbeenverlies, subchondrale botveranderingen en verminderde gewrichtsfunctie.</p><h3>Betrokken gewrichten</h3><ul><li>Subtalaire gewricht (talocalcaneair)</li><li>Talonaviculair gewricht</li><li>Calcaneocubo&iuml;de gewricht</li></ul><h3>Ontstaansmechanismen</h3><ul><li>Primair degeneratief</li><li>Posttraumatisch (na fractuur of ernstig enkeltrauma)</li><li>Secundair aan standsafwijkingen (bijv. pes planovalgus)</li><li>Secundair aan tarsale coalitie of instabiliteit</li></ul><hr><h2>Anatomie en biomechanische consequenties</h2><p>De achtervoet fungeert als:</p><ul><li>adaptatiemechanisme bij lopen op ongelijk terrein;</li><li>schakel tussen onderbeenrotatie en voetafwikkeling.</li></ul><h3>Gevolgen van artrose</h3><ul><li>Verminderde of afwezige subtalaire beweging.</li><li>Verminderde schokabsorptie.</li><li>Toename van rotatie- en schuifkrachten in:</li></ul><ul><li>enkelgewricht,</li><li>midvoet,</li><li>knie en onderrug.</li></ul><h3>Compensatiepatronen</h3><ul><li>Verhoogde eversie of inversie elders in de voet.</li><li>Verkorte paslengte.</li><li>Toename van energieverbruik bij lopen.</li></ul><hr><h2>Klinisch beeld</h2><h3>Klachten</h3><ul><li>Diepe, zeurende pijn in de achtervoet.</li><li>Stijfheid, vooral bij opstarten.</li><li>Pijn bij lopen op oneffen ondergrond.</li><li>Snelle vermoeidheid.</li><li>Beperkingen bij traplopen en langere afstanden.</li></ul><h3>Presentatie</h3><ul><li>Klachten nemen toe bij belasting.</li><li>Vaak afname van pijn in rust.</li><li>Beweeglijkheid neemt geleidelijk af.</li></ul><hr><h2>Diagnostiek</h2><h3>Klinisch onderzoek</h3><ul><li>Beperkte subtalaire en midtarsale beweging.</li><li>Pijn bij eindstanden.</li><li>Veranderd looppatroon.</li><li>Drukpijn rond de voetwortel.</li></ul><h3>Beeldvorming</h3><ul><li>R&ouml;ntgenonderzoek: eerste keuze (gewrichtsspleetversmalling, osteofyten).</li><li>CT-scan: bij complexe of gecombineerde artrose.</li><li>MRI: bij verdenking op actieve ontstekingscomponent of weke-delenproblematiek.</li></ul><p>Beeldvorming ondersteunt de diagnose, maar is niet leidend voor behandelkeuze.</p><hr><h2>Visie op behandeling</h2><p>Artrose van de achtervoet is niet te genezen, maar wel be&iuml;nvloedbaar&nbsp;in termen van klachten en functioneren. De behandeling richt zich op:</p><ul><li>optimaliseren van belastbaarheid;</li><li>reduceren van pijn;</li><li>verbeteren van loopeffici&euml;ntie;</li><li>voorkomen van overbelasting van andere gewrichten.</li></ul><hr><h2>Stepped care: gefaseerde behandelstrategie</h2><h3>Stap 1: Conservatieve behandeling</h3><p>Doel</p><ul><li>Klachten verminderen.</li><li>Dagelijks functioneren verbeteren.</li></ul><p>Interventies</p><ul><li>Educatie over artrose en belastbaarheid.</li><li>Belastingsmanagement.</li><li>Schoenadvies (demping, afwikkelhulpmiddelen).</li><li>Eventueel steunzolen of rockerzolen.</li></ul><p>Oefentherapie</p><ul><li>Krachttraining onderbeen en voet.</li><li>Verbeteren van proximale stabiliteit.</li><li>Mobiliteit binnen pijngrens (geen agressieve mobilisaties).</li></ul><hr><h3>Stap 2: Opschalen bij aanhoudende klachten</h3><p>Indicaties</p><ul><li>Persisterende pijn ondanks adequaat beleid.</li><li>Beperkingen in werk of mobiliteit.</li></ul><p>Acties</p><ul><li>Overleg met huisarts of specialist.</li><li>Optimaliseren hulpmiddelen.</li><li>Overwegen injectietherapie (medicamenteus).</li></ul><hr><h3>Stap 3: Operatieve behandeling</h3><p>Indicaties</p><ul><li>Ernstige pijn.</li><li>Functiebeperking.</li><li>Uitputting van conservatieve opties.</li></ul><p>Mogelijkheden</p><ul><li>Artrodese (vergroeien van het gewricht).</li><li>Soms gecombineerde correctieve ingrepen.</li></ul><hr><h2>Algemene overwegingen</h2><ul><li>Artrose is meer dan alleen &ldquo;slijtage&rdquo;.</li><li>Beeldvorming en pijn correleren beperkt.</li><li>Goed schoeisel en begeleiding zijn cruciaal.</li><li>Interdisciplinaire samenwerking verhoogt kwaliteit van zorg.</li></ul><hr><h2>Gebruikte literatuur en bronnen</h2><ul><li>van Dijk et al. &ndash; Foot and ankle osteoarthritis</li><li>Saltzman et al. &ndash; Hindfoot arthritis</li><li>Bijlsma et al. &ndash; Osteoarthritis management</li><li>BOA/NOV richtlijnen voet- en enkelartrose</li></ul><hr>
   </div>
   
@@ -166,5 +190,72 @@
 <footer>
   <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
 </footer>
+
+<script>
+  let voorlezenActief = false;
+  let huidigeUtterance = null;
+  function haalVoorleesbareTekst() {
+    const container = document.getElementById('artikel-tekst');
+    const elementen = container.querySelectorAll('h2, h3, p, li, td, th');
+    let zinnen = [];
+    elementen.forEach(el => { const t = el.textContent.trim(); if (t.length > 0) zinnen.push(t); });
+    return zinnen;
+  }
+  function voorlezenWisselen() {
+    if (!('speechSynthesis' in window)) {
+      document.getElementById('voorleesbalk').style.display = 'none';
+      document.getElementById('voorlees-niet-beschikbaar').style.display = 'block';
+      return;
+    }
+    const btn = document.getElementById('voorlees-btn');
+    const label = document.getElementById('voorlees-label');
+    const status = document.getElementById('voorlees-status');
+    if (voorlezenActief) {
+      window.speechSynthesis.cancel();
+      voorlezenActief = false;
+      btn.classList.remove('bezig');
+      label.textContent = 'Lees dit artikel voor';
+      status.textContent = '';
+      return;
+    }
+    const zinnen = haalVoorleesbareTekst();
+    if (zinnen.length === 0) return;
+    let index = 0;
+    voorlezenActief = true;
+    btn.classList.add('bezig');
+    label.textContent = 'Stop met voorlezen';
+    const snelheid = parseFloat(document.getElementById('voorlees-snelheid').value);
+    function leesVolgendeZin() {
+      if (!voorlezenActief || index >= zinnen.length) {
+        voorlezenActief = false;
+        btn.classList.remove('bezig');
+        label.textContent = 'Lees dit artikel voor';
+        status.textContent = '';
+        return;
+      }
+      status.textContent = `Zin ${index + 1} van ${zinnen.length}`;
+      huidigeUtterance = new SpeechSynthesisUtterance(zinnen[index]);
+      huidigeUtterance.lang = 'nl-NL';
+      huidigeUtterance.rate = snelheid;
+      huidigeUtterance.onend = () => { index++; leesVolgendeZin(); };
+      huidigeUtterance.onerror = () => { index++; leesVolgendeZin(); };
+      window.speechSynthesis.speak(huidigeUtterance);
+    }
+    leesVolgendeZin();
+  }
+  function snelheidAanpassen() {
+    if (voorlezenActief && huidigeUtterance) {
+      window.speechSynthesis.cancel();
+      voorlezenActief = false;
+      voorlezenWisselen();
+    }
+  }
+  if (!('speechSynthesis' in window)) {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('voorleesbalk').style.display = 'none';
+      document.getElementById('voorlees-niet-beschikbaar').style.display = 'block';
+    });
+  }
+</script>
 </body>
 </html>

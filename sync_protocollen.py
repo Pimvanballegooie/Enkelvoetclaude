@@ -119,7 +119,6 @@ def extraheer_oefenfilmpjes_ruw(rauwe_html_niveaus):
 def maak_protocol_titel(protocol_naam, niveau):
     niveau_labels = {
         'makkelijk': 'basisinformatie',
-        'gemiddeld': 'voor zorgverleners',
         'complex': 'verdiepend'
     }
     label = niveau_labels.get(niveau, niveau)
@@ -128,7 +127,6 @@ def maak_protocol_titel(protocol_naam, niveau):
 def maak_meta_description(protocol_naam, niveau, body_schoon):
     niveau_intro = {
         'makkelijk': 'Begrijpelijke uitleg over',
-        'gemiddeld': 'Behandelprotocol voor',
         'complex': 'Verdiepend behandelprotocol voor'
     }
     intro = niveau_intro.get(niveau, 'Behandelprotocol voor')
@@ -140,8 +138,104 @@ def maak_meta_description(protocol_naam, niveau, body_schoon):
     return f"{intro} {protocol_naam.lower()}. Fysiotherapie Breda - Enkel Voet Netwerk."
 
 def maak_niveau_label(niveau):
-    labels = {'makkelijk': '📗 Makkelijk', 'gemiddeld': '📘 Gemiddeld', 'complex': '📕 Complex'}
+    labels = {'makkelijk': '📗 Makkelijk', 'complex': '📕 Complex'}
     return labels.get(niveau, niveau.capitalize())
+
+VOORLEESBALK_HTML = '''<div class="voorleesbalk" id="voorleesbalk">
+  <button class="voorlees-btn" id="voorlees-btn" onclick="voorlezenWisselen()">
+    <svg viewBox="0 0 24 24" fill="currentColor" id="voorlees-icoon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+    <span id="voorlees-label">Lees dit artikel voor</span>
+  </button>
+  <div class="voorlees-snelheid">
+    Snelheid:
+    <select id="voorlees-snelheid" onchange="snelheidAanpassen()">
+      <option value="0.8">Langzaam</option>
+      <option value="1" selected>Normaal</option>
+      <option value="1.2">Snel</option>
+    </select>
+  </div>
+  <div class="voorlees-status" id="voorlees-status"></div>
+</div>
+<p class="voorlees-niet-beschikbaar" id="voorlees-niet-beschikbaar">Voorlezen wordt niet ondersteund in deze browser.</p>'''
+
+VOORLEES_CSS = '''
+    .voorleesbalk { display: flex; align-items: center; gap: 14px; background: var(--white); border: 1.5px solid var(--grey-border); border-radius: 12px; padding: 14px 18px; margin-bottom: 20px; flex-wrap: wrap; }
+    .voorlees-btn { display: flex; align-items: center; gap: 8px; background: var(--teal); color: white; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; font-size: 0.86rem; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+    .voorlees-btn:hover { background: #1E8571; }
+    .voorlees-btn.bezig { background: var(--navy); }
+    .voorlees-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .voorlees-snelheid { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; color: var(--text-muted); }
+    .voorlees-snelheid select { border: 1px solid var(--grey-border); border-radius: 6px; padding: 4px 8px; font-family: inherit; font-size: 0.78rem; color: var(--navy); background: white; }
+    .voorlees-status { font-size: 0.78rem; color: var(--text-muted); margin-left: auto; }
+    .voorlees-niet-beschikbaar { display: none; font-size: 0.8rem; color: var(--text-muted); font-style: italic; margin-bottom: 20px; }'''
+
+VOORLEES_SCRIPT = '''
+<script>
+  let voorlezenActief = false;
+  let huidigeUtterance = null;
+  function haalVoorleesbareTekst() {
+    const container = document.getElementById('artikel-tekst');
+    const elementen = container.querySelectorAll('h2, h3, p, li, td, th');
+    let zinnen = [];
+    elementen.forEach(el => { const t = el.textContent.trim(); if (t.length > 0) zinnen.push(t); });
+    return zinnen;
+  }
+  function voorlezenWisselen() {
+    if (!('speechSynthesis' in window)) {
+      document.getElementById('voorleesbalk').style.display = 'none';
+      document.getElementById('voorlees-niet-beschikbaar').style.display = 'block';
+      return;
+    }
+    const btn = document.getElementById('voorlees-btn');
+    const label = document.getElementById('voorlees-label');
+    const status = document.getElementById('voorlees-status');
+    if (voorlezenActief) {
+      window.speechSynthesis.cancel();
+      voorlezenActief = false;
+      btn.classList.remove('bezig');
+      label.textContent = 'Lees dit artikel voor';
+      status.textContent = '';
+      return;
+    }
+    const zinnen = haalVoorleesbareTekst();
+    if (zinnen.length === 0) return;
+    let index = 0;
+    voorlezenActief = true;
+    btn.classList.add('bezig');
+    label.textContent = 'Stop met voorlezen';
+    const snelheid = parseFloat(document.getElementById('voorlees-snelheid').value);
+    function leesVolgendeZin() {
+      if (!voorlezenActief || index >= zinnen.length) {
+        voorlezenActief = false;
+        btn.classList.remove('bezig');
+        label.textContent = 'Lees dit artikel voor';
+        status.textContent = '';
+        return;
+      }
+      status.textContent = `Zin ${index + 1} van ${zinnen.length}`;
+      huidigeUtterance = new SpeechSynthesisUtterance(zinnen[index]);
+      huidigeUtterance.lang = 'nl-NL';
+      huidigeUtterance.rate = snelheid;
+      huidigeUtterance.onend = () => { index++; leesVolgendeZin(); };
+      huidigeUtterance.onerror = () => { index++; leesVolgendeZin(); };
+      window.speechSynthesis.speak(huidigeUtterance);
+    }
+    leesVolgendeZin();
+  }
+  function snelheidAanpassen() {
+    if (voorlezenActief && huidigeUtterance) {
+      window.speechSynthesis.cancel();
+      voorlezenActief = false;
+      voorlezenWisselen();
+    }
+  }
+  if (!('speechSynthesis' in window)) {
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('voorleesbalk').style.display = 'none';
+      document.getElementById('voorlees-niet-beschikbaar').style.display = 'block';
+    });
+  }
+</script>'''
 
 def maak_cta_blok():
     return '''
@@ -177,17 +271,20 @@ def extraheer_fysioefeningen_urls(body_schoon):
         body_schoon
     )
 
-def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam):
+def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam, beschikbare_niveaus):
     titel = maak_protocol_titel(protocol_naam, niveau)
     description = maak_meta_description(protocol_naam, niveau, body_schoon)
     niveau_label = maak_niveau_label(niveau)
 
-    andere_niveaus = [n for n in ['makkelijk', 'gemiddeld', 'complex'] if n != niveau]
+    andere_niveaus = [n for n in beschikbare_niveaus if n != niveau]
     andere_niveaus_html = ''
     for n in andere_niveaus:
         andere_niveaus_html += f'<a href="{protocol_id}-{n}.html" class="niveau-badge link">{maak_niveau_label(n)}</a>\n'
 
     cta_blok = maak_cta_blok()
+    voorleesbalk_html = VOORLEESBALK_HTML if niveau == 'makkelijk' else ''
+    voorlees_css = VOORLEES_CSS if niveau == 'makkelijk' else ''
+    voorlees_script = VOORLEES_SCRIPT if niveau == 'makkelijk' else ''
 
     fysio_urls = extraheer_fysioefeningen_urls(body_schoon)
     if fysio_urls:
@@ -278,7 +375,7 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
     .content th {{ background: var(--grey-bg); font-weight: 600; }}
     footer {{ background: var(--grey-bg); border-top: 1px solid var(--grey-border); color: var(--text-muted); text-align: center; padding: 28px 24px; font-size: 0.82rem; }}
     footer a {{ color: var(--teal-dark); text-decoration: none; }}
-    @media (max-width: 700px) {{ nav {{ display: none; }} }}
+    @media (max-width: 700px) {{ nav {{ display: none; }} }}{voorlees_css}
   </style>
   <script type="application/ld+json">
   {{
@@ -328,7 +425,8 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
     ⚠️ Dit protocol is algemene informatie voor zorgverleners en patiënten. Het vervangt geen persoonlijk advies van een arts of fysiotherapeut.
   </div>
   <a href="../protocollen.html" class="terug-link">&#8592; Terug naar alle protocollen</a>
-  <div class="content">
+  {voorleesbalk_html}
+  <div class="content" id="artikel-tekst">
     {body_schoon}
   </div>
   {cta_blok}
@@ -337,6 +435,7 @@ def maak_html_pagina(protocol_naam, protocol_id, niveau, body_schoon, zone_naam)
 <footer>
   <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
 </footer>
+{voorlees_script}
 </body>
 </html>'''
 
@@ -359,6 +458,8 @@ for protocol in config['protocollen']:
     protocol_volledige_html = {}
     protocol_ruwe_html = {}
 
+    beschikbare_niveaus = [n for n, d in protocol['niveaus'].items() if d and d != 'INVULLEN']
+
     for niveau, doc_id in protocol['niveaus'].items():
         if not doc_id or doc_id == 'INVULLEN':
             print(f"Overgeslagen: {protocol['id']} - {niveau}")
@@ -380,7 +481,8 @@ for protocol in config['protocollen']:
                     protocol_id=protocol['id'],
                     niveau=niveau,
                     body_schoon=body_schoon,
-                    zone_naam=zone_naam_display
+                    zone_naam=zone_naam_display,
+                    beschikbare_niveaus=beschikbare_niveaus
                 )
                 with open(bestandsnaam, 'w', encoding='utf-8') as out:
                     out.write(volledige_pagina)
@@ -414,15 +516,15 @@ protocol_kaarten = ''
 for p in protocol_data:
     zone_id = p['zone']
     zone_naam = ZONES.get(zone_id, zone_id.capitalize())
-    preview_html = p['previews'].get('makkelijk', p['previews'].get('gemiddeld', '<p>Geen preview beschikbaar.</p>'))
-    tekst_data = p['teksten'].get('makkelijk', p['teksten'].get('gemiddeld', ''))
+    preview_html = p['previews'].get('makkelijk', p['previews'].get('complex', '<p>Geen preview beschikbaar.</p>'))
+    tekst_data = p['teksten'].get('makkelijk', p['teksten'].get('complex', ''))
     tekst_data = tekst_data[:500].lower().replace('"', '').replace("'", '')
 
     import json as jsonlib
     volledige_json = jsonlib.dumps(p['volledige_html'])
 
-    niveau_labels = {'makkelijk': 'Makkelijk', 'gemiddeld': 'Gemiddeld', 'complex': 'Complex'}
-    niveau_emojis = {'makkelijk': '📗', 'gemiddeld': '📘', 'complex': '📕'}
+    niveau_labels = {'makkelijk': 'Makkelijk', 'complex': 'Complex'}
+    niveau_emojis = {'makkelijk': '📗', 'complex': '📕'}
 
     niveaus_html = ''
     for n in p['teksten'].keys():
@@ -555,8 +657,6 @@ html_pagina = '''<!DOCTYPE html>
     .niveau-btn { padding: 6px 14px; border-radius: 6px; font-size: 0.78rem; font-weight: 600; transition: all 0.15s; cursor: pointer; border: none; display: inline-block; }
     .niveau-makkelijk { background: #EAF7F0; color: #1E8449; }
     .niveau-makkelijk:hover { background: #1E8449; color: white; }
-    .niveau-gemiddeld { background: #FEF9E7; color: #B7770D; }
-    .niveau-gemiddeld:hover { background: #B7770D; color: white; }
     .niveau-complex { background: #EAF0FB; color: #1A5276; }
     .niveau-complex:hover { background: #1A5276; color: white; }
     .protocol-viewer { margin-top: 20px; border-top: 2px solid var(--teal); padding-top: 16px; }
@@ -597,7 +697,7 @@ html_pagina = '''<!DOCTYPE html>
 </header>
 <div class="hero">
   <h1>Alle behandelprotocollen<br><em>enkel & voet</em></h1>
-  <p>Zoek op aandoening, klacht of behandeling. Beschikbaar op drie leesniveaus.</p>
+  <p>Zoek op aandoening, klacht of behandeling. Beschikbaar op twee leesniveaus, met voorleesfunctie bij de makkelijke versie.</p>
   <p style="margin-top:14px;font-size:0.78rem;opacity:0.65;max-width:520px;margin-left:auto;margin-right:auto">⚠️ Deze protocollen zijn algemene informatie voor zorgverleners en patiënten. Ze vervangen geen persoonlijk advies van een arts of fysiotherapeut. Bij twijfel of alarmsymptomen altijd contact opnemen met een zorgverlener.</p>
   <div class="zoekbalk-wrap">
     <div class="zoekbalk">
@@ -634,7 +734,7 @@ html_pagina = '''<!DOCTYPE html>
     const viewer = document.getElementById("viewer-" + id);
     const inhoud = document.getElementById("viewer-inhoud-" + id);
     const titel = document.getElementById("viewer-titel-" + id);
-    const niveauLabels = {makkelijk: "📗 Makkelijk", gemiddeld: "📘 Gemiddeld", complex: "📕 Complex"};
+    const niveauLabels = {makkelijk: "📗 Makkelijk", complex: "📕 Complex"};
     document.querySelectorAll(".protocol-viewer").forEach(v => {
       if (v.id !== "viewer-" + id) v.style.display = "none";
     });
