@@ -414,10 +414,11 @@
   <div class="hero-inner">
     <div class="hero-badge">Regio Breda e.o.</div>
     <h1>Hoogwaardige zorg voor<br><em>enkel & voet</em></h1>
-    <p>Behandelprotocollen die continu worden bijgehouden door een team van experts. Transparant, eenduidig en beschikbaar op drie leesniveaus. Let op: er wordt momenteel nog aan deze site gewerkt, waardoor nog niet alle protocollen bijgewerkt en correct zijn</p>
+    <p>Behandelprotocollen die continu worden bijgehouden door een team van experts. Transparant, eenduidig en beschikbaar op twee leesniveaus, met voorleesfunctie. Let op: er wordt momenteel nog aan deze site gewerkt, waardoor nog niet alle protocollen bijgewerkt en correct zijn</p>
     <div class="hero-stats">
-      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Leesniveaus</div></div>
+      <div class="stat"><div class="stat-num">2</div><div class="stat-label">Leesniveaus</div></div>
       <div class="stat"><div class="stat-num" id="stat-protocollen">–</div><div class="stat-label">Protocollen</div></div>
+      <div class="stat"><div class="stat-num" id="stat-cursussen">–</div><div class="stat-label">Cursussen</div></div>
       <div class="stat"><div class="stat-num" id="stat-praktijken">–</div><div class="stat-label">Locaties</div></div>
       <div class="stat"><div class="stat-num" id="stat-therapeuten">–</div><div class="stat-label">Therapeuten</div></div>
     </div>
@@ -432,7 +433,7 @@
     <div>
       <div class="section-eyebrow">Fysiotherapie</div>
       <h2 style="font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:var(--navy);letter-spacing:-0.02em;margin-bottom:12px">Behandelprotocollen</h2>
-      <p style="color:var(--text-muted);font-size:0.95rem;max-width:520px;line-height:1.7">Onze behandelprotocollen worden continu bijgehouden door een team van experts. Beschikbaar op drie leesniveaus — voor patiënten, verwijzers en professionals. Zoek op aandoening, klacht of behandeling.</p>
+      <p style="color:var(--text-muted);font-size:0.95rem;max-width:520px;line-height:1.7">Onze behandelprotocollen worden continu bijgehouden door een team van experts. Beschikbaar op twee leesniveaus, met voorleesfunctie — voor patiënten en professionals. Zoek op aandoening, klacht of behandeling.</p>
       <div style="display:flex;gap:12px;margin-top:24px;flex-wrap:wrap">
         <a href="protocollen.html" class="btn-primary" style="display:inline-flex;align-items:center;gap:8px">📋 Bekijk alle protocollen →</a>
         <a href="protocollen.html" style="display:inline-flex;align-items:center;gap:6px;padding:12px 20px;border:2px solid var(--grey-border);border-radius:8px;color:var(--text-muted);text-decoration:none;font-size:0.875rem;font-weight:600;transition:all 0.2s" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--grey-border)';this.style.color='var(--text-muted)'">🔍 Zoek op klacht</a>
@@ -700,7 +701,6 @@
   laadLocaties();
 
   async function updateStats(aantalLocaties) {
-    document.getElementById('stat-protocollen').textContent = '15+';
     document.getElementById('stat-praktijken').textContent = aantalLocaties > 0 ? aantalLocaties + '+' : '–';
 
     try {
@@ -712,6 +712,25 @@
       document.getElementById('stat-therapeuten').textContent = count > 0 ? count + '+' : '–';
     } catch(e) {
       document.getElementById('stat-therapeuten').textContent = '–';
+    }
+
+    try {
+      const resp = await fetch('protocollen-config.json');
+      const data = await resp.json();
+      const n = (data.protocollen || []).length;
+      document.getElementById('stat-protocollen').textContent = n > 0 ? n + '+' : '–';
+    } catch(e) {
+      document.getElementById('stat-protocollen').textContent = '–';
+    }
+
+    try {
+      const resp = await fetch('cursussen/index.html');
+      const html = await resp.text();
+      const match = html.match(/const MODULES = (\[[\s\S]*?\]);/);
+      const n = match ? (match[1].match(/"id":/g) || []).length : 0;
+      document.getElementById('stat-cursussen').textContent = n > 0 ? n + '+' : '–';
+    } catch(e) {
+      document.getElementById('stat-cursussen').textContent = '–';
     }
   }
 
