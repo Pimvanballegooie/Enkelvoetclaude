@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Vermoeidheidsbreuk voet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule vermoeidheidsbreuk voet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Middenvoet</span>
+      <h1 class="cursus-titel">Vermoeidheidsbreuk voet</h1>
+      <p class="cursus-beschrijving">Stress fracturen van de voet: risicostratificatie, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "vermoeidheidsbreuk-voet-v1",
+  "titel": "Vermoeidheidsbreuk voet",
+  "zone": "Middenvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Ontstaansmechanisme",
+          "tekst": "Een stress fractuur ontstaat door repetitieve submaximale belasting die de botremodellering overtreft (cumulatief microtrauma), zonder acuut trauma. In de voet zijn de metatarsalia, met name de tweede en derde, het meest frequent aangedaan.",
+          "lijst": null
+        },
+        {
+          "kop": "Risicofactoren",
+          "tekst": "Verschillende factoren verhogen het risico op het ontstaan van een stress fractuur, variërend van trainingsgerelateerd tot systemisch.",
+          "lijst": [
+            "Snelle toename van trainingsintensiteit of -volume",
+            "Verandering van ondergrond of schoeisel",
+            "Verminderde botdichtheid (o.a. bij relative energy deficiency in sport / RED-S)",
+            "Biomechanische factoren (afwijkende voetstatiek, beenlengteverschil)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is het onderliggende mechanisme van een stress fractuur?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Cumulatief microtrauma door repetitieve submaximale belasting die de botremodellering overtreft",
+              "correct": true
+            },
+            {
+              "tekst": "Een acute, eenmalige hoogenergetische val",
+              "correct": false
+            },
+            {
+              "tekst": "Een virale botinfectie",
+              "correct": false
+            },
+            {
+              "tekst": "Een aangeboren botafwijking zonder relatie met belasting",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een stress fractuur ontstaat door cumulatief microtrauma, niet door acuut hoogenergetisch trauma.",
+          "feedback_fout": "Niet correct. Het kenmerkende verschil met een gewone fractuur is juist de afwezigheid van acuut trauma.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke middenvoetsbeentjes zijn het meest frequent aangedaan bij een stress fractuur van de voet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Het tweede en derde metatarsale",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend het eerste metatarsale",
+              "correct": false
+            },
+            {
+              "tekst": "De calcaneus als meest frequente locatie",
+              "correct": false
+            },
+            {
+              "tekst": "De tenen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het tweede en derde metatarsale zijn de meest frequent aangedane locaties in de voet.",
+          "feedback_fout": "Niet correct. Hoewel andere locaties voorkomen, zijn het tweede en derde metatarsale het meest frequent.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Wat wordt bedoeld met 'relative energy deficiency in sport' (RED-S) als risicofactor voor stress fracturen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Een onvoldoende energiebeschikbaarheid die onder andere kan leiden tot verminderde botdichtheid",
+              "correct": true
+            },
+            {
+              "tekst": "Een overmaat aan calorie-inname zonder enig risico",
+              "correct": false
+            },
+            {
+              "tekst": "Een vorm van spierverrekking",
+              "correct": false
+            },
+            {
+              "tekst": "Een acute infectie van de voet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. RED-S beschrijft onvoldoende energiebeschikbaarheid, wat via verminderde botdichtheid het risico op stress fracturen verhoogt.",
+          "feedback_fout": "Niet correct. RED-S betreft juist een tekort, niet een overmaat aan energie-inname.",
+          "bron": "Mountjoy M et al. (2018) — IOC consensus statement on relative energy deficiency in sport (RED-S)."
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Kenmerkend is geleidelijk toenemende, activiteitsgerelateerde pijn met een goed lokaliseerbaar drukpijnlijk punt, in tegenstelling tot de diffuse pijn bij bijvoorbeeld weke-delen-overbelasting.",
+          "lijst": null
+        },
+        {
+          "kop": "Risicostratificatie naar locatie",
+          "tekst": "Voor de klinische besluitvorming is het onderscheid tussen laag-risico- en hoog-risicolocaties essentieel, gezien de verschillen in kans op vertraagde genezing.",
+          "lijst": [
+            "Laag risico: metatarsale schacht (met name 2e-4e)",
+            "Hoog risico op vertraagde genezing/non-union: os naviculare, basis 5e metatarsale (Jones-fractuur), mediale malleolus",
+            "MRI: hoogste sensitiviteit voor vroege diagnostiek; röntgen kan in vroege fase vals-negatief zijn"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat is een kenmerkend verschil tussen de pijn bij een stress fractuur en bij algemene weke-delen-overbelasting?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Bij een stress fractuur is er een goed lokaliseerbaar drukpijnlijk punt, in tegenstelling tot meer diffuse pijn",
+              "correct": true
+            },
+            {
+              "tekst": "Er is geen enkel verschil in pijnpatroon",
+              "correct": false
+            },
+            {
+              "tekst": "Een stress fractuur geeft nooit pijn bij belasting",
+              "correct": false
+            },
+            {
+              "tekst": "Weke-delen-overbelasting geeft altijd een scherper lokaliseerbaar punt dan een fractuur",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een goed lokaliseerbaar drukpijnlijk punt is kenmerkend voor een stress fractuur, in tegenstelling tot diffuse weke-delen-pijn.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een klinisch onderscheidend kenmerk in de lokaliseerbaarheid van de pijn.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke locatie van een stress fractuur in de voet wordt beschouwd als hoog risico op vertraagde genezing?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "De basis van het vijfde metatarsale (Jones-fractuur)",
+              "correct": true
+            },
+            {
+              "tekst": "De schacht van het tweede metatarsale",
+              "correct": false
+            },
+            {
+              "tekst": "De schacht van het derde metatarsale",
+              "correct": false
+            },
+            {
+              "tekst": "Alle locaties hebben een identiek, laag risico",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De basis van het vijfde metatarsale (Jones-fractuur) is een bekende hoog-risicolocatie voor vertraagde genezing of non-union.",
+          "feedback_fout": "Niet correct. De metatarsale schacht wordt juist als laag-risicolocatie beschouwd; de Jones-fractuur is hoog risico.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Welke beeldvormende techniek heeft de hoogste sensitiviteit voor de vroege diagnostiek van een stress fractuur?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "MRI",
+              "correct": true
+            },
+            {
+              "tekst": "Een gewone röntgenfoto, altijd het meest sensitief in de vroege fase",
+              "correct": false
+            },
+            {
+              "tekst": "Een bloedonderzoek",
+              "correct": false
+            },
+            {
+              "tekst": "Een longfunctietest",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. MRI heeft de hoogste sensitiviteit, met name in de vroege fase waarin röntgen nog vals-negatief kan zijn.",
+          "feedback_fout": "Niet correct. Röntgen kan juist vals-negatief zijn in de vroege fase; MRI is gevoeliger.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling (laag-risicolocaties)",
+          "tekst": "Stap 1 bestaat uit activiteitmodificatie/relatieve rust, cross-training zonder axiale belasting (zwemmen, fietsen), en een gemonitorde, geleidelijke belastingopbouw (graded loading protocol). Evaluatie van trainingsopbouw, schoeisel, voeding en energiebeschikbaarheid maakt hier onderdeel van uit.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij hoog-risicolocaties is immobilisatie (walker of gips) met volledige ontlasting geïndiceerd. Chirurgische fixatie wordt overwogen bij hoog-risicolocaties met vertraagde genezing, of bij persisterende non-union na adequaat conservatief beleid.",
+          "lijst": [
+            "Stap 2: immobilisatie/ontlasting bij hoog-risicolocaties, screening op onderliggende risicofactoren bij recidief",
+            "Stap 3: chirurgische fixatie bij vertraagde genezing/non-union op hoog-risicolocaties"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij een stress fractuur op een laag-risicolocatie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Activiteitmodificatie, cross-training zonder axiale belasting, en gemonitorde belastingopbouw",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische fixatie",
+              "correct": false
+            },
+            {
+              "tekst": "Volledig ongelimiteerd doorsporten zonder aanpassing",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De behandeling start conservatief met relatieve rust en een gecontroleerde, geleidelijke opbouw van belasting.",
+          "feedback_fout": "Niet correct. Chirurgie is voorbehouden aan specifieke hoog-risicosituaties, niet de eerste stap bij laag risico.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wat is de aangewezen behandeling bij een stress fractuur op een hoog-risicolocatie, zoals een Jones-fractuur bij een sporter?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Immobilisatie/ontlasting, met chirurgische fixatie als reële optie bij deze hoog-risicolocatie",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend afwachten zonder enige aanpassing van belasting",
+              "correct": false
+            },
+            {
+              "tekst": "Direct amputeren",
+              "correct": false
+            },
+            {
+              "tekst": "Hetzelfde beleid als bij een laag-risicolocatie, zonder enig verschil",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij hoog-risicolocaties zoals een Jones-fractuur wordt strikter behandeld, met chirurgische fixatie als reële, vaak toegepaste optie bij sporters.",
+          "feedback_fout": "Niet correct. Hoog-risicolocaties vereisen een intensiever beleid dan laag-risicolocaties.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom is screening op onderliggende risicofactoren (bijv. energiebeschikbaarheid, botdichtheid) belangrijk bij recidiverende stress fracturen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat onbehandelde systemische risicofactoren het risico op herhaling van stress fracturen in stand houden",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat dit geen enkele invloed heeft op het recidiefrisico",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit uitsluitend relevant is bij mannen",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat trainingsopbouw hierbij nooit een rol speelt",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Zonder aanpak van onderliggende systemische factoren blijft het risico op herhaling bestaan.",
+          "feedback_fout": "Niet correct. Systemische risicofactoren spelen wel degelijk een belangrijke rol bij het recidiefrisico.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke bult bovenzijde voet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke bult bovenzijde voet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Middenvoet</span>
+      <h1 class="cursus-titel">Pijnlijke bult bovenzijde voet</h1>
+      <p class="cursus-beschrijving">Dorsale exostose van de middenvoet: pathofysiologie, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-bult-bovenzijde-voet-v1",
+  "titel": "Pijnlijke bult bovenzijde voet",
+  "zone": "Middenvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Dorsale exostose",
+          "tekst": "Een dorsale exostose van de middenvoet is een benige uitgroei aan de dorsale zijde, meestal ter hoogte van het eerste tarsometatarsale (Lisfranc-)gewricht. De aandoening hangt vaak samen met beginnende artrose of chronische micro-instabiliteit van de tarsometatarsale gewrichten.",
+          "lijst": null
+        },
+        {
+          "kop": "Gevolgen van de exostose",
+          "tekst": "De benige uitgroei kan mechanische irritatie door schoeisel geven en, bij druk op oppervlakkige zenuwtakken, ook neurogene klachten veroorzaken.",
+          "lijst": [
+            "Mechanische irritatie en drukpijn door schoeisel",
+            "Mogelijke compressie van takken van de n. peroneus superficialis",
+            "Vaak geassocieerd met (beginnende) artrose of instabiliteit van het tarsometatarsale gewricht"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Waar is een dorsale exostose van de middenvoet meestal gelokaliseerd?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Ter hoogte van het eerste tarsometatarsale (Lisfranc-)gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "Onder de hiel",
+              "correct": false
+            },
+            {
+              "tekst": "Aan de laterale malleolus",
+              "correct": false
+            },
+            {
+              "tekst": "Bij de achillespeesinsertie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De meest voorkomende locatie is dorsaal ter hoogte van het eerste tarsometatarsale gewricht.",
+          "feedback_fout": "Niet correct. De genoemde alternatieve locaties betreffen andere aandoeningen elders in de voet.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke onderliggende problematiek hangt vaak samen met een dorsale middenvoetexostose?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Beginnende artrose of chronische micro-instabiliteit van het tarsometatarsale gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "Een acute infectie van de huid",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend een allergische reactie",
+              "correct": false
+            },
+            {
+              "tekst": "Een virale aandoening van de zenuwen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De exostose ontstaat vaak als reactie op onderliggende artrose of micro-instabiliteit van het gewricht.",
+          "feedback_fout": "Niet correct. Het betreft een mechanisch/degeneratief mechanisme, niet infectie of allergie.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Welke zenuw kan gecomprimeerd raken door een dorsale middenvoetexostose?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Takken van de n. peroneus superficialis",
+              "correct": true
+            },
+            {
+              "tekst": "De n. ischiadicus",
+              "correct": false
+            },
+            {
+              "tekst": "De n. femoralis",
+              "correct": false
+            },
+            {
+              "tekst": "De n. medianus",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Oppervlakkige takken van de n. peroneus superficialis lopen over de dorsale voet en kunnen gecomprimeerd raken.",
+          "feedback_fout": "Niet correct. De genoemde andere zenuwen lopen elders in het lichaam, niet over de dorsale voet.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Palpatie lokaliseert de exostose en beoordeelt drukpijn; aanvullend wordt gescreend op sensibiliteitsklachten passend bij zenuwcompressie, en op tekenen van onderliggende instabiliteit van het tarsometatarsale gewricht.",
+          "lijst": null
+        },
+        {
+          "kop": "Beeldvorming",
+          "tekst": "Röntgenonderzoek toont de benige uitgroei en eventuele onderliggende gewrichtsversmalling of instabiliteit; bij twijfel over zenuwbetrokkenheid kan aanvullend onderzoek (bijvoorbeeld echografie) worden ingezet.",
+          "lijst": [
+            "Palpatie: lokalisatie exostose en drukpijn",
+            "Screening op sensibiliteitsklachten (zenuwcompressie)",
+            "Röntgen: benige uitgroei, eventuele gewrichtsversmalling/instabiliteit"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarop wordt naast palpatie van de exostose ook actief gescreend bij dit klachtenbeeld?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Sensibiliteitsklachten passend bij compressie van oppervlakkige zenuwtakken",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend de bloeddruk",
+              "correct": false
+            },
+            {
+              "tekst": "De longfunctie",
+              "correct": false
+            },
+            {
+              "tekst": "De gehoorscherpte",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Gezien het risico op zenuwcompressie wordt actief gescreend op sensibiliteitsklachten.",
+          "feedback_fout": "Niet correct. De screening is specifiek gericht op sensibiliteit gerelateerd aan lokale zenuwcompressie.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Wat toont een röntgenfoto doorgaans bij een dorsale middenvoetexostose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De benige uitgroei en eventuele onderliggende gewrichtsversmalling of instabiliteit",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend wekedelenzwelling zonder enige botafwijking",
+              "correct": false
+            },
+            {
+              "tekst": "Een volledig normaal beeld, altijd",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen peesverkalking elders in de voet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Röntgen toont de benige uitgroei zelf en eventuele onderliggende gewrichtsafwijkingen.",
+          "feedback_fout": "Niet correct. De exostose is juist een benige, op röntgen zichtbare afwijking.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarom is beoordeling van onderliggende instabiliteit van het tarsometatarsale gewricht relevant bij deze aandoening?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat dit de behandelkeuze kan beïnvloeden, bijvoorbeeld de overweging van artrodese naast exostectomie",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat instabiliteit nooit een rol speelt bij dit klachtenbeeld",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is klinisch volledig irrelevant",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat instabiliteit alleen bij kinderen relevant is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Aangetoonde instabiliteit kan de behandelkeuze beïnvloeden, bijvoorbeeld door artrodese te overwegen naast het verwijderen van de exostose.",
+          "feedback_fout": "Niet correct. Instabiliteit is wel degelijk relevant voor de uiteindelijke behandelkeuze.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies (ruimere of hogere wreef, alternatieve vetersystemen) en drukontlastende padding (donut-vilt) ter hoogte van de exostose, aangevuld met anti-inflammatoire maatregelen bij acute irritatie.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een op maat gemaakte orthese met dorsale uitsparing of een corticosteroïdinjectie worden overwogen. Chirurgische exostectomie is geïndiceerd bij persisterende klachten, eventueel gecombineerd met artrodese bij aangetoonde onderliggende instabiliteit.",
+          "lijst": [
+            "Stap 2: op maat gemaakte orthese met dorsale uitsparing, corticosteroïdinjectie",
+            "Stap 3: chirurgische exostectomie, eventueel gecombineerd met artrodese bij instabiliteit"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij een dorsale middenvoetexostose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies (ruimere/hogere wreef) en drukontlastende padding",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische exostectomie",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Schoeiseladvies en drukontlasting vormen de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie is een latere stap, niet de eerste keus.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wat houdt een exostectomie in?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Het chirurgisch afvijlen/verwijderen van de benige uitgroei",
+              "correct": true
+            },
+            {
+              "tekst": "Het plaatsen van een gewrichtsprothese",
+              "correct": false
+            },
+            {
+              "tekst": "Het verlengen van een pees",
+              "correct": false
+            },
+            {
+              "tekst": "Het amputeren van een teen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Exostectomie betreft het verwijderen van de benige uitgroei (osteofyt/exostose).",
+          "feedback_fout": "Niet correct. Het is een gerichte botresectie, geen prothese of peesverlenging.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wanneer wordt exostectomie gecombineerd met artrodese van het tarsometatarsale gewricht?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij aangetoonde onderliggende instabiliteit van het gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "Altijd, ongeacht de bevindingen",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, deze twee ingrepen worden nooit gecombineerd",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend bij kinderen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij aangetoonde instabiliteit kan artrodese worden toegevoegd om de onderliggende oorzaak mee te behandelen.",
+          "feedback_fout": "Niet correct. De combinatie is specifiek geïndiceerd bij aangetoonde instabiliteit, niet standaard bij elke patiënt.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

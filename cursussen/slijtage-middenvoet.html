@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Slijtage middenvoet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule slijtage middenvoet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Middenvoet</span>
+      <h1 class="cursus-titel">Slijtage middenvoet</h1>
+      <p class="cursus-beschrijving">Artrose van de tarsometatarsale (Lisfranc-)gewrichten: pathofysiologie, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "slijtage-middenvoet-v1",
+  "titel": "Slijtage middenvoet",
+  "zone": "Middenvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "De tarsometatarsale gewrichten",
+          "tekst": "De middenvoet bestaat uit een complex van kleine gewrichten, waaronder de tarsometatarsale (Lisfranc-)gewrichten, die relatief weinig bewegen maar essentieel zijn voor de stijfheid van de voet tijdens de afzetfase van het lopen. Slijtage hier ontstaat vaak posttraumatisch (na een Lisfranc-letsel) of secundair aan chronische overbelasting.",
+          "lijst": null
+        },
+        {
+          "kop": "Gevolgen voor de biomechaniek",
+          "tekst": "Doordat de middenvoetgewrichten bijdragen aan de stijfheid van de voetboog tijdens afzet, geeft artrose hier vooral pijn bij afzet en bij het dragen van schoenen die op de dorsale zijde van de voet drukken.",
+          "lijst": [
+            "Vaak posttraumatisch (na een Lisfranc-letsel) of door chronische overbelasting",
+            "Bijdrage aan stijfheid van de voetboog tijdens de afzetfase",
+            "Klachten vooral bij afzet en drukkende schoenen"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Welke gewrichten worden bedoeld met de tarsometatarsale (Lisfranc-)gewrichten?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De gewrichten tussen de tarsale botten en de metatarsalia",
+              "correct": true
+            },
+            {
+              "tekst": "De gewrichten tussen de tenen onderling",
+              "correct": false
+            },
+            {
+              "tekst": "Het gewricht tussen talus en calcaneus",
+              "correct": false
+            },
+            {
+              "tekst": "Het bovenste spronggewricht",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De tarsometatarsale (Lisfranc-)gewrichten verbinden de tarsale botten met de metatarsalia.",
+          "feedback_fout": "Niet correct. De genoemde alternatieven betreffen andere gewrichten in de voet/enkel.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat is een veelvoorkomende oorzaak van artrose in de middenvoet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een eerder Lisfranc-letsel of chronische overbelasting",
+              "correct": true
+            },
+            {
+              "tekst": "Een acute verkoudheid",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend erfelijkheid zonder mechanische factoren",
+              "correct": false
+            },
+            {
+              "tekst": "Een allergische reactie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Middenvoetartrose ontstaat vaak posttraumatisch (Lisfranc-letsel) of door chronische overbelasting.",
+          "feedback_fout": "Niet correct. Mechanisch trauma of overbelasting zijn de belangrijkste oorzaken, niet de genoemde alternatieven.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom geeft middenvoetartrose met name klachten bij afzet tijdens het lopen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de tarsometatarsale gewrichten bijdragen aan de stijfheid van de voetboog tijdens de afzetfase",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat afzet geen enkele belasting geeft op de middenvoet",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat de middenvoet alleen bij rust wordt belast",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is puur toeval zonder biomechanische verklaring",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De rol van deze gewrichten in de stijfheid tijdens afzet verklaart waarom juist deze fase klachten geeft.",
+          "feedback_fout": "Niet correct. Er is een duidelijke biomechanische relatie tussen de afzetfase en de belasting van deze gewrichten.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Kenmerkend zijn dorsale middenvoetpijn, soms met een palpabele dorsale osteofyt, verergerend bij afzet en bij het dragen van veters die op de wreef drukken. Bij een voorgeschiedenis van trauma moet actief gevraagd worden naar het ontstaansmechanisme (bijvoorbeeld een val met gestrekte voet).",
+          "lijst": null
+        },
+        {
+          "kop": "Beeldvorming",
+          "tekst": "Röntgenonderzoek (belaste opnamen, dus staand) is de eerste stap en toont gewrichtsspleetversmalling en osteofytvorming. Bij verdenking op een oud, gemist Lisfranc-letsel kan aanvullende beeldvorming (CT/MRI) nodig zijn om ligamentaire instabiliteit te beoordelen.",
+          "lijst": [
+            "Dorsale middenvoetpijn, mogelijk palpabele osteofyt",
+            "Verergering bij afzet en drukkend schoeisel",
+            "Röntgen (belast/staand): gewrichtsspleetversmalling, osteofyten",
+            "CT/MRI: bij verdenking op instabiliteit na een (gemist) Lisfranc-letsel"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarom worden röntgenfoto's bij verdenking op middenvoetartrose bij voorkeur belast (staand) gemaakt?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om functionele instabiliteit en gewrichtsspleetversmalling onder belasting beter te kunnen beoordelen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat liggende opnamen technisch onmogelijk zijn",
+              "correct": false
+            },
+            {
+              "tekst": "Dit heeft geen enkel diagnostisch voordeel",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat staande opnamen minder stralingsbelasting geven",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Belaste opnamen tonen functionele veranderingen zoals instabiliteit en gewrichtsspleetversmalling beter dan onbelaste opnamen.",
+          "feedback_fout": "Niet correct. Het voordeel zit in het beoordelen van functionele, belaste veranderingen, niet in techniek of straling.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waar moet actief naar gevraagd worden bij een patiënt met middenvoetklachten en een mogelijke traumatische voorgeschiedenis?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Het exacte ontstaansmechanisme, bijvoorbeeld een val met gestrekte voet",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend de kleur van de huid rond de voet",
+              "correct": false
+            },
+            {
+              "tekst": "Het merk van de gedragen schoenen op het moment van het ongeval",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is nooit relevant voor de diagnostiek",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het ontstaansmechanisme kan wijzen op een (mogelijk gemist) Lisfranc-letsel als onderliggende oorzaak.",
+          "feedback_fout": "Niet correct. Het ontstaansmechanisme is wel degelijk relevant voor het diagnostisch redeneren.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Wanneer is aanvullende CT- of MRI-beeldvorming geïndiceerd bij verdenking op middenvoetartrose?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij verdenking op ligamentaire instabiliteit na een (gemist) Lisfranc-letsel",
+              "correct": true
+            },
+            {
+              "tekst": "Altijd als eerste stap, vóór röntgen",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, röntgen is altijd voldoende",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend bij kinderen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Aanvullende beeldvorming is met name geïndiceerd bij verdenking op onderliggende ligamentaire instabiliteit.",
+          "feedback_fout": "Niet correct. Röntgen is de eerste stap; CT/MRI wordt gerichter ingezet.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies (stugge, afwikkelende zool met rocker-profiel om middenvoetbeweging te reduceren, ruime wreef) en oefentherapie gericht op omliggende spierkracht en algehele voetfunctie.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een op maat gemaakte, verstevigde orthese of een corticosteroïdinjectie worden overwogen. Bij persisterende, functiebeperkende klachten is artrodese van de aangedane tarsometatarsale gewrichten de meest toegepaste chirurgische behandeling.",
+          "lijst": [
+            "Stap 2: verstevigde orthese, corticosteroïdinjectie bij onvoldoende effect",
+            "Stap 3: artrodese van de aangedane tarsometatarsale gewrichten bij persisterende klachten",
+            "Artrodese vermindert pijn effectief door de (reeds beperkte) beweging te elimineren"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Welk type schoeisel wordt geadviseerd bij middenvoetartrose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een stugge, afwikkelende zool met rocker-profiel",
+              "correct": true
+            },
+            {
+              "tekst": "Een zeer flexibele, buigzame zool zonder enige verstijving",
+              "correct": false
+            },
+            {
+              "tekst": "Schoenen zonder enige zooldemping",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend blote voeten lopen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een stugge, afwikkelende zool (rocker-profiel) reduceert de beweging in de middenvoet en vermindert klachten.",
+          "feedback_fout": "Niet correct. Juist een stugge, afwikkelende zool is geïndiceerd, niet flexibel schoeisel.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom is artrodese een effectieve behandeloptie bij middenvoetartrose, ondanks het opofferen van gewrichtsbeweging?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de tarsometatarsale gewrichten van nature al weinig bewegen, waardoor het functionele verlies beperkt is terwijl de pijn effectief vermindert",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat artrodese de mobiliteit juist volledig herstelt",
+              "correct": false
+            },
+            {
+              "tekst": "Artrodese heeft geen enkel effect op pijn",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit gewricht normaliter net zoveel beweegt als de knie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Doordat deze gewrichten van nature weinig bewegen, is het functionele verlies bij artrodese relatief beperkt, terwijl de pijnreductie aanzienlijk kan zijn.",
+          "feedback_fout": "Niet correct. Artrodese elimineert beweging in het gewricht, maar dit gewricht bewoog al weinig, wat het functionele verlies beperkt.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat is het doel van oefentherapie in stap 1 van de behandeling van middenvoetartrose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Versterken van omliggende musculatuur en optimaliseren van de algehele voetfunctie",
+              "correct": true
+            },
+            {
+              "tekst": "Het volledig immobiliseren van de voet",
+              "correct": false
+            },
+            {
+              "tekst": "Het direct voorbereiden op een operatie, ongeacht klachten",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend cardiotraining zonder relatie tot de voet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Oefentherapie richt zich op kracht van omliggende musculatuur en optimalisatie van de algehele voetfunctie.",
+          "feedback_fout": "Niet correct. Immobilisatie en directe operatievoorbereiding zijn niet het doel van conservatieve oefentherapie.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

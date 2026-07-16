@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Platvoet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule platvoet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Middenvoet</span>
+      <h1 class="cursus-titel">Platvoet</h1>
+      <p class="cursus-beschrijving">Pes planus: flexibele versus verworven platvoet, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "platvoet-v1",
+  "titel": "Platvoet",
+  "zone": "Middenvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Twee hoofdvormen",
+          "tekst": "Pes planus (platvoet) wordt gekenmerkt door een verlaagde of afwezige mediale longitudinale voetboog. Onderscheiden wordt de flexibele, vaak asymptomatische vorm (fysiologisch, veel voorkomend bij kinderen en volwassenen zonder klachten) en de verworven vorm (adult acquired flatfoot), doorgaans secundair aan disfunctie van de tibialis posterior.",
+          "lijst": null
+        },
+        {
+          "kop": "Relatie met tibialis posterior disfunctie",
+          "tekst": "Een verworven platvoet op volwassen leeftijd is in de meeste gevallen het gevolg van progressieve disfunctie van de tibialis posterior, de belangrijkste dynamische stabilisator van de mediale voetboog.",
+          "lijst": [
+            "Flexibele platvoet: vaak fysiologisch, correctie mogelijk bij niet-belaste stand (bijv. op tenen staan)",
+            "Verworven platvoet: vaak secundair aan tibialis posterior disfunctie (PTTD)",
+            "Progressief onbehandeld beloop kan leiden tot een rigide deformiteit"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is het belangrijkste verschil tussen een flexibele en een verworven platvoet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een flexibele platvoet is vaak fysiologisch/asymptomatisch, een verworven platvoet ontstaat doorgaans secundair aan tibialis posterior disfunctie",
+              "correct": true
+            },
+            {
+              "tekst": "Er is geen enkel verschil tussen beide vormen",
+              "correct": false
+            },
+            {
+              "tekst": "Een verworven platvoet komt alleen bij kinderen voor",
+              "correct": false
+            },
+            {
+              "tekst": "Een flexibele platvoet is altijd pijnlijk, een verworven platvoet nooit",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De flexibele vorm is vaak onschuldig en fysiologisch; de verworven vorm hangt vaak samen met tibialis posterior disfunctie.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een belangrijk onderscheid in oorzaak en klinische relevantie.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke spier is de belangrijkste dynamische stabilisator van de mediale voetboog, waarvan disfunctie kan leiden tot een verworven platvoet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Tibialis posterior",
+              "correct": true
+            },
+            {
+              "tekst": "Peroneus longus",
+              "correct": false
+            },
+            {
+              "tekst": "Extensor hallucis longus",
+              "correct": false
+            },
+            {
+              "tekst": "Gastrocnemius als primaire boogstabilisator",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De tibialis posterior is de primaire dynamische stabilisator van de mediale longitudinale voetboog.",
+          "feedback_fout": "Niet correct. De genoemde andere spieren hebben andere primaire functies.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Wat kan gebeuren als een verworven platvoet onbehandeld blijft?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Een progressief beloop naar een rigide deformiteit",
+              "correct": true
+            },
+            {
+              "tekst": "De voet herstelt altijd spontaan zonder enige interventie",
+              "correct": false
+            },
+            {
+              "tekst": "Dit heeft geen enkele invloed op de lange termijn",
+              "correct": false
+            },
+            {
+              "tekst": "De klachten verdwijnen altijd na 1 week vanzelf",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Onbehandeld kan een verworven platvoet progressief verergeren tot een rigide deformiteit.",
+          "feedback_fout": "Niet correct. Zonder behandeling kan de aandoening juist progressief verergeren, niet spontaan herstellen.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "De Jack's test (of toe raise test) beoordeelt de flexibiliteit van de voetboog: bij dorsaalflexie van de grote teen in stand zou bij een flexibele platvoet de boog zich moeten herstellen. Daarnaast is screening op tibialis posterior disfunctie relevant, via het 'too many toes' sign en de single-leg heel raise.",
+          "lijst": null
+        },
+        {
+          "kop": "Onderscheid flexibel versus rigide",
+          "tekst": "Het onderscheid tussen een flexibele en rigide (niet-corrigeerbare) platvoet is essentieel voor de behandelkeuze en kan wijzen op verschillende onderliggende oorzaken.",
+          "lijst": [
+            "Jack's test: herstel van de boog bij dorsaalflexie grote teen wijst op flexibiliteit",
+            "'Too many toes' sign en single-leg heel raise: screening op tibialis posterior disfunctie",
+            "Rigide (niet-corrigeerbare) platvoet: kan wijzen op tarsale coalitie of gevorderde PTTD"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat beoordeelt de Jack's test (toe raise test)?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De flexibiliteit van de voetboog",
+              "correct": true
+            },
+            {
+              "tekst": "De kracht van de kuitmusculatuur",
+              "correct": false
+            },
+            {
+              "tekst": "De stabiliteit van het bovenste spronggewricht",
+              "correct": false
+            },
+            {
+              "tekst": "De sensibiliteit van de voetzool",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De Jack's test beoordeelt of de voetboog zich herstelt bij dorsaalflexie van de grote teen, wat wijst op flexibiliteit.",
+          "feedback_fout": "Niet correct. De test is specifiek gericht op boogflexibiliteit, niet op kracht, stabiliteit of sensibiliteit.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waarom is screening op tibialis posterior disfunctie relevant bij een patiënt met een (nieuw ontstane) platvoet op volwassen leeftijd?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat een verworven platvoet vaak secundair is aan progressieve tibialis posterior disfunctie",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat dit nooit een relevante onderliggende oorzaak is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit uitsluitend bij kinderen relevant is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit de enige mogelijke oorzaak van elke voetklacht is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Gezien de sterke associatie tussen verworven platvoet en tibialis posterior disfunctie is gerichte screening klinisch relevant.",
+          "feedback_fout": "Niet correct. Deze screening is juist zeer relevant bij een (nieuw ontstane) platvoet op volwassen leeftijd.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waar kan een rigide (niet-corrigeerbare) platvoet, in tegenstelling tot een flexibele vorm, op wijzen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Op een tarsale coalitie of een gevorderd stadium van tibialis posterior disfunctie",
+              "correct": true
+            },
+            {
+              "tekst": "Altijd op een goedaardige, fysiologische variant zonder verdere betekenis",
+              "correct": false
+            },
+            {
+              "tekst": "Op een acute spierverrekking",
+              "correct": false
+            },
+            {
+              "tekst": "Dit heeft nooit een specifieke betekenis",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een rigide platvoet kan wijzen op structurele oorzaken zoals een tarsale coalitie of een verder gevorderde PTTD.",
+          "feedback_fout": "Niet correct. Een rigide platvoet is klinisch relevanter dan een flexibele vorm en verdient nader onderzoek.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 richt zich op krachttraining van de intrinsieke voetmusculatuur en de tibialis posterior, ondersteund door een boogondersteunende orthese of steunzool en gericht schoeiseladvies.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en verdere behandeling",
+          "tekst": "Bij progressieve klachten of aanwijzingen voor tibialis posterior disfunctie wordt intensievere, individueel aangemeten orthesiologie ingezet en verdere diagnostiek/behandeling volgens het PTTD-traject. Chirurgie is zelden geïndiceerd bij een flexibele, asymptomatische platvoet.",
+          "lijst": [
+            "Stap 2: individueel aangemeten orthese, functionele training",
+            "Bij aanwijzingen voor PTTD: doorverwijzing/behandeling volgens het PTTD-stadiëringstraject",
+            "Chirurgie zelden geïndiceerd bij flexibele, asymptomatische platvoet"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is de eerste-stap-behandeling bij een symptomatische, flexibele platvoet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Krachttraining van de intrinsieke voetmusculatuur en tibialis posterior, met een boogondersteunende orthese",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische correctie",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Gerichte krachttraining en boogondersteuning vormen de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie en immobilisatie zijn niet de eerste keus bij een flexibele platvoet.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Is chirurgie doorgaans geïndiceerd bij een asymptomatische, flexibele platvoet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Ja, altijd, ongeacht klachten",
+              "correct": false
+            },
+            {
+              "tekst": "Nee, chirurgie is zelden geïndiceerd bij een asymptomatische, flexibele platvoet",
+              "correct": true
+            },
+            {
+              "tekst": "Ja, mits de patiënt jonger is dan 18 jaar",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is nooit relevant voor de behandelbeslissing",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een asymptomatische, flexibele platvoet vereist doorgaans geen chirurgische behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie wordt juist niet toegepast bij afwezigheid van klachten.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat is de aangewezen vervolgstap wanneer bij een platvoet aanwijzingen worden gevonden voor tibialis posterior disfunctie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Verder onderzoek en behandeling volgens het PTTD-stadiëringstraject",
+              "correct": true
+            },
+            {
+              "tekst": "De platvoet volledig negeren",
+              "correct": false
+            },
+            {
+              "tekst": "Direct amputeren",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen de tenen behandelen, los van de rest van de voet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij aanwijzingen voor PTTD wordt het behandeltraject afgestemd op de specifieke stadiëring van die aandoening.",
+          "feedback_fout": "Niet correct. Aanwijzingen voor PTTD vragen om gerichte verdere diagnostiek en behandeling, niet om het negeren van de bevindingen.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

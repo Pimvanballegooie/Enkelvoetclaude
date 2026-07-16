@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke bult onderzijde voet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke bult onderzijde voet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Middenvoet</span>
+      <h1 class="cursus-titel">Pijnlijke bult onderzijde voet</h1>
+      <p class="cursus-beschrijving">Ziekte van Ledderhose (plantaire fibromatose): pathofysiologie, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-bult-onderzijde-voet-v1",
+  "titel": "Pijnlijke bult onderzijde voet",
+  "zone": "Middenvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Plantaire fibromatose",
+          "tekst": "De ziekte van Ledderhose is een benigne, fibroproliferatieve aandoening van de fascia plantaris, histologisch verwant aan de ziekte van Dupuytren van de hand. De aandoening wordt gekenmerkt door nodulaire verdikkingen in de fascia, meestal gelokaliseerd mediaal-plantair.",
+          "lijst": null
+        },
+        {
+          "kop": "Kenmerken",
+          "tekst": "De nodulaire verdikkingen kunnen geïsoleerd of multipel voorkomen en soms bilateraal optreden, met een mogelijke associatie met andere fibromatosen.",
+          "lijst": [
+            "Histologisch verwant aan de ziekte van Dupuytren (hand)",
+            "Meestal mediaal-plantair gelokaliseerd",
+            "Kan geïsoleerd, multipel, of bilateraal voorkomen",
+            "Mogelijke associatie met andere fibromatosen (bijv. ziekte van Peyronie)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Met welke andere aandoening is de ziekte van Ledderhose histologisch verwant?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De ziekte van Dupuytren van de hand",
+              "correct": true
+            },
+            {
+              "tekst": "Reumatoïde artritis",
+              "correct": false
+            },
+            {
+              "tekst": "Diabetes mellitus",
+              "correct": false
+            },
+            {
+              "tekst": "Artrose van de knie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De ziekte van Ledderhose is histologisch verwant aan de ziekte van Dupuytren, maar dan gelokaliseerd in de voetzool.",
+          "feedback_fout": "Niet correct. De verwantschap is specifiek met de ziekte van Dupuytren, niet met de genoemde alternatieven.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat is de aard van de nodulaire verdikkingen bij de ziekte van Ledderhose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Benigne (goedaardig), fibroproliferatief van aard",
+              "correct": true
+            },
+            {
+              "tekst": "Altijd kwaadaardig",
+              "correct": false
+            },
+            {
+              "tekst": "Een bacteriële infectie",
+              "correct": false
+            },
+            {
+              "tekst": "Een virale wratvorming",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het betreft een benigne, fibroproliferatieve aandoening van de fascia plantaris.",
+          "feedback_fout": "Niet correct. De aandoening is goedaardig, geen maligniteit, infectie of virale aandoening.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Met welke andere fibromatose kan de ziekte van Ledderhose geassocieerd zijn?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "De ziekte van Peyronie",
+              "correct": true
+            },
+            {
+              "tekst": "Longontsteking",
+              "correct": false
+            },
+            {
+              "tekst": "Nierstenen",
+              "correct": false
+            },
+            {
+              "tekst": "Migraine",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Er is een bekende associatie tussen de ziekte van Ledderhose en andere fibromatosen, zoals de ziekte van Peyronie en Dupuytren.",
+          "feedback_fout": "Niet correct. De genoemde alternatieven zijn geen fibromatosen en hebben geen bekende associatie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinische presentatie",
+          "tekst": "Patiënten presenteren zich met een palpabele, vaak niet-pijnlijke tot mild pijnlijke nodulus in de voetzool, met toenemende pijn bij drukbelasting (staan, lopen, blootvoets lopen op harde ondergrond).",
+          "lijst": null
+        },
+        {
+          "kop": "Diagnostiek",
+          "tekst": "De diagnose wordt doorgaans klinisch gesteld op basis van palpatie; echografie of MRI kan aanvullend worden ingezet om de uitgebreidheid te beoordelen en te differentiëren van andere weke-delen-afwijkingen.",
+          "lijst": [
+            "Palpabele, vaste nodulus in de voetzool, meestal mediaal",
+            "Pijn toenemend bij drukbelasting",
+            "Echografie/MRI: beoordeling uitgebreidheid, differentiatie met andere weke-delen-massa's"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Hoe presenteert de ziekte van Ledderhose zich klinisch?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een palpabele nodulus in de voetzool, met pijn toenemend bij drukbelasting",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend koorts zonder enige lokale afwijking",
+              "correct": false
+            },
+            {
+              "tekst": "Een volledig pijnvrije, onzichtbare afwijking die nooit te voelen is",
+              "correct": false
+            },
+            {
+              "tekst": "Pijn uitsluitend bovenop de voet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een palpabele nodulus met drukgerelateerde pijn in de voetzool is het kenmerkende beeld.",
+          "feedback_fout": "Niet correct. De aandoening is juist palpabel en lokaal in de voetzool gelokaliseerd.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waarvoor kan aanvullende beeldvorming (echografie/MRI) worden ingezet bij verdenking op de ziekte van Ledderhose?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om de uitgebreidheid te beoordelen en te differentiëren van andere weke-delen-afwijkingen",
+              "correct": true
+            },
+            {
+              "tekst": "Beeldvorming heeft hierbij nooit enige toegevoegde waarde",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend om de schoenmaat te bepalen",
+              "correct": false
+            },
+            {
+              "tekst": "Om de botdichtheid te meten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Beeldvorming helpt de uitgebreidheid te beoordelen en andere oorzaken van een weke-delen-massa uit te sluiten.",
+          "feedback_fout": "Niet correct. Beeldvorming heeft wel degelijk toegevoegde waarde voor uitgebreidheid en differentiaaldiagnose.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarom kan blootvoets lopen op een harde ondergrond de klachten bij de ziekte van Ledderhose verergeren?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Doordat de directe drukbelasting op de nodulus in de voetzool toeneemt zonder demping",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat blootvoets lopen de nodulus geneest",
+              "correct": false
+            },
+            {
+              "tekst": "Dit heeft geen enkele invloed op de klachten",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit de bloedsomloop volledig stopzet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Zonder dempend schoeisel neemt de directe drukbelasting op de nodulus toe, wat de klachten verergert.",
+          "feedback_fout": "Niet correct. Verminderde demping verergert juist de klachten door verhoogde drukbelasting.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit een drukontlastende orthese met uitsparing ter hoogte van de nodulus, schoeiseladvies met adequate demping, en voorzichtige rek- en mobiliteitsoefeningen van de fascia plantaris.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en terughoudendheid bij chirurgie",
+          "tekst": "Corticosteroïdinjecties kunnen symptomen verlichten, maar beïnvloeden het natuurlijk beloop niet altijd. Chirurgische excisie wordt terughoudend toegepast vanwege een hoog recidiefpercentage; uitgebreidere resectie geeft een lager recidiefrisico maar meer morbiditeit.",
+          "lijst": [
+            "Stap 2: corticosteroïdinjectie (symptomatische verlichting); in sommige centra radiotherapie in de vroege fase",
+            "Stap 3: chirurgische excisie terughoudend toepassen — lokale excisie kent een recidiefpercentage tot 60-100%",
+            "Uitgebreidere resectie (partiële/totale fasciëctomie): lager recidiefrisico, meer morbiditeit"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij de ziekte van Ledderhose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een drukontlastende orthese met uitsparing en schoeiseladvies met demping",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische excisie",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de voorvoet",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie gedurende 6 maanden",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Drukontlasting via orthese en schoeisel vormt de kern van de conservatieve eerste stap.",
+          "feedback_fout": "Niet correct. Chirurgie is een latere, terughoudend toegepaste stap, niet de eerste keus.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom wordt chirurgische excisie bij de ziekte van Ledderhose terughoudend toegepast?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Vanwege een hoog recidiefpercentage, met name bij lokale excisie",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat chirurgie bij deze aandoening levensgevaarlijk is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat er geen enkele chirurgische techniek voor bestaat",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat de aandoening nooit chirurgisch te benaderen is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het hoge recidiefpercentage bij lokale excisie (tot 60-100%) maakt terughoudendheid gepast.",
+          "feedback_fout": "Niet correct. Het probleem is een hoog recidiefrisico, niet dat chirurgie onmogelijk of gevaarlijk is.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat is de afweging tussen lokale excisie en uitgebreidere resectie (partiële/totale fasciëctomie)?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Lokale excisie heeft een hoog recidiefrisico maar minder morbiditeit; uitgebreidere resectie heeft een lager recidiefrisico maar meer morbiditeit",
+              "correct": true
+            },
+            {
+              "tekst": "Beide technieken zijn in alle opzichten identiek",
+              "correct": false
+            },
+            {
+              "tekst": "Uitgebreidere resectie heeft altijd een hoger recidiefrisico dan lokale excisie",
+              "correct": false
+            },
+            {
+              "tekst": "Lokale excisie heeft nooit enig recidiefrisico",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Er is een afweging tussen recidiefrisico en operatieve morbiditeit bij de keuze van de resectie-omvang.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een relevante afweging tussen recidiefrisico en morbiditeit tussen beide technieken.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

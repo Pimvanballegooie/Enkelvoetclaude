@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke voorste scheenbeenpees - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke voorste scheenbeenpees voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Middenvoet</span>
+      <h1 class="cursus-titel">Pijnlijke voorste scheenbeenpees</h1>
+      <p class="cursus-beschrijving">Tibialis anterior tendinopathie en tenosynovitis: pathofysiologie, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-voorste-scheenbeenpees-v1",
+  "titel": "Pijnlijke voorste scheenbeenpees",
+  "zone": "Middenvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Functie van de tibialis anterior",
+          "tekst": "De m. tibialis anterior is de primaire dorsaalflexor van de enkel en draagt bij aan de controle van de voet tijdens de 'heel strike'-fase van de gangcyclus (excentrische afremming van de voorvoet na hielcontact).",
+          "lijst": null
+        },
+        {
+          "kop": "Ontstaansmechanisme",
+          "tekst": "Overbelasting, met name door repetitieve dorsaalflexie of externe compressie, kan leiden tot tendinopathie of tenosynovitis van de pees.",
+          "lijst": [
+            "Repetitieve dorsaalflexie: hardlopen, bergafwaarts lopen",
+            "Externe compressie: te strak schoeisel/veters over de wreef",
+            "Zelden: (sub)totale peesruptuur, met name bij oudere patiënten"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is de primaire functie van de m. tibialis anterior?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Dorsaalflexie van de enkel en excentrische controle tijdens 'heel strike'",
+              "correct": true
+            },
+            {
+              "tekst": "Plantairflexie van de enkel",
+              "correct": false
+            },
+            {
+              "tekst": "Eversie van de voorvoet als hoofdfunctie",
+              "correct": false
+            },
+            {
+              "tekst": "Flexie van de knie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De tibialis anterior is de primaire dorsaalflexor en controleert de voet excentrisch na hielcontact.",
+          "feedback_fout": "Niet correct. Plantairflexie wordt door andere spieren (o.a. triceps surae) verzorgd.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke externe factor kan bijdragen aan het ontstaan van tibialis anterior tenosynovitis?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Te strak schoeisel of veters die over de wreef drukken",
+              "correct": true
+            },
+            {
+              "tekst": "Een tekort aan vitamine D",
+              "correct": false
+            },
+            {
+              "tekst": "Een allergische reactie op zonlicht",
+              "correct": false
+            },
+            {
+              "tekst": "Een virale keelontsteking",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Externe compressie door strak schoeisel over de wreef kan bijdragen aan tenosynovitis van de pees.",
+          "feedback_fout": "Niet correct. Het gaat om een mechanisch/compressief mechanisme, niet de genoemde alternatieven.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Bij welke patiëntengroep komt een (sub)totale ruptuur van de tibialis anterior-pees relatief vaker voor?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij oudere patiënten",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend bij zuigelingen",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, deze pees kan niet ruptureren",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend bij zwemmers",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een (sub)totale ruptuur van de tibialis anterior-pees komt, hoewel zeldzaam, relatief vaker voor bij oudere patiënten.",
+          "feedback_fout": "Niet correct. Deze pees kan wel degelijk ruptureren, met een hogere incidentie bij oudere patiënten.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Kenmerkend zijn pijn en soms zwelling over de wreef, ter hoogte van het verloop van de pees, verergerend bij actieve dorsaalflexie tegen weerstand of bij schoeisel dat op die plek drukt.",
+          "lijst": null
+        },
+        {
+          "kop": "Differentiaaldiagnose",
+          "tekst": "Belangrijk is het onderscheid met een chronisch inspanningsgebonden anterior compartimentsyndroom en met een neurogene voetheffersparese (uitval van de n. peroneus profundus). Bij een acute, pijnloze voetval moet direct aan een peesruptuur worden gedacht.",
+          "lijst": [
+            "Anterior compartimentsyndroom: krampende pijn tijdens inspanning, afnemend in rust",
+            "Neurogene voetheffersparese: krachtsverlies zonder lokale peespijn, mogelijk sensibiliteitsverlies",
+            "Acute, pijnloze voetval: verdenking op peesruptuur"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Welke beweging provoceert typisch de klachten bij tibialis anterior tendinopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Actieve dorsaalflexie tegen weerstand",
+              "correct": true
+            },
+            {
+              "tekst": "Passieve plantairflexie in rust",
+              "correct": false
+            },
+            {
+              "tekst": "Weerstand tegen inversie van de achtervoet",
+              "correct": false
+            },
+            {
+              "tekst": "Flexie van de tenen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Actieve dorsaalflexie tegen weerstand belast de tibialis anterior en provoceert de klachten.",
+          "feedback_fout": "Niet correct. Plantairflexie belast juist de antagonisten van deze spier.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Wat is een belangrijk onderscheidend kenmerk van een neurogene voetheffersparese ten opzichte van tibialis anterior tendinopathie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Krachtsverlies zonder lokale peespijn, mogelijk met sensibiliteitsverlies",
+              "correct": true
+            },
+            {
+              "tekst": "Beide aandoeningen zijn klinisch identiek en niet te onderscheiden",
+              "correct": false
+            },
+            {
+              "tekst": "Neurogene parese geeft altijd hevige lokale peespijn",
+              "correct": false
+            },
+            {
+              "tekst": "Tendinopathie geeft altijd sensibiliteitsverlies",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een neurogene oorzaak geeft krachtsverlies zonder de lokale peespijn die bij tendinopathie wordt gezien, mogelijk met sensibiliteitsverlies.",
+          "feedback_fout": "Niet correct. Er is wel degelijk klinisch onderscheid te maken tussen beide oorzaken van voetheffersparese.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waar moet direct aan gedacht worden bij een acute, pijnloze voetval?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een mogelijke peesruptuur van de tibialis anterior",
+              "correct": true
+            },
+            {
+              "tekst": "Een gewone lichte verstuiking",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is altijd onschuldig en vereist geen verdere actie",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend vermoeidheid na sporten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een acute, pijnloze voetval is een alarmsymptoom voor een mogelijke peesruptuur en vereist nadere evaluatie.",
+          "feedback_fout": "Niet correct. Dit symptoom moet serieus genomen worden en niet als onschuldig worden beschouwd.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit relatieve rust en aanpassing van de trainingsopbouw, schoeiseladvies (losser vetersysteem over de wreef), rekoefeningen voor de kuitmusculatuur, en geleidelijk opgebouwde krachttraining van de tibialis anterior.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij aanhoudende tenosynovitis kan tijdelijke immobilisatie worden overwogen. Chirurgische exploratie en hechting is uitsluitend geïndiceerd bij een (sub)totale ruptuur, herkenbaar aan acute voetheffersparese en een palpabele discontinuïteit van de pees.",
+          "lijst": [
+            "Stap 2: tijdelijke immobilisatie bij aanhoudende tenosynovitis",
+            "Stap 3: chirurgische exploratie en hechting uitsluitend bij (sub)totale peesruptuur",
+            "Diagnose van een ruptuur: acute voetheffersparese met palpabele discontinuïteit"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij tibialis anterior tendinopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Relatieve rust, aangepaste trainingsopbouw en schoeiseladvies",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische exploratie",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie gedurende 3 maanden",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De behandeling start conservatief met relatieve rust, aangepaste opbouw en schoeiseladvies.",
+          "feedback_fout": "Niet correct. Chirurgie is uitsluitend voorbehouden aan een aangetoonde peesruptuur.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wanneer is chirurgische exploratie en hechting van de tibialis anterior-pees geïndiceerd?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Uitsluitend bij een (sub)totale ruptuur, herkenbaar aan acute voetheffersparese en palpabele discontinuïteit",
+              "correct": true
+            },
+            {
+              "tekst": "Bij elke vorm van lichte tendinopathie",
+              "correct": false
+            },
+            {
+              "tekst": "Als eerste behandeloptie bij alle patiënten",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, chirurgie is bij deze pees niet mogelijk",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie is specifiek voorbehouden aan een aangetoonde (sub)totale ruptuur.",
+          "feedback_fout": "Niet correct. Lichte tendinopathie wordt conservatief behandeld; chirurgie is voor rupturen.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom is het merendeel van de gevallen van tibialis anterior tendinopathie goed te behandelen met conservatieve, belastinggerichte therapie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de onderliggende oorzaak doorgaans mechanische overbelasting of compressie is, die goed reageert op aanpassing van belasting en schoeisel",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat deze pees nooit daadwerkelijk beschadigd kan raken",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat conservatieve therapie geen enkel effect heeft, maar toch wordt toegepast",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat chirurgie bij deze aandoening verboden is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Omdat de oorzaak vaak mechanisch/reversibel is, reageert de aandoening doorgaans goed op gerichte, conservatieve behandeling.",
+          "feedback_fout": "Niet correct. Conservatieve therapie is juist effectief doordat de onderliggende oorzaak vaak mechanisch en omkeerbaar is.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

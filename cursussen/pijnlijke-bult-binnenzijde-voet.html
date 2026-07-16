@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke bult binnenzijde voet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke bult binnenzijde voet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Middenvoet</span>
+      <h1 class="cursus-titel">Pijnlijke bult binnenzijde voet</h1>
+      <p class="cursus-beschrijving">Os naviculare accessorium: anatomie, classificatie, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-bult-binnenzijde-voet-v1",
+  "titel": "Pijnlijke bult binnenzijde voet",
+  "zone": "Middenvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Het os naviculare accessorium",
+          "tekst": "Het os naviculare accessorium is een accessoir botje aan de mediale zijde van de voet, gelegen ter hoogte van de tuberositas van het os naviculare, verbonden via een synchondrose of syndesmose. Het komt voor bij circa 10-14% van de bevolking en is meestal asymptomatisch.",
+          "lijst": null
+        },
+        {
+          "kop": "Classificatie (Geist)",
+          "tekst": "Het accessoire botje wordt ingedeeld naar type, met verschillen in symptomatisch potentieel.",
+          "lijst": [
+            "Type I: sesamoïd binnen de tibialis posterior-pees, zelden symptomatisch",
+            "Type II: verbonden via fibrocartilaginaire synchondrose, meest symptomatisch (kwetsbaar voor microtrauma)",
+            "Type III: volledig gefuseerd met het naviculare (cornuatum)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is een os naviculare accessorium?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een acute fractuur van het os naviculare",
+              "correct": false
+            },
+            {
+              "tekst": "Een aangeboren accessoir botje aan de mediale zijde van de voet, bij de tuberositas van het os naviculare",
+              "correct": true
+            },
+            {
+              "tekst": "Een peesverkalking",
+              "correct": false
+            },
+            {
+              "tekst": "Een vorm van artrose",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het betreft een aangeboren accessoir botje, geen fractuur of degeneratieve aandoening.",
+          "feedback_fout": "Niet correct. Het gaat om een congenitale variant, niet om een fractuur of peesverkalking.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welk type os naviculare accessorium is volgens de classificatie van Geist het meest symptomatisch?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Type I",
+              "correct": false
+            },
+            {
+              "tekst": "Type II",
+              "correct": true
+            },
+            {
+              "tekst": "Type III",
+              "correct": false
+            },
+            {
+              "tekst": "Alle typen zijn even vaak symptomatisch",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Type II, verbonden via een fibrocartilaginaire synchondrose, is het meest kwetsbaar voor microtrauma en daarmee het meest symptomatisch.",
+          "feedback_fout": "Niet correct. Type I is zelden symptomatisch en type III is volledig gefuseerd; type II is het meest symptomatisch.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Hoeveel procent van de bevolking heeft naar schatting een os naviculare accessorium?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Circa 10-14%",
+              "correct": true
+            },
+            {
+              "tekst": "Minder dan 0,1%",
+              "correct": false
+            },
+            {
+              "tekst": "Meer dan 80%",
+              "correct": false
+            },
+            {
+              "tekst": "Vrijwel 100%",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Naar schatting komt het bij 10-14% van de bevolking voor, meestal zonder klachten.",
+          "feedback_fout": "Niet correct. De juiste schatting ligt rond de 10-14%, niet bij de genoemde extremen.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Symptomatische presentatie ontstaat door trauma, chronische overbelasting, of drukirritatie door schoeisel, met een pijnlijke, soms rode bult aan de binnenkant van de voet.",
+          "lijst": null
+        },
+        {
+          "kop": "Differentiaaldiagnose en beeldvorming",
+          "tekst": "Belangrijk is onderscheid met tibialis posterior tendinopathie zelf, aangezien de pees insereert nabij/op het accessoire botje en beide problematieken samen kunnen voorkomen. Röntgen toont het botje; MRI kan oedeem in de synchondrose (bij type II) aantonen.",
+          "lijst": [
+            "Onderscheid met (comorbide) tibialis posterior tendinopathie",
+            "Röntgen: zichtbaarheid van het accessoire botje",
+            "MRI: oedeem in de synchondrose bij symptomatisch type II"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat kan een symptomatisch os naviculare accessorium uitlokken?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Trauma, chronische overbelasting, of drukirritatie door schoeisel",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend een virale infectie",
+              "correct": false
+            },
+            {
+              "tekst": "Een allergische reactie op voedsel",
+              "correct": false
+            },
+            {
+              "tekst": "Dit gebeurt altijd spontaan zonder enige aanleiding",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Trauma, overbelasting en drukirritatie zijn de belangrijkste uitlokkende factoren.",
+          "feedback_fout": "Niet correct. Mechanische factoren zijn de belangrijkste triggers, niet infectie of allergie.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waarom is het klinisch belangrijk om bij deze aandoening ook de tibialis posterior-pees te beoordelen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de pees insereert nabij of op het accessoire botje en beide problematieken vaak samen voorkomen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat de tibialis posterior-pees hier nooit een rol speelt",
+              "correct": false
+            },
+            {
+              "tekst": "Om puur anatomische interesse, zonder klinisch belang",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit de enige manier is om schoenmaat te bepalen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Door de anatomische nabijheid komen beide problematieken vaak samen voor en moeten beide worden meegenomen in de diagnostiek.",
+          "feedback_fout": "Niet correct. Er is juist een sterke anatomische en klinische relatie tussen beide structuren.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Welke beeldvormende bevinding past bij een symptomatisch type II os naviculare accessorium?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Oedeem in de fibrocartilaginaire synchondrose op MRI",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend een normale bevinding zonder enige afwijking",
+              "correct": false
+            },
+            {
+              "tekst": "Een volledige botbreuk elders in de voet",
+              "correct": false
+            },
+            {
+              "tekst": "Vocht in de longen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. MRI kan oedeem in de synchondrose tonen, passend bij symptomatische irritatie van een type II os naviculare accessorium.",
+          "feedback_fout": "Niet correct. De relevante bevinding is lokaal oedeem in de synchondrose, niet de genoemde alternatieven.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies met drukontlasting mediaal (ruimere last, zachte voering), krachttraining van de tibialis posterior binnen pijngrenzen, en taping ter ontlasting tijdens de acute fase.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij acute synchondrose-irritatie kan tijdelijke immobilisatie (walker) worden overwogen, samen met een orthese met mediale uitsparing. Bij persisterende klachten ondanks adequaat conservatief beleid kan chirurgische excisie van het accessoire botje worden overwogen (Kidner-procedure), eventueel met re-attachering van de tibialis posterior-pees.",
+          "lijst": [
+            "Stap 2: tijdelijke immobilisatie bij acute irritatie, orthese met mediale uitsparing",
+            "Stap 3: chirurgische excisie (Kidner-procedure) bij persisterende klachten",
+            "Eventuele re-attachering van de tibialis posterior-pees tijdens de ingreep"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij een symptomatisch os naviculare accessorium?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies met mediale drukontlasting en krachttraining van de tibialis posterior",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische excisie",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie gedurende 3 maanden",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Drukontlasting en gerichte krachttraining vormen de kern van de conservatieve eerste stap.",
+          "feedback_fout": "Niet correct. Chirurgie is een latere stap, niet de eerste keus.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wat houdt de Kidner-procedure in?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Chirurgische excisie van het accessoire botje, eventueel met re-attachering van de tibialis posterior-pees",
+              "correct": true
+            },
+            {
+              "tekst": "Het plaatsen van een enkelprothese",
+              "correct": false
+            },
+            {
+              "tekst": "Het vastzetten van het gehele voetgewricht",
+              "correct": false
+            },
+            {
+              "tekst": "Het verlengen van de achillespees",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De Kidner-procedure betreft excisie van het accessoire botje, eventueel gecombineerd met re-attachering van de pees.",
+          "feedback_fout": "Niet correct. Het is een gerichte excisieprocedure, geen prothese of artrodese.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wanneer wordt chirurgische behandeling van een os naviculare accessorium overwogen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Bij persisterende klachten ondanks adequaat doorlopen conservatief beleid",
+              "correct": true
+            },
+            {
+              "tekst": "Bij elke toevallig op röntgen gevonden, asymptomatisch botje",
+              "correct": false
+            },
+            {
+              "tekst": "Als eerste behandeloptie bij iedereen met dit botje",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, chirurgie is hierbij niet mogelijk",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie is voorbehouden aan persisterende, symptomatische klachten na conservatieve behandeling.",
+          "feedback_fout": "Niet correct. Een asymptomatisch, toevallig gevonden botje behoeft geen behandeling.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

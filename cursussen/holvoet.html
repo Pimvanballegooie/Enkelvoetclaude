@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Holvoet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule holvoet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Middenvoet</span>
+      <h1 class="cursus-titel">Holvoet</h1>
+      <p class="cursus-beschrijving">Pes cavus: oorzaken, diagnostiek en behandeling van de verhoogde voetboog.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "holvoet-v1",
+  "titel": "Holvoet",
+  "zone": "Middenvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Wat is een holvoet?",
+          "tekst": "Bij een holvoet (pes cavus) is de mediale longitudinale voetboog abnormaal verhoogd, vaak gepaard gaand met een verhoogde druk onder de voorvoet en hiel, en relatief weinig contact van de middenvoet met de grond. In tegenstelling tot een platvoet is een holvoet vaker geassocieerd met een onderliggende neurologische oorzaak.",
+          "lijst": null
+        },
+        {
+          "kop": "Mogelijke onderliggende oorzaken",
+          "tekst": "Een holvoet kan idiopathisch zijn, maar verdient altijd aandacht voor mogelijke onderliggende neurologische aandoeningen, zeker bij progressieve of asymmetrische presentatie.",
+          "lijst": [
+            "Idiopathisch (geen aanwijsbare oorzaak)",
+            "Neurologisch: ziekte van Charcot-Marie-Tooth is de meest voorkomende onderliggende oorzaak",
+            "Overige neurologische aandoeningen: spina bifida, poliomyelitis (zeldzamer)",
+            "Verworven (posttraumatisch of bij compartimentsyndroom)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat kenmerkt een holvoet (pes cavus)?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een abnormaal verhoogde mediale longitudinale voetboog",
+              "correct": true
+            },
+            {
+              "tekst": "Een volledig afwezige voetboog",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend een misvorming van de tenen",
+              "correct": false
+            },
+            {
+              "tekst": "Een verbrede voorvoet zonder boogverandering",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een holvoet wordt gekenmerkt door een abnormaal verhoogde voetboog.",
+          "feedback_fout": "Niet correct. Een afwezige boog beschrijft juist een platvoet, het tegenovergestelde beeld.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke onderliggende aandoening is de meest voorkomende neurologische oorzaak van een holvoet?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "De ziekte van Charcot-Marie-Tooth",
+              "correct": true
+            },
+            {
+              "tekst": "De ziekte van Parkinson",
+              "correct": false
+            },
+            {
+              "tekst": "Multiple sclerose als meest voorkomende oorzaak",
+              "correct": false
+            },
+            {
+              "tekst": "Migraine",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De ziekte van Charcot-Marie-Tooth is de meest voorkomende onderliggende neurologische oorzaak van een holvoet.",
+          "feedback_fout": "Niet correct. Hoewel andere neurologische aandoeningen een holvoet kunnen geven, is Charcot-Marie-Tooth de meest voorkomende.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom is het belangrijk om bij een holvoet te screenen op onderliggende neurologische oorzaken?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat een holvoet, in tegenstelling tot een platvoet, vaker geassocieerd is met onderliggende neurologische aandoeningen, zeker bij progressieve of asymmetrische presentatie",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat een holvoet nooit een neurologische oorzaak heeft",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is klinisch niet relevant",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat elke holvoet altijd wijst op een hersentumor",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Gezien de associatie met neurologische aandoeningen zoals Charcot-Marie-Tooth is screening relevant, vooral bij progressieve of asymmetrische klachten.",
+          "feedback_fout": "Niet correct. Er is juist een reële associatie met neurologische oorzaken die aandacht verdient.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Naast beoordeling van de voetboogstand (staand, met de Coleman block test om flexibiliteit te beoordelen) is een gericht neurologisch onderzoek essentieel: spierkracht, reflexen en sensibiliteit van de onderste extremiteiten, en beoordeling van eventuele klauwtenen die vaak geassocieerd zijn met een holvoet.",
+          "lijst": null
+        },
+        {
+          "kop": "Aanvullend onderzoek",
+          "tekst": "Bij verdenking op een onderliggende neurologische oorzaak is verwijzing voor neurologisch onderzoek (eventueel met EMG/zenuwgeleidingsonderzoek en genetische diagnostiek) geïndiceerd.",
+          "lijst": [
+            "Coleman block test: beoordeling flexibiliteit van de hindfoot-component",
+            "Neurologisch onderzoek: kracht, reflexen, sensibiliteit",
+            "Vaak geassocieerde klauwtenen",
+            "Bij verdenking neurologische oorzaak: verwijzing voor EMG/genetische diagnostiek"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarom is neurologisch onderzoek een essentieel onderdeel van de diagnostiek bij een holvoet?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat een holvoet vaak geassocieerd is met onderliggende neurologische aandoeningen die om verdere diagnostiek vragen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat neurologisch onderzoek nooit relevant is bij voetklachten",
+              "correct": false
+            },
+            {
+              "tekst": "Om uitsluitend de bloeddruk te meten",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit de enige manier is om schoenmaat te bepalen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Gezien de associatie met neurologische aandoeningen is gericht neurologisch onderzoek essentieel.",
+          "feedback_fout": "Niet correct. Neurologisch onderzoek is juist wel relevant gezien de mogelijke onderliggende oorzaken.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke misvorming van de tenen wordt vaak geassocieerd met een holvoet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Klauwtenen",
+              "correct": true
+            },
+            {
+              "tekst": "Hallux valgus als primaire associatie",
+              "correct": false
+            },
+            {
+              "tekst": "Syndactylie (vergroeide tenen)",
+              "correct": false
+            },
+            {
+              "tekst": "Polydactylie (extra tenen)",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Klauwtenen worden vaak gezien in combinatie met een holvoet, mede door de onderliggende spierdisbalans.",
+          "feedback_fout": "Niet correct. Klauwtenen zijn de meest kenmerkende geassocieerde teenafwijking bij een holvoet, niet de genoemde alternatieven.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Wat beoordeelt de Coleman block test bij een holvoet?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Of de hindfoot-component van de deformiteit flexibel of rigide/gefixeerd is",
+              "correct": true
+            },
+            {
+              "tekst": "De longfunctie van de patiënt",
+              "correct": false
+            },
+            {
+              "tekst": "De kracht van de quadriceps",
+              "correct": false
+            },
+            {
+              "tekst": "De bloeddruk in de onderste extremiteit",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De Coleman block test helpt bepalen of de hindfoot-component corrigeerbaar (flexibel) of gefixeerd (rigide) is, relevant voor de behandelkeuze.",
+          "feedback_fout": "Niet correct. De test is specifiek gericht op de flexibiliteit van de voetdeformiteit.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit een op maat gemaakte orthese om de drukverdeling onder voorvoet en hiel te optimaliseren, schoeiseladvies met voldoende demping, en oefentherapie gericht op behoud van mobiliteit en spierbalans.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij een progressieve, rigide deformiteit met functiebeperking, met name bij een onderliggende neurologische aandoening, kan chirurgische correctie worden overwogen — bijvoorbeeld weke-delen-release, peestransfers, of osteotomieën, afhankelijk van de mate van rigiditeit en de betrokken structuren.",
+          "lijst": [
+            "Stap 2: intensievere orthesiologie en functionele training",
+            "Stap 3: chirurgische correctie (weke-delen-release, peestransfer, osteotomie) bij progressieve, rigide deformiteit",
+            "Behandeling wordt idealiter multidisciplinair afgestemd bij een onderliggende neurologische aandoening"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij een holvoet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een op maat gemaakte orthese om de drukverdeling te optimaliseren",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische correctie",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend afwachten zonder enige interventie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een op maat gemaakte orthese ter optimalisatie van de drukverdeling is een passende eerste stap.",
+          "feedback_fout": "Niet correct. Chirurgie is een latere stap, geen eerste-keus-behandeling.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wanneer wordt chirurgische correctie bij een holvoet overwogen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij een progressieve, rigide deformiteit met functiebeperking, ondanks conservatieve behandeling",
+              "correct": true
+            },
+            {
+              "tekst": "Bij elke lichte, stabiele holvoet zonder klachten",
+              "correct": false
+            },
+            {
+              "tekst": "Als eerste behandeloptie, vóór conservatieve zorg",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit bij een holvoet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie wordt overwogen bij progressieve, rigide deformiteiten met functiebeperking na falen van conservatieve behandeling.",
+          "feedback_fout": "Niet correct. Een lichte, stabiele, asymptomatische holvoet vereist geen chirurgie.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom is een multidisciplinaire aanpak vaak wenselijk bij een holvoet met een onderliggende neurologische aandoening?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de behandeling van de onderliggende neurologische aandoening en de voetproblematiek samen moeten worden afgestemd voor optimaal resultaat",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat een multidisciplinaire aanpak geen enkele meerwaarde heeft",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat de podotherapeut altijd de enige behandelaar moet zijn",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is nooit relevant bij voetklachten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Afstemming tussen behandeling van de onderliggende neurologische aandoening en de voetproblematiek optimaliseert het resultaat.",
+          "feedback_fout": "Niet correct. Een multidisciplinaire aanpak heeft juist meerwaarde bij een onderliggende neurologische oorzaak.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>
