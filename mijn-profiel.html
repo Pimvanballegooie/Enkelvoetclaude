@@ -476,25 +476,41 @@ const HEADERS = { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` };
 // MODULES CONFIG — gelijk aan cursussen/index.html
 // ─────────────────────────────────────────────────────────────
 const MODULES = [
-  {
-    id: "instabiele-enkel-v1",
-    titel: "Instabiele enkel",
-    zone: "Enkel",
-    beschrijving: "Anatomie, diagnostiek en revalidatie bij chronische enkelbandinstabiliteit.",
-    blokken: 3,
-    vragen: 9,
-    url: "cursussen/instabiele-enkel.html",
-    vereist: true
-  }
+  {"id": "instabiele-enkel-v1", "titel": "Instabiele enkel", "zone": "Enkel", "beschrijving": "Anatomie, diagnostiek en revalidatie bij chronische enkelbandinstabiliteit. Inclusief operatieve aspecten en return-to-sport criteria.", "blokken": 3, "vragen": 9, "url": "instabiele-enkel.html", "beschikbaar": true, "vereist": true},
+  {"id": "slijtage-enkel-v1", "titel": "Slijtage enkel", "zone": "Enkel", "beschrijving": "Gebaseerd op het EVN-protocol (complex niveau): pathofysiologie, biomechanische factoren, stepped-care-behandeling en operatieve overwegingen bij artrose van het bovenste spronggewricht.", "blokken": 3, "vragen": 9, "url": "slijtage-enkel.html", "beschikbaar": true, "vereist": true},
+  {"id": "voorste-enkel-inklemming-v1", "titel": "Voorste enkel inklemming", "zone": "Enkel", "beschrijving": "Anterieur enkelimpingement: botvorming, weke-delen inklemming, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "voorste-enkel-inklemming.html", "beschikbaar": true, "vereist": true},
+  {"id": "achterste-enkel-inklemming-v1", "titel": "Achterste enkel inklemming", "zone": "Enkel", "beschrijving": "Posterieur enkelimpingement (os trigonum-syndroom): anatomie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "achterste-enkel-inklemming.html", "beschikbaar": true, "vereist": true},
+  {"id": "kraakbeenletsel-enkel-v1", "titel": "Kraakbeenletsel van de enkel", "zone": "Enkel", "beschrijving": "Osteochondraal letsel van de talus: pathofysiologie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "kraakbeenletsel-enkel.html", "beschikbaar": true, "vereist": true},
+  {"id": "gewrichtsmuis-enkel-v1", "titel": "Gewrichtsmuis enkel", "zone": "Enkel", "beschrijving": "Losse lichamen (loose bodies) in het enkelgewricht: ontstaan, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "gewrichtsmuis-enkel.html", "beschikbaar": true, "vereist": true},
+  {"id": "re-insertie-buitenste-enkelpees-v1", "titel": "Re-insertie buitenste enkelpees", "zone": "Enkel", "beschrijving": "Revalidatie na chirurgische re-insertie van het laterale bandcomplex: fasering, belastingsopbouw en return-to-sport-criteria.", "blokken": 3, "vragen": 9, "url": "re-insertie-buitenste-enkelpees.html", "beschikbaar": true, "vereist": true},
+  {"id": "enkelverzwikking-acuut-v1", "titel": "Enkelverzwikking (acuut)", "zone": "Enkel", "beschrijving": "Acuut lateraal enkelbandletsel: mechanisme, gradering, acute diagnostiek en functionele behandeling.", "blokken": 3, "vragen": 9, "url": "enkelverzwikking-acuut.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-achillespees-v1", "titel": "Pijnlijke achillespees", "zone": "Achtervoet", "beschrijving": "Achillespeestendinopathie: mid-portie versus insertioneel, pathofysiologie, diagnostiek en evidence-based behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-achillespees.html", "beschikbaar": true, "vereist": true},
+  {"id": "zenuwbeknelling-achtervoet-v1", "titel": "Zenuwbeknelling achtervoet", "zone": "Achtervoet", "beschrijving": "Tarsale tunnelsyndroom en gerelateerde zenuwbeknelling in de achtervoet: anatomie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "zenuwbeknelling-achtervoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-kuitbeenpees-v1", "titel": "Pijnlijke kuitbeenpees", "zone": "Achtervoet", "beschrijving": "Peroneale tendinopathie en (sub)luxatie: anatomie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-kuitbeenpees.html", "beschikbaar": true, "vereist": true},
+  {"id": "stugge-achtervoet-v1", "titel": "Stugge achtervoet", "zone": "Achtervoet", "beschrijving": "Beperkte mobiliteit van het subtalaire en bovenste spronggewricht: oorzaken, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "stugge-achtervoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "slijtage-achtervoet-v1", "titel": "Slijtage achtervoet", "zone": "Achtervoet", "beschrijving": "Subtalaire artrose: pathofysiologie, diagnostiek en stepped-care-behandeling.", "blokken": 3, "vragen": 9, "url": "slijtage-achtervoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-hiel-v1", "titel": "Pijnlijke bult hiel", "zone": "Achtervoet", "beschrijving": "Ziekte van Haglund: pathofysiologie, diagnostiek en stapsgewijze behandeling van de posterosuperieure calcaneale exostose.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-hiel.html", "beschikbaar": true, "vereist": true},
+  {"id": "hielspoor-v1", "titel": "Hielspoor", "zone": "Achtervoet", "beschrijving": "Calcaneale spoor en plantaire fasciopathie: pathofysiologie, diagnostiek en evidence-based behandeling.", "blokken": 3, "vragen": 9, "url": "hielspoor.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-achterste-scheenbeenpees-v1", "titel": "Pijnlijke achterste scheenbeenpees", "zone": "Achtervoet", "beschrijving": "Tibialis posterior tendinopathie en disfunctie (PTTD): stadiëring, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-achterste-scheenbeenpees.html", "beschikbaar": true, "vereist": true},
+  {"id": "slijtage-middenvoet-v1", "titel": "Slijtage middenvoet", "zone": "Middenvoet", "beschrijving": "Artrose van de tarsometatarsale (Lisfranc-)gewrichten: pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "slijtage-middenvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "holvoet-v1", "titel": "Holvoet", "zone": "Middenvoet", "beschrijving": "Pes cavus: oorzaken, diagnostiek en behandeling van de verhoogde voetboog.", "blokken": 3, "vragen": 9, "url": "holvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "platvoet-v1", "titel": "Platvoet", "zone": "Middenvoet", "beschrijving": "Pes planus: flexibele versus verworven platvoet, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "platvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-voorste-scheenbeenpees-v1", "titel": "Pijnlijke voorste scheenbeenpees", "zone": "Middenvoet", "beschrijving": "Tibialis anterior tendinopathie en tenosynovitis: pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-voorste-scheenbeenpees.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-binnenzijde-voet-v1", "titel": "Pijnlijke bult binnenzijde voet", "zone": "Middenvoet", "beschrijving": "Os naviculare accessorium: anatomie, classificatie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-binnenzijde-voet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-bovenzijde-voet-v1", "titel": "Pijnlijke bult bovenzijde voet", "zone": "Middenvoet", "beschrijving": "Dorsale exostose van de middenvoet: pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-bovenzijde-voet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-onderzijde-voet-v1", "titel": "Pijnlijke bult onderzijde voet", "zone": "Middenvoet", "beschrijving": "Ziekte van Ledderhose (plantaire fibromatose): pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-onderzijde-voet.html", "beschikbaar": true, "vereist": true},
+  {"id": "vermoeidheidsbreuk-voet-v1", "titel": "Vermoeidheidsbreuk voet", "zone": "Middenvoet", "beschrijving": "Stress fracturen van de voet: risicostratificatie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "vermoeidheidsbreuk-voet.html", "beschikbaar": true, "vereist": true},
+  {"id": "scheve-grote-teen-v1", "titel": "Scheve grote teen", "zone": "Voorvoet", "beschrijving": "Hallux valgus: etiologie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "scheve-grote-teen.html", "beschikbaar": true, "vereist": true},
+  {"id": "stijve-grote-teen-v1", "titel": "Stijve grote teen", "zone": "Voorvoet", "beschrijving": "Hallux rigidus: gradering, diagnostiek en stapsgewijze behandeling van artrose van het eerste MTP-gewricht.", "blokken": 3, "vragen": 9, "url": "stijve-grote-teen.html", "beschikbaar": true, "vereist": true},
+  {"id": "hamerteen-klauwteen-v1", "titel": "Hamerteen en klauwteen", "zone": "Voorvoet", "beschrijving": "Teendeformiteiten: etiologie, differentiatie flexibel/rigide en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "hamerteen-klauwteen.html", "beschikbaar": true, "vereist": true},
+  {"id": "ruiterteen-v1", "titel": "Ruiterteen", "zone": "Voorvoet", "beschrijving": "Overlapping toe deformity: congenitale en verworven vormen, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "ruiterteen.html", "beschikbaar": true, "vereist": true},
+  {"id": "zenuwbeknelling-voorvoet-v1", "titel": "Zenuwbeknelling voorvoet", "zone": "Voorvoet", "beschrijving": "Morton's neuroom (interdigitaal neuroom): pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "zenuwbeknelling-voorvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-voorvoet-v1", "titel": "Pijnlijke voorvoet", "zone": "Voorvoet", "beschrijving": "Metatarsalgie: multifactoriële etiologie, diagnostiek en gerichte behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-voorvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-kleine-teen-v1", "titel": "Pijnlijke bult kleine teen", "zone": "Voorvoet", "beschrijving": "Bunionette (Tailor's bunion): classificatie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-kleine-teen.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-onder-nagel-v1", "titel": "Pijnlijke bult onder nagel", "zone": "Voorvoet", "beschrijving": "Subunguale exostose: differentiaaldiagnose, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-onder-nagel.html", "beschikbaar": true, "vereist": true}
 ];
 
-const BINNENKORT = [
-  { zone: "Achtervoet", titel: "Achillespees pathologie" },
-  { zone: "Achtervoet", titel: "Hielspoor & plantaire fasciitis" },
-  { zone: "Middenvoet", titel: "Os naviculare & Lisfranc" },
-  { zone: "Voorvoet", titel: "Hallux valgus & metatarsalgie" },
-  { zone: "Fundament", titel: "Biomechanica van de keten" }
-];
+const BINNENKORT = [];
 
 let huidigeTherapeut = null;
 

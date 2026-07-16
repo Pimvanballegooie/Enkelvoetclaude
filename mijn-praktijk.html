@@ -553,6 +553,7 @@ async function laadTherapeutenVanPraktijk() {
     const therapeuten = await tResp.json();
 
     // Check specialisten
+    const VEREISTE_CURSUSSEN = ['instabiele-enkel-v1', 'slijtage-enkel-v1', 'voorste-enkel-inklemming-v1', 'achterste-enkel-inklemming-v1', 'kraakbeenletsel-enkel-v1', 'gewrichtsmuis-enkel-v1', 're-insertie-buitenste-enkelpees-v1', 'enkelverzwikking-acuut-v1', 'pijnlijke-achillespees-v1', 'zenuwbeknelling-achtervoet-v1', 'pijnlijke-kuitbeenpees-v1', 'stugge-achtervoet-v1', 'slijtage-achtervoet-v1', 'pijnlijke-bult-hiel-v1', 'hielspoor-v1', 'pijnlijke-achterste-scheenbeenpees-v1', 'slijtage-middenvoet-v1', 'holvoet-v1', 'platvoet-v1', 'pijnlijke-voorste-scheenbeenpees-v1', 'pijnlijke-bult-binnenzijde-voet-v1', 'pijnlijke-bult-bovenzijde-voet-v1', 'pijnlijke-bult-onderzijde-voet-v1', 'vermoeidheidsbreuk-voet-v1', 'scheve-grote-teen-v1', 'stijve-grote-teen-v1', 'hamerteen-klauwteen-v1', 'ruiterteen-v1', 'zenuwbeknelling-voorvoet-v1', 'pijnlijke-voorvoet-v1', 'pijnlijke-bult-kleine-teen-v1', 'pijnlijke-bult-onder-nagel-v1'];
     const codes = therapeuten.map(t => t.code).filter(Boolean);
     let specialisten = new Set();
     if (codes.length > 0) {
@@ -568,7 +569,8 @@ async function laadTherapeutenVanPraktijk() {
         behaald[v.therapeut_code].add(v.cursus_id);
       });
       codes.forEach(code => {
-        if (behaald[code]?.has('instabiele-enkel-v1')) specialisten.add(code);
+        const set = behaald[code] || new Set();
+        if (VEREISTE_CURSUSSEN.every(c => set.has(c))) specialisten.add(code);
       });
     }
 
