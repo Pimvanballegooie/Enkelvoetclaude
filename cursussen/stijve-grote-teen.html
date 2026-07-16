@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Stijve grote teen - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule stijve grote teen voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Voorvoet</span>
+      <h1 class="cursus-titel">Stijve grote teen</h1>
+      <p class="cursus-beschrijving">Hallux rigidus: gradering, diagnostiek en stapsgewijze behandeling van artrose van het eerste MTP-gewricht.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "stijve-grote-teen-v1",
+  "titel": "Stijve grote teen",
+  "zone": "Voorvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Hallux rigidus",
+          "tekst": "Hallux rigidus betreft degeneratieve artrose van het eerste metatarsofalangeale (MTP1-)gewricht, gekenmerkt door progressief verlies van met name dorsaalflexie. Dit resulteert in pijnlijke beperking van de afzet tijdens de gangcyclus.",
+          "lijst": null
+        },
+        {
+          "kop": "Classificatie (Coughlin & Shurnas)",
+          "tekst": "De ernst wordt geclassificeerd op basis van bewegingsbeperking en radiologische bevindingen, oplopend in vier graden.",
+          "lijst": [
+            "Graad 0-1: lichte beperking van ROM, minimale radiologische veranderingen",
+            "Graad 2: matige ROM-beperking, dorsale osteofytvorming",
+            "Graad 3: ernstige ROM-beperking, uitgebreide gewrichtsspleetversmalling",
+            "Graad 4: stijf gewricht met uitgesproken artrose"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Welke beweging is primair beperkt bij hallux rigidus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Dorsaalflexie van het eerste MTP-gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "Inversie van de achtervoet",
+              "correct": false
+            },
+            {
+              "tekst": "Flexie van de knie",
+              "correct": false
+            },
+            {
+              "tekst": "Eversie van de enkel",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Progressief verlies van met name dorsaalflexie van het MTP1-gewricht is kenmerkend voor hallux rigidus.",
+          "feedback_fout": "Niet correct. De beperking betreft specifiek de dorsaalflexie van de grote teen, niet elders in het lichaam.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke gradering volgens Coughlin & Shurnas wordt gekenmerkt door een stijf gewricht met uitgesproken artrose?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Graad 4",
+              "correct": true
+            },
+            {
+              "tekst": "Graad 0",
+              "correct": false
+            },
+            {
+              "tekst": "Graad 1",
+              "correct": false
+            },
+            {
+              "tekst": "Er bestaat geen graad 4 in deze classificatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Graad 4 representeert de meest ernstige vorm, met een stijf gewricht en uitgesproken artrose.",
+          "feedback_fout": "Niet correct. Graad 0-1 betreft juist lichte beperking; graad 4 is de ernstigste vorm.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom veroorzaakt hallux rigidus specifiek pijn bij de afzetfase van het lopen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat afzet een aanzienlijke mate van dorsaalflexie van de grote teen vereist, wat bij dit gewricht beperkt is",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat afzet geen enkele belasting geeft op het MTP1-gewricht",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat de pijn uitsluitend in rust optreedt",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is puur toeval zonder biomechanische verklaring",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De afzetfase vereist substantiële dorsaalflexie van de grote teen, wat bij een beperkt bewegend MTP1-gewricht pijn veroorzaakt.",
+          "feedback_fout": "Niet correct. Er is een duidelijke biomechanische relatie tussen de afzetfase en de vereiste dorsaalflexie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Beoordeling van de actieve en passieve dorsaalflexie van het MTP1-gewricht, palpatie van eventuele dorsale osteofyten, en beoordeling van pijn tijdens de afzetfase van het lopen.",
+          "lijst": null
+        },
+        {
+          "kop": "Beeldvorming en gradering",
+          "tekst": "Röntgenonderzoek is essentieel voor de gradering volgens Coughlin & Shurnas, met beoordeling van gewrichtsspleetversmalling en osteofytvorming, wat direct de behandelkeuze beïnvloedt.",
+          "lijst": [
+            "Actieve/passieve dorsaalflexie MTP1: kwantificeren van de bewegingsbeperking",
+            "Palpatie dorsale osteofyten",
+            "Röntgen: gradering volgens Coughlin & Shurnas"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarom is röntgenonderzoek essentieel bij de diagnostiek van hallux rigidus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Voor de gradering volgens Coughlin & Shurnas, wat de behandelkeuze beïnvloedt",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat röntgen de enige manier is om de schoenmaat te bepalen",
+              "correct": false
+            },
+            {
+              "tekst": "Röntgen heeft geen enkele toegevoegde waarde bij deze aandoening",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat röntgen uitsluitend gebruikt wordt om leeftijd te schatten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Röntgen is nodig voor de gradering, wat direct de behandelstrategie bepaalt.",
+          "feedback_fout": "Niet correct. Röntgen heeft juist een essentiële rol in de gradering en behandelplanning.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Wat wordt klinisch beoordeeld naast de mate van dorsaalflexiebeperking bij hallux rigidus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Aanwezigheid van dorsale osteofyten via palpatie",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend de lengte van de tweede teen",
+              "correct": false
+            },
+            {
+              "tekst": "De kleur van de nagel",
+              "correct": false
+            },
+            {
+              "tekst": "De temperatuur van de gehele voet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Palpatie van dorsale osteofyten is een relevant onderdeel van het klinisch onderzoek.",
+          "feedback_fout": "Niet correct. De genoemde alternatieven zijn niet relevant voor de diagnostiek van hallux rigidus.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Hoe beïnvloedt de gradering volgens Coughlin & Shurnas de behandelkeuze?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij lagere gradaties is joint-preserving chirurgie (cheilectomie) mogelijk, bij hogere gradaties eerder artrodese",
+              "correct": true
+            },
+            {
+              "tekst": "De gradering heeft geen enkele invloed op de behandelkeuze",
+              "correct": false
+            },
+            {
+              "tekst": "Elke gradering wordt identiek behandeld met dezelfde chirurgische techniek",
+              "correct": false
+            },
+            {
+              "tekst": "De gradering bepaalt uitsluitend de schoenmaat",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Lagere gradaties lenen zich beter voor joint-preserving chirurgie, terwijl hogere gradaties vaker artrodese vereisen.",
+          "feedback_fout": "Niet correct. De gradering is juist bepalend voor de keuze van chirurgische techniek.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies (rocker-sole/afwikkelzool en stugge zoolversterking om MTP1-beweging te reduceren, brede neus), carbon-inleg of Morton's extension ter beperking van dorsaalflexie, en mobiliserende/krachtoefeningen binnen pijngrenzen.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een intra-articulaire corticosteroïdinjectie worden overwogen. Bij milde tot matige gradaties (0-2) is cheilectomie effectief; bij ernstige artrose (graad 3-4) geldt artrodese als gouden standaard, met een prothese als alternatief bij lagere functionele eisen.",
+          "lijst": [
+            "Stap 2: intra-articulaire corticosteroïdinjectie",
+            "Stap 3 (graad 0-2): cheilectomie (verwijderen dorsale osteofyten)",
+            "Stap 3 (graad 3-4): artrodese (gouden standaard) of prothese bij lagere functionele eisen"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij hallux rigidus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies met rocker-sole/stugge zoolversterking en carbon-inleg",
+              "correct": true
+            },
+            {
+              "tekst": "Directe artrodese",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de teen",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie gedurende 3 maanden",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Schoeiselaanpassing gericht op het reduceren van MTP1-beweging vormt de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Artrodese en amputatie zijn niet de eerste-keus-behandeling.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Bij welke gradering is cheilectomie doorgaans een geschikte chirurgische optie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Milde tot matige gradaties (graad 0-2)",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend graad 4",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen bij kinderen",
+              "correct": false
+            },
+            {
+              "tekst": "Cheilectomie wordt nooit toegepast bij hallux rigidus",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Cheilectomie is een joint-preserving optie die het meest geschikt is bij mildere tot matige gradaties.",
+          "feedback_fout": "Niet correct. Bij graad 4 is artrodese eerder aangewezen dan cheilectomie.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat geldt als gouden standaard bij ernstige hallux rigidus (graad 3-4)?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Artrodese van het MTP1-gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend conservatieve behandeling, levenslang",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de gehele voorvoet",
+              "correct": false
+            },
+            {
+              "tekst": "Een kniebrace",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Artrodese van het MTP1-gewricht is de gouden standaard bij ernstige artrose (graad 3-4).",
+          "feedback_fout": "Niet correct. Bij ernstige artrose is chirurgische artrodese de erkende gouden standaard.",
+          "bron": "Coughlin MJ & Shurnas PS (2003) — Hallux rigidus: grading and long-term results of operative treatment."
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

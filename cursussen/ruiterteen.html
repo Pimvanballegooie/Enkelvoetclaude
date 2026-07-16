@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Ruiterteen - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule ruiterteen voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Voorvoet</span>
+      <h1 class="cursus-titel">Ruiterteen</h1>
+      <p class="cursus-beschrijving">Overlapping toe deformity: congenitale en verworven vormen, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "ruiterteen-v1",
+  "titel": "Ruiterteen",
+  "zone": "Voorvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Twee vormen van 'ruiterteen'",
+          "tekst": "De term 'ruiterteen' omvat verschillende presentaties van een over- of onderliggende teen. Meest frequent betreft het de vijfde teen (digitus quintus varus), doorgaans congenitaal, met een adductie- en supinatiecontractuur.",
+          "lijst": null
+        },
+        {
+          "kop": "Verworven crossover toe",
+          "tekst": "Daarnaast kan een verworven overlap van de tweede teen ontstaan (crossover toe), meestal secundair aan progressieve hallux valgus (waarbij de hallux de tweede teen dorsaal wegdrukt) of aan instabiliteit van het tweede MTP-gewricht (predislocatiesyndroom).",
+          "lijst": [
+            "Congenitale digitus quintus varus: aangeboren, vaak bilateraal",
+            "Verworven crossover toe: secundair aan hallux valgus of MTP2-instabiliteit (plantaire plaatschade)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Welke teen is het meest frequent betrokken bij de congenitale vorm van 'ruiterteen'?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De vijfde teen (digitus quintus varus)",
+              "correct": true
+            },
+            {
+              "tekst": "De grote teen",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend de derde teen",
+              "correct": false
+            },
+            {
+              "tekst": "Alle tenen tegelijk, altijd",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De vijfde teen (digitus quintus varus) is het meest frequent betrokken bij de congenitale vorm.",
+          "feedback_fout": "Niet correct. De congenitale vorm betreft specifiek de vijfde teen, niet de grote teen.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat is een veelvoorkomende oorzaak van een verworven crossover toe van de tweede teen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Progressieve hallux valgus die de tweede teen dorsaal wegdrukt, of MTP2-instabiliteit",
+              "correct": true
+            },
+            {
+              "tekst": "Een virale infectie",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend erfelijkheid zonder enige mechanische factor",
+              "correct": false
+            },
+            {
+              "tekst": "Een allergische reactie op schoenmateriaal",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Progressieve hallux valgus of instabiliteit van het tweede MTP-gewricht zijn de belangrijkste oorzaken van een verworven crossover toe.",
+          "feedback_fout": "Niet correct. Het betreft mechanische/structurele oorzaken, niet infectie of allergie.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Wat kenmerkt de congenitale digitus quintus varus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een adductie- en supinatiecontractuur van de vijfde teen, vaak bilateraal aanwezig",
+              "correct": true
+            },
+            {
+              "tekst": "Een acute fractuur na trauma",
+              "correct": false
+            },
+            {
+              "tekst": "Een tijdelijke, spontaan verdwijnende zwelling",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend een huidafwijking zonder standverandering",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De congenitale vorm kenmerkt zich door een aangeboren adductie- en supinatiecontractuur, vaak bilateraal.",
+          "feedback_fout": "Niet correct. Het betreft een structurele, aangeboren standafwijking, geen trauma of tijdelijke zwelling.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Differentiatie naar oorzaak",
+          "tekst": "Bij het klinisch onderzoek is het essentieel te differentiëren tussen de congenitale vorm (aanwezig vanaf jonge leeftijd, vaak bilateraal) en de verworven vorm (later ontstaan, vaak unilateraal, met aanwijzingen voor onderliggende hallux valgus of MTP-instabiliteit).",
+          "lijst": null
+        },
+        {
+          "kop": "Aanvullend onderzoek bij verworven vorm",
+          "tekst": "Bij verdenking op MTP2-instabiliteit (predislocatiesyndroom) kan de 'drawer test' van het MTP-gewricht en/of beeldvorming (röntgen, MRI voor plantaire plaatschade) worden ingezet.",
+          "lijst": [
+            "Beoordeling leeftijd van ontstaan en bilateraliteit",
+            "Drawer test MTP2-gewricht bij verdenking op instabiliteit",
+            "Röntgen/MRI bij verdenking op plantaire plaatschade"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Welk klinisch gegeven wijst eerder op de congenitale dan de verworven vorm van 'ruiterteen'?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Aanwezigheid vanaf jonge leeftijd, vaak bilateraal",
+              "correct": true
+            },
+            {
+              "tekst": "Recent ontstaan bij een volwassene met hallux valgus",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend unilaterale presentatie op oudere leeftijd",
+              "correct": false
+            },
+            {
+              "tekst": "Een acuut ontstaan na een sportblessure",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Aanwezigheid vanaf jonge leeftijd en bilateraliteit wijzen op de congenitale vorm.",
+          "feedback_fout": "Niet correct. Recent ontstaan of unilaterale presentatie op oudere leeftijd wijst eerder op de verworven vorm.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waarvoor wordt de 'drawer test' van het MTP2-gewricht gebruikt?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om instabiliteit van het tweede MTP-gewricht (predislocatiesyndroom) te beoordelen",
+              "correct": true
+            },
+            {
+              "tekst": "Om de kniestabiliteit te testen",
+              "correct": false
+            },
+            {
+              "tekst": "Om de bloeddruk te meten",
+              "correct": false
+            },
+            {
+              "tekst": "Om de kracht van de kuitmusculatuur te testen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De drawer test beoordeelt specifiek de stabiliteit van het MTP2-gewricht.",
+          "feedback_fout": "Niet correct. Deze test is specifiek gericht op het MTP2-gewricht, niet op de knie of kuit.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Wanneer wordt MRI overwogen bij verdenking op een verworven crossover toe?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij verdenking op onderliggende plantaire plaatschade",
+              "correct": true
+            },
+            {
+              "tekst": "Altijd als eerste stap, vóór lichamelijk onderzoek",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, MRI wordt bij deze aandoening niet gebruikt",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend bij kinderen met de congenitale vorm",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. MRI is behulpzaam bij verdenking op plantaire plaatschade als oorzaak van MTP2-instabiliteit.",
+          "feedback_fout": "Niet correct. MRI wordt gericht ingezet bij specifieke verdenking, niet standaard als eerste stap.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Bij de congenitale vorm op jonge leeftijd kan taping/spalken effectief zijn. Bij de verworven vorm richt de behandeling zich op de onderliggende oorzaak: behandeling van hallux valgus, of stabiliserende taping bij MTP2-instabiliteit, aangevuld met schoeiseladvies (ruime teenbox).",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een op maat gemaakte correctie-orthese of een corticosteroïdinjectie (bij MTP-synovitis) worden overwogen. Chirurgische correctie bestaat afhankelijk van de oorzaak uit weke-delen-release, pees-transfer, of osteotomie, bij de crossover toe vaak gecombineerd met correctie van de onderliggende hallux valgus.",
+          "lijst": [
+            "Stap 2: correctie-orthese, corticosteroïdinjectie bij synovitis",
+            "Stap 3: weke-delen-release, pees-transfer of osteotomie; bij crossover toe vaak gecombineerd met hallux valgus-correctie"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passende behandeling bij de congenitale vorm van 'ruiterteen' op jonge leeftijd?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Taping of spalken",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische correctie bij elke pasgeborene",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de teen",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend afwachten zonder enige interventie, ongeacht klachten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Taping/spalken op jonge leeftijd kan effectief zijn bij de congenitale vorm.",
+          "feedback_fout": "Niet correct. Chirurgie en amputatie zijn niet de eerste-keus-behandeling op jonge leeftijd.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom wordt bij chirurgische correctie van een crossover toe vaak ook de hallux valgus behandeld?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de onderliggende hallux valgus vaak de oorzaak is van de crossover toe, en behandeling hiervan nodig is voor een duurzaam resultaat",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat dit puur cosmetische redenen heeft",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat hallux valgus nooit een relatie heeft met de tweede teen",
+              "correct": false
+            },
+            {
+              "tekst": "Dit gebeurt nooit in de praktijk",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Omdat hallux valgus vaak de onderliggende oorzaak is, wordt deze meebehandeld voor een duurzaam resultaat.",
+          "feedback_fout": "Niet correct. Er is een functionele reden: de onderliggende oorzaak moet worden aangepakt.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat is een passende conservatieve maatregel bij MTP2-instabiliteit als oorzaak van de verworven crossover toe?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Stabiliserende taping van het MTP2-gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "Directe amputatie van de tweede teen",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie van de gehele voet in gips",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend pijnstillers zonder enige mechanische maatregel",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Stabiliserende taping is een passende conservatieve maatregel bij MTP2-instabiliteit.",
+          "feedback_fout": "Niet correct. Amputatie en volledige immobilisatie zijn niet passend als eerste-stap-behandeling.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

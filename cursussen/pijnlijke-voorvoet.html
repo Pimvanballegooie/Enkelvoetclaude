@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke voorvoet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke voorvoet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Voorvoet</span>
+      <h1 class="cursus-titel">Pijnlijke voorvoet</h1>
+      <p class="cursus-beschrijving">Metatarsalgie: multifactoriële etiologie, diagnostiek en gerichte behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-voorvoet-v1",
+  "titel": "Pijnlijke voorvoet",
+  "zone": "Voorvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Metatarsalgie als symptoomcomplex",
+          "tekst": "Metatarsalgie is een overkoepelende term voor pijn onder de metatarsaalkopjes, met een multifactoriële etiologie. Het is geen diagnose op zich, maar een symptoomcomplex dat nadere differentiatie vereist.",
+          "lijst": null
+        },
+        {
+          "kop": "Mogelijke onderliggende oorzaken",
+          "tekst": "Verschillende factoren kunnen bijdragen aan het ontstaan van metatarsalgie, wat de noodzaak van gerichte diagnostiek onderstreept.",
+          "lijst": [
+            "Biomechanische afwijkingen: verkorte m. gastrocnemius/soleus, pes cavus, atrofie van het plantaire vetkussen bij veroudering",
+            "Overdracht van belasting naar laterale stralen bij hallux valgus",
+            "Onderliggend Morton's neuroom",
+            "Synovitis of instabiliteit van een MTP-gewricht"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Is metatarsalgie een specifieke diagnose of een symptoomcomplex?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een symptoomcomplex dat nadere differentiatie naar de onderliggende oorzaak vereist",
+              "correct": true
+            },
+            {
+              "tekst": "Een specifieke, eenduidige diagnose met één vaste oorzaak",
+              "correct": false
+            },
+            {
+              "tekst": "Een aandoening die uitsluitend bij kinderen voorkomt",
+              "correct": false
+            },
+            {
+              "tekst": "Een virale infectie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Metatarsalgie is een overkoepelende term voor pijn onder de metatarsaalkopjes, met een multifactoriële achtergrond.",
+          "feedback_fout": "Niet correct. Het is juist geen eenduidige diagnose, maar vereist nadere differentiatie.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke leeftijdsgerelateerde factor kan bijdragen aan metatarsalgie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Atrofie van het plantaire vetkussen",
+              "correct": true
+            },
+            {
+              "tekst": "Toename van botdichtheid met de leeftijd",
+              "correct": false
+            },
+            {
+              "tekst": "Verbeterde propriocepsis op oudere leeftijd",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is nooit leeftijdsgerelateerd",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Atrofie van het plantaire vetkussen bij veroudering vermindert de demping onder de metatarsaalkopjes en kan bijdragen aan metatarsalgie.",
+          "feedback_fout": "Niet correct. Het is juist verminderde demping (vetkussenatrofie), niet toegenomen botdichtheid of propriocepsis.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Hoe kan hallux valgus bijdragen aan metatarsalgie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Door overdracht van belasting naar de laterale stralen van de voorvoet",
+              "correct": true
+            },
+            {
+              "tekst": "Hallux valgus heeft geen enkele relatie met metatarsalgie",
+              "correct": false
+            },
+            {
+              "tekst": "Door de belasting uitsluitend naar de hiel te verplaatsen",
+              "correct": false
+            },
+            {
+              "tekst": "Door de kniebelasting te verhogen, zonder effect op de voorvoet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De veranderde belastingsverdeling bij hallux valgus kan leiden tot overbelasting van de laterale metatarsaalkopjes.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een biomechanische relatie tussen hallux valgus en overbelasting van de voorvoet.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Systematische analyse",
+          "tekst": "Gezien de multifactoriële achtergrond vereist metatarsalgie een systematische analyse: beoordeling van voetstatiek, ganganalyse (indien beschikbaar), en gerichte uitsluiting van specifieke oorzaken zoals Morton's neuroom of MTP-synovitis.",
+          "lijst": null
+        },
+        {
+          "kop": "Aanvullend onderzoek",
+          "tekst": "Beoordeling van de lengte van de m. gastrocnemius/soleus (Silfverskiöld-test) en, indien geïndiceerd, beeldvorming (röntgen voor structurele afwijkingen, echografie/MRI voor weke-delen-oorzaken) completeren de diagnostiek.",
+          "lijst": [
+            "Beoordeling voetstatiek en ganganalyse",
+            "Uitsluiten Morton's neuroom en MTP-synovitis",
+            "Silfverskiöld-test: beoordeling gastrocnemius/soleus-lengte",
+            "Beeldvorming op indicatie (röntgen, echografie/MRI)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarom is een systematische analyse essentieel bij de diagnostiek van metatarsalgie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Vanwege de multifactoriële etiologie, waarbij verschillende onderliggende oorzaken moeten worden onderscheiden",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat metatarsalgie altijd één enkele, voorspelbare oorzaak heeft",
+              "correct": false
+            },
+            {
+              "tekst": "Systematische analyse is bij deze klacht niet nodig",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat beeldvorming altijd overbodig is bij metatarsalgie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De multifactoriële achtergrond maakt een systematische, gerichte analyse essentieel voor effectieve behandeling.",
+          "feedback_fout": "Niet correct. Metatarsalgie heeft juist een multifactoriële achtergrond die systematische analyse vereist.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke test wordt gebruikt om de lengte van de kuitmusculatuur te beoordelen bij metatarsalgie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De Silfverskiöld-test",
+              "correct": true
+            },
+            {
+              "tekst": "De Ottawa Ankle Rules",
+              "correct": false
+            },
+            {
+              "tekst": "De Lachman-test",
+              "correct": false
+            },
+            {
+              "tekst": "De Tinel-test",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De Silfverskiöld-test beoordeelt de dorsaalflexie (en daarmee indirect de kuitspierlengte) met gebogen en gestrekte knie.",
+          "feedback_fout": "Niet correct. De genoemde andere testen zijn bedoeld voor andere structuren/doeleinden.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Welke twee specifieke oorzaken moeten actief worden uitgesloten bij de diagnostiek van metatarsalgie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Morton's neuroom en MTP-synovitis/-instabiliteit",
+              "correct": true
+            },
+            {
+              "tekst": "Migraine en tinnitus",
+              "correct": false
+            },
+            {
+              "tekst": "Astma en eczeem",
+              "correct": false
+            },
+            {
+              "tekst": "Diabetes en hoge bloeddruk als enige mogelijke oorzaken",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Morton's neuroom en MTP-synovitis/-instabiliteit zijn specifieke, behandelbare oorzaken die actief uitgesloten of bevestigd moeten worden.",
+          "feedback_fout": "Niet correct. De genoemde alternatieven hebben geen directe relatie met metatarsalgie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies met adequate demping en brede neus, een metatarsale pelotte/steunzool ter herverdeling van druk, krachttraining van de intrinsieke voetmusculatuur en rekoefeningen voor de kuitmusculatuur.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een op maat gemaakte orthese of een corticosteroïdinjectie bij aangetoonde synovitis worden overwogen. Chirurgie is zelden geïndiceerd en sterk afhankelijk van de specifieke onderliggende oorzaak.",
+          "lijst": [
+            "Stap 2: op maat gemaakte orthese, corticosteroïdinjectie bij aangetoonde synovitis",
+            "Stap 3: chirurgie zelden, en uitsluitend gericht op de specifieke onderliggende oorzaak (bijv. metatarsale osteotomie)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij metatarsalgie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies met demping, een metatarsale pelotte en krachttraining van de voetmusculatuur",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische osteotomie",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de voorvoet",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Schoeiseladvies, drukverdeling en gerichte oefentherapie vormen de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie is zelden geïndiceerd en niet de eerste-keus-behandeling.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom is chirurgie bij metatarsalgie zelden de eerste overweging?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de behandeling sterk afhankelijk is van de specifieke, vaak conservatief behandelbare onderliggende oorzaak",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat chirurgie bij voetklachten in het algemeen verboden is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat metatarsalgie nooit chirurgisch te behandelen is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat er geen enkele chirurgische techniek voor bestaat",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Omdat de oorzaak vaak conservatief te behandelen is en chirurgie sterk situatie-afhankelijk is, wordt dit zelden als eerste stap ingezet.",
+          "feedback_fout": "Niet correct. Chirurgie is niet verboden, maar wordt terughoudend en gericht toegepast.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat is het doel van krachttraining van de intrinsieke voetmusculatuur bij de behandeling van metatarsalgie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Verbeteren van de drukverdeling en ondersteuning van de voorvoet tijdens belasting",
+              "correct": true
+            },
+            {
+              "tekst": "Het volledig laten verdwijnen van het plantaire vetkussen",
+              "correct": false
+            },
+            {
+              "tekst": "Het verhogen van de botdichtheid direct via spiertraining",
+              "correct": false
+            },
+            {
+              "tekst": "Het verminderen van de longcapaciteit",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Krachttraining van de intrinsieke voetmusculatuur draagt bij aan betere drukverdeling en ondersteuning van de voorvoet.",
+          "feedback_fout": "Niet correct. Het doel is functionele ondersteuning, niet de genoemde onjuiste effecten.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

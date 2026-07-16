@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Zenuwbeknelling voorvoet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule zenuwbeknelling voorvoet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Voorvoet</span>
+      <h1 class="cursus-titel">Zenuwbeknelling voorvoet</h1>
+      <p class="cursus-beschrijving">Morton's neuroom (interdigitaal neuroom): pathofysiologie, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "zenuwbeknelling-voorvoet-v1",
+  "titel": "Zenuwbeknelling voorvoet",
+  "zone": "Voorvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Morton's neuroom",
+          "tekst": "Morton's neuroom betreft een perineurale fibrose van een interdigitale zenuw, meestal gelokaliseerd in de derde interspace tussen het derde en vierde metatarsale. De aandoening ontstaat door chronische mechanische compressie van de zenuw tussen de metatarsaalkopjes tijdens de afzetfase.",
+          "lijst": null
+        },
+        {
+          "kop": "Bijdragende factoren",
+          "tekst": "Knellend schoeisel is een belangrijke uitlokkende factor, in combinatie met de anatomische kwetsbaarheid van de derde interspace.",
+          "lijst": [
+            "Chronische mechanische compressie tijdens de afzetfase van het lopen",
+            "Knellend schoeisel (smalle neus, hoge hak) als belangrijke uitlokkende factor",
+            "Derde interspace: anatomisch meest kwetsbare locatie"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is Morton's neuroom histopathologisch gezien?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Perineurale fibrose van een interdigitale zenuw",
+              "correct": true
+            },
+            {
+              "tekst": "Een kwaadaardige zenuwtumor",
+              "correct": false
+            },
+            {
+              "tekst": "Een botcyste",
+              "correct": false
+            },
+            {
+              "tekst": "Een virale infectie van de huid",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het betreft perineurale fibrose, geen kwaadaardige tumor, botafwijking of infectie.",
+          "feedback_fout": "Niet correct. Morton's neuroom is een benigne, fibrotische verandering van de zenuw, geen maligniteit.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "In welke interspace komt Morton's neuroom het meest frequent voor?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Tussen het derde en vierde metatarsale",
+              "correct": true
+            },
+            {
+              "tekst": "Tussen het eerste en tweede metatarsale",
+              "correct": false
+            },
+            {
+              "tekst": "Tussen het vierde en vijfde metatarsale",
+              "correct": false
+            },
+            {
+              "tekst": "Dit varieert willekeurig zonder voorkeurslocatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De derde interspace (tussen derde en vierde metatarsale) is de meest voorkomende locatie.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een voorkeurslocatie: de derde interspace.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Wat is het onderliggende mechanisme voor het ontstaan van Morton's neuroom?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Chronische mechanische compressie van de zenuw tussen de metatarsaalkopjes tijdens de afzetfase",
+              "correct": true
+            },
+            {
+              "tekst": "Een acute doorsnijding van de zenuw",
+              "correct": false
+            },
+            {
+              "tekst": "Een systemische auto-immuunreactie",
+              "correct": false
+            },
+            {
+              "tekst": "Een erfelijke zenuwaandoening zonder mechanische component",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chronische mechanische compressie tijdens de afzetfase is het kernmechanisme.",
+          "feedback_fout": "Niet correct. Het mechanisme is chronische compressie, geen acuut trauma of auto-immuunproces.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Patiënten rapporteren brandende pijn of tintelingen tussen de betrokken tenen, vaak met het gevoel van een 'prop' of 'kiezelsteentje' in de schoen, verergerend bij smalle schoenen of hoge hakken.",
+          "lijst": null
+        },
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Mulder's click (een palpabele/hoorbare click bij mediolaterale compressie van de voorvoet) en de metatarsale squeeze test zijn kenmerkende provocatietesten. Echografie is behulpzaam voor het bevestigen van de diagnose en het bepalen van de grootte van het neuroom.",
+          "lijst": [
+            "Mulder's click test: palpabele/hoorbare click bij mediolaterale compressie",
+            "Metatarsale squeeze test: reproductie van de klachten",
+            "Echografie: bevestiging diagnose en grootte-inschatting"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat is een kenmerkend symptoom van Morton's neuroom?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Brandende pijn of tintelingen tussen de tenen, met het gevoel van een prop in de schoen",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend pijn aan de hiel",
+              "correct": false
+            },
+            {
+              "tekst": "Zwelling van de gehele onderbeen",
+              "correct": false
+            },
+            {
+              "tekst": "Koorts en algehele malaise",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Brandende pijn/tintelingen tussen de tenen met het 'prop-gevoel' is klassiek voor Morton's neuroom.",
+          "feedback_fout": "Niet correct. Het klachtenpatroon is specifiek gelokaliseerd interdigitaal in de voorvoet.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Wat is de Mulder's click test?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Een palpabele/hoorbare click bij mediolaterale compressie van de voorvoet",
+              "correct": true
+            },
+            {
+              "tekst": "Een test voor kniestabiliteit",
+              "correct": false
+            },
+            {
+              "tekst": "Een röntgentechniek",
+              "correct": false
+            },
+            {
+              "tekst": "Een bloedtest",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Mulder's click is een klinische provocatietest met mediolaterale compressie van de voorvoet.",
+          "feedback_fout": "Niet correct. Het is een specifieke klinische test, geen beeldvormende of laboratoriumtechniek.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarvoor is echografie behulpzaam bij verdenking op Morton's neuroom?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Bevestiging van de diagnose en inschatting van de grootte van het neuroom",
+              "correct": true
+            },
+            {
+              "tekst": "Het meten van de botdichtheid",
+              "correct": false
+            },
+            {
+              "tekst": "Het beoordelen van de longfunctie",
+              "correct": false
+            },
+            {
+              "tekst": "Het bepalen van de bloedgroep",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Echografie bevestigt de diagnose en geeft inzicht in de grootte van het neuroom, relevant voor de behandelkeuze.",
+          "feedback_fout": "Niet correct. Echografie is specifiek gericht op de zenuw/weke-delen-beoordeling, niet de genoemde alternatieven.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies (brede neus, lage hak, vermijden van compressie van de voorvoet), een metatarsale pelotte/steunzool ter spreiding van de metatarsaalkopjes, en activiteitmodificatie.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een corticosteroïdinjectie (goede kortetermijneffectiviteit) of sclerotherapie (alcohol-injecties, in sommige centra toegepast) worden overwogen. Chirurgische excisie (neurectomie) is voorbehouden aan persisterende klachten en resulteert in permanent sensibiliteitsverlies interdigitaal.",
+          "lijst": [
+            "Stap 2: corticosteroïdinjectie, eventueel sclerotherapie",
+            "Stap 3: chirurgische excisie (neurectomie) bij persisterende klachten",
+            "Neurectomie geeft blijvend sensibiliteitsverlies in het betreffende interdigitale gebied"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij Morton's neuroom?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies (brede neus, lage hak) en een metatarsale pelotte",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische excisie",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de betrokken tenen",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Schoeiseladvies en drukverdeling via een pelotte vormen de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie en amputatie zijn niet de eerste-keus-behandeling.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wat is een belangrijk aandachtspunt om met de patiënt te bespreken vóór een chirurgische neurectomie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Dat de ingreep resulteert in permanent sensibiliteitsverlies in het betreffende interdigitale gebied",
+              "correct": true
+            },
+            {
+              "tekst": "Dat de ingreep de sensibiliteit altijd volledig herstelt",
+              "correct": false
+            },
+            {
+              "tekst": "Dat er geen enkel risico verbonden is aan de ingreep",
+              "correct": false
+            },
+            {
+              "tekst": "Dat dit de eerste-keus-behandeling is, vóór conservatieve zorg",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Patiënten moeten vooraf geïnformeerd worden over het permanente sensibiliteitsverlies na neurectomie.",
+          "feedback_fout": "Niet correct. De ingreep leidt juist tot blijvend verlies van gevoel in het behandelde gebied, geen herstel.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat is het doel van een metatarsale pelotte bij de behandeling van Morton's neuroom?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Het spreiden van de metatarsaalkopjes om compressie van de interdigitale zenuw te verminderen",
+              "correct": true
+            },
+            {
+              "tekst": "Het versterken van de kuitmusculatuur",
+              "correct": false
+            },
+            {
+              "tekst": "Het verstijven van het bovenste spronggewricht",
+              "correct": false
+            },
+            {
+              "tekst": "Het verlengen van de achillespees",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een metatarsale pelotte spreidt de metatarsaalkopjes en ontlast zo de interdigitale zenuw.",
+          "feedback_fout": "Niet correct. Het doel is specifiek gericht op drukontlasting van de interdigitale zenuw in de voorvoet.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

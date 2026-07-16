@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke bult onder nagel - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke bult onder nagel voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Voorvoet</span>
+      <h1 class="cursus-titel">Pijnlijke bult onder nagel</h1>
+      <p class="cursus-beschrijving">Subunguale exostose: differentiaaldiagnose, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-bult-onder-nagel-v1",
+  "titel": "Pijnlijke bult onder nagel",
+  "zone": "Voorvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Subunguale exostose",
+          "tekst": "Een subunguale exostose is een benigne osteochondrale uitgroei aan de dorsale of dorsomediale zijde van de distale falanx, meestal van de hallux, met een karakteristieke locatie onder of naast het nagelbed.",
+          "lijst": null
+        },
+        {
+          "kop": "Voorkomen en ontstaan",
+          "tekst": "De aandoening komt relatief vaak voor bij jonge, actieve patiënten en wordt vaak in verband gebracht met (herhaald) microtrauma van de teen.",
+          "lijst": [
+            "Vaker bij jonge, actieve patiënten",
+            "Geassocieerd met (herhaald) microtrauma van de teen",
+            "Benigne, langzaam progressieve botgroei"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is een subunguale exostose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een benigne osteochondrale uitgroei onder of naast het nagelbed",
+              "correct": true
+            },
+            {
+              "tekst": "Een kwaadaardige huidtumor",
+              "correct": false
+            },
+            {
+              "tekst": "Een schimmelinfectie van de nagel",
+              "correct": false
+            },
+            {
+              "tekst": "Een bloeduitstorting onder de nagel",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het betreft een benigne botgroei, geen maligniteit, infectie of bloeduitstorting.",
+          "feedback_fout": "Niet correct. Een subunguale exostose is specifiek een goedaardige benige uitgroei, geen infectie of tumor.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Bij welke patiëntengroep komt een subunguale exostose relatief vaker voor?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Jonge, actieve patiënten",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend ouderen boven de 80 jaar",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend zuigelingen",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is nooit leeftijdsafhankelijk",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De aandoening komt relatief vaker voor bij jonge, actieve patiënten, vaak gerelateerd aan microtrauma.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een leeftijdsgerelateerd patroon, met name bij jongere, actieve mensen.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarmee wordt het ontstaan van een subunguale exostose vaak geassocieerd?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Herhaald microtrauma van de teen",
+              "correct": true
+            },
+            {
+              "tekst": "Een chronisch tekort aan vitamine C",
+              "correct": false
+            },
+            {
+              "tekst": "Een allergische reactie op nagellak",
+              "correct": false
+            },
+            {
+              "tekst": "Een systemische schimmelinfectie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Herhaald microtrauma wordt beschouwd als een belangrijke bijdragende factor bij het ontstaan.",
+          "feedback_fout": "Niet correct. Het mechanisme is mechanisch (microtrauma), niet gerelateerd aan vitaminetekort, allergie of infectie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Differentiaaldiagnose",
+          "tekst": "Belangrijk is onderscheid met een ingegroeide teennagel, een subunguale wrat (verruca), en — bij atypische presentatie — een subunguaal melanoom. Bij pigmentatie, snelle groei of atypische kenmerken is verwijzing voor nadere diagnostiek geïndiceerd.",
+          "lijst": null
+        },
+        {
+          "kop": "Beeldvorming",
+          "tekst": "Een röntgenfoto bevestigt de diagnose door de benige uitgroei direct zichtbaar te maken en helpt onderscheid te maken met de genoemde differentiaaldiagnoses, die geen benige component hebben.",
+          "lijst": [
+            "Differentiaaldiagnose: ingegroeide nagel, subunguale wrat, subunguaal melanoom",
+            "Röntgenfoto: directe visualisatie van de benige uitgroei",
+            "Alarmsymptomen (pigmentatie, snelle groei): verwijzing voor nadere diagnostiek"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Welke aandoening moet met name worden uitgesloten bij atypische presentatie (bijv. pigmentatie) van een vermeende subunguale exostose?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Subunguaal melanoom",
+              "correct": true
+            },
+            {
+              "tekst": "Een gewone verkoudheid",
+              "correct": false
+            },
+            {
+              "tekst": "Diabetes mellitus",
+              "correct": false
+            },
+            {
+              "tekst": "Migraine",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij atypische kenmerken zoals pigmentatie moet een subunguaal melanoom worden uitgesloten via verwijzing voor nadere diagnostiek.",
+          "feedback_fout": "Niet correct. De relevante, potentieel ernstige differentiaaldiagnose is specifiek het subunguaal melanoom.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waarmee wordt een subunguale exostose vaak verward?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een ingegroeide teennagel of een subunguale wrat",
+              "correct": true
+            },
+            {
+              "tekst": "Een gebroken arm",
+              "correct": false
+            },
+            {
+              "tekst": "Longontsteking",
+              "correct": false
+            },
+            {
+              "tekst": "Een oorontsteking",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Vanwege de locatie en presentatie wordt een subunguale exostose vaak verward met een ingegroeide nagel of wrat.",
+          "feedback_fout": "Niet correct. De genoemde alternatieven liggen anatomisch elders en worden niet met deze aandoening verward.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Hoe bevestigt een röntgenfoto de diagnose subunguale exostose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Door de benige uitgroei direct zichtbaar te maken",
+              "correct": true
+            },
+            {
+              "tekst": "Röntgen kan deze aandoening nooit aantonen",
+              "correct": false
+            },
+            {
+              "tekst": "Door uitsluitend wekedelenzwelling te tonen",
+              "correct": false
+            },
+            {
+              "tekst": "Door de bloedsuikerspiegel te meten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Omdat het een benige afwijking betreft, is deze goed zichtbaar op een röntgenfoto.",
+          "feedback_fout": "Niet correct. Röntgen is juist zeer geschikt om de benige component direct aan te tonen.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies (ruime teenbox, vermijden van druk op de distale falanx), beschermende padding, en activiteitmodificatie, met name bij jonge, actieve patiënten waarbij de aandoening vaak trauma-gerelateerd is ontstaan.",
+          "lijst": null
+        },
+        {
+          "kop": "Diagnostische verificatie en operatieve overweging",
+          "tekst": "Bij diagnostische onzekerheid of atypische presentatie is verwijzing voor nadere diagnostiek (en eventueel biopsie) aangewezen. Chirurgische excisie is de definitieve behandeling bij persisterende klachten of functiebeperking.",
+          "lijst": [
+            "Verwijzing bij diagnostische onzekerheid of atypische presentatie",
+            "Stap 3: chirurgische excisie bij persisterende klachten/functiebeperking",
+            "Zorgvuldig behoud van de nagelmatrix tijdens de ingreep om nagelgroeistoornissen te voorkomen"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij een subunguale exostose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies (ruime teenbox) en beschermende padding",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische excisie zonder verdere diagnostiek",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de teen",
+              "correct": false
+            },
+            {
+              "tekst": "Chemotherapie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Schoeiseladvies en drukontlasting vormen de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie zonder diagnostiek, amputatie en chemotherapie zijn niet passend bij deze benigne aandoening.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom is zorgvuldigheid ten aanzien van de nagelmatrix belangrijk bij chirurgische excisie van een subunguale exostose?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om nagelgroeistoornissen na de ingreep te voorkomen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat de nagelmatrix geen enkele functie heeft",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit de enige manier is om bloeding te voorkomen",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is niet relevant voor de ingreep",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Beschadiging van de nagelmatrix tijdens de ingreep kan leiden tot blijvende nagelgroeistoornissen, vandaar de zorgvuldigheid.",
+          "feedback_fout": "Niet correct. De nagelmatrix is functioneel belangrijk voor normale nagelgroei en verdient bescherming tijdens de ingreep.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wanneer wordt chirurgische excisie van een subunguale exostose overwogen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Bij persisterende klachten of functiebeperking ondanks conservatieve maatregelen",
+              "correct": true
+            },
+            {
+              "tekst": "Bij elke toevallig gevonden, asymptomatische exostose",
+              "correct": false
+            },
+            {
+              "tekst": "Als eerste behandeloptie bij iedereen",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, chirurgie is bij deze aandoening niet mogelijk",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie is de definitieve behandeling bij persisterende, functiebeperkende klachten na conservatieve maatregelen.",
+          "feedback_fout": "Niet correct. Een asymptomatische bevinding vereist geen chirurgische behandeling.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

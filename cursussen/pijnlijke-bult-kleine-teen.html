@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke bult kleine teen - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke bult kleine teen voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Voorvoet</span>
+      <h1 class="cursus-titel">Pijnlijke bult kleine teen</h1>
+      <p class="cursus-beschrijving">Bunionette (Tailor's bunion): classificatie, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-bult-kleine-teen-v1",
+  "titel": "Pijnlijke bult kleine teen",
+  "zone": "Voorvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Bunionette",
+          "tekst": "Een bunionette (Tailor's bunion) betreft een laterale prominentie van de vijfde metatarsaalkop, vaak samenhangend met een vergrote intermetatarsale hoek (4-5) en/of een lateraal gebogen vijfde metatarsale. Mechanische irritatie door schoeisel leidt tot bursitis en callusvorming ter plaatse.",
+          "lijst": null
+        },
+        {
+          "kop": "Classificatie",
+          "tekst": "De aandoening wordt ingedeeld naar het onderliggende structurele type, wat relevant is voor de eventuele chirurgische techniekkeuze.",
+          "lijst": [
+            "Type 1: vergrote metatarsaalkop zonder afwijkende hoekstand",
+            "Type 2: laterale bowing van de vijfde metatarsale schacht",
+            "Type 3: vergrote 4-5 intermetatarsale hoek"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is een bunionette?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een laterale prominentie van de vijfde metatarsaalkop",
+              "correct": true
+            },
+            {
+              "tekst": "Een mediale prominentie van de eerste metatarsaalkop",
+              "correct": false
+            },
+            {
+              "tekst": "Een fractuur van de vijfde teen",
+              "correct": false
+            },
+            {
+              "tekst": "Een infectie van de nagelriem",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een bunionette is specifiek een laterale prominentie ter hoogte van de vijfde metatarsaalkop.",
+          "feedback_fout": "Niet correct. Een mediale prominentie bij de eerste metatarsaalkop beschrijft juist hallux valgus, niet een bunionette.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat veroorzaakt de klachten bij een bunionette doorgaans?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Mechanische irritatie door schoeisel, leidend tot bursitis en callusvorming",
+              "correct": true
+            },
+            {
+              "tekst": "Een systemische virusinfectie",
+              "correct": false
+            },
+            {
+              "tekst": "Een auto-immuunreactie zonder mechanische component",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend erfelijke factoren zonder enige mechanische bijdrage",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Mechanische irritatie door schoeisel is de belangrijkste oorzaak van de klachten.",
+          "feedback_fout": "Niet correct. Het mechanisme is mechanisch (drukirritatie), niet infectieus of auto-immuun.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Welk type bunionette wordt gekenmerkt door laterale bowing van de vijfde metatarsale schacht?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Type 2",
+              "correct": true
+            },
+            {
+              "tekst": "Type 1",
+              "correct": false
+            },
+            {
+              "tekst": "Type 3",
+              "correct": false
+            },
+            {
+              "tekst": "Dit wordt niet meegenomen in de classificatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Type 2 wordt specifiek gekenmerkt door laterale bowing van de schacht van het vijfde metatarsale.",
+          "feedback_fout": "Niet correct. Type 1 betreft een vergrote metatarsaalkop zonder hoekafwijking; type 3 betreft de intermetatarsale hoek.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Palpatie van de laterale prominentie, beoordeling van eventuele bursitis (roodheid, zwelling) en callusvorming, en beoordeling van de algehele voorvoetbreedte en het schoeisel.",
+          "lijst": null
+        },
+        {
+          "kop": "Beeldvorming",
+          "tekst": "Belaste röntgenopnamen (staand) zijn nodig om het type bunionette te bepalen via meting van de intermetatarsale hoek en beoordeling van de vorm van de vijfde metatarsale, essentieel bij een eventuele chirurgische indicatie.",
+          "lijst": [
+            "Palpatie van de laterale prominentie en beoordeling van bursitis/callus",
+            "Belaste röntgenopnamen: bepaling van het type (1, 2 of 3)",
+            "Meting van de 4-5 intermetatarsale hoek"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarom zijn belaste röntgenopnamen relevant bij een bunionette?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om het type bunionette te bepalen, wat relevant is voor een eventuele chirurgische techniekkeuze",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat liggende opnamen technisch onmogelijk zijn",
+              "correct": false
+            },
+            {
+              "tekst": "Dit heeft geen enkel diagnostisch voordeel",
+              "correct": false
+            },
+            {
+              "tekst": "Om uitsluitend de schoenmaat te bepalen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Belaste opnamen tonen de functionele hoekstand, essentieel voor typering en behandelplanning.",
+          "feedback_fout": "Niet correct. Het voordeel zit in het objectiveren van type en ernst van de deformiteit.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke klinische bevindingen passen bij een geïrriteerde bunionette?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Roodheid, zwelling (bursitis) en callusvorming ter plaatse van de prominentie",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend koorts zonder enige lokale afwijking",
+              "correct": false
+            },
+            {
+              "tekst": "Een volledig pijnvrije, onopvallende voet",
+              "correct": false
+            },
+            {
+              "tekst": "Gehoorverlies",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bursitis en callusvorming door mechanische irritatie zijn kenmerkende bevindingen.",
+          "feedback_fout": "Niet correct. De bevindingen zijn lokaal ter plaatse van de prominentie, niet systemisch of elders in het lichaam.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Wat wordt gemeten om de ernst van een type 3 bunionette te objectiveren?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De 4-5 intermetatarsale hoek",
+              "correct": true
+            },
+            {
+              "tekst": "De calcaneale inclinatiehoek",
+              "correct": false
+            },
+            {
+              "tekst": "De Q-hoek van de knie",
+              "correct": false
+            },
+            {
+              "tekst": "De schouderhoek",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De 4-5 intermetatarsale hoek is specifiek relevant bij het beoordelen van type 3 bunionette.",
+          "feedback_fout": "Niet correct. De genoemde andere hoeken zijn niet relevant voor deze aandoening.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies (brede last, zacht bovenmateriaal), padding en drukontlastende orthese lateraal, en activiteitmodificatie.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een op maat gemaakte zool met laterale uitsparing of een corticosteroïdinjectie bij bursitis worden overwogen. Bij persisterende, functiebeperkende klachten kan chirurgische correctie (exostectomie, eventueel gecombineerd met metatarsale osteotomie afhankelijk van het type) worden overwogen.",
+          "lijst": [
+            "Stap 2: op maat gemaakte zool met laterale uitsparing, corticosteroïdinjectie bij bursitis",
+            "Stap 3: exostectomie, eventueel met metatarsale osteotomie afhankelijk van het deformiteitstype"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij een bunionette?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies (brede last) en drukontlastende padding lateraal",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische exostectomie",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de vijfde teen",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Schoeiseladvies en drukontlasting vormen de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie en amputatie zijn niet de eerste-keus-behandeling.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom wordt de chirurgische techniek bij een bunionette mede bepaald door het type volgens de classificatie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat verschillende onderliggende structurele afwijkingen (kopgrootte, bowing, hoekstand) een andere correctietechniek vereisen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat het type geen enkele invloed heeft op de chirurgische keuze",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat alle typen exact dezelfde operatie ondergaan",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat het type alleen de kleur van het litteken bepaalt",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De onderliggende structurele afwijking bepaalt welke correctietechniek (bijv. exostectomie alleen versus gecombineerd met osteotomie) het meest passend is.",
+          "feedback_fout": "Niet correct. Het type is wel degelijk bepalend voor de chirurgische strategie.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat houdt een exostectomie bij een bunionette in?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Het chirurgisch verwijderen van de laterale benige prominentie",
+              "correct": true
+            },
+            {
+              "tekst": "Het plaatsen van een gewrichtsprothese",
+              "correct": false
+            },
+            {
+              "tekst": "Het verlengen van de achillespees",
+              "correct": false
+            },
+            {
+              "tekst": "Het amputeren van de gehele voorvoet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Exostectomie betreft het verwijderen van de benige prominentie zelf.",
+          "feedback_fout": "Niet correct. Het is een gerichte botresectie, geen prothese of amputatie.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

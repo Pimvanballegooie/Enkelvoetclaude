@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Scheve grote teen - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule scheve grote teen voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Voorvoet</span>
+      <h1 class="cursus-titel">Scheve grote teen</h1>
+      <p class="cursus-beschrijving">Hallux valgus: etiologie, diagnostiek en stapsgewijze behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "scheve-grote-teen-v1",
+  "titel": "Scheve grote teen",
+  "zone": "Voorvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Hallux valgus",
+          "tekst": "Hallux valgus betreft een laterale deviatie van de hallux ter hoogte van het eerste metatarsofalangeale (MTP1-)gewricht, met een mediale prominentie (bunion) als gevolg van subluxatie van het gewricht. Vaak gaat dit gepaard met pronatie van de hallux en secundaire klachten aan de kleine tenen.",
+          "lijst": null
+        },
+        {
+          "kop": "Etiologie",
+          "tekst": "De aandoening is multifactorieel van oorsprong, met zowel intrinsieke als extrinsieke bijdragende factoren.",
+          "lijst": [
+            "Genetische predispositie en ligamentaire laxiteit",
+            "Schoeisel met smalle neus en verhoogde hak",
+            "Pes planus en verminderde stabiliteit van de mediale voetboog"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is het kernkenmerk van hallux valgus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Laterale deviatie van de hallux ter hoogte van het MTP1-gewricht met mediale prominentie",
+              "correct": true
+            },
+            {
+              "tekst": "Een volledige verstijving van het MTP1-gewricht",
+              "correct": false
+            },
+            {
+              "tekst": "Een breuk van de hallux",
+              "correct": false
+            },
+            {
+              "tekst": "Een infectie van de nagelriem",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Hallux valgus wordt gekenmerkt door laterale deviatie van de grote teen met een mediale bunion.",
+          "feedback_fout": "Niet correct. Het gaat om een standafwijking, geen verstijving, breuk of infectie.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke schoeisel-gerelateerde factor draagt bij aan het ontstaan van hallux valgus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een smalle schoenneus in combinatie met een verhoogde hak",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend platte, brede sportschoenen",
+              "correct": false
+            },
+            {
+              "tekst": "Blootvoets lopen op zacht zand",
+              "correct": false
+            },
+            {
+              "tekst": "Sokken van katoen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Smalle schoenneuzen en verhoogde hakken zijn bekende bijdragende factoren.",
+          "feedback_fout": "Niet correct. Juist brede, platte schoenen worden geadviseerd; smalle/hoge schoenen dragen bij aan het ontstaan.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Welke secundaire klachten kunnen ontstaan door de progressie van hallux valgus?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Klachten aan de kleine tenen, door verdringing en veranderde belastingsverdeling",
+              "correct": true
+            },
+            {
+              "tekst": "Klachten aan de knie als enige mogelijke secundaire klacht",
+              "correct": false
+            },
+            {
+              "tekst": "Er zijn nooit secundaire klachten mogelijk",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend gehoorproblemen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Door verdringing en veranderde krachtsverdeling kunnen secundaire klachten aan de kleine tenen ontstaan, zoals hamertenen of metatarsalgie.",
+          "feedback_fout": "Niet correct. De secundaire klachten betreffen typisch de kleine tenen van dezelfde voet.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Beoordeling van de mate van deviatie, pronatie van de hallux, flexibiliteit van de deformiteit, en aanwezigheid van drukplekken/eelt. Ook wordt gescreend op secundaire klachten aan de kleine tenen.",
+          "lijst": null
+        },
+        {
+          "kop": "Beeldvorming",
+          "tekst": "Belaste röntgenopnamen (staand) zijn de standaard om de ernst van de deformiteit te objectiveren via specifieke hoekmetingen, essentieel voor behandelplanning bij een eventuele operatie-indicatie.",
+          "lijst": [
+            "Hallux valgus-hoek en intermetatarsale hoek: gemeten op belaste röntgenfoto's",
+            "Beoordeling gewrichtscongruentie van het MTP1-gewricht",
+            "Screening op secundaire klachten aan de kleine tenen"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarom worden röntgenopnamen bij hallux valgus bij voorkeur belast (staand) gemaakt?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om de werkelijke, functionele hoekmeting van de deformiteit onder belasting te objectiveren",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat liggende opnamen technisch onmogelijk zijn",
+              "correct": false
+            },
+            {
+              "tekst": "Dit heeft geen enkel diagnostisch voordeel",
+              "correct": false
+            },
+            {
+              "tekst": "Om stralingsbelasting te verminderen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Belaste opnamen tonen de functionele, werkelijke ernst van de deformiteit.",
+          "feedback_fout": "Niet correct. Het voordeel zit in het objectiveren van de functionele situatie, niet in techniek of straling.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke hoekmeting wordt gebruikt om de ernst van hallux valgus te objectiveren?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De hallux valgus-hoek en de intermetatarsale hoek",
+              "correct": true
+            },
+            {
+              "tekst": "De Cobb-hoek",
+              "correct": false
+            },
+            {
+              "tekst": "De Q-hoek van de knie",
+              "correct": false
+            },
+            {
+              "tekst": "De calcaneale inclinatiehoek als enige maat",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De hallux valgus-hoek en intermetatarsale hoek zijn de standaardmaten voor ernstbeoordeling.",
+          "feedback_fout": "Niet correct. De genoemde andere hoeken worden gebruikt voor andere aandoeningen (bijv. scoliose, patellofemorale problematiek).",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarom is beoordeling van de flexibiliteit van de deformiteit relevant bij hallux valgus?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat dit relevant is voor zowel de conservatieve behandelkeuze als een eventuele chirurgische strategie",
+              "correct": true
+            },
+            {
+              "tekst": "Flexibiliteit heeft geen enkele klinische relevantie bij deze aandoening",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit de enige factor is die de diagnose bepaalt",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat flexibiliteit altijd hetzelfde is bij iedere patiënt",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Flexibiliteit van de deformiteit beïnvloedt zowel conservatieve opties als de chirurgische techniekkeuze.",
+          "feedback_fout": "Niet correct. Flexibiliteit is wel degelijk relevant voor de behandelstrategie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies (brede neus, lage hak, flexibel bovenmateriaal), training van de intrinsieke voetmusculatuur, en teenspreiders/siliconen orthesen ter drukontlasting. Een nachtelijke spalk heeft beperkte evidentie voor structurele correctie, maar kan symptomatisch verlichten.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij progressieve deformiteit met functiebeperking of persisterende pijn ondanks conservatief beleid komt chirurgie in aanmerking, met keuze van techniek afhankelijk van ernst en gewrichtscongruentie.",
+          "lijst": [
+            "Stap 2: op maat gemaakte orthese, corticosteroïdinjectie bij bursitis van de mediale eminentie",
+            "Stap 3: osteotomie (bijv. Chevron/Scarf) bij matige deformiteit, artrodese bij ernstige deformiteit"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij hallux valgus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies (brede neus, lage hak) en training van de intrinsieke voetmusculatuur",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische osteotomie",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de teen",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Schoeiseladvies en gerichte oefentherapie vormen de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie en amputatie zijn niet de eerste-keus-behandeling.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Corrigeert conservatieve behandeling (zoals een nachtspalk) de structurele standafwijking bij hallux valgus?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Nee, conservatieve behandeling corrigeert de stand niet structureel, maar kan klachten en progressiesnelheid beperken",
+              "correct": true
+            },
+            {
+              "tekst": "Ja, een nachtspalk corrigeert de stand altijd volledig en blijvend",
+              "correct": false
+            },
+            {
+              "tekst": "Conservatieve behandeling heeft nooit enig effect",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is niet relevant voor de behandelkeuze",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Conservatieve maatregelen bieden vooral symptomatische verlichting en kunnen progressie vertragen, maar corrigeren de deformiteit niet structureel.",
+          "feedback_fout": "Niet correct. Een nachtspalk heeft beperkte evidentie voor structurele correctie.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarop is de chirurgische indicatiestelling bij hallux valgus primair gebaseerd?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Functiebeperking en pijn, niet uitsluitend cosmetiek",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend de wens tot een cosmetisch mooiere voet",
+              "correct": false
+            },
+            {
+              "tekst": "De leeftijd van de patiënt als enige factor",
+              "correct": false
+            },
+            {
+              "tekst": "Het schoenmerk dat de patiënt draagt",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie wordt geïndiceerd op basis van functiebeperking en pijn, niet op cosmetische gronden alleen.",
+          "feedback_fout": "Niet correct. Cosmetiek alleen is geen voldoende indicatie voor een operatie.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

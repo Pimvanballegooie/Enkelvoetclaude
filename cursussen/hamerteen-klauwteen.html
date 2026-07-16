@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Hamerteen en klauwteen - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule hamerteen en klauwteen voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Voorvoet</span>
+      <h1 class="cursus-titel">Hamerteen en klauwteen</h1>
+      <p class="cursus-beschrijving">Teendeformiteiten: etiologie, differentiatie flexibel/rigide en stapsgewijze behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "hamerteen-klauwteen-v1",
+  "titel": "Hamerteen en klauwteen",
+  "zone": "Voorvoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Hamerteen versus klauwteen",
+          "tekst": "Een hamerteen betreft een flexiecontractuur van het proximale interfalangeale (PIP-)gewricht. Een klauwteen betreft flexiecontracturen van zowel het PIP- als het distale interfalangeale (DIP-)gewricht, vaak gecombineerd met hyperextensie in het metatarsofalangeale (MTP-)gewricht.",
+          "lijst": null
+        },
+        {
+          "kop": "Etiologie",
+          "tekst": "Beide deformiteiten ontstaan doorgaans door disbalans tussen de intrinsieke en extrinsieke teenmusculatuur, met verschillende mogelijke onderliggende oorzaken.",
+          "lijst": [
+            "Chronisch te krap schoeisel (extrinsieke factor)",
+            "Neurologische aandoeningen (bijv. ziekte van Charcot-Marie-Tooth)",
+            "Reumatoïde artritis en andere inflammatoire gewrichtsaandoeningen",
+            "Secundair aan hallux valgus (verdringing van de tweede teen)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is het verschil tussen een hamerteen en een klauwteen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een hamerteen betreft alleen het PIP-gewricht, een klauwteen zowel PIP als DIP, vaak met MTP-hyperextensie",
+              "correct": true
+            },
+            {
+              "tekst": "Er is geen enkel verschil tussen beide termen",
+              "correct": false
+            },
+            {
+              "tekst": "Een klauwteen betreft uitsluitend de grote teen",
+              "correct": false
+            },
+            {
+              "tekst": "Een hamerteen is altijd ernstiger dan een klauwteen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het onderscheid zit in het aantal betrokken gewrichten en de aanwezigheid van MTP-hyperextensie bij een klauwteen.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een anatomisch onderscheid tussen beide vormen.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat is een belangrijke onderliggende oorzaak van teendeformiteiten zoals hamer- of klauwteen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Disbalans tussen intrinsieke en extrinsieke teenmusculatuur",
+              "correct": true
+            },
+            {
+              "tekst": "Een virale infectie van de teen",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend genetische factoren zonder enige mechanische bijdrage",
+              "correct": false
+            },
+            {
+              "tekst": "Een allergische reactie op nagellak",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Disbalans tussen de teenmusculatuur is een centrale factor in het ontstaan van deze deformiteiten.",
+          "feedback_fout": "Niet correct. De genoemde alternatieven zijn geen erkende oorzaken van deze deformiteiten.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Hoe kan hallux valgus bijdragen aan het ontstaan van een klauwteen van de tweede teen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Door verdringing van de tweede teen door de afwijkende stand van de grote teen",
+              "correct": true
+            },
+            {
+              "tekst": "Hallux valgus heeft geen enkele relatie met de andere tenen",
+              "correct": false
+            },
+            {
+              "tekst": "Doordat hallux valgus de tweede teen altijd verlengt",
+              "correct": false
+            },
+            {
+              "tekst": "Doordat hallux valgus uitsluitend de vijfde teen beïnvloedt",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De afwijkende stand bij hallux valgus kan de tweede teen verdringen en zo bijdragen aan secundaire teendeformiteiten.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een biomechanische relatie tussen hallux valgus en klachten aan de tweede teen.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Flexibel versus rigide",
+          "tekst": "Klinisch onderzoek moet onderscheid maken tussen een flexibele deformiteit (nog passief te corrigeren) en een rigide deformiteit (niet meer passief corrigeerbaar), aangezien dit essentieel is voor de prognose en behandelkeuze.",
+          "lijst": null
+        },
+        {
+          "kop": "Bijkomende bevindingen",
+          "tekst": "Beoordeling van drukplekken/eelt op de dorsale zijde van het PIP-gewricht (door wrijving met schoeisel) en van de onderliggende oorzaak (bijvoorbeeld tekenen van hallux valgus of een neurologische aandoening) completeert het onderzoek.",
+          "lijst": [
+            "Passieve corrigeerbaarheid testen: flexibel versus rigide",
+            "Drukplekken/eelt dorsaal op het PIP-gewricht",
+            "Screening op onderliggende oorzaak (hallux valgus, neurologische aandoening, reuma)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarom is het onderscheid tussen een flexibele en een rigide teendeformiteit klinisch essentieel?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat dit de prognose en behandelkeuze (conservatief versus chirurgisch) bepaalt",
+              "correct": true
+            },
+            {
+              "tekst": "Dit onderscheid heeft geen enkele klinische relevantie",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat een rigide deformiteit altijd vanzelf overgaat",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat flexibiliteit alleen relevant is voor de schoenmaat",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het onderscheid bepaalt in belangrijke mate de te verwachten effectiviteit van conservatieve behandeling versus de noodzaak voor chirurgie.",
+          "feedback_fout": "Niet correct. Het onderscheid is juist zeer relevant voor de behandelstrategie.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waar ontstaan drukplekken of eelt typisch bij een hamerteen door wrijving met schoeisel?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Dorsaal op het PIP-gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend onder de hiel",
+              "correct": false
+            },
+            {
+              "tekst": "Aan de binnenkant van de enkel",
+              "correct": false
+            },
+            {
+              "tekst": "Op de rug",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Door de gebogen stand van het PIP-gewricht ontstaat wrijving met de bovenkant van de schoen, wat leidt tot dorsale drukplekken.",
+          "feedback_fout": "Niet correct. De typische locatie is dorsaal op het PIP-gewricht van de aangedane teen.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarom is screening op een onderliggende oorzaak (bijv. reuma of een neurologische aandoening) relevant bij teendeformiteiten?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de behandeling van de onderliggende oorzaak mede bepalend kan zijn voor het succes van de teenbehandeling",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat de onderliggende oorzaak nooit relevant is voor de voetklacht",
+              "correct": false
+            },
+            {
+              "tekst": "Om puur administratieve redenen",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit de enige manier is om schoenmaat te bepalen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een onbehandelde onderliggende oorzaak kan de teendeformiteit doen voortbestaan of verergeren, ondanks lokale behandeling.",
+          "feedback_fout": "Niet correct. De onderliggende oorzaak is wel degelijk relevant voor een succesvolle, duurzame behandeling.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies (ruime teenbox, lage hak), siliconen orthesen of teenpleisters ter drukontlasting, en training van de intrinsieke voetmusculatuur — met de beste resultaten bij nog flexibele deformiteiten.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een op maat gemaakte teenspalk/-corrector worden ingezet, of een corticosteroïdinjectie bij MTP-synovitis. Bij een rigide, pijnlijke deformiteit die niet reageert op conservatieve behandeling zijn chirurgische opties onder andere PIP-artroplastiek of -artrodese.",
+          "lijst": [
+            "Stap 2: op maat gemaakte teenspalk/-corrector, corticosteroïdinjectie bij synovitis",
+            "Stap 3: PIP-artroplastiek/-artrodese, extensor-tenotomie of MTP-release bij rigide deformiteit"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij een flexibele hamerteen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies, siliconen orthesen/teenpleisters en training van de intrinsieke voetmusculatuur",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische artrodese",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de teen",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie van de gehele voet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij een nog flexibele deformiteit start de behandeling conservatief met drukontlasting en gerichte oefentherapie.",
+          "feedback_fout": "Niet correct. Chirurgie en amputatie zijn niet de eerste-keus-behandeling bij een flexibele deformiteit.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wanneer wordt chirurgie (bijvoorbeeld PIP-artroplastiek of -artrodese) overwogen bij een teendeformiteit?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij een rigide, pijnlijke deformiteit die niet reageert op conservatieve behandeling",
+              "correct": true
+            },
+            {
+              "tekst": "Bij elke lichte, flexibele deformiteit zonder klachten",
+              "correct": false
+            },
+            {
+              "tekst": "Als eerste behandeloptie, vóór conservatieve zorg",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit bij teendeformiteiten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie is voorbehouden aan rigide, pijnlijke deformiteiten die niet reageren op conservatieve zorg.",
+          "feedback_fout": "Niet correct. Een lichte, flexibele, asymptomatische deformiteit vereist geen chirurgie.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom heeft conservatieve behandeling de beste resultaten bij nog flexibele teendeformiteiten?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat een flexibele deformiteit nog passief te corrigeren is, waardoor gerichte therapie effectiever kan aangrijpen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat flexibiliteit geen enkele invloed heeft op het behandelresultaat",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat rigide deformiteiten altijd beter reageren op conservatieve zorg",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is uitsluitend toeval",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij een nog corrigeerbare (flexibele) deformiteit kan gerichte, conservatieve behandeling effectiever aangrijpen dan bij een reeds vastgelegde, rigide deformiteit.",
+          "feedback_fout": "Niet correct. Juist de flexibiliteit maakt conservatieve behandeling kansrijker.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>
