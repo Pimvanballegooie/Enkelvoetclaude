@@ -174,6 +174,25 @@
     .cursus-icoon.behaald { background: var(--green); color: white; }
     .cursus-icoon.niet-behaald { background: var(--red); color: white; }
     .cursus-icoon.beschikbaar { background: var(--teal-light); color: var(--teal); }
+
+    /* DOMEINTEGELS */
+    .domein-tegel { border-radius: 12px; border: 2px solid var(--grey-border); background: var(--white); margin-bottom: 10px; overflow: hidden; }
+    .domein-tegel.behaald { border-color: var(--green); }
+    .domein-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px 20px; cursor: pointer; }
+    .domein-header:hover { background: var(--grey-bg); }
+    .domein-tegel.behaald .domein-header:hover { background: var(--green-light); }
+    .domein-header-links { display: flex; align-items: center; gap: 14px; }
+    .domein-icoon-badge { width: 40px; height: 40px; border-radius: 50%; background: var(--teal-light); color: var(--teal); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.05rem; flex-shrink: 0; }
+    .domein-tegel.behaald .domein-icoon-badge { background: var(--green); color: white; }
+    .domein-naam { font-size: 0.98rem; font-weight: 700; color: var(--navy); }
+    .domein-tegel.behaald .domein-naam { color: var(--green); }
+    .domein-progress { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+    .domein-chevron { font-size: 0.9rem; color: var(--text-muted); transition: transform 0.2s; flex-shrink: 0; }
+    .domein-tegel.open .domein-chevron { transform: rotate(90deg); }
+    .domein-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .domein-tegel.open .domein-body { max-height: 3000px; }
+    .domein-body-inner { padding: 4px 16px 16px; }
+    .domein-body-inner .cursus-tegel:last-child { margin-bottom: 0; }
     .cursus-icoon.binnenkort { background: var(--grey-bg); color: var(--text-muted); }
 
     .spec-banner { background: var(--gold-light); border: 1px solid rgba(201,148,10,0.3); border-radius: 12px; padding: 16px 20px; margin-bottom: 20px; display: none; }
@@ -476,38 +495,38 @@ const HEADERS = { 'apikey': ANON_KEY, 'Authorization': `Bearer ${ANON_KEY}` };
 // MODULES CONFIG — gelijk aan cursussen/index.html
 // ─────────────────────────────────────────────────────────────
 const MODULES = [
-  {"id": "instabiele-enkel-v1", "titel": "Instabiele enkel", "zone": "Enkel", "beschrijving": "Anatomie, diagnostiek en revalidatie bij chronische enkelbandinstabiliteit. Inclusief operatieve aspecten en return-to-sport criteria.", "blokken": 3, "vragen": 9, "url": "instabiele-enkel.html", "beschikbaar": true, "vereist": true},
-  {"id": "slijtage-enkel-v1", "titel": "Slijtage enkel", "zone": "Enkel", "beschrijving": "Gebaseerd op het EVN-protocol (complex niveau): pathofysiologie, biomechanische factoren, stepped-care-behandeling en operatieve overwegingen bij artrose van het bovenste spronggewricht.", "blokken": 3, "vragen": 9, "url": "slijtage-enkel.html", "beschikbaar": true, "vereist": true},
-  {"id": "voorste-enkel-inklemming-v1", "titel": "Voorste enkel inklemming", "zone": "Enkel", "beschrijving": "Anterieur enkelimpingement: botvorming, weke-delen inklemming, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "voorste-enkel-inklemming.html", "beschikbaar": true, "vereist": true},
-  {"id": "achterste-enkel-inklemming-v1", "titel": "Achterste enkel inklemming", "zone": "Enkel", "beschrijving": "Posterieur enkelimpingement (os trigonum-syndroom): anatomie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "achterste-enkel-inklemming.html", "beschikbaar": true, "vereist": true},
-  {"id": "kraakbeenletsel-enkel-v1", "titel": "Kraakbeenletsel van de enkel", "zone": "Enkel", "beschrijving": "Osteochondraal letsel van de talus: pathofysiologie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "kraakbeenletsel-enkel.html", "beschikbaar": true, "vereist": true},
-  {"id": "gewrichtsmuis-enkel-v1", "titel": "Gewrichtsmuis enkel", "zone": "Enkel", "beschrijving": "Losse lichamen (loose bodies) in het enkelgewricht: ontstaan, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "gewrichtsmuis-enkel.html", "beschikbaar": true, "vereist": true},
-  {"id": "re-insertie-buitenste-enkelpees-v1", "titel": "Re-insertie buitenste enkelpees", "zone": "Enkel", "beschrijving": "Revalidatie na chirurgische re-insertie van het laterale bandcomplex: fasering, belastingsopbouw en return-to-sport-criteria.", "blokken": 3, "vragen": 9, "url": "re-insertie-buitenste-enkelpees.html", "beschikbaar": true, "vereist": true},
-  {"id": "enkelverzwikking-acuut-v1", "titel": "Enkelverzwikking (acuut)", "zone": "Enkel", "beschrijving": "Acuut lateraal enkelbandletsel: mechanisme, gradering, acute diagnostiek en functionele behandeling.", "blokken": 3, "vragen": 9, "url": "enkelverzwikking-acuut.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-achillespees-v1", "titel": "Pijnlijke achillespees", "zone": "Achtervoet", "beschrijving": "Achillespeestendinopathie: mid-portie versus insertioneel, pathofysiologie, diagnostiek en evidence-based behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-achillespees.html", "beschikbaar": true, "vereist": true},
-  {"id": "zenuwbeknelling-achtervoet-v1", "titel": "Zenuwbeknelling achtervoet", "zone": "Achtervoet", "beschrijving": "Tarsale tunnelsyndroom en gerelateerde zenuwbeknelling in de achtervoet: anatomie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "zenuwbeknelling-achtervoet.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-kuitbeenpees-v1", "titel": "Pijnlijke kuitbeenpees", "zone": "Achtervoet", "beschrijving": "Peroneale tendinopathie en (sub)luxatie: anatomie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-kuitbeenpees.html", "beschikbaar": true, "vereist": true},
-  {"id": "stugge-achtervoet-v1", "titel": "Stugge achtervoet", "zone": "Achtervoet", "beschrijving": "Beperkte mobiliteit van het subtalaire en bovenste spronggewricht: oorzaken, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "stugge-achtervoet.html", "beschikbaar": true, "vereist": true},
-  {"id": "slijtage-achtervoet-v1", "titel": "Slijtage achtervoet", "zone": "Achtervoet", "beschrijving": "Subtalaire artrose: pathofysiologie, diagnostiek en stepped-care-behandeling.", "blokken": 3, "vragen": 9, "url": "slijtage-achtervoet.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-bult-hiel-v1", "titel": "Pijnlijke bult hiel", "zone": "Achtervoet", "beschrijving": "Ziekte van Haglund: pathofysiologie, diagnostiek en stapsgewijze behandeling van de posterosuperieure calcaneale exostose.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-hiel.html", "beschikbaar": true, "vereist": true},
-  {"id": "hielspoor-v1", "titel": "Hielspoor", "zone": "Achtervoet", "beschrijving": "Calcaneale spoor en plantaire fasciopathie: pathofysiologie, diagnostiek en evidence-based behandeling.", "blokken": 3, "vragen": 9, "url": "hielspoor.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-achterste-scheenbeenpees-v1", "titel": "Pijnlijke achterste scheenbeenpees", "zone": "Achtervoet", "beschrijving": "Tibialis posterior tendinopathie en disfunctie (PTTD): stadiëring, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-achterste-scheenbeenpees.html", "beschikbaar": true, "vereist": true},
-  {"id": "slijtage-middenvoet-v1", "titel": "Slijtage middenvoet", "zone": "Middenvoet", "beschrijving": "Artrose van de tarsometatarsale (Lisfranc-)gewrichten: pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "slijtage-middenvoet.html", "beschikbaar": true, "vereist": true},
-  {"id": "holvoet-v1", "titel": "Holvoet", "zone": "Middenvoet", "beschrijving": "Pes cavus: oorzaken, diagnostiek en behandeling van de verhoogde voetboog.", "blokken": 3, "vragen": 9, "url": "holvoet.html", "beschikbaar": true, "vereist": true},
-  {"id": "platvoet-v1", "titel": "Platvoet", "zone": "Middenvoet", "beschrijving": "Pes planus: flexibele versus verworven platvoet, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "platvoet.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-voorste-scheenbeenpees-v1", "titel": "Pijnlijke voorste scheenbeenpees", "zone": "Middenvoet", "beschrijving": "Tibialis anterior tendinopathie en tenosynovitis: pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-voorste-scheenbeenpees.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-bult-binnenzijde-voet-v1", "titel": "Pijnlijke bult binnenzijde voet", "zone": "Middenvoet", "beschrijving": "Os naviculare accessorium: anatomie, classificatie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-binnenzijde-voet.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-bult-bovenzijde-voet-v1", "titel": "Pijnlijke bult bovenzijde voet", "zone": "Middenvoet", "beschrijving": "Dorsale exostose van de middenvoet: pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-bovenzijde-voet.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-bult-onderzijde-voet-v1", "titel": "Pijnlijke bult onderzijde voet", "zone": "Middenvoet", "beschrijving": "Ziekte van Ledderhose (plantaire fibromatose): pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-onderzijde-voet.html", "beschikbaar": true, "vereist": true},
-  {"id": "vermoeidheidsbreuk-voet-v1", "titel": "Vermoeidheidsbreuk voet", "zone": "Middenvoet", "beschrijving": "Stress fracturen van de voet: risicostratificatie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "vermoeidheidsbreuk-voet.html", "beschikbaar": true, "vereist": true},
-  {"id": "scheve-grote-teen-v1", "titel": "Scheve grote teen", "zone": "Voorvoet", "beschrijving": "Hallux valgus: etiologie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "scheve-grote-teen.html", "beschikbaar": true, "vereist": true},
-  {"id": "stijve-grote-teen-v1", "titel": "Stijve grote teen", "zone": "Voorvoet", "beschrijving": "Hallux rigidus: gradering, diagnostiek en stapsgewijze behandeling van artrose van het eerste MTP-gewricht.", "blokken": 3, "vragen": 9, "url": "stijve-grote-teen.html", "beschikbaar": true, "vereist": true},
-  {"id": "hamerteen-klauwteen-v1", "titel": "Hamerteen en klauwteen", "zone": "Voorvoet", "beschrijving": "Teendeformiteiten: etiologie, differentiatie flexibel/rigide en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "hamerteen-klauwteen.html", "beschikbaar": true, "vereist": true},
-  {"id": "ruiterteen-v1", "titel": "Ruiterteen", "zone": "Voorvoet", "beschrijving": "Overlapping toe deformity: congenitale en verworven vormen, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "ruiterteen.html", "beschikbaar": true, "vereist": true},
-  {"id": "zenuwbeknelling-voorvoet-v1", "titel": "Zenuwbeknelling voorvoet", "zone": "Voorvoet", "beschrijving": "Morton's neuroom (interdigitaal neuroom): pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "zenuwbeknelling-voorvoet.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-voorvoet-v1", "titel": "Pijnlijke voorvoet", "zone": "Voorvoet", "beschrijving": "Metatarsalgie: multifactoriële etiologie, diagnostiek en gerichte behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-voorvoet.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-bult-kleine-teen-v1", "titel": "Pijnlijke bult kleine teen", "zone": "Voorvoet", "beschrijving": "Bunionette (Tailor's bunion): classificatie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-kleine-teen.html", "beschikbaar": true, "vereist": true},
-  {"id": "pijnlijke-bult-onder-nagel-v1", "titel": "Pijnlijke bult onder nagel", "zone": "Voorvoet", "beschrijving": "Subunguale exostose: differentiaaldiagnose, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "pijnlijke-bult-onder-nagel.html", "beschikbaar": true, "vereist": true}
+  {"id": "instabiele-enkel-v1", "titel": "Instabiele enkel", "zone": "Enkel", "beschrijving": "Anatomie, diagnostiek en revalidatie bij chronische enkelbandinstabiliteit. Inclusief operatieve aspecten en return-to-sport criteria.", "blokken": 3, "vragen": 9, "url": "cursussen/instabiele-enkel.html", "beschikbaar": true, "vereist": true},
+  {"id": "slijtage-enkel-v1", "titel": "Slijtage enkel", "zone": "Enkel", "beschrijving": "Gebaseerd op het EVN-protocol (complex niveau): pathofysiologie, biomechanische factoren, stepped-care-behandeling en operatieve overwegingen bij artrose van het bovenste spronggewricht.", "blokken": 3, "vragen": 9, "url": "cursussen/slijtage-enkel.html", "beschikbaar": true, "vereist": true},
+  {"id": "voorste-enkel-inklemming-v1", "titel": "Voorste enkel inklemming", "zone": "Enkel", "beschrijving": "Anterieur enkelimpingement: botvorming, weke-delen inklemming, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/voorste-enkel-inklemming.html", "beschikbaar": true, "vereist": true},
+  {"id": "achterste-enkel-inklemming-v1", "titel": "Achterste enkel inklemming", "zone": "Enkel", "beschrijving": "Posterieur enkelimpingement (os trigonum-syndroom): anatomie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/achterste-enkel-inklemming.html", "beschikbaar": true, "vereist": true},
+  {"id": "kraakbeenletsel-enkel-v1", "titel": "Kraakbeenletsel van de enkel", "zone": "Enkel", "beschrijving": "Osteochondraal letsel van de talus: pathofysiologie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/kraakbeenletsel-enkel.html", "beschikbaar": true, "vereist": true},
+  {"id": "gewrichtsmuis-enkel-v1", "titel": "Gewrichtsmuis enkel", "zone": "Enkel", "beschrijving": "Losse lichamen (loose bodies) in het enkelgewricht: ontstaan, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/gewrichtsmuis-enkel.html", "beschikbaar": true, "vereist": true},
+  {"id": "re-insertie-buitenste-enkelpees-v1", "titel": "Re-insertie buitenste enkelpees", "zone": "Enkel", "beschrijving": "Revalidatie na chirurgische re-insertie van het laterale bandcomplex: fasering, belastingsopbouw en return-to-sport-criteria.", "blokken": 3, "vragen": 9, "url": "cursussen/re-insertie-buitenste-enkelpees.html", "beschikbaar": true, "vereist": true},
+  {"id": "enkelverzwikking-acuut-v1", "titel": "Enkelverzwikking (acuut)", "zone": "Enkel", "beschrijving": "Acuut lateraal enkelbandletsel: mechanisme, gradering, acute diagnostiek en functionele behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/enkelverzwikking-acuut.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-achillespees-v1", "titel": "Pijnlijke achillespees", "zone": "Achtervoet", "beschrijving": "Achillespeestendinopathie: mid-portie versus insertioneel, pathofysiologie, diagnostiek en evidence-based behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-achillespees.html", "beschikbaar": true, "vereist": true},
+  {"id": "zenuwbeknelling-achtervoet-v1", "titel": "Zenuwbeknelling achtervoet", "zone": "Achtervoet", "beschrijving": "Tarsale tunnelsyndroom en gerelateerde zenuwbeknelling in de achtervoet: anatomie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/zenuwbeknelling-achtervoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-kuitbeenpees-v1", "titel": "Pijnlijke kuitbeenpees", "zone": "Achtervoet", "beschrijving": "Peroneale tendinopathie en (sub)luxatie: anatomie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-kuitbeenpees.html", "beschikbaar": true, "vereist": true},
+  {"id": "stugge-achtervoet-v1", "titel": "Stugge achtervoet", "zone": "Achtervoet", "beschrijving": "Beperkte mobiliteit van het subtalaire en bovenste spronggewricht: oorzaken, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/stugge-achtervoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "slijtage-achtervoet-v1", "titel": "Slijtage achtervoet", "zone": "Achtervoet", "beschrijving": "Subtalaire artrose: pathofysiologie, diagnostiek en stepped-care-behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/slijtage-achtervoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-hiel-v1", "titel": "Pijnlijke bult hiel", "zone": "Achtervoet", "beschrijving": "Ziekte van Haglund: pathofysiologie, diagnostiek en stapsgewijze behandeling van de posterosuperieure calcaneale exostose.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-bult-hiel.html", "beschikbaar": true, "vereist": true},
+  {"id": "hielspoor-v1", "titel": "Hielspoor", "zone": "Achtervoet", "beschrijving": "Calcaneale spoor en plantaire fasciopathie: pathofysiologie, diagnostiek en evidence-based behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/hielspoor.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-achterste-scheenbeenpees-v1", "titel": "Pijnlijke achterste scheenbeenpees", "zone": "Achtervoet", "beschrijving": "Tibialis posterior tendinopathie en disfunctie (PTTD): stadiëring, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-achterste-scheenbeenpees.html", "beschikbaar": true, "vereist": true},
+  {"id": "slijtage-middenvoet-v1", "titel": "Slijtage middenvoet", "zone": "Middenvoet", "beschrijving": "Artrose van de tarsometatarsale (Lisfranc-)gewrichten: pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/slijtage-middenvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "holvoet-v1", "titel": "Holvoet", "zone": "Middenvoet", "beschrijving": "Pes cavus: oorzaken, diagnostiek en behandeling van de verhoogde voetboog.", "blokken": 3, "vragen": 9, "url": "cursussen/holvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "platvoet-v1", "titel": "Platvoet", "zone": "Middenvoet", "beschrijving": "Pes planus: flexibele versus verworven platvoet, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/platvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-voorste-scheenbeenpees-v1", "titel": "Pijnlijke voorste scheenbeenpees", "zone": "Middenvoet", "beschrijving": "Tibialis anterior tendinopathie en tenosynovitis: pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-voorste-scheenbeenpees.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-binnenzijde-voet-v1", "titel": "Pijnlijke bult binnenzijde voet", "zone": "Middenvoet", "beschrijving": "Os naviculare accessorium: anatomie, classificatie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-bult-binnenzijde-voet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-bovenzijde-voet-v1", "titel": "Pijnlijke bult bovenzijde voet", "zone": "Middenvoet", "beschrijving": "Dorsale exostose van de middenvoet: pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-bult-bovenzijde-voet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-onderzijde-voet-v1", "titel": "Pijnlijke bult onderzijde voet", "zone": "Middenvoet", "beschrijving": "Ziekte van Ledderhose (plantaire fibromatose): pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-bult-onderzijde-voet.html", "beschikbaar": true, "vereist": true},
+  {"id": "vermoeidheidsbreuk-voet-v1", "titel": "Vermoeidheidsbreuk voet", "zone": "Middenvoet", "beschrijving": "Stress fracturen van de voet: risicostratificatie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/vermoeidheidsbreuk-voet.html", "beschikbaar": true, "vereist": true},
+  {"id": "scheve-grote-teen-v1", "titel": "Scheve grote teen", "zone": "Voorvoet", "beschrijving": "Hallux valgus: etiologie, diagnostiek en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/scheve-grote-teen.html", "beschikbaar": true, "vereist": true},
+  {"id": "stijve-grote-teen-v1", "titel": "Stijve grote teen", "zone": "Voorvoet", "beschrijving": "Hallux rigidus: gradering, diagnostiek en stapsgewijze behandeling van artrose van het eerste MTP-gewricht.", "blokken": 3, "vragen": 9, "url": "cursussen/stijve-grote-teen.html", "beschikbaar": true, "vereist": true},
+  {"id": "hamerteen-klauwteen-v1", "titel": "Hamerteen en klauwteen", "zone": "Voorvoet", "beschrijving": "Teendeformiteiten: etiologie, differentiatie flexibel/rigide en stapsgewijze behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/hamerteen-klauwteen.html", "beschikbaar": true, "vereist": true},
+  {"id": "ruiterteen-v1", "titel": "Ruiterteen", "zone": "Voorvoet", "beschrijving": "Overlapping toe deformity: congenitale en verworven vormen, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/ruiterteen.html", "beschikbaar": true, "vereist": true},
+  {"id": "zenuwbeknelling-voorvoet-v1", "titel": "Zenuwbeknelling voorvoet", "zone": "Voorvoet", "beschrijving": "Morton's neuroom (interdigitaal neuroom): pathofysiologie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/zenuwbeknelling-voorvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-voorvoet-v1", "titel": "Pijnlijke voorvoet", "zone": "Voorvoet", "beschrijving": "Metatarsalgie: multifactoriële etiologie, diagnostiek en gerichte behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-voorvoet.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-kleine-teen-v1", "titel": "Pijnlijke bult kleine teen", "zone": "Voorvoet", "beschrijving": "Bunionette (Tailor's bunion): classificatie, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-bult-kleine-teen.html", "beschikbaar": true, "vereist": true},
+  {"id": "pijnlijke-bult-onder-nagel-v1", "titel": "Pijnlijke bult onder nagel", "zone": "Voorvoet", "beschrijving": "Subunguale exostose: differentiaaldiagnose, diagnostiek en behandeling.", "blokken": 3, "vragen": 9, "url": "cursussen/pijnlijke-bult-onder-nagel.html", "beschikbaar": true, "vereist": true}
 ];
 
 const BINNENKORT = [];
@@ -1005,41 +1024,80 @@ function renderCursussen() {
 
   const grid = document.getElementById('cursussen-grid');
   grid.innerHTML = '';
-  MODULES.forEach(module => {
-    const isAfgerond = afgerond.includes(module.id);
-    const status = isAfgerond ? 'behaald' : 'beschikbaar';
-    const icoon = isAfgerond ? '✓' : '→';
-    const actie = isAfgerond ? 'Opnieuw bekijken' : 'Module starten';
+  const ZONE_VOLGORDE = ['Enkel', 'Achtervoet', 'Middenvoet', 'Voorvoet'];
+  const zones = ZONE_VOLGORDE.filter(z => MODULES.some(m => m.zone === z));
+  zones.forEach(zone => {
+    const modulesInZone = MODULES.filter(m => m.zone === zone);
+    const aantalBehaald = modulesInZone.filter(m => afgerond.includes(m.id)).length;
+    const alleBehaald = aantalBehaald === modulesInZone.length;
 
-    const tegel = document.createElement('a');
-    tegel.href = module.url;
-    tegel.className = 'cursus-tegel ' + status;
-    tegel.innerHTML =
-      '<div class="cursus-info">' +
-        '<div class="cursus-zone">' + module.zone + (module.vereist ? ' · ⭐ Vereist voor specialisatie' : '') + '</div>' +
-        '<div class="cursus-naam">' + module.titel + '</div>' +
-        '<div class="cursus-meta">' + module.blokken + ' blokken · ' + module.vragen + ' vragen</div>' +
+    const domein = document.createElement('div');
+    domein.className = 'domein-tegel' + (alleBehaald ? ' behaald' : '');
+
+    const header = document.createElement('div');
+    header.className = 'domein-header';
+    header.onclick = () => domein.classList.toggle('open');
+    header.innerHTML =
+      '<div class="domein-header-links">' +
+        '<div class="domein-icoon-badge">' + (alleBehaald ? '✓' : zone.charAt(0)) + '</div>' +
+        '<div>' +
+          '<div class="domein-naam">' + zone + '</div>' +
+          '<div class="domein-progress">' + aantalBehaald + ' van ' + modulesInZone.length + ' cursussen behaald</div>' +
+        '</div>' +
       '</div>' +
-      '<div style="display:flex;align-items:center;gap:10px">' +
-        '<span style="font-size:0.82rem;font-weight:700;color:' + (isAfgerond ? 'var(--green)' : 'var(--teal)') + '">' + actie + ' →</span>' +
-        '<div class="cursus-icoon ' + status + '">' + icoon + '</div>' +
-      '</div>';
-    grid.appendChild(tegel);
+      '<div class="domein-chevron">▸</div>';
+
+    const body = document.createElement('div');
+    body.className = 'domein-body';
+    const bodyInner = document.createElement('div');
+    bodyInner.className = 'domein-body-inner';
+    modulesInZone.forEach(module => {
+      const isAfgerond = afgerond.includes(module.id);
+      const status = isAfgerond ? 'behaald' : 'beschikbaar';
+      const icoon = isAfgerond ? '✓' : '→';
+      const actie = isAfgerond ? 'Opnieuw bekijken' : 'Module starten';
+
+      const tegel = document.createElement('a');
+      tegel.href = module.url;
+      tegel.className = 'cursus-tegel ' + status;
+      tegel.innerHTML =
+        '<div class="cursus-info">' +
+          '<div class="cursus-zone">' + module.zone + (module.vereist ? ' · ⭐ Vereist voor specialisatie' : '') + '</div>' +
+          '<div class="cursus-naam">' + module.titel + '</div>' +
+          '<div class="cursus-meta">' + module.blokken + ' blokken · ' + module.vragen + ' vragen</div>' +
+        '</div>' +
+        '<div style="display:flex;align-items:center;gap:10px">' +
+          '<span style="font-size:0.82rem;font-weight:700;color:' + (isAfgerond ? 'var(--green)' : 'var(--teal)') + '">' + actie + ' →</span>' +
+          '<div class="cursus-icoon ' + status + '">' + icoon + '</div>' +
+        '</div>';
+      bodyInner.appendChild(tegel);
+    });
+
+    body.appendChild(bodyInner);
+    domein.appendChild(header);
+    domein.appendChild(body);
+    grid.appendChild(domein);
   });
 
-  const bGrid = document.getElementById('binnenkort-grid');
-  bGrid.innerHTML = '';
-  BINNENKORT.forEach(m => {
-    const el = document.createElement('div');
-    el.className = 'cursus-tegel binnenkort';
-    el.innerHTML =
-      '<div class="cursus-info">' +
-        '<div class="cursus-zone">' + m.zone + '</div>' +
-        '<div class="cursus-naam">' + m.titel + '</div>' +
-      '</div>' +
-      '<div class="cursus-icoon binnenkort">⏳</div>';
-    bGrid.appendChild(el);
-  });
+  const binnenkortKaart = document.getElementById('binnenkort-grid').parentElement;
+  if (BINNENKORT.length === 0) {
+    binnenkortKaart.style.display = 'none';
+  } else {
+    binnenkortKaart.style.display = '';
+    const bGrid = document.getElementById('binnenkort-grid');
+    bGrid.innerHTML = '';
+    BINNENKORT.forEach(m => {
+      const el = document.createElement('div');
+      el.className = 'cursus-tegel binnenkort';
+      el.innerHTML =
+        '<div class="cursus-info">' +
+          '<div class="cursus-zone">' + m.zone + '</div>' +
+          '<div class="cursus-naam">' + m.titel + '</div>' +
+        '</div>' +
+        '<div class="cursus-icoon binnenkort">⏳</div>';
+      bGrid.appendChild(el);
+    });
+  }
 }
 
 async function renderLocaties() {

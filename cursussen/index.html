@@ -63,6 +63,13 @@
     nav a.cta { background: var(--teal); color: white; margin-left: 8px; }
     nav a.cta:hover { background: #1E8571; }
     @media (max-width: 700px) { nav { display: none; } }
+    .header-right { display: flex; align-items: center; gap: 12px; }
+    .therapeut-info { text-align: right; display: none; }
+    .therapeut-info.zichtbaar { display: block; }
+    .therapeut-naam-header { font-size: 0.82rem; font-weight: 600; color: var(--navy); }
+    .btn-uitloggen { background: var(--grey-bg); border: 1px solid var(--grey-border); color: var(--text-muted); border-radius: 6px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer; font-family: 'Inter', sans-serif; display: none; transition: background 0.2s; }
+    .btn-uitloggen.zichtbaar { display: block; }
+    .btn-uitloggen:hover { background: var(--grey-border); }
 
     .wrap { max-width: 1100px; margin: 0 auto; padding: 40px 24px 64px; }
 
@@ -161,6 +168,24 @@
     .status-icoon.beschikbaar { background: var(--teal-light); color: var(--teal); }
     .status-icoon.binnenkort { background: var(--grey-bg); color: var(--text-muted); }
 
+    /* DOMEINTEGELS */
+    .domein-tegel { grid-column: 1 / -1; border-radius: 14px; border: 2px solid var(--grey-border); background: var(--white); overflow: hidden; }
+    .domein-tegel.behaald { border-color: var(--green); }
+    .domein-header { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 22px; cursor: pointer; }
+    .domein-header:hover { background: var(--grey-bg); }
+    .domein-tegel.behaald .domein-header:hover { background: var(--green-light); }
+    .domein-header-links { display: flex; align-items: center; gap: 14px; }
+    .domein-icoon-badge { width: 44px; height: 44px; border-radius: 50%; background: var(--teal-light); color: var(--teal); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; flex-shrink: 0; }
+    .domein-tegel.behaald .domein-icoon-badge { background: var(--green); color: white; }
+    .domein-naam { font-size: 1.05rem; font-weight: 700; color: var(--navy); }
+    .domein-tegel.behaald .domein-naam { color: var(--green); }
+    .domein-progress { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+    .domein-chevron { font-size: 1rem; color: var(--text-muted); transition: transform 0.2s; flex-shrink: 0; }
+    .domein-tegel.open .domein-chevron { transform: rotate(90deg); }
+    .domein-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .domein-tegel.open .domein-body { max-height: 3000px; }
+    .domein-body-inner { padding: 4px 22px 22px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+
     footer { background: var(--grey-bg); border-top: 1px solid var(--grey-border); color: var(--text-muted); text-align: center; padding: 24px; font-size: 0.78rem; margin-top: 48px; }
     footer a { color: var(--teal-dark); text-decoration: none; }
 
@@ -192,6 +217,12 @@
       <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
       <a href="../locatie-worden.html" class="cta">Locatie worden</a>
     </nav>
+    <div class="header-right">
+      <div class="therapeut-info" id="header-therapeut">
+        <div class="therapeut-naam-header" id="header-naam"></div>
+      </div>
+      <button class="btn-uitloggen" id="btn-uitloggen" onclick="uitloggen()">Uitloggen</button>
+    </div>
   </div>
 </header>
 
@@ -359,7 +390,6 @@ async function inloggen() {
     document.getElementById('scherm-inlog').style.display = 'none';
     document.getElementById('scherm-portaal').style.display = 'block';
     document.getElementById('header-naam').textContent = huidigeTherapeut.naam;
-    document.getElementById('header-praktijk').textContent = huidigeTherapeut.praktijk + ' · ' + huidigeTherapeut.locatie;
     document.getElementById('header-therapeut').classList.add('zichtbaar');
     document.getElementById('btn-uitloggen').classList.add('zichtbaar');
     renderPortaal();
@@ -403,63 +433,105 @@ function renderPortaal() {
     document.getElementById('spec-banner').classList.add('zichtbaar');
   }
 
-  // Beschikbare modules als tegels
+  // Beschikbare modules als domeintegels
   const grid = document.getElementById('tegels-grid');
   grid.innerHTML = '';
-  MODULES.forEach(module => {
-    const isAfgerond = afgerond.includes(module.id);
-    // Voor demo: EVN-002 heeft instabiele-enkel geprobeerd maar niet behaald
-    const isNietBehaald = huidigeTherapeut.code === 'EVN-002' && module.id === 'instabiele-enkel-v1';
-    const status = isAfgerond ? 'behaald' : isNietBehaald ? 'niet-behaald' : 'beschikbaar';
+  const ZONE_VOLGORDE = ['Enkel', 'Achtervoet', 'Middenvoet', 'Voorvoet'];
+  const zones = ZONE_VOLGORDE.filter(z => MODULES.some(m => m.zone === z));
+  zones.forEach(zone => {
+    const modulesInZone = MODULES.filter(m => m.zone === zone);
+    const aantalBehaald = modulesInZone.filter(m => afgerond.includes(m.id)).length;
+    const alleBehaald = aantalBehaald === modulesInZone.length;
 
-    const tegel = document.createElement('a');
-    tegel.href = module.url;
-    tegel.className = 'tegel ' + status;
+    const domein = document.createElement('div');
+    domein.className = 'domein-tegel' + (alleBehaald ? ' behaald' : '');
 
-    const icoon = status === 'behaald' ? '✓' : status === 'niet-behaald' ? '✗' : '→';
-    const actietekst = status === 'behaald' ? 'Opnieuw bekijken' : status === 'niet-behaald' ? 'Opnieuw proberen' : 'Module starten';
-    const scoretekst = status === 'behaald' ? 'Geslaagd' : status === 'niet-behaald' ? 'Niet geslaagd' : '';
-
-    tegel.innerHTML =
-      '<div class="tegel-status-balk"></div>' +
-      '<div class="tegel-zone">' + module.zone + '</div>' +
-      '<div class="tegel-titel">' + module.titel + '</div>' +
-      '<div class="tegel-beschrijving">' + module.beschrijving + '</div>' +
-      '<div class="tegel-meta">' +
-        '<span>' + module.blokken + ' blokken</span>' +
-        '<span>·</span>' +
-        '<span>' + module.vragen + ' vragen</span>' +
-        (module.vereist ? '<span class="tegel-vereist">⭐ Vereist voor specialisatie</span>' : '') +
-      '</div>' +
-      '<div class="tegel-footer">' +
-        '<span class="tegel-actie">' + actietekst + ' →</span>' +
-        '<div style="display:flex;align-items:center;gap:8px;">' +
-          (scoretekst ? '<span class="tegel-score">' + scoretekst + '</span>' : '') +
-          '<div class="status-icoon ' + status + '">' + icoon + '</div>' +
+    const header = document.createElement('div');
+    header.className = 'domein-header';
+    header.onclick = () => domein.classList.toggle('open');
+    header.innerHTML =
+      '<div class="domein-header-links">' +
+        '<div class="domein-icoon-badge">' + (alleBehaald ? '✓' : zone.charAt(0)) + '</div>' +
+        '<div>' +
+          '<div class="domein-naam">' + zone + '</div>' +
+          '<div class="domein-progress">' + aantalBehaald + ' van ' + modulesInZone.length + ' cursussen behaald</div>' +
         '</div>' +
-      '</div>';
+      '</div>' +
+      '<div class="domein-chevron">▸</div>';
 
-    grid.appendChild(tegel);
+    const body = document.createElement('div');
+    body.className = 'domein-body';
+    const bodyInner = document.createElement('div');
+    bodyInner.className = 'domein-body-inner';
+
+    modulesInZone.forEach(module => {
+      const isAfgerond = afgerond.includes(module.id);
+      // Voor demo: EVN-002 heeft instabiele-enkel geprobeerd maar niet behaald
+      const isNietBehaald = huidigeTherapeut.code === 'EVN-002' && module.id === 'instabiele-enkel-v1';
+      const status = isAfgerond ? 'behaald' : isNietBehaald ? 'niet-behaald' : 'beschikbaar';
+
+      const tegel = document.createElement('a');
+      tegel.href = module.url;
+      tegel.className = 'tegel ' + status;
+
+      const icoon = status === 'behaald' ? '✓' : status === 'niet-behaald' ? '✗' : '→';
+      const actietekst = status === 'behaald' ? 'Opnieuw bekijken' : status === 'niet-behaald' ? 'Opnieuw proberen' : 'Module starten';
+      const scoretekst = status === 'behaald' ? 'Geslaagd' : status === 'niet-behaald' ? 'Niet geslaagd' : '';
+
+      tegel.innerHTML =
+        '<div class="tegel-status-balk"></div>' +
+        '<div class="tegel-zone">' + module.zone + '</div>' +
+        '<div class="tegel-titel">' + module.titel + '</div>' +
+        '<div class="tegel-beschrijving">' + module.beschrijving + '</div>' +
+        '<div class="tegel-meta">' +
+          '<span>' + module.blokken + ' blokken</span>' +
+          '<span>·</span>' +
+          '<span>' + module.vragen + ' vragen</span>' +
+          (module.vereist ? '<span class="tegel-vereist">⭐ Vereist voor specialisatie</span>' : '') +
+        '</div>' +
+        '<div class="tegel-footer">' +
+          '<span class="tegel-actie">' + actietekst + ' →</span>' +
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+            (scoretekst ? '<span class="tegel-score">' + scoretekst + '</span>' : '') +
+            '<div class="status-icoon ' + status + '">' + icoon + '</div>' +
+          '</div>' +
+        '</div>';
+
+      bodyInner.appendChild(tegel);
+    });
+
+    body.appendChild(bodyInner);
+    domein.appendChild(header);
+    domein.appendChild(body);
+    grid.appendChild(domein);
   });
 
   // Binnenkort tegels
-  const bGrid = document.getElementById('binnenkort-grid');
-  bGrid.innerHTML = '';
-  BINNENKORT.forEach(m => {
-    const tegel = document.createElement('div');
-    tegel.className = 'tegel binnenkort';
-    tegel.innerHTML =
-      '<div class="tegel-status-balk" style="background:var(--grey-border)"></div>' +
-      '<div class="tegel-zone">' + m.zone + '</div>' +
-      '<div class="tegel-titel">' + m.titel + '</div>' +
-      '<div class="tegel-beschrijving">' + m.beschrijving + '</div>' +
-      '<div class="tegel-meta"><span>' + m.blokken + ' blokken</span><span>·</span><span>' + m.vragen + ' vragen</span></div>' +
-      '<div class="tegel-footer">' +
-        '<span class="tegel-actie">Binnenkort beschikbaar</span>' +
-        '<div class="status-icoon binnenkort">⏳</div>' +
-      '</div>';
-    bGrid.appendChild(tegel);
-  });
+  const binnenkortLabel = document.getElementById('binnenkort-grid').previousElementSibling;
+  if (BINNENKORT.length === 0) {
+    document.getElementById('binnenkort-grid').style.display = 'none';
+    if (binnenkortLabel) binnenkortLabel.style.display = 'none';
+  } else {
+    document.getElementById('binnenkort-grid').style.display = '';
+    if (binnenkortLabel) binnenkortLabel.style.display = '';
+    const bGrid = document.getElementById('binnenkort-grid');
+    bGrid.innerHTML = '';
+    BINNENKORT.forEach(m => {
+      const tegel = document.createElement('div');
+      tegel.className = 'tegel binnenkort';
+      tegel.innerHTML =
+        '<div class="tegel-status-balk" style="background:var(--grey-border)"></div>' +
+        '<div class="tegel-zone">' + m.zone + '</div>' +
+        '<div class="tegel-titel">' + m.titel + '</div>' +
+        '<div class="tegel-beschrijving">' + m.beschrijving + '</div>' +
+        '<div class="tegel-meta"><span>' + m.blokken + ' blokken</span><span>·</span><span>' + m.vragen + ' vragen</span></div>' +
+        '<div class="tegel-footer">' +
+          '<span class="tegel-actie">Binnenkort beschikbaar</span>' +
+          '<div class="status-icoon binnenkort">⏳</div>' +
+        '</div>';
+      bGrid.appendChild(tegel);
+    });
+  }
 }
 </script>
 </body>
