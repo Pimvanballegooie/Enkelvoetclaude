@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Stugge achtervoet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule stugge achtervoet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Achtervoet</span>
+      <h1 class="cursus-titel">Stugge achtervoet</h1>
+      <p class="cursus-beschrijving">Beperkte mobiliteit van het subtalaire en bovenste spronggewricht: oorzaken, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "stugge-achtervoet-v1",
+  "titel": "Stugge achtervoet",
+  "zone": "Achtervoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Gewrichten van de achtervoet",
+          "tekst": "De beweeglijkheid van de achtervoet wordt bepaald door het bovenste spronggewricht (dorsaal-/plantairflexie) en het subtalaire gewricht (inversie/eversie, essentieel voor aanpassing aan oneffen ondergrond). Stugheid kan in een van beide, of in beide gewrichten tegelijk optreden.",
+          "lijst": null
+        },
+        {
+          "kop": "Mogelijke oorzaken",
+          "tekst": "Een stugge achtervoet kan verschillende onderliggende oorzaken hebben, met uiteenlopende implicaties voor de behandeling.",
+          "lijst": [
+            "Posttraumatisch (na fractuur of langdurige immobilisatie)",
+            "Degeneratief (beginnende artrose van subtalair of bovenste spronggewricht)",
+            "Congenitaal (tarsale coalitie: abnormale botverbinding tussen tarsale botten)",
+            "Verkorte kuitmusculatuur (beperkte dorsaalflexie)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Welke twee gewrichten bepalen primair de beweeglijkheid van de achtervoet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Het bovenste spronggewricht en het subtalaire gewricht",
+              "correct": true
+            },
+            {
+              "tekst": "De metatarsofalangeale gewrichten",
+              "correct": false
+            },
+            {
+              "tekst": "Het Lisfranc-gewricht en de tenengewrichten",
+              "correct": false
+            },
+            {
+              "tekst": "Het kniegewricht en het heupgewricht",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het bovenste spronggewricht (dorsaal-/plantairflexie) en het subtalaire gewricht (inversie/eversie) bepalen de achtervoetmobiliteit.",
+          "feedback_fout": "Niet correct. De genoemde andere gewrichten liggen elders in de voet of het lichaam.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat is een tarsale coalitie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Een acute peesscheur",
+              "correct": false
+            },
+            {
+              "tekst": "Een aangeboren, abnormale botverbinding tussen tarsale botten die de beweeglijkheid beperkt",
+              "correct": true
+            },
+            {
+              "tekst": "Een vorm van artrose op oudere leeftijd",
+              "correct": false
+            },
+            {
+              "tekst": "Een type schoenzool",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een tarsale coalitie is een congenitale, abnormale botverbinding die de normale gewrichtsbeweeglijkheid beperkt.",
+          "feedback_fout": "Niet correct. Het betreft een aangeboren botafwijking, geen peesletsel of artrose.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Op welke manier kan verkorte kuitmusculatuur bijdragen aan een 'stugge' achtervoet?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Door de dorsaalflexie van het bovenste spronggewricht te beperken",
+              "correct": true
+            },
+            {
+              "tekst": "Door uitsluitend de tenen te beïnvloeden",
+              "correct": false
+            },
+            {
+              "tekst": "Kuitmusculatuur heeft geen relatie met enkelmobiliteit",
+              "correct": false
+            },
+            {
+              "tekst": "Door de subtalaire eversie te vergroten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een verkorte m. gastrocnemius/soleus beperkt de dorsaalflexie van het bovenste spronggewricht, wat als functionele stugheid wordt ervaren.",
+          "feedback_fout": "Niet correct. Verkorte kuitmusculatuur beperkt specifiek de dorsaalflexie, niet de subtalaire eversie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Onderzoek naar achtervoetstugheid omvat afzonderlijke beoordeling van bovenste spronggewricht (dorsaalflexie met gebogen en gestrekte knie, om onderscheid te maken tussen gastrocnemius- en soleus-beperking) en subtalair gewricht (inversie/eversie in neutrale positie).",
+          "lijst": null
+        },
+        {
+          "kop": "Differentiatie naar oorzaak",
+          "tekst": "Bij verdenking op een tarsale coalitie (vaak bij jongeren met terugkerende 'verzwikkingen' en peroneale spasme) is beeldvorming (CT is de gouden standaard) geïndiceerd. Bij verdenking op artrose is röntgenonderzoek de eerste stap.",
+          "lijst": [
+            "Silfverskiöld-test: onderscheid gastrocnemius- versus soleus-beperkte dorsaalflexie",
+            "CT: gouden standaard bij verdenking tarsale coalitie",
+            "Röntgen: eerste stap bij verdenking op subtalaire/enkelartrose"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat is het doel van het testen van dorsaalflexie met zowel gebogen als gestrekte knie (Silfverskiöld-test)?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Onderscheid maken tussen een gastrocnemius- en een soleus-beperkte dorsaalflexie",
+              "correct": true
+            },
+            {
+              "tekst": "Het testen van de kracht van de tibialis anterior",
+              "correct": false
+            },
+            {
+              "tekst": "Het beoordelen van de subtalaire eversie",
+              "correct": false
+            },
+            {
+              "tekst": "Het testen van de stabiliteit van het ATFL",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Omdat de gastrocnemius de knie kruist, kan met deze test onderscheid gemaakt worden tussen een gastrocnemius- en soleus-gerelateerde beperking.",
+          "feedback_fout": "Niet correct. Deze test is specifiek gericht op differentiatie van de dorsaalflexiebeperking, niet op kracht of laterale stabiliteit.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke beeldvormende techniek geldt als gouden standaard bij verdenking op een tarsale coalitie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Röntgenfoto alleen",
+              "correct": false
+            },
+            {
+              "tekst": "CT-scan",
+              "correct": true
+            },
+            {
+              "tekst": "Echografie",
+              "correct": false
+            },
+            {
+              "tekst": "Botdichtheidsmeting",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. CT geeft de beste gedetailleerde weergave van de botstructuren en wordt gezien als gouden standaard voor tarsale coalitie.",
+          "feedback_fout": "Niet correct. Röntgen kan aanwijzingen geven, maar CT is de gouden standaard voor definitieve diagnostiek.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Bij welke patiëntengroep moet met name gedacht worden aan een tarsale coalitie als oorzaak van achtervoetstugheid?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Uitsluitend bij ouderen boven de 70 jaar",
+              "correct": false
+            },
+            {
+              "tekst": "Bij jongeren met terugkerende 'verzwikkingen' en peroneale spasme",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend bij topsporters ouder dan 40",
+              "correct": false
+            },
+            {
+              "tekst": "Dit is nooit leeftijdsafhankelijk",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Tarsale coalitie wordt vaak pas symptomatisch op jongere leeftijd, met terugkerende instabiliteitsklachten en peroneale spasme als kenmerkend beeld.",
+          "feedback_fout": "Niet correct. Tarsale coalitie is een congenitale afwijking die zich typisch op jongere leeftijd manifesteert.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "De behandeling is sterk afhankelijk van de onderliggende oorzaak. Bij verkorte kuitmusculatuur staat een gericht rekprogramma centraal. Bij posttraumatische of degeneratieve stugheid wordt mobilisatie binnen pijngrenzen gecombineerd met krachttraining.",
+          "lijst": null
+        },
+        {
+          "kop": "Behandeling bij tarsale coalitie",
+          "tekst": "Bij een symptomatische tarsale coalitie is de eerste stap vaak conservatief (activiteitaanpassing, eventueel tijdelijke immobilisatie); bij aanhoudende klachten kan chirurgische resectie van de coalitie worden overwogen, afhankelijk van type en grootte.",
+          "lijst": [
+            "Stap 1: rekprogramma en/of mobilisatie afhankelijk van oorzaak",
+            "Stap 2: tijdelijke immobilisatie of orthese bij aanhoudende klachten",
+            "Stap 3: chirurgische resectie van de coalitie bij persisterende, functiebeperkende klachten"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Welke behandeling is het meest passend wanneer verkorte kuitmusculatuur de oorzaak is van beperkte dorsaalflexie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een gericht rekprogramma voor de kuitmusculatuur",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische resectie",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend pijnstillers",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij verkorte kuitmusculatuur als oorzaak is een gericht rekprogramma de aangewezen eerste stap.",
+          "feedback_fout": "Niet correct. Chirurgie en immobilisatie zijn niet passend wanneer spierverkorting de oorzaak is.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wanneer wordt chirurgische resectie overwogen bij een symptomatische tarsale coalitie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Direct bij het stellen van de diagnose, ongeacht klachten",
+              "correct": false
+            },
+            {
+              "tekst": "Bij persisterende, functiebeperkende klachten ondanks conservatieve behandeling",
+              "correct": true
+            },
+            {
+              "tekst": "Nooit, coalities worden nooit chirurgisch behandeld",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen bij patiënten ouder dan 60 jaar",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie wordt overwogen bij aanhoudende, functiebeperkende klachten na een conservatief traject.",
+          "feedback_fout": "Niet correct. Een asymptomatische of goed reagerende coalitie wordt niet direct chirurgisch behandeld.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom is het bepalen van de onderliggende oorzaak zo belangrijk bij een stugge achtervoet?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat de behandeling sterk verschilt afhankelijk van de oorzaak (bijv. rekprogramma bij spierverkorting versus chirurgie bij een coalitie)",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat de behandeling voor elke oorzaak identiek is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat de oorzaak geen invloed heeft op de prognose",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat beeldvorming nooit nodig is bij achtervoetstugheid",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De behandelstrategie verschilt sterk per onderliggende oorzaak, van rekoefeningen tot mogelijke chirurgie.",
+          "feedback_fout": "Niet correct. De oorzaak bepaalt in belangrijke mate de behandelkeuze en prognose.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

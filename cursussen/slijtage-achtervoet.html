@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Slijtage achtervoet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule slijtage achtervoet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Achtervoet</span>
+      <h1 class="cursus-titel">Slijtage achtervoet</h1>
+      <p class="cursus-beschrijving">Subtalaire artrose: pathofysiologie, diagnostiek en stepped-care-behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "slijtage-achtervoet-v1",
+  "titel": "Slijtage achtervoet",
+  "zone": "Achtervoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Subtalaire artrose",
+          "tekst": "Het subtalaire gewricht (tussen talus en calcaneus) is verantwoordelijk voor inversie en eversie van de achtervoet, essentieel voor aanpassing aan oneffen ondergrond. Slijtage van dit gewricht ontstaat, net als bij het bovenste spronggewricht, overwegend posttraumatisch — bijvoorbeeld na een calcaneusfractuur of herhaalde ernstige inversietrauma's.",
+          "lijst": null
+        },
+        {
+          "kop": "Gevolgen voor functie",
+          "tekst": "Doordat het subtalaire gewricht essentieel is voor terreinaanpassing, geeft slijtage hier vooral klachten bij lopen op oneffen ondergrond, naast pijn en stijfheid bij inversie/eversie.",
+          "lijst": [
+            "Vaak posttraumatisch (calcaneusfractuur, herhaald ernstig inversieletsel)",
+            "Klachten met name bij lopen op oneffen ondergrond",
+            "Pijn en stijfheid bij inversie- en eversiebeweging"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Welke beweging wordt primair mogelijk gemaakt door het subtalaire gewricht?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Dorsaal- en plantairflexie",
+              "correct": false
+            },
+            {
+              "tekst": "Inversie en eversie van de achtervoet",
+              "correct": true
+            },
+            {
+              "tekst": "Flexie en extensie van de tenen",
+              "correct": false
+            },
+            {
+              "tekst": "Rotatie van de knie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het subtalaire gewricht maakt inversie en eversie van de achtervoet mogelijk, essentieel voor terreinaanpassing.",
+          "feedback_fout": "Niet correct. Dorsaal-/plantairflexie is de functie van het bovenste spronggewricht, niet het subtalaire gewricht.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat is een veelvoorkomende oorzaak van subtalaire artrose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een calcaneusfractuur of herhaald ernstig inversieletsel",
+              "correct": true
+            },
+            {
+              "tekst": "Een virale infectie",
+              "correct": false
+            },
+            {
+              "tekst": "Een aangeboren hartafwijking",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend genetische factoren zonder trauma",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Net als bij het bovenste spronggewricht is subtalaire artrose overwegend posttraumatisch, bijvoorbeeld na een calcaneusfractuur.",
+          "feedback_fout": "Niet correct. Trauma, met name een calcaneusfractuur, is een belangrijke oorzaak.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom geeft subtalaire artrose met name klachten bij lopen op oneffen ondergrond?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat het subtalaire gewricht essentieel is voor de aanpassing van de voet aan een oneffen ondergrond",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat oneffen ondergrond geen enkele invloed heeft op enkelgewrichten",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat subtalaire artrose alleen bij vlak lopen klachten geeft",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat dit uitsluitend een placebo-effect betreft",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De functie van terreinaanpassing via inversie/eversie maakt dat juist oneffen ondergrond de klachten uitlokt.",
+          "feedback_fout": "Niet correct. Het subtalaire gewricht is specifiek verantwoordelijk voor terreinaanpassing, wat de klachten op oneffen ondergrond verklaart.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Onderzoek naar subtalaire artrose omvat specifiek testen van inversie/eversie (met het bovenste spronggewricht in neutrale positie om isolatie van het subtalaire gewricht te bevorderen), en beoordeling van pijn en crepitaties bij deze bewegingen.",
+          "lijst": null
+        },
+        {
+          "kop": "Beeldvorming",
+          "tekst": "Röntgenonderzoek (specifieke Broden-opnamen kunnen behulpzaam zijn) toont gewrichtsspleetversmalling en osteofytvorming. Bij twijfel of preoperatieve planning kan CT worden ingezet voor gedetailleerde beoordeling van het gewrichtsoppervlak.",
+          "lijst": [
+            "Geïsoleerd testen van subtalaire inversie/eversie",
+            "Röntgen (evt. Broden-opnamen): gewrichtsspleetversmalling, osteofyten",
+            "CT: gedetailleerde beoordeling bij twijfel of preoperatieve planning"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Waarom wordt bij het testen van subtalaire beweeglijkheid het bovenste spronggewricht in neutrale positie gehouden?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om isolatie van de subtalaire beweging te bevorderen en compensatie vanuit het bovenste spronggewricht te beperken",
+              "correct": true
+            },
+            {
+              "tekst": "Dit heeft geen functioneel doel",
+              "correct": false
+            },
+            {
+              "tekst": "Om de test pijnlijker te maken",
+              "correct": false
+            },
+            {
+              "tekst": "Om de dorsaalflexie te maximaliseren",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Neutrale positionering van het bovenste spronggewricht helpt de subtalaire beweging te isoleren van compensatoire beweging elders.",
+          "feedback_fout": "Niet correct. Het doel is isolatie van de subtalaire beweging, niet het beïnvloeden van pijn of dorsaalflexie.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Wat toont een röntgenfoto bij subtalaire artrose doorgaans?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Gewrichtsspleetversmalling en osteofytvorming",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend wekedelenzwelling zonder botveranderingen",
+              "correct": false
+            },
+            {
+              "tekst": "Een volledig normaal beeld, altijd",
+              "correct": false
+            },
+            {
+              "tekst": "Alleen peesverkalking",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Gewrichtsspleetversmalling en osteofytvorming zijn klassieke röntgenkenmerken van artrose.",
+          "feedback_fout": "Niet correct. Artrose geeft juist karakteristieke botveranderingen zichtbaar op röntgen.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Wanneer wordt CT-beeldvorming toegevoegd aan de diagnostiek bij subtalaire artrose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Altijd als eerste stap, vóór röntgen",
+              "correct": false
+            },
+            {
+              "tekst": "Bij diagnostische twijfel of ter voorbereiding van een eventuele operatie",
+              "correct": true
+            },
+            {
+              "tekst": "Nooit, CT wordt bij deze aandoening niet gebruikt",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend bij kinderen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. CT wordt aanvullend ingezet bij diagnostische onzekerheid of preoperatieve planning, niet als eerste stap.",
+          "feedback_fout": "Niet correct. Röntgen is de eerste stap; CT wordt gerichter ingezet.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit oefentherapie gericht op behoud van resterende mobiliteit en kracht van de omliggende musculatuur, schoeiseladvies (stevige, stabiliserende schoenen) en eventueel een aangepaste steunzool om subtalaire beweging te dempen.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een corticosteroïdinjectie worden overwogen. Bij ernstige, therapieresistente klachten is subtalaire artrodese (vastzetten van het gewricht) de meest toegepaste operatieve behandeling.",
+          "lijst": [
+            "Stap 2: corticosteroïdinjectie bij onvoldoende effect van conservatieve zorg",
+            "Stap 3: subtalaire artrodese bij ernstige, therapieresistente klachten",
+            "Artrodese vermindert pijn, maar beperkt blijvend de inversie/eversie-mobiliteit"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij subtalaire artrose?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Directe artrodese",
+              "correct": false
+            },
+            {
+              "tekst": "Oefentherapie voor mobiliteit/kracht, schoeiseladvies en eventueel een aangepaste steunzool",
+              "correct": true
+            },
+            {
+              "tekst": "Volledige immobilisatie gedurende 6 maanden",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend antibiotica",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De behandeling start conservatief met oefentherapie en schoeiseladvies.",
+          "feedback_fout": "Niet correct. Artrodese is een laatste-stap-behandeling; antibiotica zijn hier niet geïndiceerd (geen infectie).",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wat is het te verwachten effect van een subtalaire artrodese op de mobiliteit?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Volledig behoud van inversie/eversie-mobiliteit",
+              "correct": false
+            },
+            {
+              "tekst": "Vermindering van pijn, maar blijvende beperking van de inversie/eversie-mobiliteit",
+              "correct": true
+            },
+            {
+              "tekst": "Geen enkel effect op pijn of mobiliteit",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige toename van mobiliteit ten opzichte van voor de operatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Artrodese vermindert pijn effectief, maar gaat gepaard met blijvend verlies van subtalaire beweeglijkheid.",
+          "feedback_fout": "Niet correct. Artrodese vermindert juist de mobiliteit blijvend, terwijl het de pijn vermindert.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wanneer wordt subtalaire artrodese overwogen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Bij lichte, incidentele klachten",
+              "correct": false
+            },
+            {
+              "tekst": "Bij ernstige, therapieresistente klachten na conservatieve behandeling",
+              "correct": true
+            },
+            {
+              "tekst": "Als eerste behandeloptie bij elke patiënt met subtalaire artrose",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit bij subtalaire artrose",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Artrodese is gereserveerd voor ernstige, therapieresistente gevallen na een adequaat conservatief traject.",
+          "feedback_fout": "Niet correct. Chirurgie is niet de eerste keus en wordt niet bij lichte klachten toegepast.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

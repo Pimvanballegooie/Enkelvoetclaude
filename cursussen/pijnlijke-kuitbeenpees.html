@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke kuitbeenpees - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke kuitbeenpees voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Achtervoet</span>
+      <h1 class="cursus-titel">Pijnlijke kuitbeenpees</h1>
+      <p class="cursus-beschrijving">Peroneale tendinopathie en (sub)luxatie: anatomie, diagnostiek en stapsgewijze behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-kuitbeenpees-v1",
+  "titel": "Pijnlijke kuitbeenpees",
+  "zone": "Achtervoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "De peroneuspezen",
+          "tekst": "De peroneus longus en peroneus brevis lopen samen achter de laterale malleolus, vastgehouden door het retinaculum peroneale. Zij zijn belangrijke dynamische stabilisatoren tegen inversie en dragen bij aan de afwikkeling tijdens het lopen.",
+          "lijst": null
+        },
+        {
+          "kop": "Twee hoofdvormen van pathologie",
+          "tekst": "Peroneale klachten kunnen bestaan uit tendinopathie (degeneratieve overbelasting) of (sub)luxatie van de pezen uit hun groeve achter de fibula, vaak na een trauma waarbij het retinaculum peroneale beschadigd raakt.",
+          "lijst": [
+            "Tendinopathie: vaak secundair aan chronische enkelinstabiliteit of overbelasting",
+            "(Sub)luxatie: ontstaat door een scheur of verzwakking van het retinaculum peroneale",
+            "Chronische laterale instabiliteit is een belangrijke risicofactor voor beide vormen"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Welke twee pezen vormen samen de peroneuspezen achter de laterale malleolus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Peroneus longus en peroneus brevis",
+              "correct": true
+            },
+            {
+              "tekst": "Tibialis anterior en tibialis posterior",
+              "correct": false
+            },
+            {
+              "tekst": "Flexor hallucis longus en flexor digitorum longus",
+              "correct": false
+            },
+            {
+              "tekst": "Gastrocnemius en soleus",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De peroneus longus en peroneus brevis lopen samen achter de laterale malleolus.",
+          "feedback_fout": "Niet correct. De genoemde andere pezen liggen elders; het gaat om peroneus longus en brevis.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Wat is een belangrijke risicofactor voor het ontstaan van peroneale tendinopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Chronische laterale enkelinstabiliteit",
+              "correct": true
+            },
+            {
+              "tekst": "Een verkoudheid",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend genetische aanleg zonder mechanische factoren",
+              "correct": false
+            },
+            {
+              "tekst": "Een allergie voor bepaalde schoenmaterialen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chronische laterale instabiliteit verhoogt de belasting op de peroneuspezen en is een belangrijke risicofactor.",
+          "feedback_fout": "Niet correct. Mechanische factoren zoals chronische instabiliteit spelen een centrale rol, niet de genoemde alternatieven.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Hoe ontstaat een (sub)luxatie van de peroneuspezen doorgaans?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Door een scheur of verzwakking van het retinaculum peroneale, vaak na trauma",
+              "correct": true
+            },
+            {
+              "tekst": "Door verkalking van de achillespees",
+              "correct": false
+            },
+            {
+              "tekst": "Door een virale infectie van het gewricht",
+              "correct": false
+            },
+            {
+              "tekst": "Spontaan, zonder enige relatie met trauma of anatomische factoren",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een beschadigd of verzwakt retinaculum peroneale, vaak na trauma, laat de pezen uit hun anatomische groeve glijden.",
+          "feedback_fout": "Niet correct. Het retinaculum peroneale speelt de sleutelrol; schade hieraan leidt tot (sub)luxatie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Peroneale tendinopathie geeft pijn en zwelling achter en onder de laterale malleolus, verergerend bij weerstand tegen eversie. Bij (sub)luxatie rapporteren patiënten vaak een 'knappend' of 'schietend' gevoel achter de malleolus tijdens bewegen, soms met zichtbare/voelbare verplaatsing van de pezen.",
+          "lijst": null
+        },
+        {
+          "kop": "Provocatietesten en beeldvorming",
+          "tekst": "Weerstand tegen eversie in dorsaalflexie kan zowel pijn (tendinopathie) als een voelbare subluxatie provoceren. Echografie is behulpzaam om peesintegriteit, vochtophoping in de peesschede en dynamische (sub)luxatie tijdens beweging te beoordelen.",
+          "lijst": [
+            "Pijn en zwelling achter/onder de laterale malleolus",
+            "Weerstandstest eversie in dorsaalflexie kan klachten of subluxatie provoceren",
+            "Echografie: dynamische beoordeling van peesintegriteit en (sub)luxatie"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Welke beweging provoceert typisch de klachten bij peroneale pathologie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Weerstand tegen eversie, vaak in dorsaalflexie",
+              "correct": true
+            },
+            {
+              "tekst": "Weerstand tegen inversie",
+              "correct": false
+            },
+            {
+              "tekst": "Passieve plantairflexie in rust",
+              "correct": false
+            },
+            {
+              "tekst": "Actieve flexie van de grote teen",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Weerstand tegen eversie in dorsaalflexie belast de peroneuspezen en provoceert de klachten.",
+          "feedback_fout": "Niet correct. De peroneuspezen zijn evertoren; inversieweerstand test andere structuren.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Wat is een kenmerkende klacht bij (sub)luxatie van de peroneuspezen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een 'knappend' of 'schietend' gevoel achter de laterale malleolus tijdens bewegen",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend nachtelijke rugpijn",
+              "correct": false
+            },
+            {
+              "tekst": "Een volledig pijnvrij, stabiel gevoel bij elke beweging",
+              "correct": false
+            },
+            {
+              "tekst": "Koorts zonder lokale klachten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een knappend of schietend gevoel, soms met voelbare verplaatsing van de pezen, is kenmerkend voor (sub)luxatie.",
+          "feedback_fout": "Niet correct. Dit klachtenpatroon (mechanisch, lokaal) is specifiek voor peroneale (sub)luxatie.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Welke beeldvormende techniek is bij uitstek geschikt om een dynamische (sub)luxatie van de peroneuspezen vast te leggen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Een statische röntgenfoto",
+              "correct": false
+            },
+            {
+              "tekst": "Echografie, vanwege de mogelijkheid tot dynamisch (bewegend) onderzoek",
+              "correct": true
+            },
+            {
+              "tekst": "Een botdichtheidsmeting",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend lichamelijk onderzoek zonder enige beeldvorming",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Echografie maakt dynamisch onderzoek tijdens beweging mogelijk, wat essentieel is om (sub)luxatie vast te leggen.",
+          "feedback_fout": "Niet correct. Een statische röntgenfoto toont geen dynamische peesbeweging; echografie is hiervoor geschikter.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Bij tendinopathie bestaat stap 1 uit excentrische/concentrische krachttraining van de peroneusmusculatuur, activiteitmodificatie en propriocepsistraining (vooral relevant bij onderliggende instabiliteit). Bij een eerste, milde (sub)luxatie kan tijdelijke immobilisatie met een brace worden overwogen.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij persisterende tendinopathie kan shockwave-therapie worden overwogen. Bij recidiverende of persisterende (sub)luxatie, of bij een peesscheur, is chirurgisch herstel van het retinaculum peroneale (met eventueel groeververdieping) geïndiceerd.",
+          "lijst": [
+            "Tendinopathie stap 2: shockwave-therapie bij onvoldoende effect",
+            "(Sub)luxatie: chirurgisch retinaculumherstel bij recidief of falen conservatieve behandeling",
+            "Chirurgie bij een aangetoonde peesscheur"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is de eerste-stap-behandeling bij peroneale tendinopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Directe chirurgische behandeling",
+              "correct": false
+            },
+            {
+              "tekst": "Excentrische/concentrische krachttraining en propriocepsistraining",
+              "correct": true
+            },
+            {
+              "tekst": "Volledige immobilisatie gedurende 3 maanden",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend pijnstillers zonder oefentherapie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Gerichte krachttraining en propriocepsistraining vormen de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie en langdurige immobilisatie zijn niet de eerste keus.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wanneer wordt chirurgisch herstel van het retinaculum peroneale overwogen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij recidiverende of persisterende (sub)luxatie, of bij een aangetoonde peesscheur",
+              "correct": true
+            },
+            {
+              "tekst": "Bij elke eerste milde episode van (sub)luxatie",
+              "correct": false
+            },
+            {
+              "tekst": "Als eerste behandeloptie, vóór conservatieve zorg",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, chirurgie is bij peroneale problematiek niet geïndiceerd",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie is voorbehouden aan recidiverende/persisterende klachten of bij een peesscheur, niet aan een eerste milde episode.",
+          "feedback_fout": "Niet correct. Bij een eerste milde episode wordt eerst conservatief behandeld, bijvoorbeeld met tijdelijke immobilisatie.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom is propriocepsistraining relevant bij de behandeling van peroneale klachten?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat onderliggende enkelinstabiliteit vaak bijdraagt aan peroneale overbelasting, en verbeterde neuromusculaire controle dit kan verminderen",
+              "correct": true
+            },
+            {
+              "tekst": "Propriocepsistraining heeft geen enkele relatie met de peroneuspezen",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat het de enige benodigde interventie is, los van kracht",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat het uitsluitend cosmetisch van waarde is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Omdat chronische instabiliteit een risicofactor is voor peroneale problematiek, draagt propriocepsistraining bij aan het verminderen van de onderliggende oorzaak.",
+          "feedback_fout": "Niet correct. Propriocepsistraining is wel degelijk relevant, gezien de link met onderliggende enkelinstabiliteit.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

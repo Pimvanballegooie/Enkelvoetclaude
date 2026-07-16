@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke bult hiel - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke bult hiel voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Achtervoet</span>
+      <h1 class="cursus-titel">Pijnlijke bult hiel</h1>
+      <p class="cursus-beschrijving">Ziekte van Haglund: pathofysiologie, diagnostiek en stapsgewijze behandeling van de posterosuperieure calcaneale exostose.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-bult-hiel-v1",
+  "titel": "Pijnlijke bult hiel",
+  "zone": "Achtervoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Haglund-exostose",
+          "tekst": "De ziekte van Haglund (Haglund-exostose, ook wel 'pump bump') betreft een benige uitgroei aan de posterosuperieure zijde van de calcaneus. Door mechanische wrijving met het schoeisel, met name schoenen met een stugge hielrand, kan dit leiden tot een retrocalcaneale bursitis en/of insertionele achillespeestendinopathie.",
+          "lijst": null
+        },
+        {
+          "kop": "Bijdragende biomechanische factoren",
+          "tekst": "De aandoening ontstaat vaak op basis van een individuele anatomische predispositie in combinatie met extrinsieke factoren.",
+          "lijst": [
+            "Verhoogde calcaneale inclinatiehoek (anatomische predispositie)",
+            "Verkorte of hypertone m. gastrocnemius/soleus",
+            "Overpronatie of hindfoot-varus",
+            "Inadequaat schoeisel met stugge hielcounter"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Waar bevindt zich de benige uitgroei bij de ziekte van Haglund?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Aan de posterosuperieure zijde van de calcaneus",
+              "correct": true
+            },
+            {
+              "tekst": "Onder de voetzool bij de metatarsaalkopjes",
+              "correct": false
+            },
+            {
+              "tekst": "Bovenop de wreef",
+              "correct": false
+            },
+            {
+              "tekst": "Aan de mediale zijde van de enkel",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De Haglund-exostose bevindt zich posterosuperieur op de calcaneus, waar deze kan wrijven tegen het schoeisel.",
+          "feedback_fout": "Niet correct. De locatie is specifiek posterosuperieur op de calcaneus, niet elders in de voet.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke twee aandoeningen kunnen secundair ontstaan door mechanische wrijving bij de ziekte van Haglund?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Retrocalcaneale bursitis en insertionele achillespeestendinopathie",
+              "correct": true
+            },
+            {
+              "tekst": "Tarsale tunnelsyndroom en Morton's neuroom",
+              "correct": false
+            },
+            {
+              "tekst": "Hallux valgus en hamerteen",
+              "correct": false
+            },
+            {
+              "tekst": "Plantaire fasciitis en hielspoor",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Mechanische wrijving kan leiden tot retrocalcaneale bursitis en/of insertionele tendinopathie van de achillespees.",
+          "feedback_fout": "Niet correct. De genoemde andere aandoeningen betreffen andere locaties in de voet.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Welke biomechanische factor draagt bij aan een verhoogd risico op de ziekte van Haglund?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Een verkorte of hypertone m. gastrocnemius/soleus",
+              "correct": true
+            },
+            {
+              "tekst": "Overmatige flexibiliteit van de kuitmusculatuur",
+              "correct": false
+            },
+            {
+              "tekst": "Een verlaagde calcaneale inclinatiehoek",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend leeftijd, ongeacht andere factoren",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een verkorte of hypertone kuitmusculatuur verhoogt de mechanische spanning en draagt bij aan het risico op Haglund-klachten.",
+          "feedback_fout": "Niet correct. Het is juist een verkorting/hypertonie, niet overmatige flexibiliteit, die bijdraagt aan het risico.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Patiënten rapporteren een pijnlijke, harde bult aan de achterkant van de hiel, vaak met roodheid of zwelling, die verergert bij het dragen van schoenen met een stugge hielrand.",
+          "lijst": null
+        },
+        {
+          "kop": "Differentiatie bursitis versus tendinopathie",
+          "tekst": "Klinisch onderzoek moet onderscheid maken tussen retrocalcaneale bursitis (drukpijn juist voor de achillespeesinsertie, aan weerszijden) en insertionele tendinopathie (drukpijn direct op de insertie zelf). Beide kunnen tegelijk voorkomen.",
+          "lijst": [
+            "Palpabele, pijnlijke bult posterosuperieur op de calcaneus",
+            "Retrocalcaneale bursitis: drukpijn aan weerszijden vlak voor de insertie",
+            "Insertionele tendinopathie: drukpijn direct op de peesinsertie"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat is een kenmerkend klinisch beeld bij de ziekte van Haglund?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een pijnlijke, harde bult aan de achterkant van de hiel, verergerend bij stugge schoenen",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend pijn onder de voorvoet",
+              "correct": false
+            },
+            {
+              "tekst": "Tintelingen in de tenen zonder enige zwelling",
+              "correct": false
+            },
+            {
+              "tekst": "Pijn die uitsluitend 's nachts in rust optreedt",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een pijnlijke bult posterosuperieur, verergerend bij stug schoeisel, is het klassieke beeld.",
+          "feedback_fout": "Niet correct. Het klachtenpatroon is specifiek gelokaliseerd aan de achterkant van de hiel en schoeisel-gerelateerd.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Hoe onderscheidt u klinisch retrocalcaneale bursitis van insertionele achillespeestendinopathie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Via de exacte locatie van de drukpijn: aan weerszijden vlak voor de insertie (bursitis) versus direct op de insertie zelf (tendinopathie)",
+              "correct": true
+            },
+            {
+              "tekst": "Dit onderscheid is nooit klinisch te maken",
+              "correct": false
+            },
+            {
+              "tekst": "Bursitis geeft nooit pijn bij palpatie",
+              "correct": false
+            },
+            {
+              "tekst": "Tendinopathie komt nooit gecombineerd voor met bursitis",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De precieze locatie van de drukpijn helpt onderscheid te maken, al kunnen beide vormen samen voorkomen.",
+          "feedback_fout": "Niet correct. Er is wel degelijk een klinisch onderscheid te maken via de exacte palpatielocatie.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarom kunnen retrocalcaneale bursitis en insertionele tendinopathie tegelijk voorkomen bij de ziekte van Haglund?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat beide structuren dicht bij elkaar liggen en door dezelfde mechanische wrijving van de exostose worden beïnvloed",
+              "correct": true
+            },
+            {
+              "tekst": "Dit is puur toeval zonder anatomische verklaring",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat bursitis altijd tendinopathie veroorzaakt via infectie",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat beide structuren nooit tegelijk geïrriteerd kunnen raken",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De anatomische nabijheid van de bursa en de peesinsertie ten opzichte van de exostose verklaart waarom beide structuren tegelijk geïrriteerd kunnen raken.",
+          "feedback_fout": "Niet correct. Er is een duidelijke anatomische verklaring voor het gelijktijdig voorkomen, niet toeval of infectie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit schoeiseladvies (vermijden van druk op de posterieure calcaneus), een heellift ter reductie van insertiespanning, en excentrische/isometrische oefentherapie voor de kuitmusculatuur — met aangepaste dosering die volledige dorsaalflexie in de eindfase vermijdt bij insertionele betrokkenheid.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan extracorporale shockwave therapie (ESWT) worden toegevoegd. Corticosteroïdinjecties worden ontraden in de directe nabijheid van de achillespees vanwege het rupturerisico. Bij persisterende klachten kan een calcaneoplastiek (resectie van de exostose) worden overwogen.",
+          "lijst": [
+            "Stap 2: ESWT bij onvoldoende effect van conservatieve zorg",
+            "Corticosteroïdinjecties nabij de achillespees: terughoudend vanwege rupturerisico",
+            "Stap 3: calcaneoplastiek (chirurgische resectie van de exostose) bij persisterende klachten"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passend onderdeel van de eerste-stap-behandeling bij de ziekte van Haglund?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Schoeiseladvies, een heellift en aangepaste excentrische oefentherapie",
+              "correct": true
+            },
+            {
+              "tekst": "Directe chirurgische resectie",
+              "correct": false
+            },
+            {
+              "tekst": "Corticosteroïdinjectie als eerste keus",
+              "correct": false
+            },
+            {
+              "tekst": "Volledige immobilisatie gedurende 3 maanden",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Schoeiseladvies, heellift en aangepaste oefentherapie vormen de kern van de eerste-stap-behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie en injecties nabij de pees zijn niet de eerste keus.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom worden corticosteroïdinjecties in de directe nabijheid van de achillespees ontraden bij de ziekte van Haglund?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Vanwege een verhoogd risico op peesruptuur",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat ze de exostose direct doen groeien",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat ze altijd een allergische reactie veroorzaken",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat ze nooit enig effect hebben op pijn",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Corticosteroïdinjecties nabij de achillespees verhogen het risico op peesruptuur en worden daarom terughoudend toegepast.",
+          "feedback_fout": "Niet correct. Het risico betreft peesverzwakking/-ruptuur, niet de genoemde alternatieven.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wat houdt een calcaneoplastiek in?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Het vastzetten van het gehele enkelgewricht",
+              "correct": false
+            },
+            {
+              "tekst": "Chirurgische resectie van de posterosuperieure exostose",
+              "correct": true
+            },
+            {
+              "tekst": "Het plaatsen van een enkelprothese",
+              "correct": false
+            },
+            {
+              "tekst": "Het verlengen van de achillespees",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een calcaneoplastiek betreft het chirurgisch verwijderen van de benige uitgroei (exostose).",
+          "feedback_fout": "Niet correct. Het is een gerichte botresectie, geen artrodese, prothese of peesverlenging.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Zenuwbeknelling achtervoet - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule zenuwbeknelling achtervoet voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Achtervoet</span>
+      <h1 class="cursus-titel">Zenuwbeknelling achtervoet</h1>
+      <p class="cursus-beschrijving">Tarsale tunnelsyndroom en gerelateerde zenuwbeknelling in de achtervoet: anatomie, diagnostiek en behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "zenuwbeknelling-achtervoet-v1",
+  "titel": "Zenuwbeknelling achtervoet",
+  "zone": "Achtervoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Het tarsale tunnelsyndroom",
+          "tekst": "De tarsale tunnel bevindt zich mediaal achter de mediale malleolus, afgesloten door het retinaculum flexorum. Hierin loopt de n. tibialis posterior, die zich hier splitst in de n. plantaris medialis en lateralis. Compressie van de zenuw in deze tunnel geeft het tarsale tunnelsyndroom.",
+          "lijst": null
+        },
+        {
+          "kop": "Oorzaken van compressie",
+          "tekst": "Compressie kan ontstaan door ruimte-innemende factoren binnen de tunnel, of door verhoogde druk van buitenaf.",
+          "lijst": [
+            "Ruimte-innemende afwijkingen: ganglion, variceuze venen, tenosynovitis",
+            "Verworven pes planovalgus (bijv. bij tibialis posterior disfunctie) verhoogt tractie op de zenuw",
+            "Direct trauma of littekenweefsel na eerdere enkelchirurgie"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Welke zenuw is primair betrokken bij het tarsale tunnelsyndroom?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De n. tibialis posterior",
+              "correct": true
+            },
+            {
+              "tekst": "De n. peroneus superficialis",
+              "correct": false
+            },
+            {
+              "tekst": "De n. suralis",
+              "correct": false
+            },
+            {
+              "tekst": "De n. femoralis",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De n. tibialis posterior loopt door de tarsale tunnel en is de betrokken zenuw bij dit syndroom.",
+          "feedback_fout": "Niet correct. De n. peroneus superficialis en n. suralis lopen elders; het tarsale tunnelsyndroom betreft de n. tibialis posterior.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Waar bevindt zich de tarsale tunnel anatomisch?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Lateraal, voor de laterale malleolus",
+              "correct": false
+            },
+            {
+              "tekst": "Mediaal, achter de mediale malleolus, onder het retinaculum flexorum",
+              "correct": true
+            },
+            {
+              "tekst": "Anterieur op de wreef",
+              "correct": false
+            },
+            {
+              "tekst": "Onder de voorvoet bij de metatarsaalkopjes",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De tarsale tunnel ligt mediaal, achter de mediale malleolus, afgesloten door het retinaculum flexorum.",
+          "feedback_fout": "Niet correct. De tarsale tunnel bevindt zich mediaal-achter de mediale malleolus, niet lateraal of anterieur.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom kan een verworven platvoet (pes planovalgus) bijdragen aan het ontstaan van een tarsale tunnelsyndroom?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Doordat de veranderde voetstand extra tractie op de n. tibialis posterior in de tunnel kan geven",
+              "correct": true
+            },
+            {
+              "tekst": "Een platvoet heeft geen enkele relatie met zenuwcompressie",
+              "correct": false
+            },
+            {
+              "tekst": "Doordat een platvoet de tunnel volledig sluit",
+              "correct": false
+            },
+            {
+              "tekst": "Doordat een platvoet altijd leidt tot een botfractuur",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De veranderde biomechanica bij een verworven platvoet kan extra tractie op de zenuw in de tarsale tunnel geven.",
+          "feedback_fout": "Niet correct. Het mechanisme is verhoogde tractie op de zenuw door de veranderde voetstand, niet volledige tunnelsluiting.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Kenmerkend zijn brandende pijn, tintelingen of een doof gevoel aan de mediale enkelzijde, uitstralend naar de voetzool en tenen, vaak verergerend bij langdurig staan of 's nachts. Tinel-teken (percussie over de tarsale tunnel reproduceert de tintelingen) ondersteunt de diagnose.",
+          "lijst": null
+        },
+        {
+          "kop": "Aanvullend onderzoek",
+          "tekst": "Elektromyografie (EMG) en zenuwgeleidingsonderzoek kunnen de diagnose objectiveren en de ernst van de zenuwbeschadiging in kaart brengen; MRI of echografie kan worden ingezet om een ruimte-innemende oorzaak (bijvoorbeeld een ganglion) op te sporen.",
+          "lijst": [
+            "Tinel-teken: percussie over de tarsale tunnel reproduceert klachten",
+            "EMG/zenuwgeleidingsonderzoek: objectiveren van zenuwfunctie",
+            "MRI/echografie: opsporen van ruimte-innemende oorzaken"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat is het Tinel-teken en waarvoor wordt het gebruikt bij verdenking op tarsale tunnelsyndroom?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Een test waarbij de voet in maximale plantairflexie wordt gebracht",
+              "correct": false
+            },
+            {
+              "tekst": "Percussie over de tarsale tunnel die de tintelingen/klachten reproduceert",
+              "correct": true
+            },
+            {
+              "tekst": "Een röntgenopname van de calcaneus",
+              "correct": false
+            },
+            {
+              "tekst": "Een krachttest van de tibialis posterior",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het Tinel-teken bestaat uit percussie over het verloop van de zenuw, wat bij zenuwirritatie de klachten reproduceert.",
+          "feedback_fout": "Niet correct. Het Tinel-teken is een percussietest, geen bewegings- of krachttest.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welk klachtenpatroon past bij het tarsale tunnelsyndroom?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Uitsluitend pijn bovenop de voet zonder sensibiliteitsklachten",
+              "correct": false
+            },
+            {
+              "tekst": "Brandende pijn, tintelingen of doof gevoel aan de mediale enkelzijde, uitstralend naar de voetzool en tenen",
+              "correct": true
+            },
+            {
+              "tekst": "Alleen zwelling zonder enige pijn of sensibiliteitsklachten",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend nachtelijke koorts",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Brandende pijn en sensibiliteitsklachten mediaal, uitstralend naar de voetzool, zijn kenmerkend voor zenuwcompressie in de tarsale tunnel.",
+          "feedback_fout": "Niet correct. Sensibiliteitsklachten (tintelingen, doof gevoel) zijn juist kenmerkend, niet afwezig.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Welk aanvullend onderzoek objectiveert de mate van zenuwfunctiebeperking bij het tarsale tunnelsyndroom?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Elektromyografie (EMG) en zenuwgeleidingsonderzoek",
+              "correct": true
+            },
+            {
+              "tekst": "Een botdichtheidsmeting (DEXA)",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend een bloedonderzoek",
+              "correct": false
+            },
+            {
+              "tekst": "Een longfunctietest",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. EMG en zenuwgeleidingsonderzoek objectiveren de zenuwfunctie en de ernst van de compressie.",
+          "feedback_fout": "Niet correct. Botdichtheid en bloedonderzoek zeggen niets over zenuwfunctie; EMG is de aangewezen test.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 richt zich op het verminderen van mechanische tractie en compressie: schoeiseladvies, orthese ter correctie van een eventuele afwijkende voetstand, activiteitmodificatie en zenuwmobilisatie-oefeningen binnen tolerantie.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een corticosteroïdinjectie worden overwogen. Chirurgische decompressie (tarsale tunnel release) is voorbehouden aan gevallen met een aangetoonde ruimte-innemende oorzaak of therapieresistente klachten met objectiveerbare zenuwschade.",
+          "lijst": [
+            "Stap 1: schoeiseladvies, orthese, activiteitmodificatie, zenuwmobilisatie",
+            "Stap 2: corticosteroïdinjectie bij onvoldoende effect",
+            "Stap 3: chirurgische decompressie (tarsale tunnel release) bij aangetoonde oorzaak of therapieresistentie"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een passende eerste-stap-behandeling bij het tarsale tunnelsyndroom?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Directe chirurgische decompressie",
+              "correct": false
+            },
+            {
+              "tekst": "Schoeiseladvies, orthese ter correctie van de voetstand en zenuwmobilisatie binnen tolerantie",
+              "correct": true
+            },
+            {
+              "tekst": "Langdurige volledige immobilisatie",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend pijnstillers zonder verdere aanpak",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De behandeling start conservatief, gericht op het verminderen van mechanische tractie en compressie.",
+          "feedback_fout": "Niet correct. Chirurgie is een latere stap, niet de eerste keus.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Wanneer wordt chirurgische decompressie (tarsale tunnel release) overwogen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij een aangetoonde ruimte-innemende oorzaak of therapieresistente klachten met objectiveerbare zenuwschade",
+              "correct": true
+            },
+            {
+              "tekst": "Bij elke lichte tinteling in de voet, ongeacht duur",
+              "correct": false
+            },
+            {
+              "tekst": "Als eerste behandeloptie, vóór conservatieve zorg",
+              "correct": false
+            },
+            {
+              "tekst": "Nooit, chirurgie wordt bij dit syndroom niet toegepast",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie is voorbehouden aan gevallen met een aangetoonde oorzaak (bijv. ganglion) of therapieresistentie na conservatieve behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie wordt wel degelijk toegepast, maar pas na conservatieve behandeling en bij specifieke indicaties.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom is een orthese ter correctie van de voetstand een logisch onderdeel van de conservatieve behandeling?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat het de mechanische tractie op de n. tibialis posterior in de tarsale tunnel kan verminderen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat een orthese de zenuw volledig laat regenereren binnen 1 week",
+              "correct": false
+            },
+            {
+              "tekst": "Orthesen hebben geen enkel effect bij dit syndroom",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat een orthese uitsluitend cosmetisch van waarde is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Door de voetstand te optimaliseren kan de mechanische tractie op de zenuw in de tarsale tunnel worden verminderd.",
+          "feedback_fout": "Niet correct. Een orthese heeft wel degelijk een functioneel doel: het verminderen van tractie op de zenuw.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

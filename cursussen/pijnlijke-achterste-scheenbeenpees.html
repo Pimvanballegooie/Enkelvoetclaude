@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke achterste scheenbeenpees - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke achterste scheenbeenpees voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Achtervoet</span>
+      <h1 class="cursus-titel">Pijnlijke achterste scheenbeenpees</h1>
+      <p class="cursus-beschrijving">Tibialis posterior tendinopathie en disfunctie (PTTD): stadiëring, diagnostiek en stapsgewijze behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-achterste-scheenbeenpees-v1",
+  "titel": "Pijnlijke achterste scheenbeenpees",
+  "zone": "Achtervoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Functie van de tibialis posterior",
+          "tekst": "De m. tibialis posterior is de primaire dynamische stabilisator van de mediale longitudinale voetboog en controleert de pronatie tijdens de standfase van de gangcyclus. Disfunctie van deze pees (posterior tibial tendon dysfunction, PTTD) vormt een progressief spectrum, van tendinopathie tot volledige peesinsufficiëntie.",
+          "lijst": null
+        },
+        {
+          "kop": "Stadiëring (Johnson & Strom, uitgebreid door Myerson)",
+          "tekst": "PTTD wordt ingedeeld in vier stadia, met toenemende ernst en structurele verandering.",
+          "lijst": [
+            "Stadium I: tendinitis/tendinopathie zonder deformiteit, pees intact",
+            "Stadium II: peeselongatie met flexibele pes planovalgus, 'too many toes' sign positief",
+            "Stadium III: rigide deformiteit met secundaire subtalaire artrose",
+            "Stadium IV: deltoïd-ligamentbetrokkenheid met valgusdeformiteit van de talus"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is de primaire functie van de m. tibialis posterior tijdens de gangcyclus?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Dynamische stabilisatie van de mediale longitudinale voetboog en controle van pronatie",
+              "correct": true
+            },
+            {
+              "tekst": "Dorsaalflexie van de tenen",
+              "correct": false
+            },
+            {
+              "tekst": "Stabilisatie van de knie",
+              "correct": false
+            },
+            {
+              "tekst": "Eversie van de voorvoet als hoofdfunctie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De tibialis posterior stabiliseert de mediale voetboog en controleert de pronatie tijdens de standfase.",
+          "feedback_fout": "Niet correct. De genoemde alternatieven betreffen andere spieren/gewrichten.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welk stadium van PTTD wordt gekenmerkt door een flexibele pes planovalgus en een positief 'too many toes' sign?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Stadium I",
+              "correct": false
+            },
+            {
+              "tekst": "Stadium II",
+              "correct": true
+            },
+            {
+              "tekst": "Stadium III",
+              "correct": false
+            },
+            {
+              "tekst": "Stadium IV",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Stadium II wordt gekenmerkt door peeselongatie met een flexibele pes planovalgus en een positief 'too many toes' sign.",
+          "feedback_fout": "Niet correct. Stadium I heeft nog geen deformiteit; stadium III/IV betreft rigide deformiteit met verdere structurele betrokkenheid.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Wat onderscheidt stadium III van stadium II bij PTTD?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Stadium III kenmerkt zich door een rigide deformiteit met secundaire subtalaire artrose, in tegenstelling tot de flexibele deformiteit bij stadium II",
+              "correct": true
+            },
+            {
+              "tekst": "Er is geen enkel verschil tussen beide stadia",
+              "correct": false
+            },
+            {
+              "tekst": "Stadium III heeft altijd een intacte pees zonder enige elongatie",
+              "correct": false
+            },
+            {
+              "tekst": "Stadium II is ernstiger dan stadium III",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het onderscheid zit in de rigiditeit van de deformiteit en de aanwezigheid van secundaire artrose bij stadium III.",
+          "feedback_fout": "Niet correct. Stadium III is juist ernstiger, gekenmerkt door rigiditeit en artrose, in tegenstelling tot de flexibele deformiteit bij stadium II.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Het 'too many toes' sign (bij observatie van achteren zijn bij een aangedane voet meer tenen zichtbaar door de toegenomen abductie van de voorvoet) en een verminderde of pijnlijke single-leg heel raise zijn kenmerkende klinische bevindingen.",
+          "lijst": null
+        },
+        {
+          "kop": "Aanvullende testen",
+          "tekst": "Palpatie van de pees retromalleolair en aan de insertie op het os naviculare, en de Coleman block test (ter beoordeling van flexibiliteit versus rigiditeit van de deformiteit) completeren het klinisch onderzoek.",
+          "lijst": [
+            "'Too many toes' sign bij observatie van achteren",
+            "Verminderde/pijnlijke single-leg heel raise",
+            "Palpatie retromalleolair en bij de insertie op het os naviculare",
+            "Coleman block test: flexibiliteit versus rigiditeit van de deformiteit"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat wordt beoordeeld met het 'too many toes' sign?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Toegenomen abductie van de voorvoet, zichtbaar als meer tenen bij observatie van achteren",
+              "correct": true
+            },
+            {
+              "tekst": "De kracht van de tenenflexoren",
+              "correct": false
+            },
+            {
+              "tekst": "De stabiliteit van het bovenste spronggewricht",
+              "correct": false
+            },
+            {
+              "tekst": "De temperatuur van de voet",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het teken beoordeelt de toegenomen abductiestand van de voorvoet bij PTTD, zichtbaar als 'te veel tenen' van achteren gezien.",
+          "feedback_fout": "Niet correct. Het teken betreft de stand van de voorvoet, niet kracht, stabiliteit of temperatuur.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Wat beoordeelt de Coleman block test?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Of de deformiteit flexibel of rigide is",
+              "correct": true
+            },
+            {
+              "tekst": "De spierkracht van de quadriceps",
+              "correct": false
+            },
+            {
+              "tekst": "De stabiliteit van de knie",
+              "correct": false
+            },
+            {
+              "tekst": "De longfunctie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De Coleman block test bepaalt of een hindfoot-deformiteit flexibel (corrigeerbaar) of rigide is, wat relevant is voor stadiëring en behandelkeuze.",
+          "feedback_fout": "Niet correct. De test is specifiek gericht op de flexibiliteit van de voetdeformiteit.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Wat wijst een pijnlijke of verminderde single-leg heel raise op bij verdenking op PTTD?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Verminderde functie/kracht van de tibialis posterior",
+              "correct": true
+            },
+            {
+              "tekst": "Een normale, gezonde peesfunctie",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend een probleem met de achillespees, los van de tibialis posterior",
+              "correct": false
+            },
+            {
+              "tekst": "Een fractuur van de calcaneus",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Een pijnlijke of verminderde single-leg heel raise wijst op verminderde functie van de tibialis posterior, kenmerkend voor PTTD.",
+          "feedback_fout": "Niet correct. Dit teken wijst juist op peesdisfunctie, niet op normale functie of een fractuur.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling (stadium I-II)",
+          "tekst": "Stap 1 bestaat uit mediale wigging en boogondersteuning in schoeisel of orthese, excentrische en concentrische krachttraining van de tibialis posterior, en activiteitmodificatie tijdens de acute fase. Bij uitgesproken inflammatie kan tijdelijke immobilisatie (walker/brace) geïndiceerd zijn.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Stap 2 omvat een aangepaste enkel-voet-orthese (AFO) voor betere mediale ondersteuning en intensievere functionele training. Chirurgische opties zijn stadiumafhankelijk: peesdebridement met eventueel FDL-transfer bij stadium II, artrodese bij stadium III-IV met rigide deformiteit en artrose.",
+          "lijst": [
+            "Stap 2: AFO, intensievere functionele training, evt. tijdelijke gipsimmobilisatie bij acute inflammatie",
+            "Stap 3 (stadium II): peesdebridement, eventueel met FDL-transfer en/of calcaneus-osteotomie",
+            "Stap 3 (stadium III-IV): artrodese (bijv. triple artrodese) bij rigide deformiteit met artrose"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is een kernonderdeel van de conservatieve behandeling bij PTTD stadium I-II?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Mediale wigging/boogondersteuning en krachttraining van de tibialis posterior",
+              "correct": true
+            },
+            {
+              "tekst": "Directe artrodese",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend rust zonder enige vorm van ondersteuning",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Mediale ondersteuning en gerichte krachttraining vormen de kern van de conservatieve behandeling in de vroege stadia.",
+          "feedback_fout": "Niet correct. Artrodese is een chirurgische optie voor latere stadia, niet de eerste-stap-behandeling.",
+          "bron": null
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Welke chirurgische optie past bij stadium II PTTD?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Peesdebridement, eventueel met flexor digitorum longus (FDL)-transfer",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend triple artrodese",
+              "correct": false
+            },
+            {
+              "tekst": "Amputatie van de voet",
+              "correct": false
+            },
+            {
+              "tekst": "Enkelprothese als standaardbehandeling",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij stadium II wordt gedacht aan peesdebridement, eventueel gecombineerd met een FDL-transfer en/of calcaneus-osteotomie.",
+          "feedback_fout": "Niet correct. Triple artrodese is voorbehouden aan stadium III-IV met rigide deformiteit en artrose.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Waarom is vroege herkenning en behandeling van PTTD in stadium I-II klinisch zo belangrijk?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat dit progressie naar een rigide, artrotische deformiteit (stadium III-IV) kan helpen voorkomen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat PTTD nooit progressief is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat vroege behandeling geen enkel effect heeft op het beloop",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat stadium I-II nooit vanzelf overgaat naar latere stadia",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Vroege interventie kan de progressie naar een rigide deformiteit met secundaire artrose helpen voorkomen.",
+          "feedback_fout": "Niet correct. PTTD is wel degelijk progressief van aard; vroege behandeling kan verdere achteruitgang beperken.",
+          "bron": "Myerson MS (1996) — Adult acquired flatfoot deformity."
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

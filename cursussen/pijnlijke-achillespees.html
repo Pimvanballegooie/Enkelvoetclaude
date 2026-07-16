@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Pijnlijke achillespees - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule pijnlijke achillespees voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Achtervoet</span>
+      <h1 class="cursus-titel">Pijnlijke achillespees</h1>
+      <p class="cursus-beschrijving">Achillespeestendinopathie: mid-portie versus insertioneel, pathofysiologie, diagnostiek en evidence-based behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "pijnlijke-achillespees-v1",
+  "titel": "Pijnlijke achillespees",
+  "zone": "Achtervoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Twee vormen van achillespeestendinopathie",
+          "tekst": "Er wordt onderscheid gemaakt tussen mid-portie tendinopathie (2-6 cm boven de calcaneale insertie, vaak gerelateerd aan hypovasculaire zone) en insertionele tendinopathie (ter hoogte van de aanhechting op de calcaneus, vaak samenhangend met Haglund-exostose of retrocalcaneale bursitis). Dit onderscheid is bepalend voor de behandelkeuze.",
+          "lijst": null
+        },
+        {
+          "kop": "Pathofysiologie",
+          "tekst": "Tendinopathie is een falend genezingsproces van de pees door herhaalde overbelasting, gekenmerkt door collageendesorganisatie, neovascularisatie en toename van grondsubstantie — geen klassieke ontsteking, wat de term 'tendinitis' misleidend maakt.",
+          "lijst": [
+            "Mid-portie: relatief hypovasculaire zone, gevoelig voor degeneratieve veranderingen",
+            "Insertioneel: vaak samenhangend met Haglund-exostose/retrocalcaneale bursitis",
+            "Pathofysiologisch: falend genezingsproces (tendinose), geen zuivere ontsteking"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is het belangrijkste onderscheid tussen mid-portie en insertionele achillespeestendinopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "De locatie van de klachten langs de pees, met gevolgen voor de behandelkeuze",
+              "correct": true
+            },
+            {
+              "tekst": "Mid-portie komt alleen bij kinderen voor",
+              "correct": false
+            },
+            {
+              "tekst": "Insertionele tendinopathie is altijd acuut, mid-portie altijd chronisch",
+              "correct": false
+            },
+            {
+              "tekst": "Er is geen relevant klinisch onderscheid",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De locatie (mid-portie versus insertie) is bepalend voor met name de dosering van excentrische oefentherapie.",
+          "feedback_fout": "Niet correct. Het onderscheid zit in de anatomische locatie langs de pees, wat de behandelkeuze beïnvloedt.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Waarom wordt de term 'tendinitis' als misleidend beschouwd bij chronische achillespeesklachten?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat er histologisch geen klassieke ontsteking maar een falend genezingsproces (tendinose) wordt gezien",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat de pees nooit pijnlijk kan zijn",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat 'tendinitis' een verouderde term is voor spierletsel",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat chronische peesklachten altijd volledig psychogeen zijn",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Histologisch onderzoek toont collageendesorganisatie en neovascularisatie zonder klassieke ontstekingscellen, vandaar de voorkeur voor de term tendinopathie/tendinose.",
+          "feedback_fout": "Niet correct. Het gaat om een falend genezingsproces, niet om afwezigheid van pijn of een verouderde spierletsel-term.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Welke anatomische eigenschap maakt de mid-portie van de achillespees kwetsbaar voor degeneratieve veranderingen?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Een relatief hypovasculaire zone circa 2-6 cm boven de calcaneale insertie",
+              "correct": true
+            },
+            {
+              "tekst": "Een overmaat aan bloedvaten op die locatie",
+              "correct": false
+            },
+            {
+              "tekst": "De aanwezigheid van kraakbeen in de pees zelf",
+              "correct": false
+            },
+            {
+              "tekst": "Directe verbinding met het enkelgewrichtskapsel",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De relatief hypovasculaire zone in de mid-portie is gevoeliger voor degeneratieve veranderingen door beperkte doorbloeding.",
+          "feedback_fout": "Niet correct. Het is juist een relatief slecht doorbloede zone die kwetsbaar maakt voor degeneratie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Kenmerkend is startpijn (ochtendstijfheid, pijn bij eerste stappen) die vermindert bij opwarmen maar terugkeert bij belasting. Palpatie toont lokale verdikking en drukpijn, met bij mid-portie tendinopathie een verschuivende pijnlijke plek ten opzichte van insertionele klachten die vast gelokaliseerd blijven bij de calcaneus.",
+          "lijst": null
+        },
+        {
+          "kop": "Aanvullend onderzoek",
+          "tekst": "Echografie is de meest toegankelijke beeldvormende techniek en toont peesverdikking, structurele afwijkingen en neovascularisatie. MRI wordt gereserveerd voor twijfelgevallen of preoperatieve planning.",
+          "lijst": [
+            "Startpijn/ochtendstijfheid die vermindert bij opwarmen",
+            "Palpabele verdikking, lokale drukpijn",
+            "Echografie: eerste keus beeldvorming (peesverdikking, neovascularisatie)",
+            "MRI: bij diagnostische onzekerheid of preoperatieve planning"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat is een kenmerkend symptoom van achillespeestendinopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Pijn die alleen 's nachts in rust optreedt, nooit bij belasting",
+              "correct": false
+            },
+            {
+              "tekst": "Startpijn/ochtendstijfheid die vermindert bij opwarmen maar terugkeert bij belasting",
+              "correct": true
+            },
+            {
+              "tekst": "Acute, plotselinge zwelling zonder enige relatie met activiteit",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend koorts en algehele malaise",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Startpijn die vermindert bij opwarmen maar terugkeert bij (over)belasting is een klassiek kenmerk van tendinopathie.",
+          "feedback_fout": "Niet correct. Het klachtenpatroon is juist activiteitsgerelateerd, met kenmerkende startpijn.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Welke beeldvormende techniek is doorgaans de eerste keus bij verdenking op achillespeestendinopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "MRI als standaard eerste keus",
+              "correct": false
+            },
+            {
+              "tekst": "Echografie",
+              "correct": true
+            },
+            {
+              "tekst": "Botscan",
+              "correct": false
+            },
+            {
+              "tekst": "CT-scan",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Echografie is toegankelijk, kosteneffectief en toont peesverdikking en neovascularisatie goed; MRI is voor twijfelgevallen.",
+          "feedback_fout": "Niet correct. Echografie is de eerste keus; MRI wordt gereserveerd voor specifieke indicaties.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Hoe kan palpatie helpen bij het onderscheiden van mid-portie en insertionele tendinopathie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Bij mid-portie tendinopathie verschuift de pijnlijke plek mee met de pees bij plantair-/dorsaalflexie, bij insertionele klachten blijft de pijn vast bij de calcaneus",
+              "correct": true
+            },
+            {
+              "tekst": "Palpatie heeft geen enkele diagnostische waarde bij achillespeesklachten",
+              "correct": false
+            },
+            {
+              "tekst": "Beide vormen zijn nooit palpabel",
+              "correct": false
+            },
+            {
+              "tekst": "Insertionele klachten verschuiven altijd mee met de pees, mid-portie nooit",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij mid-portie tendinopathie verplaatst de pijnlijke zone mee met peesbeweging; bij insertionele klachten blijft de pijn vast gelokaliseerd bij de calcaneus.",
+          "feedback_fout": "Niet correct. Palpatie in combinatie met beweging is juist behulpzaam om beide vormen te onderscheiden.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Excentrische oefentherapie als hoeksteen",
+          "tekst": "Excentrische krachttraining (bijvoorbeeld het Alfredson-protocol) vormt de kern van de conservatieve behandeling, met bewezen effectiviteit bij mid-portie tendinopathie. Bij insertionele tendinopathie wordt de training aangepast om overmatige dorsaalflexie in de eindrange te vermijden, om compressie van de insertie te beperken.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect van oefentherapie kan shockwave-therapie worden toegevoegd. Chirurgie (bijvoorbeeld debridement van gedegenereerd weefsel, of bij insertionele klachten verwijdering van een Haglund-exostose) is voorbehouden aan therapieresistente gevallen na een langdurig conservatief traject.",
+          "lijst": [
+            "Stap 1: excentrische/heavy slow resistance-training, activiteitmodificatie",
+            "Stap 2: extracorporale shockwave therapie (ESWT) bij onvoldoende effect",
+            "Stap 3: chirurgisch debridement bij persisterende klachten na ≥6 maanden conservatief beleid"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat is de hoeksteen van de conservatieve behandeling van achillespeestendinopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Volledige immobilisatie gedurende meerdere maanden",
+              "correct": false
+            },
+            {
+              "tekst": "Excentrische krachttraining, zoals het Alfredson-protocol",
+              "correct": true
+            },
+            {
+              "tekst": "Uitsluitend passieve rek zonder krachttraining",
+              "correct": false
+            },
+            {
+              "tekst": "Directe chirurgische behandeling",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Excentrische krachttraining heeft de sterkste evidentie als kern van de conservatieve behandeling.",
+          "feedback_fout": "Niet correct. Immobilisatie en directe chirurgie zijn niet de eerste-keus-behandeling.",
+          "bron": "Alfredson H et al. (1998) — Heavy-load eccentric calf muscle training for the treatment of chronic Achilles tendinosis."
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom wordt bij insertionele achillespeestendinopathie de excentrische training aangepast ten opzichte van mid-portie tendinopathie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Om overmatige dorsaalflexie in de eindrange te vermijden en compressie van de insertie te beperken",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat excentrische training bij insertionele klachten volledig gecontra-indiceerd is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat insertionele klachten geen enkele vorm van training verdragen",
+              "correct": false
+            },
+            {
+              "tekst": "Er is geen enkel verschil in aanpak nodig",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Bij insertionele klachten wordt de eindrange dorsaalflexie vermeden om compressie van de pees tegen de calcaneus te beperken.",
+          "feedback_fout": "Niet correct. Excentrische training blijft geïndiceerd, maar met een aangepast bewegingsbereik.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Wanneer wordt chirurgisch debridement bij achillespeestendinopathie overwogen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Direct bij het stellen van de diagnose",
+              "correct": false
+            },
+            {
+              "tekst": "Bij persisterende klachten na een langdurig, adequaat doorlopen conservatief traject (doorgaans ≥6 maanden)",
+              "correct": true
+            },
+            {
+              "tekst": "Alleen bij patiënten jonger dan 20 jaar",
+              "correct": false
+            },
+            {
+              "tekst": "Zodra er lichte ochtendstijfheid is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie is een laatste-stap-behandeling voor therapieresistente klachten na langdurige conservatieve zorg.",
+          "feedback_fout": "Niet correct. Eerst wordt een langdurig conservatief traject doorlopen; chirurgie is niet de eerste keus.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>

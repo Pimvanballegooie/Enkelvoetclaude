@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cursus: Hielspoor - Enkel Voet Netwerk</title>
+  <meta name="description" content="Online cursusmodule hielspoor voor fysiotherapeuten. Gebaseerd op EVN-protocollen." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="cursus-stijl.css" />
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">
+      <img class="logo-icon" src="../beenklachten_logo.png" alt="Enkel Voet Netwerk logo" />
+      <div class="logo-text">Enkel Voet Netwerk</div>
+    </a>
+    <div class="hamburger" onclick="document.getElementById('main-nav').classList.toggle('open')" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <nav id="main-nav">
+      <a href="../protocollen.html">Protocollen</a>
+      <a href="../mijn-profiel.html">Mijn profiel</a>
+      <a href="../index.html#locaties">Locaties</a>
+      <a href="../partners.html">Partners</a>
+      <a href="../therapeut-worden.html">Aanmelden als therapeut</a>
+      <a href="../locatie-worden.html" class="cta">Locatie worden</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div id="scherm-inlog">
+    <div class="inlog-kaart">
+      <span class="inlog-tag">Cursusportaal EVN</span>
+      <h1>Inloggen</h1>
+      <p>Vul uw persoonlijke inlogcode in. U ontvangt deze van het EVN-beheer na aanmelding als therapeut.</p>
+      <div class="form-group">
+        <label for="inp-code">Inlogcode</label>
+        <input type="text" id="inp-code" placeholder="bijv. EVN-001" onkeydown="if(event.key==='Enter') inloggen()" />
+      </div>
+      <div class="inlog-fout" id="inlog-fout">Onbekende code. Controleer uw inlogcode of neem contact op met EVN-beheer.</div>
+      <button class="btn-primary" onclick="inloggen()">Inloggen →</button>
+      <div class="demo-hint">Demo-codes: <strong>DEMO</strong>, <strong>EVN-001</strong> of <strong>EVN-002</strong></div>
+    </div>
+  </div>
+
+  <div id="scherm-cursus">
+    <div class="cursus-header">
+      <span class="cursus-tag">Achtervoet</span>
+      <h1 class="cursus-titel">Hielspoor</h1>
+      <p class="cursus-beschrijving">Calcaneale spoor en plantaire fasciopathie: pathofysiologie, diagnostiek en evidence-based behandeling.</p>
+    </div>
+
+    <div class="voortgang-wrap">
+      <div class="voortgang-balk-bg"><div class="voortgang-balk-fill" id="voortgang-fill"></div></div>
+      <div class="voortgang-labels"><span id="voortgang-tekst">0 van 3 blokken afgerond</span><span id="voortgang-pct">0%</span></div>
+    </div>
+
+    <div id="blokken-container"></div>
+
+    <div id="cert-banner">
+      <h2>Module afgerond</h2>
+      <p id="cert-tekst"></p>
+      <a href="../mijn-profiel.html" class="btn-volgende">Terug naar mijn profiel →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2025 Enkel Voet Netwerk &nbsp;&middot;&nbsp; <a href="../index.html">Home</a> &nbsp;&middot;&nbsp; <a href="../protocollen.html">Protocollen</a></p>
+</footer>
+
+<script>
+const CURSUS = {
+  "id": "hielspoor-v1",
+  "titel": "Hielspoor",
+  "zone": "Achtervoet",
+  "blokken": [
+    {
+      "id": "blok-1",
+      "titel": "Anatomie & pathofysiologie",
+      "nummer": 1,
+      "theorie": [
+        {
+          "kop": "Calcaneale spoor versus plantaire fasciopathie",
+          "tekst": "Een calcaneale spoor (hielspoor) is een radiologisch zichtbare botuitgroei aan de mediale tuber calcanei, ter hoogte van de origo van de fascia plantaris. De spoor zelf is vaak een toevalsbevinding: het klachtenbeeld wordt hoofdzakelijk verklaard door plantaire fasciopathie, een degeneratieve aandoening van de fascia plantaris zelf.",
+          "lijst": null
+        },
+        {
+          "kop": "Risicofactoren",
+          "tekst": "Plantaire fasciopathie kent een multifactoriële achtergrond, waarbij zowel intrinsieke als extrinsieke factoren een rol spelen.",
+          "lijst": [
+            "Verhoogde BMI",
+            "Beperkte dorsaalflexie van de enkel door verkorting m. gastrocnemius/soleus",
+            "Langdurig statische of belastende beroepen",
+            "Verminderde kracht van de intrinsieke voetmusculatuur",
+            "Afwijkende voetstatiek (pes planus of pes cavus)"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v1-1",
+          "tekst": "Wat is de belangrijkste oorzaak van de klachten bij een 'hielspoor', ondanks de naamgeving?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "De botspoor zelf, die altijd de directe oorzaak van pijn is",
+              "correct": false
+            },
+            {
+              "tekst": "Plantaire fasciopathie, een degeneratieve aandoening van de fascia plantaris",
+              "correct": true
+            },
+            {
+              "tekst": "Een infectie van het hielbot",
+              "correct": false
+            },
+            {
+              "tekst": "Een fractuur van de calcaneus",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De spoor zelf is vaak een toevalsbevinding; de klachten worden hoofdzakelijk veroorzaakt door plantaire fasciopathie.",
+          "feedback_fout": "Niet correct. De botspoor is niet de primaire oorzaak van de klachten; dat is de fasciopathie van de fascia plantaris.",
+          "bron": null
+        },
+        {
+          "id": "v1-2",
+          "tekst": "Welke factor verhoogt het risico op plantaire fasciopathie via een biomechanisch mechanisme?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Beperkte dorsaalflexie van de enkel door verkorte kuitmusculatuur",
+              "correct": true
+            },
+            {
+              "tekst": "Een te lage bloeddruk",
+              "correct": false
+            },
+            {
+              "tekst": "Een tekort aan vitamine C",
+              "correct": false
+            },
+            {
+              "tekst": "Een te hoge luchtvochtigheid",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Beperkte dorsaalflexie door verkorte kuitmusculatuur verhoogt de spanning op de fascia plantaris.",
+          "feedback_fout": "Niet correct. Het gaat om een biomechanische factor: beperkte enkelmobiliteit, niet de genoemde alternatieven.",
+          "bron": null
+        },
+        {
+          "id": "v1-3",
+          "tekst": "Waarom is het klinisch relevant te weten dat de calcaneale spoor vaak een toevalsbevinding is?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat dit voorkomt dat behandeling zich onterecht uitsluitend richt op het verwijderen van de spoor zelf",
+              "correct": true
+            },
+            {
+              "tekst": "Dit heeft geen enkele klinische relevantie",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat het betekent dat er nooit behandeling nodig is",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat het aantoont dat er altijd een fractuur aanwezig is",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het besef dat de spoor niet de primaire oorzaak is, voorkomt dat behandeling zich ten onrechte richt op het verwijderen van de botspoor in plaats van de fascia plantaris.",
+          "feedback_fout": "Niet correct. Dit inzicht is juist klinisch relevant voor een gerichte, effectieve behandelstrategie.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-2",
+      "titel": "Diagnostiek & klinisch redeneren",
+      "nummer": 2,
+      "theorie": [
+        {
+          "kop": "Klinisch beeld",
+          "tekst": "Kenmerkend is startpijn onder de hiel bij de eerste stappen na rust (ochtend, na lang zitten), die tijdens activiteit afneemt maar bij overbelasting weer toeneemt. Drukpijn is vaak aanwijsbaar ter hoogte van de mediale tuber calcanei.",
+          "lijst": null
+        },
+        {
+          "kop": "Klinisch onderzoek",
+          "tekst": "Beoordeling van dorsaalflexie van de enkel (Silfverskiöld-test) en van de voetstatiek en het looppatroon zijn onderdeel van het lichamelijk onderzoek, om bijdragende biomechanische factoren te identificeren.",
+          "lijst": [
+            "Startpijn bij eerste stappen na rust, afnemend bij activiteit",
+            "Drukpijn ter hoogte van de mediale tuber calcanei",
+            "Silfverskiöld-test: beoordeling dorsaalflexie enkel",
+            "Beoordeling voetstatiek en looppatroon"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v2-1",
+          "tekst": "Wat is een kenmerkend symptoom van plantaire fasciopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Startpijn onder de hiel bij de eerste stappen na rust, die afneemt tijdens activiteit",
+              "correct": true
+            },
+            {
+              "tekst": "Pijn die uitsluitend 's nachts optreedt zonder enige relatie met belasting",
+              "correct": false
+            },
+            {
+              "tekst": "Pijn die alleen bovenop de voet voorkomt",
+              "correct": false
+            },
+            {
+              "tekst": "Koorts en algehele malaise",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Startpijn na rust die afneemt bij activiteit is het klassieke klachtenpatroon bij plantaire fasciopathie.",
+          "feedback_fout": "Niet correct. Het klachtenpatroon is juist gerelateerd aan rust en activiteit, niet los daarvan.",
+          "bron": null
+        },
+        {
+          "id": "v2-2",
+          "tekst": "Waar is de drukpijn bij plantaire fasciopathie doorgaans het meest uitgesproken?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Ter hoogte van de mediale tuber calcanei",
+              "correct": true
+            },
+            {
+              "tekst": "Bovenop de voorvoet",
+              "correct": false
+            },
+            {
+              "tekst": "Aan de laterale malleolus",
+              "correct": false
+            },
+            {
+              "tekst": "Bij de achillespeesinsertie",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. De mediale tuber calcanei, waar de fascia plantaris zijn oorsprong heeft, is de meest voorkomende locatie van drukpijn.",
+          "feedback_fout": "Niet correct. De pijn is gelokaliseerd bij de origo van de fascia plantaris, niet bij de genoemde alternatieve locaties.",
+          "bron": null
+        },
+        {
+          "id": "v2-3",
+          "tekst": "Waarom wordt bij het onderzoek naar plantaire fasciopathie ook de dorsaalflexie van de enkel beoordeeld?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Omdat beperkte dorsaalflexie door verkorte kuitmusculatuur een bijdragende biomechanische factor is",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat dorsaalflexie geen enkele relatie heeft met de fascia plantaris",
+              "correct": false
+            },
+            {
+              "tekst": "Om uitsluitend de kracht van de tenen te testen",
+              "correct": false
+            },
+            {
+              "tekst": "Om een fractuur van de calcaneus uit te sluiten",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Beperkte dorsaalflexie is een erkende bijdragende factor, waardoor beoordeling hiervan relevant is voor de behandelplanning.",
+          "feedback_fout": "Niet correct. Dorsaalflexie-beoordeling is juist relevant vanwege de biomechanische relatie met de fascia plantaris.",
+          "bron": null
+        }
+      ]
+    },
+    {
+      "id": "blok-3",
+      "titel": "Behandelstappen & revalidatie",
+      "nummer": 3,
+      "theorie": [
+        {
+          "kop": "Conservatieve behandeling",
+          "tekst": "Stap 1 bestaat uit educatie (de spoor is geen oorzaak van de klachten), high-load strength training van de fascia plantaris (evidence-based, o.a. het Rathleff-protocol), een rekprogramma voor fascia plantaris en kuitmusculatuur, Low-Dye taping tijdens de acute fase, en schoeiseladvies met adequate demping en boogondersteuning.",
+          "lijst": null
+        },
+        {
+          "kop": "Opschalen en operatieve overweging",
+          "tekst": "Bij onvoldoende effect kan een individueel aangemeten orthese, extracorporale shockwave therapie (ESWT), of een nachtspalk worden ingezet. Corticosteroïdinjecties worden terughoudend toegepast vanwege het risico op fascia-ruptuur en vetkussenatrofie. Chirurgische partiële fasciotomie is zelden geïndiceerd.",
+          "lijst": [
+            "Stap 2: orthese, ESWT, nachtspalk bij aanhoudende ochtendklachten",
+            "Corticosteroïdinjectie: terughoudend vanwege rupturerisico en vetkussenatrofie",
+            "Stap 3: chirurgische partiële fasciotomie zelden, pas na 6-12 maanden adequaat conservatief beleid"
+          ]
+        }
+      ],
+      "vragen": [
+        {
+          "id": "v3-1",
+          "tekst": "Wat vormt de kern van de evidence-based conservatieve behandeling van plantaire fasciopathie?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "High-load strength training van de fascia plantaris",
+              "correct": true
+            },
+            {
+              "tekst": "Volledige immobilisatie gedurende 3 maanden",
+              "correct": false
+            },
+            {
+              "tekst": "Directe chirurgische fasciotomie",
+              "correct": false
+            },
+            {
+              "tekst": "Uitsluitend rust zonder enige vorm van oefening",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. High-load strength training heeft goede evidentie als kern van de behandeling.",
+          "feedback_fout": "Niet correct. Chirurgie en volledige immobilisatie zijn niet de eerste-keus-behandeling.",
+          "bron": "Rathleff MS et al. (2015) — High-load strength training improves outcome in patients with plantar fasciitis."
+        },
+        {
+          "id": "v3-2",
+          "tekst": "Waarom wordt terughoudend omgegaan met corticosteroïdinjecties bij plantaire fasciopathie?",
+          "niveau": "verdiepend",
+          "opties": [
+            {
+              "tekst": "Vanwege het risico op fascia-ruptuur en atrofie van het hielvetkussen",
+              "correct": true
+            },
+            {
+              "tekst": "Omdat injecties nooit enig effect hebben op pijn",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat injecties de spoor doen groeien",
+              "correct": false
+            },
+            {
+              "tekst": "Omdat injecties altijd een infectie veroorzaken",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Het risico op fascia-ruptuur en vetkussenatrofie maakt terughoudendheid met corticosteroïdinjecties gewenst.",
+          "feedback_fout": "Niet correct. Het specifieke risico betreft structurele schade (ruptuur, atrofie), niet de genoemde alternatieven.",
+          "bron": null
+        },
+        {
+          "id": "v3-3",
+          "tekst": "Na welke periode van adequaat conservatief beleid wordt chirurgische fasciotomie pas overwogen?",
+          "niveau": "basis",
+          "opties": [
+            {
+              "tekst": "Na 2 weken",
+              "correct": false
+            },
+            {
+              "tekst": "Na minimaal 6 tot 12 maanden",
+              "correct": true
+            },
+            {
+              "tekst": "Direct bij het stellen van de diagnose",
+              "correct": false
+            },
+            {
+              "tekst": "Na 1 week zonder verbetering",
+              "correct": false
+            }
+          ],
+          "feedback_correct": "Correct. Chirurgie wordt pas overwogen na een langdurig, adequaat doorlopen conservatief traject van 6 tot 12 maanden.",
+          "feedback_fout": "Niet correct. Een periode van slechts enkele weken is onvoldoende om chirurgie te overwegen bij deze aandoening.",
+          "bron": null
+        }
+      ]
+    }
+  ]
+};
+</script>
+<script src="cursus-engine.js"></script>
+</body>
+</html>
